@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:t="http://www.record.xl.pt" xmlns:media="http://search.yahoo.com/mrss/" xmlns:ynews="http://news.yahoo.com/rss/" version="2.0">
+  <channel>
+    <title><![CDATA[Jornal Record]]></title>
+    <link><![CDATA[http://www.record.xl.pt]]></link>
+    <description><![CDATA[Record Online é o site do Record, órgão de informação de referência, especializado em Desporto mas também generalista e pluralista, independente de clubes, associações, partidos ou crenças religiosas. Record está atento à atualidade, aborda os acontecimentos exclusivamente pelo seu valor jornalístico, acompanha os mais importantes em direto e faz uma clara distinção entre as notícias, a análise e a opinião. Em texto, fotos, vídeos ou infografias, Record Online dá-lhe o melhor do Desporto.]]></description>
+    <language>pt-pt</language>
+    <lastBuildDate>Fri, 04 Feb 2011 19:40:00 +0000</lastBuildDate>
+    <category><![CDATA[Notícias]]></category>
+    <copyright>Record</copyright>
+    <managingEditor>online@record.xl.pt</managingEditor>
+    <webMaster>admin@xl.pt</webMaster>
+
+
+    <item>
+      <title><![CDATA[Redknapp sonha com Beckham para novembro]]></title>
+      <link><![CDATA[http://www.record.xl.pt/Futebol/Internacional/interior.aspx?content_id=682559]]></link>
+      <description><![CDATA["Becks" regressa na próxima semana a Los Angeles...]]></description>
+      <category><![CDATA[Internacional]]></category>
+      <pubDate>Fri, 04 Feb 2011 19:32:00 +0000</pubDate>
+      <guid>682559</guid>
+      <media:content url="http://www.record.xl.pt/storage/ng1097773.jpg?type=big" type="image/jpeg" height="476px" width="634px">
+        <media:title><![CDATA[Redknapp sonha com Beckham para novembro]]></media:title>
+      </media:content>
+    </item>
+
+
+    <item>
+      <title><![CDATA[Os jogos marcantes de Liedson no Sporting]]></title>
+      <link><![CDATA[http://www.record.xl.pt/galerias/videos/interior.aspx?content_id=682549]]></link>
+      <description>
+        <div id="destaque_container_noticia_682549">
+          <table width="290" cellspacing="0" cellpadding="0">
+            <tr>
+              <td>
+                <a href="javascript:SetScrolerDestaqueVideo2('noticia','682549')">
+                  <span class="video-btplay">
+                    <img src="/common/images/modGaleriaVideos/play1.png" onclick="SetScrolerDestaqueVideo('videos1','')"/>
+                  </span>
+                  <img src="&#10;&#9;&#9;/storage/ng1097739.jpg?type=highlight" width="290" height="239"/>
+                </a>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div id="destaque_noticia_682549" style="display:none">
+          <iframe width="290" height="239" id="iframe_noticia_682549" scrolling="no" frameborder="0"/>
+        </div>
+      </description>
+      <category><![CDATA[Vídeos]]></category>
+      <pubDate>Fri, 04 Feb 2011 19:20:00 +0000</pubDate>
+      <guid>682549</guid>
+    </item>
+
+    <item>
+      <title><![CDATA[Redknapp sonha com Beckham para novembro]]></title>
+      <link><![CDATA[http://www.record.xl.pt/Futebol/Internacional/interior.aspx?content_id=682559]]></link>
+      <description><![CDATA["Becks" regressa na próxima semana a Los Angeles...]]></description>
+      <category><![CDATA[Internacional]]></category>
+      <pubDate>Fri, 04 Feb 2011 19:32:00 +0000</pubDate>
+      <guid>682559</guid>
+      <media:content url="http://www.record.xl.pt/storage/ng1097773.jpg?type=big" type="image/jpeg" height="476px" width="634px">
+        <media:title><![CDATA[Redknapp sonha com Beckham para novembro]]></media:title>
+      </media:content>
+    </item>
+
+  </channel>
+</rss>

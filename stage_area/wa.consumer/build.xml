@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="webanalytics.broker.consumer.v1">
+
+	<path id="project.classpath">
+		<pathelement location="./bin" />
+
+		<fileset dir="./lib/">
+			<include name="**/*.jar" />
+		</fileset>
+
+		<fileset dir="./clib/">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+	<target name="init">
+		<mkdir dir="bin" />
+	</target>
+
+	<target name="clean">
+		<delete dir="bin" />
+		<delete dir="dist" />
+	</target>
+
+
+	<!-- bind as a separate step -->
+	<target name="bind">
+		<echo message="Running JiBX binding compiler" />
+		<taskdef name="bind" classname="org.jibx.binding.ant.CompileTask">
+			<classpath refid="project.classpath" />
+		</taskdef>
+		<bind binding="./src/binding.xml">
+			<classpath refid="project.classpath" />
+		</bind>
+	</target>
+
+	<target name="compile" depends="init">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac destdir="bin" encoding="UTF-8" debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6">
+			<src path="src" />
+			<classpath refid="project.classpath" />
+		</javac>
+		<copy todir="bin">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+	</target>
+
+
+	<target name="build" depends="compile, bind">
+		<echo message="${ant.project.name}: ${ant.file}" />
+	</target>
+
+	<target name="package" depends="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<mkdir dir="dist" />
+		<jar destfile="dist/webanalytics.broker.consumer.v1.jar" basedir="bin" />
+
+		<copy todir="dist">
+			<fileset dir="./lib/" includes="**/*.jar" />
+		</copy>
+
+	</target>
+
+</project>

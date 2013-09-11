@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.caudexorigo</groupId>
+	<artifactId>feed-parser</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>feed-parser</name>
+	<description>feed parser library</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>personal-cloudpt</id>
+			<name>Personal Repo</name>
+			<url>https://cld.pt/dl/download/9e76a086-067a-4adc-900f-5f7fdc756136/m2repo/</url>
+			<!-- url>file:///home/lneves/CloudPT/m2repo</url -->
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.caudexorigo</groupId>
+			<artifactId>org-caudexorigo</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>(1.7, )</version>
+		</dependency>
+
+
+	</dependencies>
+	<!-- mvn install:install-file \ -Dfile=target/feed-parser-1.0-SNAPSHOT.jar 
+		\ -DgroupId=org.caudexorigo \ -DartifactId=feed-parser \ -Dversion=1.0-SNAPSHOT 
+		\ -Dpackaging=jar \ -DpomFile=pom.xml \ -DcreateChecksum=true \ -DlocalRepositoryPath=$HOME/CloudPT/m2repo -->
+
+</project>
+

@@ -1,0 +1,37 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.caudexorigo</groupId>
+	<artifactId>org-caudexorigo</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<name>org-caudexorigo</name>
+	<description>utilities library</description>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+<!-- 
+  
+mvn install:install-file  \
+-Dfile=target/org-caudexorigo-1.0-SNAPSHOT.jar \
+-DgroupId=org.caudexorigo \
+-DartifactId=org-caudexorigo \
+-Dversion=1.0-SNAPSHOT \
+-Dpackaging=jar \
+-DpomFile=pom.xml \
+-DcreateChecksum=true \
+-DlocalRepositoryPath=$HOME/CloudPT/m2repo
+
+-->
+
+</project>

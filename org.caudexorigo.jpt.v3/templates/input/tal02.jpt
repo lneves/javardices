@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html>
+<head>
+<title>Test for Context object</title>
+</head>
+<body>
+<h2>Test for Context object</h2>
+</body>
+</html>

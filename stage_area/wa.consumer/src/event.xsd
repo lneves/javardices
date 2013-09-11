@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="event">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="user">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ip" type="xsd:string" />
+              <xsd:element name="visitor-id" type="xsd:long" />
+              <xsd:element name="visit-id" type="xsd:long" />
+              <xsd:element name="host-visit-id" type="xsd:long" />
+              <xsd:element name="site-visit-id" type="xsd:long" />
+              <xsd:element name="new-site-visit" type="xsd:boolean" />
+              <xsd:element name="new-visit" type="xsd:boolean" />
+              <xsd:element name="new-host-visit" type="xsd:boolean" />
+              <xsd:element name="new-unique-visitor" type="xsd:boolean" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="source">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="site-key" type="xsd:string" />
+              <xsd:element name="host" type="xsd:string" />
+              <xsd:element name="url" type="xsd:string" />
+              <xsd:element name="referer" type="xsd:string" />
+              <xsd:element name="section" type="xsd:string" />
+              <xsd:element name="subsection" type="xsd:string" />
+              <xsd:element name="section-grp" type="xsd:string" />
+              <xsd:element name="subsection-grp" type="xsd:string" />
+              <xsd:element name="content" type="xsd:string" />
+              <xsd:element name="channel" type="xsd:string" />
+              <xsd:element name="keywords" type="xsd:string" />
+              <xsd:element name="doc-title" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="user-agent">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="ua-string" type="xsd:string" />
+              <xsd:element name="os-name" type="xsd:string" />
+              <xsd:element name="os-version" type="xsd:string" />
+              <xsd:element name="browser-name" type="xsd:string" />
+              <xsd:element name="browser-version" type="xsd:string" />
+              <xsd:element name="charset" type="xsd:string" />
+              <xsd:element name="screen-resolution" type="xsd:string" />
+              <xsd:element name="language" type="xsd:string" />
+              <xsd:element name="color-depth" type="xsd:int" />
+              <xsd:element name="java-enabled" type="xsd:boolean" />
+              <xsd:element name="flash-version" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="custom-parameters" type="xsd:string" />
+        <xsd:element name="geo">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="country">
+                <xsd:complexType>
+                  <xsd:attribute name="id" type="xsd:string" />
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="district">
+                <xsd:complexType>
+                  <xsd:attribute name="id" type="xsd:int" />
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="municipality">
+                <xsd:complexType>
+                  <xsd:attribute name="id" type="xsd:int" />
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="parish">
+                <xsd:complexType>
+                  <xsd:attribute name="id" type="xsd:int" />
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="latitude" type="xsd:long" />
+              <xsd:element name="longitude" type="xsd:long" />
+              <xsd:element name="provider" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="type" type="xsd:string" />
+      <xsd:attribute name="timestamp" type="xsd:long" />
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

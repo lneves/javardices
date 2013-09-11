@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+		<title>Sapo-Broker Monitorization Console</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<script type="text/javascript" src="scripts/jQuery.gz.js"></script>
+		<script type="text/javascript" src="scripts/jquery.sparkline.min.gz.js" ></script>
+		<script type="text/javascript" src="scripts/monitor_new.js"></script>
+		<link rel="stylesheet" href="css/style_new.css" type="text/css" />
+		<script type="text/javascript">
+			jQuery.noConflict();
+			window.onload = inactiveQueuesInformationInit;
+		</script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <div id="logo">
+                    <a href="main.html" class="logo"><img src="./images/broker_console_text.png" alt="Broker Console" title="Broker Console" border="0" /></a>			
+				</div>
+				<div id="menu-items">
+					<p class="menu-item"><a href="main.html">Main</a></p>
+					<p class="menu-item"><a href="agents.html">Agents</a></p>
+					<p class="menu-item"><a href="queues.html">Queues</a></p>
+					<p class="menu-item"><a href="topics.html">Topics</a></p>
+				</div>
+			</div>
+
+            <div id="container">
+                <div id="main-stats">
+
+                    <div class="dashboard-widget">
+                        <table cellspacing="0" cellpadding="7" border="0">
+                            <caption><h1>Inactive Queues</h1></caption>
+                            <thead>
+                                <tr style="text-align:center">
+                                    <td>Queue Name</td>
+                                </tr>
+                            </thead>
+                            <tbody id="queues_info">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

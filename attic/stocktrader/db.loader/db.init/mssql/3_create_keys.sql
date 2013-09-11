@@ -1,0 +1,10 @@
+USE  stocktrader
+GO
+
+ALTER TABLE account ADD CONSTRAINT pk_account PRIMARY KEY CLUSTERED (accountid ASC);
+ALTER TABLE accountprofile ADD CONSTRAINT pk_accountprofile PRIMARY KEY CLUSTERED (userid ASC);
+ALTER TABLE holding ADD CONSTRAINT pk_holding PRIMARY KEY CLUSTERED (holdingid ASC);
+ALTER TABLE orders ADD CONSTRAINT pk_order PRIMARY KEY CLUSTERED (orderid ASC);
+ALTER TABLE quote ADD CONSTRAINT pk_quote PRIMARY KEY CLUSTERED (symbol ASC);
+
+GO

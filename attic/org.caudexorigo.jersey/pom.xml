@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.caudexorigo</groupId>
+	<artifactId>jersey-container-netty</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>jersey-container-netty</name>
+	<description>jersey netty container</description>
+
+	<repositories>
+		<repository>
+			<id>personal-cloudpt</id>
+			<name>Personal Repo</name>
+			<url>https://cld.pt/dl/download/9e76a086-067a-4adc-900f-5f7fdc756136/m2repo/</url>
+			<!-- url>file:///home/lneves/CloudPT/m2repo</url -->
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.caudexorigo</groupId>
+			<artifactId>org-caudexorigo</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>(1.7, )</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty</artifactId>
+			<version>3.6.6.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+	</dependencies>
+</project>
+
+<!-- 
+  
+mvn install:install-file  \
+-Dfile=target/jersey-container-netty-0.0.1-SNAPSHOT.jar \
+-DgroupId=caudexorigo \
+-DartifactId=jersey-container-netty \
+-Dversion=0.0.1-SNAPSHOT \
+-Dpackaging=jar \
+-DgeneratePom=true \
+-DlocalRepositoryPath=$HOME/CloudPT/m2repo
+
+-->

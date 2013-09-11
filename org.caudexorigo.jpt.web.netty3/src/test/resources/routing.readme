@@ -1,0 +1,68 @@
+----------------------
+   ROUTING README
+----------------------
+
+This file holds some information on RoutingManager behaviour and configuration, probably written in bad English.
+
+
+ - CONFIGURATION
+----------------
+
+RoutingManager configuration is based in a file or java.io.Reader whose content should look like this:
+
+-----------------------------------------------------------------
+#This is a comment
+
+#method	uri pattern						template
+
+DENY	/private/.*
+GET		/<name>							<name>.jpt
+GET		/detalhes/<event>				detalhes.jpt
+GET		/subscricao/<action>/<event>	private/event-<event>.jpt
+
+POST	/login							login.jpt
+
+*		/endpoint						endpoint.jpt
+-----------------------------------------------------------------
+
+# denotes a comment line
+
+Each valid line has three parts: Method, URI Pattern and Template
+
+Method 		- An HTTP VERB or '*' denoting all supported VERBS
+URI Pattern - The part of the URI to match
+Template    - The file location template
+
+ - API
+------ 
+ 
+ Constructors:
+  Constructs a RouterMessager
+  RoutingManager(String routesFile, String basePath, String baseUrl)
+  RoutingManager(Reader reader, String basePath, String baseUrl) 
+ 
+  routesFile and reader	- Refer to the configuration 'file'
+  basePath 				- is the file system base path (eg. /servers/alerts/frontend/wwwroot/template)
+  baseUrl 				- is the web application base url (eg. http://www.example.com)
+ 
+ map(HttpMethod method, String uri, HttpRequestWrapper request)
+  Maps a resource request to a HttpAction (NettyWebJptAction) or null. Parameters extracted from the the uri are added to the HttpRequestWrapper.
+  method 	- HTTP Verb
+  uri 		- Requested (eg. resource detalhes/astrologia)
+  request	- HttpRequestWrapper
+ 
+ reverse(String template)
+   Given a file path template, returns an URL
+   template - file path template (eg. file.jpt)
+   returns  - an URL (eg. http://www.example.com/file)
+ reverse(String template, Map<String, String> params)
+   Given a file path template and parameters, returns an URL. This is required when the file path dosen't contain all params.
+   template 		- file path template (eg. private/event-tempo.jpt)
+   params	- extra parameters (eg. action->editar)
+   returns  - an URL (eg. http://www.example.com/subscricao/editar/tempo). Note: if params was not defined the returned value whould be http://www.example.com/subscricao/<action>/tempo 
+   
+    
+ - Test
+-------
+ 
+ You can test the RoutingManager behaviour using org.caudexorigo.jpt.web.netty.routing.test.TestRouting.

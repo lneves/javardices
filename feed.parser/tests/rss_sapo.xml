@@ -1,0 +1,831 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<rss version='2.0' xmlns:lj='http://www.livejournal.org/rss/lj/1.0/'>
+<channel>
+  <title>Poingg</title>
+  <link>http://poingg.com/</link>
+  <description>Poingg - SAPO Blogs</description>
+  <lastBuildDate>Thu, 31 Dec 2009 10:12:44 GMT</lastBuildDate>
+  <generator>LiveJournal / SAPO Blogs</generator>
+  <image>
+    <url>http://blogs.sapo.pt/userpic/7963/5</url>
+    <title>Poingg</title>
+    <link>http://poingg.com/</link>
+    <width></width>
+    <height></height>
+  </image>
+
+<item>
+  <guid>http://poingg.com/28189.html</guid>
+  <pubDate>Thu, 31 Dec 2009 09:13:24 GMT</pubDate>
+  <title>Arquivo digital. &quot;Encodar 2009&quot;</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/28189.html</link>
+  <description>&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/IMG_0093-20091231-091710.jpg&quot; alt=&quot;Pasta cds&quot; style=&quot;border-color: black;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Há quase um ano decidimos duas coisas importantes:&lt;br /&gt;
+&lt;br /&gt;
+&lt;a href=&quot;http://jonasnuts.com/254143.html&quot;&gt;Ela&lt;/a&gt; achou que os CDs ocupavam imenso espaço em casa com as suas intermináveis estantes e prateleiras espalhadas pelos corredores.&lt;br /&gt;
+Eu achei que era útil ter toda a colecção de música à distância de um click sem ter que perder tempos infinitos à procura &amp;quot;daquele&amp;quot; CD.&lt;br /&gt;
+&lt;br /&gt;
+Durante algumas semanas uma nova palavra preencheu o léxico familiar.&lt;br /&gt;
+O que estás a fazer gaja?&lt;br /&gt;
+A &amp;quot;&lt;i&gt;encodar&lt;/i&gt;&amp;quot; - dizia ela enquanto o leitor de CDs bufava.&lt;br /&gt;
+&lt;br /&gt;
+Defina-se desde já o termo para que não haja margem para divagações.&lt;br /&gt;
+&lt;i&gt;Encodar&lt;/i&gt;, é um verbo cujo significado é: &amp;quot;transcrever algo para um formato de código&amp;quot;&lt;br /&gt;
+Exemplo: &amp;quot;Hoje já &lt;i&gt;encodei&lt;/i&gt; 3 seguidos&amp;quot;&lt;br /&gt;
+&lt;br /&gt;
+Porque o resultado final foi fantástico e porque algures pelo meio cometemos alguns erros, achei por bem documentar passo-a-passo a operação &amp;quot;&lt;b&gt;Encodar 2009&lt;/b&gt;&amp;quot;. Espero que sirva de guia e referência para vós que ainda viveis entremeados em caixas de plástico ao invés de o reciclarem em coisas mais úteis como surpresas dos ovos kinder.&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style=&quot;font-size: large;&quot;&gt;Preparação&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Escolham um daqueles joguinhos viciantes do tipo bejeweled, pois dependendo da dimensão da besta irão passar largas horas agarrados ao computador.&lt;br /&gt;
+Sugiro um joguinho (reforço o diminutivo) pois uma utilização mais agressiva da máquina pode comprometer os resultados finais; pior ainda, só o irão perceber no final do processo. Encodar é um processo delicado e sujeito a erros de leitura. Não vão querer as vossas máquinas (ou cabeças) ocupadas com tarefas muito complicadas.&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style=&quot;font-size: medium;&quot;&gt;Ingredientes&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Assegurem-se que têm todos os ingredientes antes de começar. Apenas os marcados com um &amp;quot;asterisco&amp;quot; são opcionais nesta fase embora sejam recomendados para a última parte.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/IMG_3305.JPG-20091231-092315.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;  &lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/iPhoto-6-20091231-092432.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;span style=&quot;font-size: larger;&quot;&gt;1 ou mais humanos&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Alguém vai ter de andar a trocar os CDs, arquivá-los nas pastas, deitar fora os plásticos, arrastar as estantes, etc.&lt;br /&gt;
+Escolham humanos pacientes e metódicos, daqueles que são muito arrumadinhos e não largam pelo.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/skitched-1-20091231-092943.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;span style=&quot;font-size: larger;&quot;&gt;2 discos suficientemente grandes&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Como referência podem usar os nossos dados: temos 2413 álbuns dos quais 1800 em formato lossless (já explico) e cerca de 600 em MP3 maioritariamente a 320 Kb/s. Este espólio ocupa quase 750 Gb em disco (693 + Artwork). Não façam uma compra mesmo à justa. Os novos cds que comprarem (agora online espero eu) irão ocupar este mesmo disco, pelo que no nosso caso optámos por discos de 1 TB.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/iTunes-4-20091231-093036.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Porquê 2 discos? Backups claro. Não vão querer chegar ao CD nº 999 de 1000 e chegar à conclusão que o disco avariou certo?&lt;br /&gt;
+1 disco externo de 1 TB custa hoje cerca de 90&amp;euro;, um de 500 GB custa cerca de 60.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;span style=&quot;font-size: larger;&quot;&gt;1 ou mais computadores&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Não precisam ser grandes bombas. Qualquer Mac ou PC com 5 anos de idade serve para o efeito. Quanto mais lento fôr o computador, menos ousado poderá ser o vosso joguinho de passatempo.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/IMG_0086-20091231-093607.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;  &lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/0611macbook_both-20091231-093717.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;span style=&quot;font-size: larger;&quot;&gt;1 leitor de CDs por computador.&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Atenção! Isto é muito importante! Nada de facilidades neste ingrediente. O ideal seria um que fosse esteticamente agradável, silencioso e rápido; ora isso não existe de todo. Terá de ser um &amp;quot;mastronço&amp;quot; barulhento, resistente e, sobretudo, muito rápido.&lt;br /&gt;
+&lt;br /&gt;
+Se o vosso computador fôr portátil comprem um leitor externo. O vosso leitor interno é provavelmente lento e frágil. Não vai aguentar a tarefa.&lt;br /&gt;
+Caso usem um PC desktop em que seja fácil mudar as entranhas, então podem optar por um leitor interno.&lt;br /&gt;
+&lt;br /&gt;
+Os mínimos olímpicos para a tarefa são capacidades de leitura de CDs a 20x. Menos do que isso é puro masoquismo. Caso comprem o leitor, experimentem-no primeiro com alguns CDs. Um dos leitores que usámos dizia ser capaz de ler a 24x. Era factualmente verdadeiro, mas com o inconveniente de só chegar a essa velocidade nas duas últimas faixas do CD. Muito mau.&lt;br /&gt;
+&lt;br /&gt;
+Os dois heróis da empreitada foram um LG externo e um Samsung que encodaram à brava sem uma queixa ou afrontamento. O Samsung foi baratucho. O LG foi bem mais caro e já morava com a família há alguns meses para outras tarefas.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/pastas-20091231-094156.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style=&quot;font-size: larger;&quot;&gt;N arquivadores de cd&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+O &amp;quot;N&amp;quot; varia obviamente com o vosso espólio. Há arquivadores de 100, 200, 300 CDs. Mais do que 300 não é boa ideia pois o seu manuseio é pouco prático. Se decidirem não comprar mais CDs em plástico, podem escolher um arquivador quase à justa para o número de CDs.&lt;br /&gt;
+No meu caso comprei 8 arquivadores de 300 CDs da Case Logic e ela comprou 2 de 200 + 1 de 100.&lt;br /&gt;
+Como irão perceber, apesar de o arquivador suportar 300 CDs, na melhor das hipóteses conseguem guardar 150 em cada um.&lt;br /&gt;
+&lt;br /&gt;
+Quaisquer 20 e poucos euros dão para comprar &lt;a href=&quot;http://27t7.sl.pt&quot;&gt;um dos arquivadores maiores&lt;/a&gt;. Há para vários gostos e feitios.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/sw-20091231-094717.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style=&quot;font-size: larger;&quot;&gt;Software&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Para encodar e sobretudo para organizar a música irão precisar de software. Há muita tralha que cumpre esta tarefa com distinção. No nosso caso usámos o iTunes por várias razões.&lt;br /&gt;
+1. É grátis&lt;br /&gt;
+2. É grátis&lt;br /&gt;
+3. É grátis&lt;br /&gt;
+Está integrado com a Gracenote media database, o que é fundamental para catalogar as músicas&lt;br /&gt;
+Além disso, está integrado com a iTunes Store, o que é sempre útil para as compras futuras.&lt;br /&gt;
+Finalmente, o facto de permitir partilhar a library de forma transparente com vários dispositivos determinou a nossa escolha.&lt;br /&gt;
+&lt;br /&gt;
+Usámos mais duas peças de software com as quais só precisam preocupar-se na fase final. Como cá em casa somos do clã do mac, as referências que deixo são para OSX e não para Windows. No entanto, estou certo que haverá alternativas para esse sistema operativo do demónio.&lt;br /&gt;
+&lt;br /&gt;
+Para as capas: &lt;a href=&quot;http://www.equinux.com/us/products/coverscout/index.html&quot;&gt;Coverscout&lt;/a&gt;&lt;br /&gt;
+Para calcular o BPM: &lt;a href=&quot;http://www.wildbits.com/bpmer/&quot;&gt;bpmer&lt;/a&gt;&lt;br /&gt;
+&lt;br /&gt;
+Mais à frente verão como são quase imprescindíveis.&lt;br /&gt;
+&lt;br /&gt;
+&lt;br /&gt;
+&lt;span style=&quot;font-size: larger;&quot;&gt;Acção&lt;/span&gt;&lt;br /&gt;
+&lt;br /&gt;
+Munidos pois de humanos, discos, leitores de CD, computadores, arquivadores e software, podemos passar à acção:&lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;1. Ordenar os CDs&lt;/b&gt;&lt;br /&gt;
+Foi um dos nossos erros. Não o fizémos. Agora dependemos do arquivo digital para sabermos onde encontrar um dos originais. E mesmo assim, temos de andar a folhear o arquivador até encontrar o que pretendemos. Não é muito grave pois teoricamente não iremos precisar de o fazer com frequência.&lt;br /&gt;
+Usem a ordenação que mais sentido fizer para vós. Ordem alfabética, por géneros musicais, por cores, etc. &lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;2. Arquivar&lt;/b&gt;&lt;br /&gt;
+Já?&lt;br /&gt;
+Sim, já. As estantes ficarão livres mais cedo, o plástico será reciclado mais cedo, o acesso aos CDs para o encodanço será mais fácil, o controle do que já foi encodado ou não também.&lt;br /&gt;
+Arquivar é um processo simples. Retirar o CD, a capa e a contracapa e deitar a caixa de plástico no balde amarelo. É só isso.&lt;br /&gt;
+Se tiverem daqueles CDs com capas de cartão, guardem um espacinho na prateleira para eles. Terão de ficar segregados do resto do clã e irão viver nas suas casas originais o resto do tempo. Infelizmente costumam ter dimensões pouco standard e não caberão nos arquivadores.&lt;br /&gt;
+Para os restantes CDs usámos a seguinte técnica.&lt;br /&gt;
+CDs simples ficam com a capa na bolsa superior e com a contra-capa na bolsa inferior. O CD propriamente dito fica sobre a contra-capa enquanto não estiver encodado. Após a digitalização passa para baixo da contra-capa. Assim é fácil saber o que já foi processado e o que ainda não foi.&lt;br /&gt;
+Para os CDs duplos guardamos as capas do lado esquerdo e os discos do lado direito.&lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;3. &amp;quot;Encodar&amp;quot;&lt;/b&gt;&lt;br /&gt;
+Encodar é tão monótono e chato que convida ao erro. Os dois erros mais comuns são a duplicação e a omissão. Usem o método referido no ponto anterior para os evitar.&lt;br /&gt;
+Escolher o formato é obviamente importante. Por isso não vale a pena falar de outra coisa que não seja o &amp;quot;lossless&amp;quot;. Lossless significa no fundo que caso o desejemos, é possível reconverter uma música para a sua representação digital original, sem qualquer adulteração. MP3, WMA e outros formatos comuns vivem da supressão de frequências, pelo que se torna impossível reverter a compressão para o formato inicial.&lt;br /&gt;
+Há pouca escolha nesta área (felizmente, digo eu). Como usámos o iTunes para a tarefa, optámos por &amp;quot;encodar&amp;quot; tudo em Apple Lossless (m4a). O iTunes não gosta da alternativa (formato Flac).&lt;br /&gt;
+A opção por um formato lossless tem vantagens óbvias e desvantagens ainda mais óbvias. A dimensão dos ficheiros é cerca de 10x superior à de um MP3 a 320 Kb/s. Isto significa que quando quiserem passar as músicas para dispositivos portáteis como telefones, psps, etc, devem, por razões de espaço, convertê-las primeiro para MP3 ou WMA antes (sem apagar o original, claro)&lt;br /&gt;
+Nota: este foi outro dos erros que cometemos. Inicialmente começámos a guardar as músicas em MP3 a 320Kb/s. Resultado? Umas boas centenas de CDs tiveram de voltar à mesa.&lt;br /&gt;
+&lt;br /&gt;
+O software que escolherem vai tentar identificar o CD e assim obter toda a metadata necessária, nome do artista, do álbum, das músicas e, se possível, a própria capa original. É aqui que entra algum método e atenção por parte dos humanos operadores de serviço. No caso do iTunes, a integração está feita com a Gracenote (ex CDDB) e se bem que a taxa de sucesso a encontrar os nomes de CDs tenha sido brutal (até a abelha maia ele conhecia), o mesmo não se pode dizer com algumas capas e até com alguns nomes de álbuns. Confirmem sempre que os dados obtidos estão correctos e caso não estejam, corrijam-nos.&lt;br /&gt;
+&lt;br /&gt;
+Cuidado com os engasganços! De vez em quando irão reparar que o leitor de CDs está algo engasgado durante o encodanço. A probabilidade é que alguma música não tenha ficado correctamente encodada. No nosso caso, trocar de leitor resolveu sempre o problema. Há quem diga que tem a ver com as preferências musicais dos leitores. Um deles não gostava mesmo de Frank Sinatra. Devia ser irlandês.&lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;4. Corrigir nomes e géneros&lt;/b&gt;&lt;br /&gt;.replaceAll("]", "]\t\t");
+Uma vez terminado o longo e tortuoso processo do encodanço, vem o longo e tortuoso processo da correcção de nomes, géneros e restante metadata.&lt;br /&gt;
+É um processo chato. Serve também para encontrarem possíveis CDs duplicados, ajustar o género musical e, sobretudo, catalogar a localização do CD: No nosso caso usámos o campo dos comentários para identificar a pasta onde se encontra o CD. Smart!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/CoverScout_3-20091231-095109.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;5. Completar capas&lt;/b&gt;&lt;br /&gt;
+Por mais recente que seja a vossa colecção, certamente irão ficar com cerca de metade das capas em branco. Há duas alternativas para resolver o problema.&lt;br /&gt;
+A gratuita chama-se google image search. Para o iTunes há scriptalhada em applescript que se pode usar para fazer a pesquisa automática das capas no google. No entanto, o processo de captura e gravação da mesma é manual.&lt;br /&gt;
+A alternativa pro: usar o coverscout. No site há vídeos e muita explicação sobre o seu funcionamento. O que mais me agradou (para além da interface) foi a qualidade da integração com os &amp;quot;fornecedores&amp;quot; de capas em formato digital, bem como o próprio browser com captura automática.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+Além de tudo, permite fazer ajustes e alinhamentos nas imagens capturadas o que é óptimo.&lt;/p&gt;
+&lt;p&gt;&lt;br /&gt;
+&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Window-28-20091231-095250.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+ &lt;/p&gt;
+&lt;p&gt;&lt;b&gt;6. Calcular o bpm&lt;/b&gt;&lt;br /&gt;
+BPM = beats per minute. É um indicador (medianamente fiável) do ritmo da música. Quanto mais dançável fôr, mais fiável será o indicador e também mais útil. Para quê? Para as mixes claro!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/iTunes-2-20091231-095603.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+ &lt;/p&gt;
+&lt;p&gt;Agora que a nossa biblioteca audiófila está toda digitalizada e com o BPM calculado o iTunes é capaz de fazer &amp;quot;altas passagens&amp;quot; entre músicas com ritmos semelhantes.&lt;br /&gt;
+Obviamente que este passo é opcional.&lt;br /&gt;
+Para a tarefa usei o BPMer. Há alternativas grátis por aí mas creio que não são tão fiáveis. A grande vantagem do BPMer é a de integrar directamente com o iTunes e assim guardar o valor calculado no campo existente para o efeito.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/BPMer-1-20091231-095431.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;  &lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/IMG_0095-20091231-095802.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+&lt;br /&gt;
+&lt;b&gt;7. Esconder as vergonhas&lt;/b&gt;&lt;br /&gt;
+Isto é fundamental caso a biblioteca seja partilhada (como é o nosso caso).&lt;br /&gt;
+Assim tenho uma playlist com a minha música e outra com a música dela.&lt;br /&gt;
+Recomendo que o façam a não ser que queiram passar pela vergonha de ouvir o &amp;quot;Netinho&amp;quot; após uma música dos New Order. Ou a Barbra Streisand mixada com os Badly Drawn Boys.&lt;br /&gt;
+&lt;br /&gt;
+Uma nota final.&lt;br /&gt;
+Ao usar o iTunes como arquivo principal de música acabamos por usufruir do seu sistema de partilha via DAAP. Todos os macs e pcs de casa podem assim aceder a toda a música sem restrições.&lt;br /&gt;
+&lt;br /&gt;
+Para que o mesmo aconteça com a PS3, recomendo o &lt;a href=&quot;http://www.nullriver.com/products/medialink&quot;&gt;medialink&lt;/a&gt;. Faz perfeitamente a ponte entre o iTunes e as consolas usando DLNA. E levam ainda o bónus das fotos e vídeos no bundle :) A versão equivalente para a XBOX360 é o &lt;a href=&quot;http://www.nullriver.com/products/connect360&quot;&gt;Connect360&lt;br /&gt;
+&lt;/a&gt;&lt;br /&gt;
+PS.&lt;br /&gt;
+&lt;br /&gt;
+Não se esqueçam! Reciclem o plástico e as prateleiras!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/penseamarelo06-20091231-100839.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</description>
+  <comments>http://poingg.com/28189.html</comments>
+  <lj:replycount>13</lj:replycount>
+  <category>vida</category>
+  <category>música</category>
+</item>
+<item>
+  <guid>http://poingg.com/27905.html</guid>
+  <pubDate>Thu, 31 Dec 2009 06:55:41 GMT</pubDate>
+  <title>O épico da série 14 do Top Gear</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/27905.html</link>
+  <description>&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color: black;&quot; alt=&quot;May&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Window-1-20091231-070027.jpg&quot; /&gt;  &lt;img border=&quot;0&quot; style=&quot;border-color: black;&quot; alt=&quot;jimmy&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Window-20091231-070245.jpg&quot; /&gt;  &lt;img border=&quot;0&quot; style=&quot;border-color: black;&quot; alt=&quot;hammond&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Window-2-20091231-070318.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;Isto é o que uma travessia da América do Sul faz aos 3 apresentadores do Top Gear. Ultimamente, cada série traz um bombom lá no meio. Foi a viagem ao Pólo Norte, a travessia de África, o coast-to-coast nos EUA, etc.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Desta vez a viagem é mais curta. &amp;quot;Apenas&amp;quot; 1000 milhas até ao Pacífico mas... através da selva amazónica, vulcões, insectos e crocodilos.&lt;/p&gt;
+&lt;p&gt;Será com este épico que alguma televisão portuguesa abre os olhos e decide transmitir a melhor (não) série sobre carros da face da terra? É que os menos &lt;a href=&quot;http://27t2.sl.pt&quot;&gt;afoitos&lt;/a&gt; estão limitados a ver a série 4 ou 5 no Discovery e por mais divertido que ela seja, os carros dessa altura são quadrados e de aspecto antiquado.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Quem é que eu preciso spamar para isto?&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color: black;&quot; alt=&quot;top gear&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/South_American_Cross.mkv-20091231-071647.jpg&quot; /&gt;&lt;/p&gt;</description>
+  <comments>http://poingg.com/27905.html</comments>
+  <lj:replycount>11</lj:replycount>
+  <category>carros</category>
+</item>
+<item>
+  <guid>http://poingg.com/27857.html</guid>
+  <pubDate>Mon, 28 Dec 2009 23:25:45 GMT</pubDate>
+  <title>JibJab 2009</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/27857.html</link>
+  <description>&lt;embed width=&quot;580&quot; height=&quot;377&quot; allowfullscreen=&quot;true&quot; type=&quot;application/x-shockwave-flash&quot; src=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/ewq8QV52Zer3iPS2Z8gd/mov/1&quot;&gt;&lt;/embed&gt;
+
+&lt;p&gt; &lt;/p&gt;&lt;p&gt;Aí está a visão americana de 2009 do pessoal do JibJab. Com nível como de costume.&lt;/p&gt;&lt;p&gt;Bom ano de 2010!&lt;/p&gt;</description>
+  <comments>http://poingg.com/27857.html</comments>
+  <lj:replycount>0</lj:replycount>
+  <category>sociedade</category>
+</item>
+<item>
+  <guid>http://poingg.com/27467.html</guid>
+  <pubDate>Fri, 18 Dec 2009 16:07:39 GMT</pubDate>
+  <title>As máquinas da fotografia</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/27467.html</link>
+  <description>&lt;p&gt;Há uma relação ancestral entre o homem e a máquina; especialmente se a máquina for a sua ferramenta de trabalho. Isto é tão mais verdade quanto se esse objecto fôr um símbolo de poder.&lt;/p&gt;
+&lt;p&gt;Veja-se a relação do soldado com a sua arma, do músico com a sua guitarra, do piloto com o seu avião e sim, do fotógrafo com a sua máquina fotográfica. Todos, objectos de poder.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Há quem diga que esta relação é eminentemente sexual. &lt;a href=&quot;http://www.arakinobuyoshi.com/&quot;&gt;Araki Nobuyoshi&lt;/a&gt;, um prolífico fotógrafo japonês comparava a fotografia ao acto sexual.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/araki.jpeg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;i&gt;Araki sometimes linkens photography to the sex act, and his camera to a penis, but he never looks or gestures at the women, his subjects, in a phallocentric manner. if the look in a man&apos;s eye is an attempt to understand the woman to project his own lust and to extract the hidden truth, then Araki becomes a woman when he takes photographs. He absorbs the incomprehensible scenes that he witnesses as well as the superficial relationships formed there without altering them. He copies with a refined eye. One might refer to Araki&apos;s camera as a device that resembles a vagina pretending to be a penis. In Araki&apos;s own eloquent words, &amp;quot;There is a camera between a man and a woman&amp;quot; (the title of the first collection of Araki&apos;s essays on photography, published in 1978). By this he means that the distance between the photographer and his subject cannot ever become transparent, due to the existence of the camera. Furthermore, Araki&apos;s camera comes and goes between the eyes of the man and woman, while diffusing the autonomy of the photographer.&lt;/i&gt;&lt;br /&gt;
+ &lt;/p&gt;
+&lt;p&gt;Objectos fálicos à parte, este post vem mesmo a propósito é da minha relação com as minhas máquinas. Ainda as tenho quase todas. E as que não tenho é por terem sido &amp;quot;recicladas&amp;quot; para a descendência.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/PolaroidZIP.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbPolaroidZIP.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.camerapedia.org/wiki/Polaroid_Super_Swinger&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Polaroid ZIP Land Camera&lt;/span&gt;&lt;/a&gt; (1974) aka Super Swinger&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Foi comprada aos dez anos em Moçambique, em parte com o dinheiro da semanada que não tinha onde gastar, em parte com a ajuda dos meus pais.&lt;/p&gt;
+&lt;p&gt;Este objecto estranho de linhas quadradas, quase robótico tem um exposímetro singular. O feedback para o fotógrafo era dado através de um painel de xadrez preto e vermelho onde leríamos YES sempre que a exposição fosse correcta. O manípulo vermelho à frente accionava o obturador e fazia a regulação da abertura. &lt;a href=&quot;http://www.flickr.com/photos/artysmokes/3121327542/&quot;&gt;Ver mais imagens&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/PentaxEspio105.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbPentaxEspio105.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;a href=&quot;http://www.camerapedia.org/wiki/Pentax_Espio_115M&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Pentax Espio 105&lt;/span&gt;&lt;/a&gt; (1994)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;As únicas boas memórias desta máquina são as fotos que tirei à minha filha. Era uma boa compacta para a época mas este modelo em particular deu-me vários problemas. Na realidade foi a única máquina que alguma vez fui forçado a reparar. Deixei-a para trás junto com a mobília do casamento.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/NikonF70.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbNikonF70.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://mir.com.my/rb/photography/companies/nikon/htmls/models/specroom98/f70/f70spec.htm&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Nikon F70&lt;/span&gt;&lt;/a&gt; (1995)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;O que está uma Nikon a fazer num universo predominantemente Canon? Guerras à parte (já fui mais faccioso pro Canon), a verdade é que a F70 é a verdadeira razão pela qual me apaixonei pela fotografia. Empurrado pelo meu grande mestre e génio dos Cárpatos António (Taw) Lopes, comprei esta delícia cheia de idiossincrasias de interface. Super robusta, a Nikon F70 foi sem sombra de dúvida a máquina que mais clicks teve. Mesmo considerando o custo dos rolos de 35mm slide e negativo, foi a que mais fotogramas produziu.&lt;/p&gt;
+&lt;p&gt;Na grande maioria terão sido slides dos Açores e alguns momentos familiares. Continua a ser a minha &amp;quot;all-time best&amp;quot;. Provavelmente (definitivamente) por razões sentimentais; as mesmas razões que me levaram a comprar mais uns rolos de slides a semana passada e prontamente a montá-los na máquina para futuras expedições.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonEOS300.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonEOS300.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/Canon_EOS_300&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon EOS 300&lt;/span&gt;&lt;/a&gt; (2000)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Sim, foi a primeira Canon que tive. Provavelmente um guilty pleasure para quem tinha uma Nikon e passava a vida a ouvir a oposição dizer que Canon é que era boa. Não vejo outra razão para a compra. Nunca foi muito usada nem me despertou grandes sensações.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/OlympusC2000L.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbOlympusC2000L.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/canons400/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Olympus C2000 L&lt;/span&gt;&lt;/a&gt; (2001)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;A minha primeira digital! Enfim, que dizer. 2 MPs. É do tempo em que não se podia ser muito exigente com este tipo de câmaras. Lenta, lenta lenta a focar e a disparar e os resultados também não era brilhantes. Tive alguns issues não muito graves que me fizeram contactar o suporte da Olympus e jurei para nunca mais. Risquei a marca da lista e nem a nova PEN me desperta o apetite.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonIXUS400.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonIXUS400.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/canons400/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon IXUS 400&lt;/span&gt;&lt;/a&gt; (2003)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Depois da experiência sui generis da Olympus, fui à procura da point-and-shoot perfeita. E encontrei-a. Esta máquina acompanhou-me centenas de vezes e nunca me deixou ficar mal. Incrível versatilidade e, para a altura, muito compacta.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonEOS350D.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonEOS350D.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/canoneos350d/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon EOS 350D&lt;/span&gt;&lt;/a&gt; (2003)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Há tempos que andava à procura de uma DSLR. Algo que combinasse a F70 com a IXUS400. A Canon lançou esta &amp;quot;coisa&amp;quot; a um preço fantástico em 2003 e saltei de imediato no barco. A verdade é que à semelhança da EOS 300, não aqueceu nem arrefeceu. Cá em casa chamámos-lhe a máquina de guerra, i.e. a que não nos importamos de esfolar se for preciso.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonEOS10D.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonEOS10D.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/canoneos10d/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon EOS 10D&lt;/span&gt;&lt;/a&gt; (2004)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&amp;quot;And now, for something completely different&amp;quot;. Não, não é o larício (the larch), mas esta foi a primeira câmara semi-pro que tive. &amp;quot;Rock solid&amp;quot;. Não desiludiu. Tive-a nas mãos pouco tempo pois uma oportunidade de negócio implicou vendê-la para comprar a EOS 1DS Mark II.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CasioExilimZ750.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCasioExilimZ750.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/CasioZ750/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Casio Exilim Z750&lt;/span&gt;&lt;/a&gt; (2005)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;À procura de actualização para a fantástica IXUS 400, fiz uma primeira incursão na Casio. Para mim Casio ainda são calculadoras ou relógios de pulso. E se calhar é assim que devem continuar. A escolha foi motivada pelos 7.2 megapixels a um preço barato. Foi uma compra que só fez sentido durante a corrida louca aos megapixels, para chegar à conclusão de que megapixels não são tudo; aliás, nem metade da equação.&lt;/p&gt;
+&lt;p&gt;A máquina foi reciclada pela minha filha e voltou a casa com o visor todo escancarado. Et boeuf!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonIXUS850is.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonIXUS850is.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/canonsd800is/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon IXUS 850 IS&lt;/span&gt;&lt;/a&gt; (2006) aka SD800&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Finalmente a verdadeira sucessora da IXUS 400. Sim, esta ainda é a minha point-and-shoot de hoje. 3 anos no bolso e em uso é obra :) Compacta, sólida, rápida e, sobretudo, uma grande angular de 28mm. É a máquina ideal para todas as situações. Não vejo substituto à vista.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonEOS1DSMKii.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonEOS1DSMKii.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/CanonEOS1DsMkII/default.asp?page=&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon EOS 1DS Mark II&lt;/span&gt;&lt;/a&gt; (2006) aka &amp;quot;O Escamartilhão&amp;quot; ou &amp;quot;O quebra-costas&amp;quot;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Quando se voa alto demais... Podes ficar com dor de costas. Ok, a câmara é full frame e isso é fantástico para tirar partido das lentes que tenho. A qualidade do sensor e estrondosa. A robustez não tem igual. A autonomia das baterias é assombrosa. Mas tanto adjectivo pesa. Oh como pesa! Acabo por não tirar partido da máquina e é candidata a venda em breve.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonG9.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonG9.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/reviews/canonG9/&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon Powershot G9&lt;/span&gt;&lt;/a&gt; (2007)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;A razão pela qual comprei a G9 foi a máquina anterior, a 1DS Mark II. Esta powershot é uma excelente máquina, a meio caminho entre a point-and-shoot e a DSLR. Mas o problema é esse mesmo. O meio caminho. Foi reciclada para a namorada :) Ela que diga de sua justiça.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/CanonEOS7D.jpg&quot;&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumbCanonEOS7D.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.dpreview.com/news/0909/09090105canoneos7d.asp&quot;&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;Canon EOS 7D&lt;/span&gt;&lt;/a&gt; (2009)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;7D? E porque não uma 5D Mark II?.&lt;/p&gt;
+&lt;p&gt;Porque a 7D apesar de não ser full frame, tem flash incorporado e além disso permite controlar flashes remotos sem fios e sem necessidade de adaptadores adicionais.&lt;/p&gt;
+&lt;p&gt;É a aquisição mais recente e estou satisfeitíssimo. Sem dúvida o melhor equilíbrio entre features, peso, interface de todas as DSLR que já tive.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;A terminar, ficam aqui as 3 melhores máquinas que já tive, usei e continuo a usar.&lt;/p&gt;
+&lt;p&gt;Nikon F70, Canon IXUS 850 IS e Canon EOS 7D&lt;/p&gt;
+&lt;p&gt;Loaded and ready to go!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/27467.html</comments>
+  <lj:replycount>3</lj:replycount>
+  <category>fotografia</category>
+</item>
+<item>
+  <guid>http://poingg.com/27268.html</guid>
+  <pubDate>Mon, 14 Dec 2009 10:51:23 GMT</pubDate>
+  <title>Chip de memória avariado</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/27268.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/zxchip-20091214-105304.png&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/zxchipthumb-20091214-231537.jpg&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/iPhoto-2-20091214-232131.jpg&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumb-20091214-232226.jpg&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/dktronics-20091214-232343.jpg&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/dktronicsthumb-20091214-232527.jpg&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&quot;myphotos&quot;&gt;&lt;a href=&quot;http://poingg.no.sapo.pt/blog/fotos/iPhoto-20091214-233500.jpg&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/thumb-20091214-233615.jpg&quot; /&gt;&lt;/a&gt;&lt;/div&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Isto vai parecer estranho, mas preciso substituir um chip de RAM no.... er... ZX Spectrum :P&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Fui desenterrar o 48k que adormecia dentro de uma caixa DKTronics, liguei-o e sim, adinda funciona *quase* tudo direitinho. No entanto há um chip de RAM que está avariado de acordo com o &lt;a href=&quot;http://poingg.no.sapo.pt/blog/files/ZXSpectrum48K_ServiceManual.pdf&quot;&gt;Spectrum Service Manual&lt;/a&gt; é o IC15 que tem este chip da TI.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Preciso pois de um chip exactamente igual para o substituir. Felizmente já usavam sockets para isto pelo que nem envolve soldadura.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;strike&gt;Alguém sabe onde posso encontrar isto?&lt;/strike&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Update: A &lt;a href=&quot;http://www.catalogo.dimofel.pt/&quot;&gt;Dimofel&lt;/a&gt; tem! Vou lá amanhã buscar:) Devia mudar os 8 chips, mas vamos ver como corre.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Update2: Já fui, já instalei e funciona lindamente. The beast is back&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/27268.html</comments>
+  <lj:replycount>8</lj:replycount>
+  <category>spectrum</category>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/26736.html</guid>
+  <pubDate>Sat, 03 Oct 2009 16:59:41 GMT</pubDate>
+  <title>Transforme o seu iPhone num Nokia 5110</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/26736.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Untitled-1_%40_100__%28Layer_2%2C_RGB_8%29-20091003-180944.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;É o que a &lt;a href=&quot;http://www.apple.com/batteries/iphone.html&quot;&gt;Apple nos recomenda para pouparmos a bateria do iPhone&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Senão, vejamos:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;GPS? -&amp;gt; Quem tem boca vai a Roma. Desliga!&lt;/p&gt;
+&lt;p&gt;Push notifications? -&amp;gt; Tu não queres isso. Desliga&lt;/p&gt;
+&lt;p&gt;Push Mail? -&amp;gt; Nem penses!&lt;/p&gt;
+&lt;p&gt;3rd party apps? -&amp;gt; Tás louco? Isso de termos uma App Store é para os iPods&lt;/p&gt;
+&lt;p&gt;Wi-Fi? -&amp;gt; Nah... desliga isso. Frita-te os miolos.&lt;/p&gt;
+&lt;p&gt;Bluetooth? -&amp;gt; P&apos;ra quê? Auriculares? Car Kits? Isso é nos filmes&lt;/p&gt;
+&lt;p&gt;Écran brilhante brutal? -&amp;gt; Não... tira-lhe o brilho. Poupas a vista.&lt;/p&gt;
+&lt;p&gt;Sound EQ? -&amp;gt; Mariquices... não é preciso&lt;/p&gt;
+&lt;p&gt;3G? -&amp;gt; Modernices dessas não precisas.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;A melhor de todas é: &amp;quot;use airplane mode&amp;quot;, i.e. transforma isso no iPod.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Há muito tempo que não tinha um telefone cuja bateria durava exactamente um dia. Acho que um dos primeiros Ericsson que tive ainda dava para dia e meio.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Se calhar o melhor é ir buscá-lo ao arquivo. Além da exclusividade, tem o charme retro.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/26736.html</comments>
+  <lj:replycount>3</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/26519.html</guid>
+  <pubDate>Mon, 28 Sep 2009 21:15:51 GMT</pubDate>
+  <title>Publicidade, não obrigado (Take 2)</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/26519.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Só agora me apercebi que para além do &lt;a href=&quot;http://poingg.com/11063.html&quot;&gt;famoso autocolante da caixa de correio&lt;/a&gt;, existe outra forma de (tentar) fugir ao SPAM; aliás, neste caso é mesmo ao SPIM (SPAM por SMS/MMS).&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;O Instituto do Consumidor mantém uma base de dados de números de telefone que desejam NÃO receber mensagens promocionais não solicitadas via SMS ou MMS.&lt;/p&gt;
+&lt;p&gt;Quem não respeitar a referida lista está sujeito a coimas até 50&amp;euro;.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Os links relevantes:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.consumidor.pt/?cn=64736498AAAAAAAAAAAAAAAA&quot;&gt;Consultar a FAQ&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.consumidor.pt/?cn=64736498AAAAAAAAAAAAAAAA&quot;&gt;Inscrição na lista&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/26519.html</comments>
+  <lj:replycount>5</lj:replycount>
+  <category>sociedade</category>
+</item>
+<item>
+  <guid>http://poingg.com/26221.html</guid>
+  <pubDate>Mon, 28 Sep 2009 12:57:06 GMT</pubDate>
+  <title>Vem aí Suzuka de novo!</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/26221.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;&lt;p&gt;E quem fala de Suzuka, fala de Senna e do inominável francês.&lt;/p&gt;&lt;p&gt;A propósito, descobri este vídeo que me dá enorme vontade de aprender japonês.&lt;/p&gt;&lt;p&gt;Os comentários devem ser fabulosos.&lt;/p&gt;&lt;p&gt; &lt;/p&gt;&lt;p&gt; &lt;/p&gt;&lt;p&gt; &lt;/p&gt;
+
+&lt;div&gt;&lt;object width=&quot;420&quot; height=&quot;339&quot;&gt;&lt;param name=&quot;movie&quot; value=&quot;http://www.dailymotion.com/swf/x16j80&quot; /&gt;&lt;param name=&quot;allowFullScreen&quot; value=&quot;true&quot; /&gt;&lt;param name=&quot;allowScriptAccess&quot; value=&quot;always&quot; /&gt;&lt;embed src=&quot;http://www.dailymotion.com/swf/x16j80&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;420&quot; height=&quot;339&quot; allowfullscreen=&quot;true&quot; allowscriptaccess=&quot;always&quot;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;br /&gt;&lt;b&gt;&lt;a href=&quot;http://www.dailymotion.com/swf/x16j80&quot;&gt;Ayrton Senna vs Alain Prost - Battles&lt;/a&gt;&lt;/b&gt;&lt;br /&gt;&lt;i&gt;by &lt;a href=&quot;http://www.dailymotion.com/christophemallet&quot;&gt;christophemallet&lt;/a&gt;&lt;/i&gt;&lt;/div&gt;</description>
+  <comments>http://poingg.com/26221.html</comments>
+  <lj:replycount>3</lj:replycount>
+  <category>carros</category>
+  <category>desporto</category>
+</item>
+<item>
+  <guid>http://poingg.com/26067.html</guid>
+  <pubDate>Sat, 26 Sep 2009 22:00:29 GMT</pubDate>
+  <title>Árvore genealógica do Donald</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/26067.html</link>
+  <description>&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;http://poingg.no.sapo.pt/blog/fotos/arvore_disney.jpg&quot;&gt;&lt;img alt=&quot;Árvore genealógica do Donald&quot; border=&quot;0&quot; style=&quot;border-color:black;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/arvore_disney_thumb.jpg&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Pois eu já andava à procura disto há uns tempos desde que &lt;a href=&quot;http://pchichorro.blogs.sapo.pt/65491.html&quot;&gt;o Chichas publicou a versão original inglesa&lt;/a&gt; da Disney.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Aqui está em toda a sua glória respeitando o famoso mistério do pai do Huguinho, Zezinho e Luisinho.&lt;/p&gt;</description>
+  <comments>http://poingg.com/26067.html</comments>
+  <lj:replycount>0</lj:replycount>
+  <category>livros</category>
+</item>
+<item>
+  <guid>http://poingg.com/25767.html</guid>
+  <pubDate>Fri, 25 Sep 2009 00:02:03 GMT</pubDate>
+  <title>E pronto, lá fiz mais um quiz</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/25767.html</link>
+  <description>&lt;p&gt;Mas é só para profissionais. Daqueles que passavam tardes inteiras a devorar as edições da Abril acompanhadas de pão com manteiga e açúcar :)&lt;/p&gt;&lt;p&gt; &lt;/p&gt;&lt;p&gt; &lt;/p&gt;
+
+</description>
+  <comments>http://poingg.com/25767.html</comments>
+  <lj:replycount>7</lj:replycount>
+  <category>quiz</category>
+  <category>jogos</category>
+</item>
+<item>
+  <guid>http://poingg.com/25452.html</guid>
+  <pubDate>Thu, 17 Sep 2009 11:35:50 GMT</pubDate>
+  <title>E pronto! Já começou :)</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/25452.html</link>
+  <description>&lt;p&gt;Era de esperar&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Exemplos:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://kanyelicio.us/http://www.sapo.pt/&quot;&gt;http://kanyelicio.us/http://www.sapo.pt/&lt;wbr /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://kanyelicio.us/http://www.beyonceonline.com/us/home&quot;&gt;http://kanyelicio.us/http://www.beyonceo&lt;wbr /&gt;nline.com/us/home&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/kanyelicio.us-20090917-123247.jpg&quot; /&gt;&lt;/p&gt;</description>
+  <comments>http://poingg.com/25452.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>sociedade</category>
+  <category>música</category>
+</item>
+<item>
+  <guid>http://poingg.com/25218.html</guid>
+  <pubDate>Thu, 17 Sep 2009 11:25:37 GMT</pubDate>
+  <title>Build your own consumer profile</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/25218.html</link>
+  <description>&lt;p&gt;Com &lt;a href=&quot;http://www.forrester.com/groundswell/b2c_profile_tool/b2c&quot;&gt;esta ferramenta&lt;/a&gt; da Forrester.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/25218.html</comments>
+  <lj:replycount>0</lj:replycount>
+  <category>sociedade</category>
+</item>
+<item>
+  <guid>http://poingg.com/25075.html</guid>
+  <pubDate>Sun, 06 Sep 2009 18:38:23 GMT</pubDate>
+  <title>Que mais irá acontecer?</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/25075.html</link>
+  <description>&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Spotify-20090906-194056.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Depois disto? Frank Pourcell Plays Joy Division?&lt;/p&gt;
+&lt;p&gt;Richard Clayderman plays The Sex Pistols?&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Não sei se devo rir ou chorar. Ao menos a loira tem boas mamas. É o que safa.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Na contra-capa podiam pôr um artigo do MEC a falar sobre a &amp;quot;permanência&amp;quot; do Still e de como o Closer tinha sido gravado numa igreja medieval bla bla bla.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Proponho já esta capa para a edição Richard Clayderman Never Minds The Bollocks&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/ah-20090906-200257.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/25075.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>música</category>
+</item>
+<item>
+  <guid>http://poingg.com/24587.html</guid>
+  <pubDate>Mon, 01 Jun 2009 21:19:59 GMT</pubDate>
+  <title>Petrol heads, regozijem-se!</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/24587.html</link>
+  <description>&lt;p&gt; &lt;a href=&quot;http://www.wook.pt/ficha/ciencia-automovel/a/id/1553479/filter/&quot;&gt;&lt;img alt=&quot;Ciência automóve, capa do livro&quot; border=&quot;0&quot; style=&quot;border-color:black;&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/skitched-20090601-222129.jpg&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Já tentaram explicar o que é o binário do motor aos vosso filhos e filhas? Não procurem mais. &lt;a href=&quot;http://www.wook.pt/ficha/ciencia-automovel/a/id/1553479/filter/&quot;&gt;Este livro&lt;/a&gt; é simplesmente fa-bu-loso :)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;O Richard Hammond (aka The Hamster) provavelmente só deve ter dado a cara para levar os pais a folhear o livro, a verdade é que o conteúdo é absolutamente genial.&lt;/p&gt;
+&lt;p&gt;Simples, claro, apelativo, divertido e excitante. Apenas isso. Leiam o livro com os miúdos e vão aprender imenso. Adultos e crianças.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;São os melhores 10 eurinhos que já gastei no DIa Mundial da Criança.&lt;/p&gt;</description>
+  <comments>http://poingg.com/24587.html</comments>
+  <lj:replycount>3</lj:replycount>
+  <category>carros</category>
+  <category>sociedade</category>
+  <category>livros</category>
+  <category>tecnologia</category>
+  <lj:music>Gasoline</lj:music>
+</item>
+<item>
+  <guid>http://poingg.com/24499.html</guid>
+  <pubDate>Mon, 01 Jun 2009 20:27:25 GMT</pubDate>
+  <title>As redes sociais e as socialistas</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/24499.html</link>
+  <description>&lt;p&gt;A gota de água foi mais um convite recebido do género:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&amp;quot;XXXX has invited you to join the group Donas de casa com aventais às bolinhas&amp;quot;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Bastam cinco minutos de acompanhamento de ombro de um colega durante uma sessão de Facebook, Hi5 ou coisa parecida para entender a origem do problema. É o malfadado &amp;quot;Send to all&amp;quot;. Cada quiz, cada link, cada tarefa concluída acaba com o invariável convite para cuspir o convite ao redor.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Esta &amp;quot;arquejante&amp;quot; vontade de fazer &amp;quot;broadcast to all&amp;quot; de tudo e mais alguma coisa é mais um dos gloriosos #fail das redes sociais. Mas passa pela cabeça de alguém dirigir um convite (seja ele qual for) para a totalidade dos seus amigos? Mesmo que eles fossem todos góticos metaleiros do sexo masculino com nomes começados por X, certamente que haveriam diferenças entre eles.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Fica a sugestão aos autores da próxima e moderníssima rede social que seja criada: impeçam o uso do &amp;quot;send to all&amp;quot;. Não faz sentido. É idiota e é demasiado socialista.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Algumas Apps do Facebook tentam ser mais inteligentes vá lá... Enviar o quiz apenas a quem já tenha respondido a quizes... Ainda assim, podia estar a fazer um quiz sobre alhos e eles a responder a bugalhos.&lt;/p&gt;
+&lt;p&gt;Mais divertido é a segmentação aleatória. É a versão cuspo. A torto e a direito.&lt;/p&gt;
+&lt;p&gt;Mas a cereja no topo é a ausência de opção para NÃO enviar. Too much.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img alt=&quot;Facebook quiz&quot; border=&quot;0&quot; style=&quot;border-color:black;&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/Movies_on_Facebook-20090601-214128.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/24499.html</comments>
+  <lj:replycount>4</lj:replycount>
+  <category>sociedade</category>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/24168.html</guid>
+  <pubDate>Thu, 07 May 2009 22:58:18 GMT</pubDate>
+  <title>Olha! O Spot tem quizzes!</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/24168.html</link>
+  <description>&lt;p&gt;&lt;a href=&quot;http://spot.blogs.sapo.pt/21291.html&quot;&gt;Ouvi dizer&lt;/a&gt; que o SAPO Spot agora estava &lt;a href=&quot;http://spot.sapo.pt/quizzes.html&quot;&gt;cheio de quizzes&lt;/a&gt;. E até ouvi dizer que &lt;a href=&quot;http://spot.sapo.pt/quizcriar.html&quot;&gt;podíamos criar&lt;/a&gt; os nossos próprios quizes.&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;A julgar pelo &lt;a href=&quot;http://spot.sapo.pt/quizzes.html&quot;&gt;repositório&lt;/a&gt;, a coisa promete.&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;What&apos;s your geek chi?&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;&lt;/p&gt; &lt;p&gt; &lt;/p&gt;&lt;p&gt;E um sobre &amp;quot;a banda&lt;/p&gt;   &lt;p&gt; &lt;/p&gt; &lt;p&gt;&lt;/p&gt;&lt;p&gt; &lt;/p&gt; &lt;p&gt;PS. Não vale vir dizer: &amp;quot;Ah e tal fiz 100% no teu quiz. Fui ao gulgul&amp;quot;&lt;/p&gt;</description>
+  <comments>http://poingg.com/24168.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>jogos</category>
+</item>
+<item>
+  <guid>http://poingg.com/23921.html</guid>
+  <pubDate>Tue, 05 May 2009 23:04:50 GMT</pubDate>
+  <title>Lá vem a palhaçada do plágio outra vez!</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/23921.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;
+
+&lt;object width=&quot;400&quot; height=&quot;350&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/7IFYvmJdQgGfQ7m93PZ0/mov/1&quot;&gt;&lt;/param&gt;
+    &lt;embed src=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/7IFYvmJdQgGfQ7m93PZ0/mov/1&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;400&quot; height=&quot;350&quot; allowFullScreen=&quot;true&quot; wmode=&quot;transparent&quot;  allowScriptAccess=&quot;never&quot;&gt;&lt;/embed&gt;
+&lt;/object&gt;
+    
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Eis se não quando, o &lt;a href=&quot;http://www.yusufislam.org.uk/&quot;&gt;Matusalém&lt;/a&gt; se levanta e diz: &amp;quot;&lt;a href=&quot;http://www.nme.com/blog/index.php?blog=121&amp;amp;title=coldplay_vs_cat_stevens_plagiarism_or_co&amp;amp;more=1&amp;amp;c=1&amp;amp;tb=1&amp;amp;pb=1&quot;&gt;Ó da guarda que me roubaram a música&lt;/a&gt;&amp;quot;.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Ó meus amigos, francamente. Não bastava a polémica do Satriani, os pobres dos Coldplay têm agora que levar com o barbichas do Cat Stevens.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Pensava eu que com o advento da versão web2.0 da música e a miraculosa constatação de que existe um número finito de combinações de notas, estas questiúnculas tinham finalmente sido ultrapasadas. Engano meu. Puro engano.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Será que anda por aí alguém que ande nisto há algum tempo que ainda ouve uma música pop e diz: &amp;quot;eh pa! Isto é mesmo supimpa de novo! Nunca tinha ouvido tal combinação melódica&amp;quot;. A verdade é que não há música dos Coldplay que não cheire a esturro. O problema do Chris Martin é que se pôs a jeito com o X&amp;amp;Y e escreveu algures no manual de instruções do CD que algumas frases eram roubadas (como por exemplo dos Kraftwerk - &amp;quot;Computer Love&amp;quot;). É isso e os dólares que os rapazes valem.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;O senhor Yusuff acha mesmo que é difícil encontrar músicas anteriores às suas que soam exactamente iguais na construção melódica? É que para cúmulo as cançonetas dele são mesmo daquelas básicas e lineares que a gente aprende a tocar na viola nas primeiras lições. &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Olha, sabes que mais ? Get-a-grip rapaz. (o get-a-grip foi roubado dos stranglers). A estrutura melódica deixou de ser a chave da música desde os trovadores da idade média.&lt;/p&gt;
+&lt;p&gt;A verdade nua e crua rapaz é esta: a tua musiqueta &amp;quot;Foreigner Suite&amp;quot; provoca-me arrepios. É um bom laxante sem dúvida. Ao nível de uma boa Balalaika russa desafinada. É horrível percebes? Já o Viva-La-Vida, não sendo o supra sumo da farinha Amparo, é uma boa canção popular que até sou capaz de ouvir na rádio.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Dito isto, não me parece que haja plágio. Para haver, ambas teriam de me agarrar da mesma maneira.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Finalmente e para quem gosta destas tricas, fica uma &lt;a href=&quot;http://www.nme.com/blog/index.php?blog=121&amp;amp;p=5004&amp;amp;more=1&amp;amp;c=1&amp;amp;tb=1&amp;amp;pb=1&quot;&gt;breve história do plágio no rock&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/23921.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>música</category>
+  <lj:music>Foreigner Suite</lj:music>
+</item>
+<item>
+  <guid>http://poingg.com/23623.html</guid>
+  <pubDate>Thu, 30 Apr 2009 14:28:31 GMT</pubDate>
+  <title>Querido Google Maps</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/23623.html</link>
+  <description>&lt;p&gt;Eu não tenho asas!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Sim, aposto que no meu perfil já tens a informação de que gosto de redbull. Mas se fosses realmente esperto, sabias também que tenho um filho que tem horas para chegar à escola. &lt;/p&gt;
+&lt;p&gt;Se fosses meu amigo, quando eu te peço um itinerário para um sítio estranho em Mem-Martins, devias ter o cuidado de me dar a PUTA DO CAMINHO CERTO EM VEZ DE ME MANDARES USAR UM JETPACK E PASSAR POR CIMA DA IC19 A VOAR!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;A não ser, querido Google, que o caminho seja subterrâneo. O facto de no meu perfil teres a informação de que gosto de música underground não devia ser suficiente. Ou ESTÁS A CHAMAR-ME TOUPEIRA SEU &amp;amp;#$25$&amp;quot;!!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Google... You #FAILed me.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/gmaps.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</description>
+  <comments>http://poingg.com/23623.html</comments>
+  <lj:replycount>4</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/23515.html</guid>
+  <pubDate>Tue, 31 Mar 2009 00:17:53 GMT</pubDate>
+  <title>Acid3 os resultados</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/23515.html</link>
+  <description>&lt;p&gt;Já agora, aqui ficam os resultados dos &lt;a href=&quot;http://acid3.acidtests.org/&quot;&gt;Acid3 Tests&lt;/a&gt; que avaliam a compatibilidade dos browsers com os standards, nomeadamente na componente de Javascript e DOM.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;table width=&quot;200&quot; cellspacing=&quot;5&quot; cellpadding=&quot;5&quot; border=&quot;0&quot;&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Chromium 0.1&lt;/td&gt;
+            &lt;td&gt;Firefox 3.0.8&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/Chromium-20090331-011321.jpg&quot; alt=&quot;Chromium&quot; style=&quot;border-color: black;&quot; /&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/Firefox-20090331-011524.jpg&quot; alt=&quot;Firefox&quot; style=&quot;border-color: black;&quot; /&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Opera 9.64&lt;/td&gt;
+            &lt;td&gt;Safari 3.2.1&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/opera-20090331-011604.jpg&quot; style=&quot;border-color: black;&quot; alt=&quot;&quot; /&gt;&lt;/td&gt;
+            &lt;td&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/safari321-20090331-011638.jpg&quot; alt=&quot;safari&quot; style=&quot;border-color: black;&quot; /&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Webkit Nightly 42114&lt;/td&gt;
+            &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/Webkit-20090331-011723.jpg&quot; alt=&quot;webkit&quot; style=&quot;border-color: black;&quot; /&gt;&lt;/td&gt;
+            &lt;td&gt; &lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;PS:&lt;/p&gt;
+&lt;p&gt;A explicação para o LINKTEST FAILED do chromium deve estar no facto de ter sido compilado com uma versão mais antiga do Webkit. Outra coisa não faz sentido pois o webkit será o responsável pelo JS e DOM neste browser.&lt;/p&gt;</description>
+  <comments>http://poingg.com/23515.html</comments>
+  <lj:replycount>0</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/23073.html</guid>
+  <pubDate>Mon, 30 Mar 2009 23:58:01 GMT</pubDate>
+  <title>Browser Wars. Benchmarking</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/23073.html</link>
+  <description>&lt;p&gt;Como ainda não encontrei o santo graal (ou o browser ideal), dei por mim a fazer benchmarking de browsers no meu mac. À falta de melhor, usei &lt;a href=&quot;http://service.futuremark.com/peacekeeper/index.action&quot;&gt;Peacekeeper&lt;/a&gt; que parece fazer uma boa mix entre performance bruta e cenários de utilização &amp;quot;normal&amp;quot;.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Os resultados:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; src=&quot;http://poingg.no.sapo.pt/Skitch/browserWars-20090331-010019.jpg&quot; alt=&quot;Browser Wars&quot; style=&quot;border-color: black;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Notas:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;O Chrome (alias Chromium) foi compilado com o Webkit trunk@42026. Source do chromium obtida &lt;a href=&quot;http://code.google.com/chromium/&quot;&gt;aqui&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;O Webkit é a nightly de hoje.&lt;/p&gt;
+&lt;p&gt;O Firefox correu com todos os add-ons desligados e o Safari é stock do Leopard.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Correu tudo num Macbook Pro 15&amp;quot; 2.4 GHz Intel Core 2 Duo, 4GB Ram.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Bottom line? Apesar de ter 1/3 da performance, continuo a usar o Firefox por causa da extensões. A ver vamos o que sai do modelo de extensões do Chrome.&lt;/p&gt;</description>
+  <comments>http://poingg.com/23073.html</comments>
+  <lj:replycount>4</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/22991.html</guid>
+  <pubDate>Mon, 30 Mar 2009 00:39:48 GMT</pubDate>
+  <title>Formula1 na BBC</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/22991.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;
+
+&lt;object width=&quot;400&quot; height=&quot;350&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/Fin9j21hjlGlFJp7SWqv/mov/1&quot;&gt;&lt;/param&gt;
+    &lt;embed src=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/Fin9j21hjlGlFJp7SWqv/mov/1&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;400&quot; height=&quot;350&quot; allowFullScreen=&quot;true&quot; wmode=&quot;transparent&quot;  allowScriptAccess=&quot;never&quot;&gt;&lt;/embed&gt;
+&lt;/object&gt;
+    
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Bem, se outra prova fosse preciso de que faço muito poucos posts no blog, o simples facto de estar a falar de novo de Formula 1 bastava. Afinal de contas, o último post sobre este tema ainda aparece na lista de posts da homepage duh!&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Adiante.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Agora é para falar da BBC. No fundo, o tema é o mesmo. F1 na SportTV versus BBC. Sim, os orçamentos são muito diferentes, mas a SportTV é só para assinantes e a BBC não.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Este ano a BBC raptou a cobertura da Formula1 à iTV. Depois de várias especulações sobre quem iria apresentar as emissões (falou-se mesmo do Jeremy Clarkson), eis que chega o primeiro GP da Austrália e a primeira oportunidade de ver como corriam as coisas.&lt;/p&gt;
+&lt;p&gt;Vi em directo na SportTV por entre bocejos e de olho entreaberto e não foi só por causa da hora. Lembro-me das vozes dos comentadores, mas não dos seus comentários. Algo de parecido com um sonho desacordado. Até que...&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Horas depois, chega-me o video da emissão da BBC. Estou embasbacado. Como diria um amigo meu, B-R-U-T-A-L!&lt;/p&gt;
+&lt;p&gt;Não vou perder muito tempo a detalhar as coisas. Para isso, procurem vocês mesmos e digam de vossa justiça. Ficam algumas notas:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Martin Brundle, David Coulthard e Eddy Jordan&lt;/p&gt;
+&lt;p&gt;Entrevistas em vários pontos da pista, junto às curvas e chicanes com explicações detalhadas.&lt;/p&gt;
+&lt;p&gt;Um comentador a dizer ao outro que &amp;quot;Sim, foi aqui que tive um acidente quando tu me acertaste por trás&amp;quot;&lt;/p&gt;
+&lt;p&gt;Entrevistas na grelha de partida com vários pilotos, Ross Brawn e até o patrão da Virgin.&lt;/p&gt;
+&lt;p&gt;Um comedy act do Martin Brundle a passear pela grelha de partida e a brincar com a espionagem às claras dos técnicos da McLaren que olhavam embevecidos e preocupados para a traseira do Brawn Racing.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Mas há mais, muito mais. Como por exemplo o trailer/genérico que a BBC fez para as emissões e que deve ter mais horas de trabalho que a equipa toda da SportTV dedicou à F1 durante o ano.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;C&apos;est la diference.&lt;/p&gt;</description>
+  <comments>http://poingg.com/22991.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>desporto</category>
+</item>
+<item>
+  <guid>http://poingg.com/22670.html</guid>
+  <pubDate>Sat, 14 Feb 2009 00:05:04 GMT</pubDate>
+  <title>Ainda o 1234567890. O vídeo</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/22670.html</link>
+  <description>&lt;p&gt;Note-se a &amp;quot;confiança&amp;quot; e o minor FAIL num firefox.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+
+&lt;object width=&quot;400&quot; height=&quot;350&quot;&gt;
+    &lt;param name=&quot;movie&quot; value=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/Piewv8kNwrZn22bsJnuw/mov/1&quot;&gt;&lt;/param&gt;
+    &lt;embed src=&quot;http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/Piewv8kNwrZn22bsJnuw/mov/1&quot; type=&quot;application/x-shockwave-flash&quot; width=&quot;400&quot; height=&quot;350&quot; allowFullScreen=&quot;true&quot; wmode=&quot;transparent&quot;  allowScriptAccess=&quot;never&quot;&gt;&lt;/embed&gt;
+&lt;/object&gt;
+    
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/22670.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/22422.html</guid>
+  <pubDate>Fri, 13 Feb 2009 23:34:38 GMT</pubDate>
+  <title>Funcionou!</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/22422.html</link>
+  <description>&lt;p&gt;O @suskind já não precisa abandonar a carreira e dedicar-se à pastorícia.&lt;/p&gt;
+&lt;p&gt;Depois do hype todo, a coisa funcionou mesmo.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/Poingg-20090213-233334.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/22422.html</comments>
+  <lj:replycount>0</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/22054.html</guid>
+  <pubDate>Thu, 12 Feb 2009 21:40:21 GMT</pubDate>
+  <title>1234567890</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/22054.html</link>
+  <description>&lt;p&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/___Happy_1234567890___-20090212-213840.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Não, não é um teste nem uma password idiota. (mas podia ser :P)&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;É o irrepetível &amp;quot;happygeek&amp;quot; que se avizinha.&lt;/p&gt;
+&lt;p&gt;Mais pormenores no &lt;a href=&quot;http://pdvel.com/happy1234567890/&quot;&gt;blog do Suskind&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;E o script, claro:&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+</description>
+  <comments>http://poingg.com/22054.html</comments>
+  <lj:replycount>0</lj:replycount>
+  <category>tecnologia</category>
+</item>
+<item>
+  <guid>http://poingg.com/21894.html</guid>
+  <pubDate>Tue, 10 Feb 2009 21:54:30 GMT</pubDate>
+  <title>Toyota Fail</title>
+  <author>Eduardo</author>
+  <link>http://poingg.com/21894.html</link>
+  <description>&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://www.toyota-future.com/EN/#/toyota_tv/top/movie2&quot;&gt;&lt;img border=&quot;0&quot; style=&quot;border-color:black;&quot; alt=&quot;&quot; src=&quot;http://poingg.no.sapo.pt/blog/fotos/TOYOTA-FUTURE.COM_%7C_Toyota_TV_%7C__Minimize_the_Negative%2C_Maximize_the_Positive_and_Humanize_Mobility__TV_commercial-20090210-215444.jpg&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Um anúncio novo da Toyota &amp;quot;Be more environmental etc e tal&amp;quot;. E a latinha a entrar na reciclagem destinada ao papel e cartão?&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Será diferente no Japão (note-se que é a European version do anúncio)?&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;Eu diria... Epic fail :P&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;</description>
+  <comments>http://poingg.com/21894.html</comments>
+  <lj:replycount>2</lj:replycount>
+  <category>sociedade</category>
+  <lj:mood>espantado</lj:mood>
+</item>
+</channel>
+</rss>

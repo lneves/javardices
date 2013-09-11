@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="ConsoleAppender">
+		<encoder>
+			<pattern>%5p - %thread - #%C# - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger level="error" additivity="false" name="org.apache">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+
+	<logger level="error" additivity="false" name="org.caudexorigo">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+
+	<logger level="info" additivity="false" name="pt.sapo.nettyjersey">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+
+	<root level="info">
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+
+</configuration>

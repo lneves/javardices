@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head xpto="xpt&ecute;">
+		<meta charset="utf-8">
+		<title>Content "Recomendation" Test</title>
+		<style>
+li {padding: 0.5em}
+label {display:block; width:150px; float:left;}
+th {width: 33%}
+td {width: 33%; vertical-align:text-top;}
+.img{display:inline-block;vertical-align: middle; width:50px; height:35px; padding-right:0.5em;}
+.title {display:inline-block;vertical-align: middle;width:60%;}
+
+		</style>
+	</head>
+	<body>	
+	
+		<h3>Tipos de recomendaç&otilde;es</h3>
+
+		<ul>
+			<li>
+				<strong>"User-Based":</strong> Quando possivel este é o método preferencial, o utilizador precisa de ter feito pelo menos 8 pageviews.
+				Baseia-se em encontrar utilizadores com perfis semelhantes e calcular previsões para o utilizador activo.
+			</li>
+			<li>
+				<strong>"Item-Based":</strong> Quando a informação do utilizador é insuficiente e/ou temos acesso ao url do item que está a ser visto.
+				Baseia-se na probabilidade de um utilizador querer ver a página B dado que que está a ver a página A.
+				Tipicamente conhecido como "quem viu isto também viu aquilo".
+			</li>
+			<li><strong>"Popularity-Based":</strong> Sugestões baseadas na popularidade dos items, fallback para quando os métodos acima não são possiveis de aplicar.</li>
+		</ul>
+
+		<form action="" id="form1" method="get">
+			<div>
+				<label for="host_limit">limite por host</label>				
+				<select id="host_limit">
+					<option value="-1">Sem limite</option>
+					<option value="1">1 item por host</option>
+					<option value="2">2 itens por host</option>
+					<option value="3">3 itens por host</option>
+				</select>
+			</div>
+			<div>
+				<label for="url">url (item-based)</label><input type="text" id="url" size="100" placeholder="(link do documento que se quer avaliar)" />				
+			</div>
+			<div>
+				<label for="shuffle">shuffle</label><input type="checkbox" id="shuffle" value="shuffle" />				
+			</div>			
+			<button type="submit">testar</button>
+		</form>
+		
+		<br />
+
+		<table id="table1" style="width:90%; border:1px solid black; border-collapse:collapse;" border="1" cellpadding="5" cellspacing="5">
+			<thead>
+				<tr>
+					<th>User-Based <small id="swauv" style="font-weight:normal;"></small></th>
+					<th>Item-Based</th>
+					<th>Popularity-Based</th>
+				</tr>
+			</thead>
+			<tbody id="tresults">
+			</tbody>
+		</table>
+
+		<script type="text/javascript" src="//js.sapo.pt/SAPO/0.1/"></script>
+		<script type="text/javascript" src="//js.sapo.pt/SAPO/Dom/Event/0.1/"></script>
+		<script type="text/javascript" src="//js.sapo.pt/SAPO/Communication/JsonP/0.1/"></script>
+		<script type="text/javascript">
+if (typeof (SAPO) === 'undefined') {
+    throw ("SAPO is undefined");
+} else {
+    SAPO.namespace('ikwyd')
+}
+(function () {
+
+    'use strict';
+
+    SAPO.ikwyd = function () {
+        this._init();
+        this._doFetch();
+    }
+
+    SAPO.ikwyd.prototype = {
+        _init: function () {
+            this._form = document.getElementById('form1');
+            this._url = document.getElementById('url');
+            this._shuffle = document.getElementById('shuffle');
+            this._host_limit = document.getElementById('host_limit');
+            this._swauv = this._gck('_swa_uv');
+            this._hasCookie = !this._isBlank(this._swauv);
+            this._setEvents();
+        },
+
+        _setEvents: function () {
+            SAPO.Dom.Event.observe(this._form, 'submit', this.fetch.bindObjEvent(this));
+        },
+
+        _dec: function (s) { // decode
+            if (typeof (decodeURIComponent) == 'function') {
+                return decodeURIComponent(s);
+            } else {
+                return unescape(s);
+            }
+        },
+
+        _gck: function (ckn) { // get cookie( cookie name )
+            var name = ckn + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1, c.length);
+                }
+                if (c.indexOf(name) === 0) {
+                    return this._dec(c.substring(name.length, c.length));
+                }
+            }
+            return null;
+        },
+
+        fetch: function (ev) {
+            SAPO.Dom.Event.stop(ev);
+            this._doFetch();
+        },
+
+        _isBlank: function (str) {
+            return (!str || /^\s*$/.test(str));
+        },
+
+        _doFetch: function () {
+
+            if (this._hasCookie) {
+                var swauvout = document.getElementById('swauv');
+                swauvout.innerHTML = '(swauv: <a href="/direct/get?id=' + this._swauv + '">' + this._swauv + '</a>)';
+            }
+            
+            var is_shuffle = this._shuffle.checked ? 'true' : 'false',
+            		uri = 'http://ikwyd.analytics.sapo.pt/re?url=' + this._url.value + '&uv=' + this._swauv + '&host.limit=' + this._host_limit.value + '&shuffle=' + is_shuffle;
+            new SAPO.Communication.JsonP(uri, {
+            	
+            	_thumbUrl: function (r) {
+            		if (r && r.images[0]) {
+            			return '<img src="' + r.images[0] + '&W=50&H=35" class="img" />';
+            		}
+                    return '';
+                },
+                
+                onComplete: function (res) {
+                    var user = res.user,
+                        popular = res.popular,
+                        item = res.item,
+                        table = document.getElementById('tresults'),
+                        bigger = Math.max(user.length, item.length, popular.length);
+
+                    var html;
+                    table.innerHTML = '';
+                    for (var i = 0, len = bigger; i < len; i++) {
+                      html = [
+                            '<tr>',
+                            '<td>' + (user[i] ? this._thumbUrl(user[i]) + '<span class="title"><a href="' + user[i].url + '">' + user[i].title + '</a><small style="padding-left:0.2em;">(' + user[i].host + ')</small></span>' : '') + '</td>',
+                            '<td>' + (item[i] ? this._thumbUrl(item[i]) + '<span class="title"><a href="' + item[i].url + '">' + item[i].title + '</a><small style="padding-left:0.2em;">(' + item[i].host + ')</small></span>' : '') + '</td>',
+                            '<td>' + (popular[i] ? this._thumbUrl(popular[i]) + '<span class="title"><a href="' + popular[i].url + '">' + popular[i].title + '</a><small style="padding-left:0.2em;">(' + popular[i].host + ')</small></span>' : '') + '</td>',
+                            '</tr>'];
+
+                        table.innerHTML += html.join('');
+                    }
+                },
+                callbackParam: 'callback'
+            });
+        }
+    }
+})();
+		</script>
+		<script type="text/javascript">
+			new SAPO.ikwyd();
+		</script>
+	</body>
+</html>

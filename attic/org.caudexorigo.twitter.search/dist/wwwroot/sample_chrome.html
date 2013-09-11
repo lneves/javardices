@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Native Base Web Socket Support</title>
+
+<script type="text/javascript">
+
+var ws;
+
+var ws_host =  "ws://" + window.location.host + "/websocket";
+
+
+function init() {
+	if (window.WebSocket) {
+
+		ws = new WebSocket(ws_host);
+
+		ws.onmessage = function (event) {
+	    	output("onmessage: " + event.data);
+	    };
+	    ws.onopen = function (event) {
+	    	output("Web Socket Opened");
+	    }
+	    ws.onclose = function (event) {
+	    	output("Web Socket Closed");
+	    }
+
+	} else {
+		output("Your browser sucks. It doesn't have Web Sockets.");
+	}
+}
+
+
+function doSend() {
+
+    var input = document.getElementById("input");
+
+	if (window.WebSocket)
+	{
+   		try {ws.send(input.value);output("send: " + input.value);}
+    	catch(err) {output("oops! something is wrong: " + err.message); }
+	}
+	else
+	{
+		output("Give up, this browser doesn't support WebSockets");
+    }
+    
+    input.value = "";
+    input.focus();
+    return false;
+}
+
+function output(str) {
+    var log = document.getElementById("log");
+    var escaped = str.replace(/&/, "&amp;").replace(/</, "&lt;").
+    replace(/>/, "&gt;").replace(/"/, "&quot;"); // "
+    log.innerHTML = escaped + "<br>" + log.innerHTML;
+}
+
+</script>
+</head>
+
+<body onload="init();">
+
+<form onsubmit="return doSend();"><input type="text" id="input">
+<input type="submit" value="Send">
+<button onclick="return doClose();">Close</button>
+</form>
+
+<div id="log"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+<binding name="binding" package="pt.sapo.wa" trim-whitespace="true">
+	<mapping class="pt.sapo.wa.Event" name="event" ordered="false" flexible="true">
+		<value style="attribute" name="type" get-method="getType" set-method="setType" usage="optional" />
+		<value style="attribute" name="timestamp" get-method="getTimestamp" set-method="setTimestamp" usage="optional" />
+		<value style="attribute" name="key" get-method="getSiteKey" set-method="setSiteKey" usage="optional" />
+
+		<structure name="user" ordered="false" flexible="true">
+			<value style="element" name="ip" get-method="getUserIp" set-method="setUserIp" />
+	
+			<structure name="global-visitor-id">
+				<value style="text" get-method="getUserGlobalVisitorId" set-method="setUserGlobalVisitorId" usage="optional"/>
+				<value style="attribute" name="new-id" get-method="getIsNewGlobalVisitorId" set-method="setIsNewGlobalVisitorId" usage="optional"/>
+			</structure>			
+			<structure name="visitor-id">
+				<value style="text" get-method="getUserVisitorId" set-method="setUserVisitorId" usage="optional"/>
+				<value style="attribute" name="new-id" get-method="getIsNewVisitorId" set-method="setIsNewVisitorId" usage="optional"/>
+			</structure>			
+			<structure name="visit-id">
+				<value style="text" get-method="getUserVisitId" set-method="setUserVisitId" usage="optional"/>
+				<value style="attribute" name="new-id" get-method="getIsNewVisitId" set-method="setIsNewVisitId" usage="optional" />
+			</structure>			
+			
+			<value style="element" name="visit-start" get-method="getUserVisitStart" set-method="setUserVisitStart" />
+			<value style="element" name="visitor-type" get-method="getUserVisitorType" set-method="setUserVisitorType" />
+			
+			<value style="element" name="source-type" get-method="getUserSourceType" set-method="setUserSourceType" usage="optional"/>
+			<value style="element" name="source-keywords" get-method="getUserSourceKeywords" set-method="setUserSourceKeywords" usage="optional"/>
+			<value style="element" name="source-referrer" get-method="getUserSourceReferrer" set-method="setUserSourceReferrer" usage="optional"/>
+		</structure>
+
+		<structure name="content" ordered="false" flexible="true">
+			<value style="element" name="host" get-method="getContentHost" set-method="setContentHost" usage="optional" />
+			<value style="element" name="path" get-method="getContentPath" set-method="setContentPath" usage="optional" />
+			<value style="element" name="title" get-method="getContentTitle" set-method="setContentTitle" usage="optional" />
+			<value style="element" name="referer" get-method="getContentReferer" set-method="setContentReferer" usage="optional" />
+			<value style="element" name="keywords" get-method="getContentKeywords" set-method="setContentKeywords" usage="optional" />					
+			<value style="element" name="ns-section" get-method="getNsSection" set-method="setNsSection" usage="optional" />
+			<value style="element" name="ns-subsection" get-method="getNsSubsection" set-method="setNsSubsection" usage="optional" />
+			<value style="element" name="ns-section-group" get-method="getNsSectionGroup" set-method="setNsSectionGroup" usage="optional" />
+			<value style="element" name="ns-subsection-group" get-method="getNsSubsectionGroup" set-method="setNsSubsectionGroup" usage="optional" />
+			<value style="element" name="ns-content" get-method="getNsContent" set-method="setNsContent" usage="optional" />
+			<value style="element" name="ns-channel" get-method="getNsChannel" set-method="setNsChannel" usage="optional" />
+			
+			<value style="element" name="has-ti" get-method="hasTimingInfo" set-method="setHasTimingInfo" usage="optional" />
+			<value style="element" name="ti-server-time" get-method="getServerTime" set-method="setServerTime" usage="optional" />
+			<value style="element" name="ti-processing-time" get-method="getProcessingTime" set-method="setProcessingTime" usage="optional" />
+			<value style="element" name="ti-total-time" get-method="getTotalTime" set-method="setTotalTime" usage="optional" />
+		</structure>
+
+		<structure name="user-agent" ordered="false" flexible="true">
+			<value style="element" name="ua-string" get-method="getUserAgentUaString" set-method="setUserAgentUaString" usage="optional" />
+			<value style="element" name="os-name" get-method="getUserAgentOsName" set-method="setUserAgentOsName" usage="optional" />
+			<value style="element" name="os-version" get-method="getUserAgentOsVersion" set-method="setUserAgentOsVersion" usage="optional" />
+			<value style="element" name="browser-name" get-method="getUserAgentBrowserName" set-method="setUserAgentBrowserName" usage="optional" />
+			<value style="element" name="browser-version" get-method="getUserAgentBrowserVersion" set-method="setUserAgentBrowserVersion" usage="optional" />
+			<value style="element" name="charset" get-method="getUserAgentCharset" set-method="setUserAgentCharset" usage="optional" />
+			<value style="element" name="screen-resolution" get-method="getUserAgentScreenResolution" set-method="setUserAgentScreenResolution" usage="optional" />
+			<value style="element" name="language" get-method="getUserAgentLanguage" set-method="setUserAgentLanguage" usage="optional" />
+			<value style="element" name="color-depth" get-method="getUserAgentColorDepth" set-method="setUserAgentColorDepth" usage="optional" />
+			<value style="element" name="java-enabled" get-method="isUserAgentJavaEnabled" set-method="setUserAgentJavaEnabled" usage="optional" />
+			<value style="element" name="flash-version" get-method="getUserAgentFlashVersion" set-method="setUserAgentFlashVersion" usage="optional" />
+		</structure>
+
+		<structure name="geo" ordered="false" flexible="true">
+			<structure name="country">
+				<value style="attribute" name="id" get-method="getGeoCountryId" set-method="setGeoCountryId" usage="optional" />
+				<value style="text" get-method="getGeoCountry" set-method="setGeoCountry" usage="optional" />
+			</structure>
+			<structure name="district">
+				<value style="attribute" name="id" get-method="getGeoDistrictId" set-method="setGeoDistrictId" usage="optional" />
+				<value style="text" get-method="getGeoDistrict" set-method="setGeoDistrict" usage="optional" />
+			</structure>
+			<structure name="municipality">
+				<value style="attribute" name="id" get-method="getGeoMunicipalityId" set-method="setGeoMunicipalityId" usage="optional" />
+				<value style="text" get-method="getGeoMunicipality" set-method="setGeoMunicipality" usage="optional" />
+			</structure>
+			<structure name="parish">
+				<value style="attribute" name="id" get-method="getGeoParishId" set-method="setGeoParishId" usage="optional" />
+				<value style="text" get-method="getGeoParish" set-method="setGeoParish" usage="optional" />
+			</structure>
+			<value style="element" name="latitude" get-method="getGeoLatitude" set-method="setGeoLatitude" usage="optional" />
+			<value style="element" name="longitude" get-method="getGeoLongitude" set-method="setGeoLongitude" usage="optional" />
+			<value style="element" name="provider" get-method="getGeoProvider" set-method="setGeoProvider" usage="optional" />
+		</structure>
+		
+		<structure name="extra" ordered="false" flexible="true">
+			<value style="element" name="goal" get-method="getExtraGoal" set-method="setExtraGoal" usage="optional" />
+			<value style="element" name="metadata" get-method="getExtraGoal" set-method="setExtraGoal" usage="optional" />		
+		</structure>
+		
+	</mapping>
+</binding>

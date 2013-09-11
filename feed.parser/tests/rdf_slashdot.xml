@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:syn="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0">
+
+<channel rdf:about="http://slashdot.org/">
+<title>Slashdot</title>
+<link>http://slashdot.org/</link>
+<description>News for nerds, stuff that matters</description>
+<dc:language>en-us</dc:language>
+<dc:rights>Copyright 1997-2009, Geeknet, Inc.  All Rights Reserved.</dc:rights>
+<dc:date>2010-03-08T22:20:15+00:00</dc:date>
+<dc:publisher>Geeknet, Inc.</dc:publisher>
+<dc:creator>help@slashdot.org</dc:creator>
+<dc:subject>Technology</dc:subject>
+<syn:updatePeriod>hourly</syn:updatePeriod>
+<syn:updateFrequency>1</syn:updateFrequency>
+<syn:updateBase>1970-01-01T00:00+00:00</syn:updateBase>
+<items>
+ <rdf:Seq>
+  <rdf:li rdf:resource="http://politics.slashdot.org/story/10/03/08/2044227/Gas-Wants-To-Kill-the-Wind?from=rss" />
+  <rdf:li rdf:resource="http://hardware.slashdot.org/story/10/03/08/2049235/8-Core-Intel-Nehalem-EX-To-Launch-This-Month?from=rss" />
+  <rdf:li rdf:resource="http://games.slashdot.org/story/10/03/08/1924208/Valve-Confirms-Mac-Versions-of-Steam-Valve-Games?from=rss" />
+  <rdf:li rdf:resource="http://yro.slashdot.org/story/10/03/08/1846259/US-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba?from=rss" />
+  <rdf:li rdf:resource="http://science.slashdot.org/story/10/03/08/1524235/Disposable-Toilet-To-Change-the-World?from=rss" />
+  <rdf:li rdf:resource="http://hardware.slashdot.org/story/10/03/08/1739251/MIT-Produces-Electricity-Using-Thermopower-Waves?from=rss" />
+  <rdf:li rdf:resource="http://games.slashdot.org/story/10/03/08/1636259/Game-Devs-Only-Use-PhysX-For-the-Money-Says-AMD?from=rss" />
+  <rdf:li rdf:resource="http://developers.slashdot.org/story/10/03/08/1614222/What-To-Expect-From-HTML5?from=rss" />
+  <rdf:li rdf:resource="http://tech.slashdot.org/story/10/03/08/1531228/Energizer-USB-Battery-Charger-Software-Infects-PCs?from=rss" />
+  <rdf:li rdf:resource="http://tech.slashdot.org/story/10/03/08/1533243/How-the-Internet-Didnt-Fail-As-Predicted?from=rss" />
+  <rdf:li rdf:resource="http://hardware.slashdot.org/story/10/03/08/151248/When-the-Power-Goes-Out-At-Google?from=rss" />
+  <rdf:li rdf:resource="http://science.slashdot.org/story/10/03/08/1450216/Theoretical-Breakthrough-For-Quantum-Cryptography?from=rss" />
+  <rdf:li rdf:resource="http://news.slashdot.org/story/10/03/08/1318244/Edward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds?from=rss" />
+  <rdf:li rdf:resource="http://tech.slashdot.org/story/10/03/08/1258200/Serious-Apache-Exploit-Discovered?from=rss" />
+  <rdf:li rdf:resource="http://apple.slashdot.org/story/10/03/08/0053237/Apples-iKey-Wants-To-Unlock-All-Doors?from=rss" />
+ </rdf:Seq>
+</items>
+<image rdf:resource="http://a.fsdn.com/sd/topics/topicslashdot.gif" />
+<textinput rdf:resource="http://slashdot.org/search.pl" />
+<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rdf+xml" href="http://rss.slashdot.org/Slashdot/slashdot" /><feedburner:info uri="slashdot/slashdot" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /></channel>
+
+<image rdf:about="http://a.fsdn.com/sd/topics/topicslashdot.gif">
+<title>Slashdot</title>
+<url>http://a.fsdn.com/sd/topics/topicslashdot.gif</url>
+<link>http://slashdot.org/</link>
+</image>
+
+<item rdf:about="http://politics.slashdot.org/story/10/03/08/2044227/Gas-Wants-To-Kill-the-Wind?from=rss">
+<title>Gas Wants To Kill the Wind</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/ho3X_gPKFLQ/Gas-Wants-To-Kill-the-Wind</link>
+<description>RABarnes writes "Scientific American has posted an article about the political efforts of natural gas and electric utilities to limit the growth of wind-generated electricity. Although several of the points raised by the utilities and carbon-based generators are valid, the basic driver behind their efforts is that wind-generation has now successfully penetrated the wholesale electricity market. Wind was okay until it became a meaningful competitor to the carbon dioxide-producing entities. Among the valid points raised by the carbon-based generators are concerns about how the cost of electricity transmission are allocated and how power quality can be improved (wind generation &amp;mdash; from individual sites &amp;mdash; is hopelessly variable). But there are fixes for all of the concerns raised by the carbon-based entities and in almost all cases they have been on the other side of the question in the past."&lt;p&gt;&lt;a href="http://politics.slashdot.org/story/10/03/08/2044227/Gas-Wants-To-Kill-the-Wind?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/2044227"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fpolitics.slashdot.org%2Fstory%2F10%2F03%2F08%2F2044227%2FGas-Wants-To-Kill-the-Wind" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Gas+Wants+To+Kill+the+Wind%3A+http%3A%2F%2Fbit.ly%2F9rgBp8" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://politics.slashdot.org/story/10/03/08/2044227/Gas-Wants-To-Kill-the-Wind?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/Gore0dGowIKiVsespOw2TDXiy48/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/Gore0dGowIKiVsespOw2TDXiy48/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/Gore0dGowIKiVsespOw2TDXiy48/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/Gore0dGowIKiVsespOw2TDXiy48/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/ho3X_gPKFLQ" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T21:48:00+00:00</dc:date>
+<dc:subject>earth</dc:subject>
+<slash:department>sounds-like-a-friend-of-mine</slash:department>
+<slash:section>politics</slash:section>
+<slash:comments>37</slash:comments>
+<slash:hit_parade>37,34,32,22,12,5,2</slash:hit_parade>
+<feedburner:origLink>http://politics.slashdot.org/story/10/03/08/2044227/Gas-Wants-To-Kill-the-Wind?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://hardware.slashdot.org/story/10/03/08/2049235/8-Core-Intel-Nehalem-EX-To-Launch-This-Month?from=rss">
+<title>8-Core Intel Nehalem-EX To Launch This Month</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/kQyV3x7Q-BE/8-Core-Intel-Nehalem-EX-To-Launch-This-Month</link>
+<description>MojoKid writes "What could you do with 8 physical cores of CPU processing power? Intel's upcoming 8-core Nehalem-EX is launching later this month, according to Intel Xeon Platform Director Shannon Poulin. The announcement puts to rest rumors that the 8-core part might be delayed, and makes good on a promise Intel made last year when the chip maker said it would release the chip in the first half of 2010. To quickly recap, Nehalem-EX boasts an extensive feature-set, including up to 8 cores per processor, up to 16 threads per processor with Intel Hyper-threading, scalability up to eight sockets via Intel's serial Quick Path Interconnect and more with third-party node controllers, and 24MB of shared cache."&lt;p&gt;&lt;a href="http://hardware.slashdot.org/story/10/03/08/2049235/8-Core-Intel-Nehalem-EX-To-Launch-This-Month?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/2049235"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fhardware.slashdot.org%2Fstory%2F10%2F03%2F08%2F2049235%2F8-Core-Intel-Nehalem-EX-To-Launch-This-Month" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=8-Core+Intel+Nehalem-EX+To+Launch+This+Month%3A+http%3A%2F%2Fbit.ly%2Fd0h0km" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://hardware.slashdot.org/story/10/03/08/2049235/8-Core-Intel-Nehalem-EX-To-Launch-This-Month?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/Pp31QECvrLrL0-GsZ4mo6n51KBE/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/Pp31QECvrLrL0-GsZ4mo6n51KBE/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/Pp31QECvrLrL0-GsZ4mo6n51KBE/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/Pp31QECvrLrL0-GsZ4mo6n51KBE/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/kQyV3x7Q-BE" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T21:29:00+00:00</dc:date>
+<dc:subject>intel</dc:subject>
+<slash:department>double-the-cores-for-only-twice-the-price</slash:department>
+<slash:section>hardware</slash:section>
+<slash:comments>39</slash:comments>
+<slash:hit_parade>39,39,29,20,6,1,0</slash:hit_parade>
+<feedburner:origLink>http://hardware.slashdot.org/story/10/03/08/2049235/8-Core-Intel-Nehalem-EX-To-Launch-This-Month?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://games.slashdot.org/story/10/03/08/1924208/Valve-Confirms-Mac-Versions-of-Steam-Valve-Games?from=rss">
+<title>Valve Confirms Mac Versions of Steam, Valve Games</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/jvtT12ANsEU/Valve-Confirms-Mac-Versions-of-Steam-Valve-Games</link>
+<description>An anonymous reader writes with this excerpt from Gamasutra:
+"Valve will release a version of its Steam digital distribution service for Mac next month, along with Mac-native versions of its own games, the company confirmed today after days of hints &amp;mdash; and owners of Valve games will have access to both platform versions. The Source engine, which Valve uses to develop all its internal titles and also licenses to third-party developers, will incorporate OpenGL in addition to DirectX, to allow Mac support for all Source developers. ... 'We are treating the Mac as a tier-1 platform, so all of our future games will release simultaneously on Windows, Mac, and the Xbox 360,' said Cook. 'Updates for the Mac will be available simultaneously with the Windows updates.'"&lt;p&gt;&lt;a href="http://games.slashdot.org/story/10/03/08/1924208/Valve-Confirms-Mac-Versions-of-Steam-Valve-Games?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1924208"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fgames.slashdot.org%2Fstory%2F10%2F03%2F08%2F1924208%2FValve-Confirms-Mac-Versions-of-Steam-Valve-Games" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Valve+Confirms+Mac+Versions+of+Steam%2C+Valve+Games%3A+http%3A%2F%2Fbit.ly%2Fdpcdfg" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://games.slashdot.org/story/10/03/08/1924208/Valve-Confirms-Mac-Versions-of-Steam-Valve-Games?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/K5WG5aJ8zdhSa9muQfcAS3hKAGk/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/K5WG5aJ8zdhSa9muQfcAS3hKAGk/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/K5WG5aJ8zdhSa9muQfcAS3hKAGk/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/K5WG5aJ8zdhSa9muQfcAS3hKAGk/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/jvtT12ANsEU" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T21:06:00+00:00</dc:date>
+<dc:subject>mac</dc:subject>
+<slash:department>branching-out-to-the-apple-tree</slash:department>
+<slash:section>games</slash:section>
+<slash:comments>147</slash:comments>
+<slash:hit_parade>147,145,120,97,24,12,5</slash:hit_parade>
+<feedburner:origLink>http://games.slashdot.org/story/10/03/08/1924208/Valve-Confirms-Mac-Versions-of-Steam-Valve-Games?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://yro.slashdot.org/story/10/03/08/1846259/US-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba?from=rss">
+<title>US Eases Internet Export Rules To Iran, Sudan, Cuba</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/b1W3L8fAo34/US-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba</link>
+<description>coondoggie writes "Looking to facilitate what it calls free speech rights in countries that don't look favorably at such liberties, the US government today said it would ease the regulations around exporting Internet-based applications to Iran, Sudan and Cuba. Specifically, the Treasury Department said it would add general licenses (PDF) authorizing the exportation of free, personal, Internet-based communications services &amp;ndash; such as instant messaging, chat and email, and social networking &amp;ndash; to those three countries. The amendments also allow the exportation of related software to Iran and Sudan, the department said in a release (the US Commerce Department controls software exports with Cuba). Until now all such exports would have broken federal laws."&lt;p&gt;&lt;a href="http://yro.slashdot.org/story/10/03/08/1846259/US-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1846259"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fyro.slashdot.org%2Fstory%2F10%2F03%2F08%2F1846259%2FUS-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=US+Eases+Internet+Export+Rules+To+Iran%2C+Sudan%2C+Cuba%3A+http%3A%2F%2Fbit.ly%2Fbkdpsq" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://yro.slashdot.org/story/10/03/08/1846259/US-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/T_KhraTiaFpx0TU6l5q-M_vYoss/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/T_KhraTiaFpx0TU6l5q-M_vYoss/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/T_KhraTiaFpx0TU6l5q-M_vYoss/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/T_KhraTiaFpx0TU6l5q-M_vYoss/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/b1W3L8fAo34" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T20:23:00+00:00</dc:date>
+<dc:subject>government</dc:subject>
+<slash:department>wising-up</slash:department>
+<slash:section>yro</slash:section>
+<slash:comments>57</slash:comments>
+<slash:hit_parade>57,55,44,38,12,4,3</slash:hit_parade>
+<feedburner:origLink>http://yro.slashdot.org/story/10/03/08/1846259/US-Eases-Internet-Export-Rules-To-Iran-Sudan-Cuba?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://science.slashdot.org/story/10/03/08/1524235/Disposable-Toilet-To-Change-the-World?from=rss">
+<title>Disposable Toilet To Change the World</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/-srwS7QONF0/Disposable-Toilet-To-Change-the-World</link>
+<description>captn ecks writes "A biodegradable and self-sterilizing bag for people of the toilet-disenfranchised world (40% of humankind) to dispose of their bodily waste and turn it into safe fertilizer has been created by a Swedish entrepreneur. It's a dead simple and brilliant solution to a vexing problem. From the article: 'Once used, the bag can be knotted and buried, and a layer of urea crystals breaks down the waste into fertilizer, killing off disease-producing pathogens found in feces. The bag, called the Peepoo, is the brainchild of Anders Wilhelmson, an architect and professor in Stockholm. &amp;ldquo;Not only is it sanitary,&amp;rdquo; said Mr. Wilhelmson, who has patented the bag, &amp;ldquo;they can reuse this to grow crops.&amp;rdquo;'"&lt;p&gt;&lt;a href="http://science.slashdot.org/story/10/03/08/1524235/Disposable-Toilet-To-Change-the-World?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1524235"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fscience.slashdot.org%2Fstory%2F10%2F03%2F08%2F1524235%2FDisposable-Toilet-To-Change-the-World" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Disposable+Toilet+To+Change+the+World%3A+http%3A%2F%2Fbit.ly%2FbSoO1B" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://science.slashdot.org/story/10/03/08/1524235/Disposable-Toilet-To-Change-the-World?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/gGf4yxexOjcAa_2Cr8VHiM1k5NI/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/gGf4yxexOjcAa_2Cr8VHiM1k5NI/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/gGf4yxexOjcAa_2Cr8VHiM1k5NI/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/gGf4yxexOjcAa_2Cr8VHiM1k5NI/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/-srwS7QONF0" height="1" width="1"/&gt;</description>
+<dc:creator>samzenpus</dc:creator>
+<dc:date>2010-03-08T19:39:00+00:00</dc:date>
+<dc:subject>earth</dc:subject>
+<slash:department>sunshine-in-a-bag</slash:department>
+<slash:section>science</slash:section>
+<slash:comments>236</slash:comments>
+<slash:hit_parade>236,230,192,149,44,27,19</slash:hit_parade>
+<feedburner:origLink>http://science.slashdot.org/story/10/03/08/1524235/Disposable-Toilet-To-Change-the-World?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://hardware.slashdot.org/story/10/03/08/1739251/MIT-Produces-Electricity-Using-Thermopower-Waves?from=rss">
+<title>MIT Produces Electricity Using Thermopower Waves</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/mxOUPFwJ7WY/MIT-Produces-Electricity-Using-Thermopower-Waves</link>
+<description>MikeChino writes "MIT scientists have discovered a never-before-known phenomenon wherein carbon nanotubes can be used to harness energy from 'thermopower waves.' To do this they coated the nanotubes with a reactive fuel and then lit one end, causing a fast-moving thermal wave to speed down the length of the tube. The heat from the fuel rises to a temperature of 3,000 kelvins, and can speed along the tube 10,000 times faster than the normal spread of this chemical reaction. The heat also pushes electrons down the tube, which creates a substantial electrical current. The system can output energy (in proportion to its weight) about 100x greater than an equivalent weight lithium-ion battery, and according to MIT the discovery 'opens up a new area of energy research, which is rare.'"&lt;p&gt;&lt;a href="http://hardware.slashdot.org/story/10/03/08/1739251/MIT-Produces-Electricity-Using-Thermopower-Waves?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1739251"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fhardware.slashdot.org%2Fstory%2F10%2F03%2F08%2F1739251%2FMIT-Produces-Electricity-Using-Thermopower-Waves" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=MIT+Produces+Electricity+Using+Thermopower+Waves%3A+http%3A%2F%2Fbit.ly%2F9FvdUg" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://hardware.slashdot.org/story/10/03/08/1739251/MIT-Produces-Electricity-Using-Thermopower-Waves?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/Ld1QlyHxQ91Zebl6lhdf3aU7zJ0/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/Ld1QlyHxQ91Zebl6lhdf3aU7zJ0/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/Ld1QlyHxQ91Zebl6lhdf3aU7zJ0/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/Ld1QlyHxQ91Zebl6lhdf3aU7zJ0/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/mxOUPFwJ7WY" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T18:55:00+00:00</dc:date>
+<dc:subject>power</dc:subject>
+<slash:department>set-on-fire-to-begin-current-flow</slash:department>
+<slash:section>hardware</slash:section>
+<slash:comments>115</slash:comments>
+<slash:hit_parade>115,115,90,76,11,9,5</slash:hit_parade>
+<feedburner:origLink>http://hardware.slashdot.org/story/10/03/08/1739251/MIT-Produces-Electricity-Using-Thermopower-Waves?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://games.slashdot.org/story/10/03/08/1636259/Game-Devs-Only-Use-PhysX-For-the-Money-Says-AMD?from=rss">
+<title>Game Devs Only Use PhysX For the Money, Says AMD</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/LyI9Atqp2Es/Game-Devs-Only-Use-PhysX-For-the-Money-Says-AMD</link>
+<description>arcticstoat writes "AMD has just aimed a shot at Nvidia's PhysX technology, saying that most game developers only implement GPU-accelerated PhysX for the money. AMD's Richard Huddy explained that 'Nvidia creates a marketing deal with a title, and then as part of that marketing deal, they have the right to go in and implement PhysX in the game.' However, he adds that 'the problem with that is obviously that the game developer doesn't actually want it. They're not doing it because they want it; they're doing it because they're paid to do it. So we have a rather artificial situation at the moment where you see PhysX in games, but it isn't because the game developer wants it in there.' AMD is pushing open standards such as OpenCL and DirectCompute as alternatives to PhysX, as these APIs can run on both AMD and Nvidia GPUs. AMD also announced today that it will be giving away free versions of Pixelux's DMM2 physics engine, which now includes Bullet Physics, to some game developers."&lt;p&gt;&lt;a href="http://games.slashdot.org/story/10/03/08/1636259/Game-Devs-Only-Use-PhysX-For-the-Money-Says-AMD?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1636259"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fgames.slashdot.org%2Fstory%2F10%2F03%2F08%2F1636259%2FGame-Devs-Only-Use-PhysX-For-the-Money-Says-AMD" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Game+Devs+Only+Use+PhysX+For+the+Money%2C+Says+AMD%3A+http%3A%2F%2Fbit.ly%2F9ufnRI" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://games.slashdot.org/story/10/03/08/1636259/Game-Devs-Only-Use-PhysX-For-the-Money-Says-AMD?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/QGIQSY7UTOYAFT6ZBJj8y2IY_ns/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/QGIQSY7UTOYAFT6ZBJj8y2IY_ns/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/QGIQSY7UTOYAFT6ZBJj8y2IY_ns/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/QGIQSY7UTOYAFT6ZBJj8y2IY_ns/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/LyI9Atqp2Es" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T18:15:00+00:00</dc:date>
+<dc:subject>amd</dc:subject>
+<slash:department>dem's-fightin'-woids</slash:department>
+<slash:section>games</slash:section>
+<slash:comments>162</slash:comments>
+<slash:hit_parade>162,160,133,97,24,11,6</slash:hit_parade>
+<feedburner:origLink>http://games.slashdot.org/story/10/03/08/1636259/Game-Devs-Only-Use-PhysX-For-the-Money-Says-AMD?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://developers.slashdot.org/story/10/03/08/1614222/What-To-Expect-From-HTML5?from=rss">
+<title>What To Expect From HTML5</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/qvL_bijkApc/What-To-Expect-From-HTML5</link>
+<description>snydeq writes "InfoWorld's Neil McAllister takes a deeper look at HTML5, outlining what developers should expect from this overhaul of HTML &amp;mdash; one that some believe could put an end to proprietary Web technologies such as Flash and Silverlight. Among the most eagerly anticipated additions to HTML5 are new elements and APIs that allow content authors to create rich media using nothing more than standards-based HTML. The standard also introduces browser-based application caches, which enable Web apps to store information on the client device. 'But for all of HTML5's new features, users shouldn't expect plug-ins to disappear overnight. The Web has a long history of many competing technologies and media formats, and the inertia of that legacy will be difficult to overcome. It may yet be many years before a pure-HTML5 browser will be able to match the capabilities of today's patchwork clients,' McAllister writes. 'In the end, browser market share may be the most significant hurdle for developers interested in making the most of HTML5. Until these legacy browsers are replaced with modern updates, Web developers may be stuck maintaining two versions of their sites: a rich version for HTML5-enabled users, and a version for legacy browsers that falls back on outdated rendering tricks.'"&lt;p&gt;&lt;a href="http://developers.slashdot.org/story/10/03/08/1614222/What-To-Expect-From-HTML5?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1614222"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fdevelopers.slashdot.org%2Fstory%2F10%2F03%2F08%2F1614222%2FWhat-To-Expect-From-HTML5" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=What+To+Expect+From+HTML5%3A+http%3A%2F%2Fbit.ly%2Fafw7OA" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://developers.slashdot.org/story/10/03/08/1614222/What-To-Expect-From-HTML5?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/JlAYbwEBcVWIEVQhI3JP--iCero/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/JlAYbwEBcVWIEVQhI3JP--iCero/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/JlAYbwEBcVWIEVQhI3JP--iCero/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/JlAYbwEBcVWIEVQhI3JP--iCero/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/qvL_bijkApc" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T17:32:00+00:00</dc:date>
+<dc:subject>internet</dc:subject>
+<slash:department>endless-debate-about-video</slash:department>
+<slash:section>developers</slash:section>
+<slash:comments>203</slash:comments>
+<slash:hit_parade>203,197,167,136,34,17,11</slash:hit_parade>
+<feedburner:origLink>http://developers.slashdot.org/story/10/03/08/1614222/What-To-Expect-From-HTML5?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://tech.slashdot.org/story/10/03/08/1531228/Energizer-USB-Battery-Charger-Software-Infects-PCs?from=rss">
+<title>Energizer USB Battery Charger Software Infects PCs</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/fqPTBlJLnjQ/Energizer-USB-Battery-Charger-Software-Infects-PCs</link>
+<description>swandives writes "Researchers at US-CERT have warned that software accompanying the Energizer DUO USB battery charger contains a Trojan that gives hackers total access to a Windows PC. The product was sold in the US, Latin America, Europe and Asia starting in 2007. Upon installation, the software creates the file 'Arucer.dll,' a Trojan that listens for commands on TCP port 7777. Upon receiving instructions, the Trojan can download and execute files, transmit files stolen from the PC, or tweak the Windows registry. Uninstalling the software disables the automatic execution of the Trojan. Users can also remove Arucer.dll from Windows' system32 directory and reboot the machine to disable the backdoor component."&lt;p&gt;&lt;a href="http://tech.slashdot.org/story/10/03/08/1531228/Energizer-USB-Battery-Charger-Software-Infects-PCs?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1531228"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Ftech.slashdot.org%2Fstory%2F10%2F03%2F08%2F1531228%2FEnergizer-USB-Battery-Charger-Software-Infects-PCs" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Energizer+USB+Battery+Charger+Software+Infects+PCs%3A+http%3A%2F%2Fbit.ly%2FcG0pzV" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://tech.slashdot.org/story/10/03/08/1531228/Energizer-USB-Battery-Charger-Software-Infects-PCs?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/ZLApxIxdv4n3h6De233HBOLyXRQ/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/ZLApxIxdv4n3h6De233HBOLyXRQ/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/ZLApxIxdv4n3h6De233HBOLyXRQ/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/ZLApxIxdv4n3h6De233HBOLyXRQ/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/fqPTBlJLnjQ" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T16:49:00+00:00</dc:date>
+<dc:subject>security</dc:subject>
+<slash:department>bad-bunny</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>194</slash:comments>
+<slash:hit_parade>194,190,154,127,43,25,17</slash:hit_parade>
+<feedburner:origLink>http://tech.slashdot.org/story/10/03/08/1531228/Energizer-USB-Battery-Charger-Software-Infects-PCs?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://tech.slashdot.org/story/10/03/08/1533243/How-the-Internet-Didnt-Fail-As-Predicted?from=rss">
+<title>How the Internet Didn't Fail As Predicted</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/cY5-EGjnsrg/How-the-Internet-Didnt-Fail-As-Predicted</link>
+<description>Lord Byron Eee PC writes "Newsweek is carrying a navel-gazing piece on how wrong they were when in 1995 they published a story about how the Internet would fail. The original article states, 'Nicholas Negroponte, director of the MIT Media Lab, predicts that we'll soon buy books and newspapers straight over the Intenet. Uh, sure.' The article continues to say that online shopping will never happen, that airline tickets won't be purchased over the web, and that newspapers have nothing to fear. It's an interesting look back at a time when the Internet was still a novelty and not yet a necessity."&lt;p&gt;&lt;a href="http://tech.slashdot.org/story/10/03/08/1533243/How-the-Internet-Didnt-Fail-As-Predicted?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1533243"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Ftech.slashdot.org%2Fstory%2F10%2F03%2F08%2F1533243%2FHow-the-Internet-Didnt-Fail-As-Predicted" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=How+the+Internet+Didn't+Fail+As+Predicted%3A+http%3A%2F%2Fbit.ly%2FbrEkaZ" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://tech.slashdot.org/story/10/03/08/1533243/How-the-Internet-Didnt-Fail-As-Predicted?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/G_erMj374ccMGRWeTchBcQGelwc/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/G_erMj374ccMGRWeTchBcQGelwc/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/G_erMj374ccMGRWeTchBcQGelwc/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/G_erMj374ccMGRWeTchBcQGelwc/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/cY5-EGjnsrg" height="1" width="1"/&gt;</description>
+<dc:creator>samzenpus</dc:creator>
+<dc:date>2010-03-08T16:22:00+00:00</dc:date>
+<dc:subject>humor</dc:subject>
+<slash:department>series-of-popular-tubes</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>183</slash:comments>
+<slash:hit_parade>183,182,157,136,45,24,16</slash:hit_parade>
+<feedburner:origLink>http://tech.slashdot.org/story/10/03/08/1533243/How-the-Internet-Didnt-Fail-As-Predicted?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://hardware.slashdot.org/story/10/03/08/151248/When-the-Power-Goes-Out-At-Google?from=rss">
+<title>When the Power Goes Out At Google</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/rEp9DiTIzP4/When-the-Power-Goes-Out-At-Google</link>
+<description>1sockchuck writes "What happens when the power goes out in one of Google's mighty data centers? The company has issued an incident report on a Feb. 24 outage for Google App Engine, which went offline when an entire data center lost power. The post-mortem outlines what went wrong and why, lessons learned and steps taken, which include additional training and documentation for staff and new datastore configurations for App Engine. Google is earning strong reviews for its openness, which is being hailed as an excellent model for industry outage reports. At the other end of the spectrum is Australian host Datacom, where executives are denying that a Melbourne data center experienced water damage during weekend flooding, forcing tech media to document the outage via photos, user stories and emails from the NOC."&lt;p&gt;&lt;a href="http://hardware.slashdot.org/story/10/03/08/151248/When-the-Power-Goes-Out-At-Google?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/151248"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fhardware.slashdot.org%2Fstory%2F10%2F03%2F08%2F151248%2FWhen-the-Power-Goes-Out-At-Google" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=When+the+Power+Goes+Out+At+Google%3A+http%3A%2F%2Fbit.ly%2FcwcNPh" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://hardware.slashdot.org/story/10/03/08/151248/When-the-Power-Goes-Out-At-Google?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/vb5v6W56eFjGyt9pkmGEU3pJPgU/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/vb5v6W56eFjGyt9pkmGEU3pJPgU/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/vb5v6W56eFjGyt9pkmGEU3pJPgU/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/vb5v6W56eFjGyt9pkmGEU3pJPgU/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/rEp9DiTIzP4" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T16:07:00+00:00</dc:date>
+<dc:subject>google</dc:subject>
+<slash:department>larry-and-sergey-ghost-stories</slash:department>
+<slash:section>hardware</slash:section>
+<slash:comments>103</slash:comments>
+<slash:hit_parade>103,100,78,64,17,8,4</slash:hit_parade>
+<feedburner:origLink>http://hardware.slashdot.org/story/10/03/08/151248/When-the-Power-Goes-Out-At-Google?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://science.slashdot.org/story/10/03/08/1450216/Theoretical-Breakthrough-For-Quantum-Cryptography?from=rss">
+<title>Theoretical Breakthrough For Quantum Cryptography</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/6-MA4Hp3ikI/Theoretical-Breakthrough-For-Quantum-Cryptography</link>
+<description>KentuckyFC writes "Quantum cryptography uses the quantum properties of photons to guarantee perfect secrecy. But one of its lesser known limitations is that it only works if Alice and Bob are perfectly aligned so that they can carry out well-defined polarization measurements on the photons as they arrive. Physicists say that Alice and Bob must share the same reference frame. That's OK if Alice and Bob are in their own ground-based labs, but it's a problem in many other applications, such as ground-to-satellite communications or even in chip-to-chip communications, because it's hard to keep chips still over distances of the order of the wavelength of light. Now a group of UK physicists have developed a way of doing quantum cryptography without sharing a reference frame. The trick is to use entangled triplets of photons, so-called qutrits, rather than entangled pairs. This solves the problem by embedding it in an extra abstract dimension, which is independent of space. So, as long as both Alice and Bob know the way in which all these abstract dimensions are related, the third provides a reference against which measurements of the other two can be made. That allows Alice and Bob to make any measurements they need without having to agree ahead of time on a frame of reference. That could be an important advance enabling the widespread use of quantum cryptography."&lt;p&gt;&lt;a href="http://science.slashdot.org/story/10/03/08/1450216/Theoretical-Breakthrough-For-Quantum-Cryptography?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1450216"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fscience.slashdot.org%2Fstory%2F10%2F03%2F08%2F1450216%2FTheoretical-Breakthrough-For-Quantum-Cryptography" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Theoretical+Breakthrough+For+Quantum+Cryptography%3A+http%3A%2F%2Fbit.ly%2FcChQUL" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://science.slashdot.org/story/10/03/08/1450216/Theoretical-Breakthrough-For-Quantum-Cryptography?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/RT1L1riViZXu-Hb_-C5WKHU0mCo/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/RT1L1riViZXu-Hb_-C5WKHU0mCo/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/RT1L1riViZXu-Hb_-C5WKHU0mCo/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/RT1L1riViZXu-Hb_-C5WKHU0mCo/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/6-MA4Hp3ikI" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T15:23:00+00:00</dc:date>
+<dc:subject>encryption</dc:subject>
+<slash:department>add-qutrits-to-your-super-scrabble-words</slash:department>
+<slash:section>science</slash:section>
+<slash:comments>101</slash:comments>
+<slash:hit_parade>101,97,68,43,19,9,4</slash:hit_parade>
+<feedburner:origLink>http://science.slashdot.org/story/10/03/08/1450216/Theoretical-Breakthrough-For-Quantum-Cryptography?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://news.slashdot.org/story/10/03/08/1318244/Edward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds?from=rss">
+<title>Edward Tufte Appointed To Help Track and Explain Stimulus Funds</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/bTeRg3gdwTc/Edward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds</link>
+<description>President Obama recently announced several appointments to the Recovery Independent Advisory Panel, including data visualization expert Edward Tufte, author of The Visual Display of Quantitative Information. The purpose of the panel is to advise the Recovery Accountability and Transparency Board, whose aim is "To promote accountability by coordinating and conducting oversight of Recovery funds to prevent fraud, waste, and abuse and to foster transparency on Recovery spending by providing the public with accurate, user-friendly information." Tufte said on his website, "I'm doing this because I like accountability and transparency, and I believe in public service. And it is the complete opposite of everything else I do. Maybe I'll learn something. The practical consequence is that I will probably go to Washington several days each month, in addition to whatever homework and phone meetings are necessary."&lt;p&gt;&lt;a href="http://news.slashdot.org/story/10/03/08/1318244/Edward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1318244"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fnews.slashdot.org%2Fstory%2F10%2F03%2F08%2F1318244%2FEdward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Edward+Tufte+Appointed+To+Help+Track+and+Explain+Stimulus+Funds%3A+http%3A%2F%2Fbit.ly%2FcyCDft" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://news.slashdot.org/story/10/03/08/1318244/Edward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/LQO9Do8bEP_qBCPMGRXQTRQ39Ls/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/LQO9Do8bEP_qBCPMGRXQTRQ39Ls/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/LQO9Do8bEP_qBCPMGRXQTRQ39Ls/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/LQO9Do8bEP_qBCPMGRXQTRQ39Ls/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/bTeRg3gdwTc" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T14:41:00+00:00</dc:date>
+<dc:subject>government</dc:subject>
+<slash:department>authoritative-bar-graphs</slash:department>
+<slash:section>news</slash:section>
+<slash:comments>154</slash:comments>
+<slash:hit_parade>154,149,127,102,53,23,16</slash:hit_parade>
+<feedburner:origLink>http://news.slashdot.org/story/10/03/08/1318244/Edward-Tufte-Appointed-To-Help-Track-and-Explain-Stimulus-Funds?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://tech.slashdot.org/story/10/03/08/1258200/Serious-Apache-Exploit-Discovered?from=rss">
+<title>Serious Apache Exploit Discovered</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/h5FejX6Yjtw/Serious-Apache-Exploit-Discovered</link>
+<description>bennyboy64 writes "An IT security company has discovered a serious exploit in Apache's HTTP web server, which could allow a remote attacker to gain complete control of a database. ZDNet reports the vulnerability exists in Apache's core mod_isapi module. By exploiting the module, an attacker could remotely gain system privileges that would compromise data security. Users of Apache 2.2.14 and earlier are advised to upgrade to Apache 2.2.15, which fixes the exploit."
+Note: according to the advisory, this exploit is exclusive to Windows.&lt;p&gt;&lt;a href="http://tech.slashdot.org/story/10/03/08/1258200/Serious-Apache-Exploit-Discovered?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/1258200"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Ftech.slashdot.org%2Fstory%2F10%2F03%2F08%2F1258200%2FSerious-Apache-Exploit-Discovered" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Serious+Apache+Exploit+Discovered%3A+http%3A%2F%2Fbit.ly%2FaePFTh" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://tech.slashdot.org/story/10/03/08/1258200/Serious-Apache-Exploit-Discovered?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/rtgiNdJCAsLA5LWFGSQyQQLgIlU/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/rtgiNdJCAsLA5LWFGSQyQQLgIlU/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/rtgiNdJCAsLA5LWFGSQyQQLgIlU/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/rtgiNdJCAsLA5LWFGSQyQQLgIlU/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/h5FejX6Yjtw" height="1" width="1"/&gt;</description>
+<dc:creator>Soulskill</dc:creator>
+<dc:date>2010-03-08T13:58:00+00:00</dc:date>
+<dc:subject>bug</dc:subject>
+<slash:department>time-to-update</slash:department>
+<slash:section>technology</slash:section>
+<slash:comments>136</slash:comments>
+<slash:hit_parade>136,130,101,75,24,12,9</slash:hit_parade>
+<feedburner:origLink>http://tech.slashdot.org/story/10/03/08/1258200/Serious-Apache-Exploit-Discovered?from=rss</feedburner:origLink></item>
+
+<item rdf:about="http://apple.slashdot.org/story/10/03/08/0053237/Apples-iKey-Wants-To-Unlock-All-Doors?from=rss">
+<title>Apple's "iKey" Wants To Unlock All Doors</title>
+<link>http://rss.slashdot.org/~r/Slashdot/slashdot/~3/ka5onVHDrvo/Apples-iKey-Wants-To-Unlock-All-Doors</link>
+<description>Pickens writes "The Telegraph reports that Apple is developing technology, already being nicknamed the 'iKey,' which will allow users to gain access to their office and unlock their car or front door with a single electronic device like an iPhone. Users would simply have to enter a PIN and wave the device over an electronic pad fitted beside a door to open it. 'The device can communicate with an external device to open a lock. By way of example, the electronic device may be a model of an iPhone,' says the newly released patent application. 'The external device may be any suitable electronic device such as a portable media player, personal data assistant or electronic lock that may be used to access a door, car, house, or other physical area.' The technology behind the invention is known as Near Field Communication; it allows electronic devices to transmit information when in proximity. 'If true, it's a very big deal. As well as opening doors and unlocking your car, it could also turn your iPhone into an electronic wallet and ID card,' says Leander Kahney, a consumer technology expert. 'The trouble is that the technology hasn't gone completely mainstream. If Apple were to adopt the technology, they would likely set the standard, and that would drive widespread adoption as everyone scrambles to make their systems iPhone-friendly.'"&lt;p&gt;&lt;a href="http://apple.slashdot.org/story/10/03/08/0053237/Apples-iKey-Wants-To-Unlock-All-Doors?from=rss"&gt;&lt;img src="http://slashdot.org/slashdot-it.pl?from=rss&amp;amp;op=image&amp;amp;style=h0&amp;amp;sid=10/03/08/0053237"&gt;&lt;/a&gt;&lt;a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fapple.slashdot.org%2Fstory%2F10%2F03%2F08%2F0053237%2FApples-iKey-Wants-To-Unlock-All-Doors" target="_blank" title="Share on Facebook"&gt;&lt;img src="http://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
+   
+      &lt;a href="http://twitter.com/home?status=Apple's+%22iKey%22+Wants+To+Unlock+All+Doors%3A+http%3A%2F%2Fbit.ly%2FaqHxRo" target="_blank" title="Share on Twitter"&gt;&lt;img src="http://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="http://apple.slashdot.org/story/10/03/08/0053237/Apples-iKey-Wants-To-Unlock-All-Doors?from=rss"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;
+&lt;p&gt;&lt;a href="http://feedads.g.doubleclick.net/~at/SHJSLY5WZuENW8eK3il16NuN5ek/0/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/SHJSLY5WZuENW8eK3il16NuN5ek/0/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;br/&gt;
+&lt;a href="http://feedads.g.doubleclick.net/~at/SHJSLY5WZuENW8eK3il16NuN5ek/1/da"&gt;&lt;img src="http://feedads.g.doubleclick.net/~at/SHJSLY5WZuENW8eK3il16NuN5ek/1/di" border="0" ismap="true"&gt;&lt;/img&gt;&lt;/a&gt;&lt;/p&gt;&lt;img src="http://feeds.feedburner.com/~r/Slashdot/slashdot/~4/ka5onVHDrvo" height="1" width="1"/&gt;</description>
+<dc:creator>kdawson</dc:creator>
+<dc:date>2010-03-08T13:15:00+00:00</dc:date>
+<dc:subject>patents</dc:subject>
+<slash:department>get-yours-at-ikea</slash:department>
+<slash:section>apple</slash:section>
+<slash:comments>332</slash:comments>
+<slash:hit_parade>332,329,256,209,50,27,19</slash:hit_parade>
+<feedburner:origLink>http://apple.slashdot.org/story/10/03/08/0053237/Apples-iKey-Wants-To-Unlock-All-Doors?from=rss</feedburner:origLink></item>
+
+<textinput rdf:about="http://slashdot.org/search.pl">
+<title>Search Slashdot</title>
+<description>Search Slashdot stories</description>
+<name>query</name>
+<link>http://slashdot.org/search.pl</link>
+</textinput>
+
+</rdf:RDF>

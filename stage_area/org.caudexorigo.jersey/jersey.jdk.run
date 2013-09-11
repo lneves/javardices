@@ -1,0 +1,15 @@
+#!/bin/sh
+
+exec 2>&1
+
+cd $(dirname $0)
+
+java -Dapp=jersey.jdk \
+-server -XX:+UseNUMA -XX:+UseParallelGC \
+-Xms32M -Xmx128M \
+-Djava.awt.headless=true \
+-Djava.net.preferIPv4Stack=true \
+-Djava.net.preferIPv6Addresses=false \
+-Dfile.encoding=UTF-8 \
+-classpath "./conf:./bin:./lib/*" \
+org.caudexorigo.jersey.netty.http.tests.MainJerseyJdkHttpServer

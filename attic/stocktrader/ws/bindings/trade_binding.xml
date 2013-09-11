@@ -1,0 +1,332 @@
+<binding xmlns:impl="http://trade.samples.websphere.ibm.com" name="binding" package="trade.domain" trim-whitespace="true">
+	<namespace uri="http://trade.samples.websphere.ibm.com" default="elements" prefix="impl" />
+
+	<mapping abstract="true" type-name="impl:OrderDataBean" class="trade.domain.OrderData">
+		<value style="element" name="orderID" get-method="getOrderId" set-method="setOrderId" usage="optional" />
+		<value style="element" name="orderType" get-method="getOrderType" set-method="setOrderType" usage="optional" />
+		<value style="element" name="orderStatus" get-method="getOrderStatus" set-method="setOrderStatus" usage="optional" />
+		<value style="element" name="openDate" get-method="getOpenDate" set-method="setOpenDate" usage="optional" />
+		<value style="element" name="completionDate" get-method="getCompletionDate" set-method="setCompletionDate" usage="optional" />
+		<value style="element" name="quantity" get-method="getQuantity" set-method="setQuantity" />
+		<value style="element" name="price" get-method="getPrice" set-method="setPrice" usage="optional" />
+		<value style="element" name="orderFee" get-method="getOrderFee" set-method="setOrderFee" usage="optional" />
+		<value style="element" name="symbol" get-method="getSymbol" set-method="setSymbol" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.Buy" name="buy">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+		<value style="element" name="symbol" get-method="getSymbol" set-method="setSymbol" usage="optional" />
+		<value style="element" name="quantity" get-method="getQuantity" set-method="setQuantity" />
+		<value style="element" name="orderProcessingMode" get-method="getOrderProcessingMode" set-method="setOrderProcessingMode" />
+	</mapping>
+
+	<mapping class="trade.ws.BuyResponse" name="buyResponse">
+		<structure map-as="impl:OrderDataBean" get-method="getBuyReturn" set-method="setBuyReturn" usage="optional" name="buyReturn" />
+	</mapping>
+
+
+	<mapping class="trade.ws.GetMarketSummary" name="getMarketSummary" />
+
+	<mapping abstract="true" type-name="impl:MarketSummaryDataBeanWS" class="trade.domain.MarketSummaryData">
+		<value style="element" name="TSIA" get-method="getTSIA" set-method="setTSIA" usage="optional" />
+		<value style="element" name="openTSIA" get-method="getOpenTSIA" set-method="setOpenTSIA" usage="optional" />
+		<value style="element" name="volume" get-method="getVolume" set-method="setVolume" />
+
+		<!--
+			<structure map-as="impl:ArrayOfQuoteDataBean" get-method="getTopGainers" set-method="setTopGainers" usage="optional" name="topGainers" />
+			<structure map-as="impl:ArrayOfQuoteDataBean" get-method="getTopLosers" set-method="setTopLosers" usage="optional" name="topLosers" />
+		-->
+
+		<structure usage="optional" name="topGainers">
+			<collection get-method="getTopGainers" set-method="setTopGainers" create-type="java.util.ArrayList">
+				<structure map-as="impl:QuoteDataBean" name="QuoteDataBean" />
+			</collection>
+		</structure>
+
+		<structure usage="optional" name="topLosers">
+			<collection get-method="getTopLosers" set-method="setTopLosers" create-type="java.util.ArrayList">
+				<structure map-as="impl:QuoteDataBean" name="QuoteDataBean" />
+			</collection>
+		</structure>
+
+		<value style="element" name="summaryDate" get-method="getSummaryDate" set-method="setSummaryDate" usage="optional" />
+	</mapping>
+
+	<mapping abstract="true" type-name="impl:QuoteDataBean" class="trade.domain.QuoteData">
+		<value style="element" name="symbol" get-method="getSymbol" set-method="setSymbol" usage="optional" />
+		<value style="element" name="companyName" get-method="getCompanyName" set-method="setCompanyName" usage="optional" />
+		<value style="element" name="price" get-method="getPrice" set-method="setPrice" usage="optional" />
+		<value style="element" name="open" get-method="getOpen" set-method="setOpen" usage="optional" />
+		<value style="element" name="low" get-method="getLow" set-method="setLow" usage="optional" />
+		<value style="element" name="high" get-method="getHigh" set-method="setHigh" usage="optional" />
+		<value style="element" name="change" get-method="getChange" set-method="setChange" />
+		<value style="element" name="volume" get-method="getVolume" set-method="setVolume" />
+	</mapping>
+
+	<!--
+		<mapping abstract="true" type-name="impl:ArrayOfQuoteDataBean" class="trade.ws.ArrayOfQuoteData">
+		<collection get-method="getQuoteDataList" set-method="setQuoteDataList" usage="optional" create-type="java.util.ArrayList">
+		<structure map-as="impl:QuoteDataBean" name="QuoteDataBean" />
+		</collection>
+		</mapping>
+	-->
+
+	<mapping class="trade.ws.GetMarketSummaryResponse" name="getMarketSummaryResponse">
+		<structure map-as="impl:MarketSummaryDataBeanWS" get-method="getMarketSummaryReturn" set-method="setMarketSummaryReturn" usage="optional" name="getMarketSummaryReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.Sell" name="sell">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+		<value style="element" name="holdingID" get-method="getHoldingId" set-method="setHoldingId" usage="optional" />
+		<value style="element" name="orderProcessingMode" get-method="getOrderProcessingMode" set-method="setOrderProcessingMode" />
+	</mapping>
+
+	<mapping class="trade.ws.SellResponse" name="sellResponse">
+		<structure map-as="impl:OrderDataBean" get-method="getSellReturn" set-method="setSellReturn" usage="optional" name="sellReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.QueueOrder" name="queueOrder">
+		<value style="element" name="orderID" get-method="getOrderId" set-method="setOrderId" usage="optional" />
+		<value style="element" name="twoPhase" get-method="isTwoPhase" set-method="setTwoPhase" />
+	</mapping>
+
+	<mapping class="trade.ws.QueueOrderResponse" name="queueOrderResponse" />
+
+	<mapping class="trade.ws.CompleteOrder" name="completeOrder">
+		<value style="element" name="orderID" get-method="getOrderId" set-method="setOrderId" usage="optional" />
+		<value style="element" name="twoPhase" get-method="isTwoPhase" set-method="setTwoPhase" />
+	</mapping>
+
+	<mapping class="trade.ws.CompleteOrderResponse" name="completeOrderResponse">
+		<structure map-as="impl:OrderDataBean" get-method="getCompleteOrderReturn" set-method="setCompleteOrderReturn" usage="optional" name="completeOrderReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.CancelOrder" name="cancelOrder">
+		<value style="element" name="orderID" get-method="getOrderId" set-method="setOrderId" usage="optional" />
+		<value style="element" name="twoPhase" get-method="isTwoPhase" set-method="setTwoPhase" />
+	</mapping>
+
+	<mapping class="trade.ws.CancelOrderResponse" name="cancelOrderResponse" />
+
+	<mapping class="trade.ws.OrderCompleted" name="orderCompleted">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+		<value style="element" name="orderID" get-method="getOrderId" set-method="setOrderId" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.OrderCompletedResponse" name="orderCompletedResponse" />
+
+	<mapping class="trade.ws.GetOrders" name="getOrders">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+	</mapping>
+
+	<!--
+		<mapping abstract="true" type-name="impl:ArrayOfOrderDataBean" class="trade.ws.ArrayOfOrderData">
+		<collection get-method="getOrderDataList" set-method="setOrderDataList" usage="optional" create-type="java.util.ArrayList">
+		<structure map-as="impl:OrderDataBean" name="OrderDataBean" />
+		</collection>
+		</mapping>
+	-->
+
+	<mapping class="trade.ws.GetOrdersResponse" name="getOrdersResponse">
+		<!--
+			<structure map-as="impl:ArrayOfOrderDataBean" get-method="getOrdersReturn" set-method="setOrdersReturn" usage="optional" name="getOrdersReturn" />
+		-->
+		<structure usage="optional" name="getOrdersReturn">
+			<collection get-method="getOrdersReturn" set-method="setOrdersReturn" create-type="java.util.ArrayList">
+				<structure map-as="impl:OrderDataBean" name="OrderDataBean" />
+			</collection>
+		</structure>
+	</mapping>
+
+	<mapping class="trade.ws.GetClosedOrders" name="getClosedOrders">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.GetClosedOrdersResponse" name="getClosedOrdersResponse">
+		<!--
+			<structure map-as="impl:ArrayOfOrderDataBean" get-method="getClosedOrdersReturn" set-method="setClosedOrdersReturn" usage="optional" name="getClosedOrdersReturn" />
+		-->
+		<structure usage="optional" name="getClosedOrdersReturn">
+			<collection get-method="getClosedOrdersReturn" set-method="setClosedOrdersReturn" create-type="java.util.ArrayList">
+				<structure map-as="impl:OrderDataBean" name="OrderDataBean" />
+			</collection>
+		</structure>
+	</mapping>
+
+	<mapping class="trade.ws.CreateQuote" name="createQuote">
+		<value style="element" name="symbol" get-method="getSymbol" set-method="setSymbol" usage="optional" />
+		<value style="element" name="companyName" get-method="getCompanyName" set-method="setCompanyName" usage="optional" />
+		<value style="element" name="price" get-method="getPrice" set-method="setPrice" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.CreateQuoteResponse" name="createQuoteResponse">
+		<structure map-as="impl:QuoteDataBean" get-method="getCreateQuoteReturn" set-method="setCreateQuoteReturn" usage="optional" name="createQuoteReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.GetQuote" name="getQuote">
+		<value style="element" name="symbol" get-method="getSymbol" set-method="setSymbol" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.GetQuoteResponse" name="getQuoteResponse">
+		<structure map-as="impl:QuoteDataBean" get-method="getQuoteReturn" set-method="setQuoteReturn" usage="optional" name="getQuoteReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.GetAllQuotes" name="getAllQuotes" />
+
+	<mapping class="trade.ws.GetAllQuotesResponse" name="getAllQuotesResponse">
+		<!--
+			<structure map-as="impl:ArrayOfQuoteDataBean" get-method="getAllQuotesReturn" set-method="setAllQuotesReturn" usage="optional" name="getAllQuotesReturn" />
+		-->
+		<structure usage="optional" name="getAllQuotesReturn">
+			<collection get-method="getAllQuotesReturn" set-method="setAllQuotesReturn" create-type="java.util.ArrayList">
+				<structure map-as="impl:QuoteDataBean" name="QuoteDataBean" />
+			</collection>
+		</structure>
+	</mapping>
+
+	<mapping class="trade.ws.UpdateQuotePriceVolume" name="updateQuotePriceVolume">
+		<value style="element" name="symbol" get-method="getSymbol" set-method="setSymbol" usage="optional" />
+		<value style="element" name="newPrice" get-method="getNewPrice" set-method="setNewPrice" usage="optional" />
+		<value style="element" name="sharesTraded" get-method="getSharesTraded" set-method="setSharesTraded" />
+	</mapping>
+
+	<mapping class="trade.ws.UpdateQuotePriceVolumeResponse" name="updateQuotePriceVolumeResponse">
+		<structure map-as="impl:QuoteDataBean" get-method="getUpdateQuotePriceVolumeReturn" set-method="setUpdateQuotePriceVolumeReturn" usage="optional" name="updateQuotePriceVolumeReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.GetHoldings" name="getHoldings">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+	</mapping>
+
+	<mapping abstract="true" type-name="impl:HoldingDataBean" class="trade.domain.HoldingData">
+		<value style="element" name="holdingID" get-method="getHoldingId" set-method="setHoldingId" usage="optional" />
+		<value style="element" name="quantity" get-method="getQuantity" set-method="setQuantity" />
+		<value style="element" name="purchasePrice" get-method="getPurchasePrice" set-method="setPurchasePrice" usage="optional" />
+		<value style="element" name="purchaseDate" get-method="getPurchaseDate" set-method="setPurchaseDate" usage="optional" />
+		<value style="element" name="quoteID" get-method="getQuoteId" set-method="setQuoteId" usage="optional" />
+	</mapping>
+
+	<!--
+		<mapping abstract="true" type-name="impl:ArrayOfHoldingDataBean" class="trade.ws.ArrayOfHoldingData">
+		<collection get-method="getHoldingDataList" set-method="setHoldingDataList" usage="optional" create-type="java.util.ArrayList">
+		<structure map-as="impl:HoldingDataBean" name="HoldingDataBean" />
+		</collection>
+		</mapping>
+	-->
+
+	<mapping class="trade.ws.GetHoldingsResponse" name="getHoldingsResponse">
+		<!--
+			<structure map-as="impl:ArrayOfHoldingDataBean" get-method="getHoldingsReturn" set-method="setHoldingsReturn" usage="optional" name="getHoldingsReturn" />
+		-->
+
+		<structure usage="optional" name="getHoldingsReturn">
+			<collection get-method="getHoldingsReturn" set-method="setHoldingsReturn" create-type="java.util.ArrayList">
+				<structure map-as="impl:HoldingDataBean" name="HoldingDataBean" />
+			</collection>
+		</structure>
+	</mapping>
+
+	<mapping class="trade.ws.GetHolding" name="getHolding">
+		<value style="element" name="holdingID" get-method="getHoldingId" set-method="setHoldingId" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.GetHoldingResponse" name="getHoldingResponse">
+		<structure map-as="impl:HoldingDataBean" get-method="getHoldingReturn" set-method="setHoldingReturn" usage="optional" name="getHoldingReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.GetAccountData" name="getAccountData">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+	</mapping>
+
+	<mapping abstract="true" type-name="impl:AccountDataBean" class="trade.domain.AccountData">
+		<value style="element" name="accountID" get-method="getAccountId" set-method="setAccountId" usage="optional" />
+		<value style="element" name="loginCount" get-method="getLoginCount" set-method="setLoginCount" />
+		<value style="element" name="logoutCount" get-method="getLogoutCount" set-method="setLogoutCount" />
+		<value style="element" name="lastLogin" get-method="getLastLogin" set-method="setLastLogin" usage="optional" />
+		<value style="element" name="creationDate" get-method="getCreationDate" set-method="setCreationDate" usage="optional" />
+		<value style="element" name="balance" get-method="getBalance" set-method="setBalance" usage="optional" />
+		<value style="element" name="openBalance" get-method="getOpenBalance" set-method="setOpenBalance" usage="optional" />
+		<value style="element" name="profileID" get-method="getProfileId" set-method="setProfileId" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.GetAccountDataResponse" name="getAccountDataResponse">
+		<structure map-as="impl:AccountDataBean" get-method="getAccountDataReturn" set-method="setAccountDataReturn" usage="optional" name="getAccountDataReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.GetAccountProfileData" name="getAccountProfileData">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+	</mapping>
+
+	<mapping abstract="true" type-name="impl:AccountProfileDataBean" class="trade.domain.AccountProfileData">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+		<value style="element" name="password" get-method="getPassword" set-method="setPassword" usage="optional" />
+		<value style="element" name="fullName" get-method="getFullName" set-method="setFullName" usage="optional" />
+		<value style="element" name="address" get-method="getAddress" set-method="setAddress" usage="optional" />
+		<value style="element" name="email" get-method="getEmail" set-method="setEmail" usage="optional" />
+		<value style="element" name="creditCard" get-method="getCreditCard" set-method="setCreditCard" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.GetAccountProfileDataResponse" name="getAccountProfileDataResponse">
+		<structure map-as="impl:AccountProfileDataBean" get-method="getAccountProfileDataReturn" set-method="setAccountProfileDataReturn" usage="optional" name="getAccountProfileDataReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.UpdateAccountProfile" name="updateAccountProfile">
+		<structure map-as="impl:AccountProfileDataBean" get-method="getProfileData" set-method="setProfileData" usage="optional" name="profileData" />
+	</mapping>
+
+	<mapping class="trade.ws.UpdateAccountProfileResponse" name="updateAccountProfileResponse">
+		<structure map-as="impl:AccountProfileDataBean" get-method="getUpdateAccountProfileReturn" set-method="setUpdateAccountProfileReturn" usage="optional" name="updateAccountProfileReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.Login" name="login">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+		<value style="element" name="password" get-method="getPassword" set-method="setPassword" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.LoginResponse" name="loginResponse">
+		<structure map-as="impl:AccountDataBean" get-method="getLoginReturn" set-method="setLoginReturn" usage="optional" name="loginReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.Logout" name="logout">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.LogoutResponse" name="logoutResponse" />
+
+	<mapping class="trade.ws.Register" name="register">
+		<value style="element" name="userID" get-method="getUserId" set-method="setUserId" usage="optional" />
+		<value style="element" name="password" get-method="getPassword" set-method="setPassword" usage="optional" />
+		<value style="element" name="fullname" get-method="getFullname" set-method="setFullname" usage="optional" />
+		<value style="element" name="address" get-method="getAddress" set-method="setAddress" usage="optional" />
+		<value style="element" name="email" get-method="getEmail" set-method="setEmail" usage="optional" />
+		<value style="element" name="creditcard" get-method="getCreditcard" set-method="setCreditcard" usage="optional" />
+		<value style="element" name="openBalance" get-method="getOpenBalance" set-method="setOpenBalance" usage="optional" />
+	</mapping>
+
+	<mapping class="trade.ws.RegisterResponse" name="registerResponse">
+		<structure map-as="impl:AccountDataBean" get-method="getRegisterReturn" set-method="setRegisterReturn" usage="optional" name="registerReturn" />
+	</mapping>
+
+	<mapping class="trade.ws.ResetTrade" name="resetTrade">
+		<value style="element" name="deleteAll" get-method="isDeleteAll" set-method="setDeleteAll" />
+	</mapping>
+
+	<mapping abstract="true" type-name="impl:RunStatsDataBean" class="trade.domain.RunStatsData">
+		<value style="element" name="tradeUserCount" get-method="getTradeUserCount" set-method="setTradeUserCount" />
+		<value style="element" name="newUserCount" get-method="getNewUserCount" set-method="setNewUserCount" />
+		<value style="element" name="sumLoginCount" get-method="getSumLoginCount" set-method="setSumLoginCount" />
+		<value style="element" name="sumLogoutCount" get-method="getSumLogoutCount" set-method="setSumLogoutCount" />
+		<value style="element" name="holdingCount" get-method="getHoldingCount" set-method="setHoldingCount" />
+		<value style="element" name="buyOrderCount" get-method="getBuyOrderCount" set-method="setBuyOrderCount" />
+		<value style="element" name="sellOrderCount" get-method="getSellOrderCount" set-method="setSellOrderCount" />
+		<value style="element" name="cancelledOrderCount" get-method="getCancelledOrderCount" set-method="setCancelledOrderCount" />
+		<value style="element" name="openOrderCount" get-method="getOpenOrderCount" set-method="setOpenOrderCount" />
+		<value style="element" name="deletedOrderCount" get-method="getDeletedOrderCount" set-method="setDeletedOrderCount" />
+		<value style="element" name="orderCount" get-method="getOrderCount" set-method="setOrderCount" />
+		<value style="element" name="tradeStockCount" get-method="getTradeStockCount" set-method="setTradeStockCount" />
+	</mapping>
+
+	<mapping class="trade.ws.ResetTradeResponse" name="resetTradeResponse">
+		<structure map-as="impl:RunStatsDataBean" get-method="getResetTradeReturn" set-method="setResetTradeReturn" usage="optional" name="resetTradeReturn" />
+	</mapping>
+</binding>

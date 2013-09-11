@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="ConsoleAppender">
+		<encoder>
+			<pattern>%5p #%C# [%t] - %m%n</pattern>
+		</encoder>
+	</appender>
+
+
+	<root level="info">
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+
+</configuration>

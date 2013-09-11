@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="uri:WSTestWeb-TestService" xmlns:intf="uri:WSTestWeb-TestService" xmlns:s0="uri:WSTestWeb-TestService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="uri:WSTestWeb-TestService">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="uri:WSTestWeb-TestService">
+			<complexType name="TestStruct">
+				<sequence>
+					<element name="i" type="xsd:int" />
+					<element name="f" nillable="true" type="xsd:float" />
+					<element name="s" nillable="true" type="xsd:string" />
+				</sequence>
+			</complexType>
+			<complexType name="COfTestStruct">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="1" name="l" type="s0:TestStruct" />
+				</sequence>
+			</complexType>
+			<complexType name="TestNode">
+				<complexContent mixed="false">
+					<extension base="s0:TestStruct">
+						<sequence>
+							<element maxOccurs="1" minOccurs="0" name="Next" type="s0:TestNode" />
+						</sequence>
+					</extension>
+				</complexContent>
+			</complexType>
+			<complexType name="LineItem">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="OrderId" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="ItemId" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="ProductId" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="ProductDescription" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="OrderQuantity" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="UnitPrice" type="xsd:float" />
+				</sequence>
+			</complexType>
+			<complexType name="COfLineItem">
+				<sequence>
+					<element maxOccurs="unbounded" minOccurs="0" name="LineItem" nillable="true" type="s0:LineItem" />
+				</sequence>
+			</complexType>
+			<complexType name="Address">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="FirstName" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="LastName" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="Address1" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="Address2" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="City" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="State" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="Zip" type="xsd:string" />
+				</sequence>
+			</complexType>
+			<complexType name="Customer">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="CustomerId" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="ContactFirstName" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="ContactLastName" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="ContactPhone" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="LastActivityDate" type="xsd:dateTime" />
+					<element maxOccurs="1" minOccurs="1" name="CreditCardNumber" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="CreditCardExpirationDate" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="1" name="BillingAddress" type="s0:Address" />
+					<element maxOccurs="1" minOccurs="1" name="ShippingAddress" type="s0:Address" />
+				</sequence>
+			</complexType>
+			<complexType name="Order">
+				<sequence>
+					<element maxOccurs="1" minOccurs="1" name="OrderId" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="OrderStatus" type="xsd:int" />
+					<element maxOccurs="1" minOccurs="1" name="OrderDate" type="xsd:dateTime" />
+					<element maxOccurs="1" minOccurs="1" name="OrderTotalAmount" type="xsd:float" />
+					<element maxOccurs="1" minOccurs="1" name="Customer" type="s0:Customer" />
+					<element maxOccurs="1" minOccurs="1" name="LineItems" type="s0:COfLineItem" />
+				</sequence>
+			</complexType>
+			<element name="EchoSynthetic">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="0" name="synth" type="s0:Synthetic" />
+					</sequence>
+				</complexType>
+			</element>
+			<complexType name="Synthetic">
+				<sequence>
+					<element maxOccurs="1" minOccurs="0" name="Strng" type="xsd:string" />
+					<element maxOccurs="1" minOccurs="0" name="Strct" type="s0:TestStruct" />
+					<element maxOccurs="1" minOccurs="0" name="Barray" type="xsd:base64Binary" />
+				</sequence>
+			</complexType>
+			<element name="EchoSyntheticResponse">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="0" name="EchoSyntheticResult" type="s0:Synthetic" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="EchoStruct">
+				<complexType>
+					<sequence>
+						<element name="array" type="s0:COfTestStruct" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="EchoStructResponse">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="1" name="EchoStructResult" type="s0:COfTestStruct" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="EchoVoid">
+				<complexType />
+			</element>
+			<element name="EchoVoidResponse">
+				<complexType />
+			</element>
+			<element name="EchoList">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="0" name="list" type="s0:TestNode" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="EchoListResponse">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="0" name="EchoListResult" type="s0:TestNode" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="GetOrder">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="1" name="orderId" type="xsd:int" />
+						<element maxOccurs="1" minOccurs="1" name="customerId" type="xsd:int" />
+						<element maxOccurs="1" minOccurs="1" name="messageSize" type="xsd:int" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="GetOrderResponse">
+				<complexType>
+					<sequence>
+						<element maxOccurs="1" minOccurs="1" name="GetOrderResult" type="s0:Order" />
+					</sequence>
+				</complexType>
+			</element>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="EchoListSoapOut">
+		<wsdl:part element="s0:EchoListResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoListSoapIn">
+		<wsdl:part element="s0:EchoList" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoVoidSoapIn">
+		<wsdl:part element="s0:EchoVoid" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoSyntheticSoapOut">
+		<wsdl:part element="s0:EchoSyntheticResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoStructSoapOut">
+		<wsdl:part element="s0:EchoStructResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="GetOrderSoapIn">
+		<wsdl:part element="s0:GetOrder" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="GetOrderSoapOut">
+		<wsdl:part element="s0:GetOrderResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoVoidSoapOut">
+		<wsdl:part element="s0:EchoVoidResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoSyntheticSoapIn">
+		<wsdl:part element="s0:EchoSynthetic" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="EchoStructSoapIn">
+		<wsdl:part element="s0:EchoStruct" name="parameters" />
+	</wsdl:message>
+	<wsdl:portType name="TestServiceSoap">
+		<wsdl:operation name="EchoSynthetic">
+			<wsdl:input message="s0:EchoSyntheticSoapIn" />
+			<wsdl:output message="s0:EchoSyntheticSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="EchoStruct">
+			<wsdl:input message="s0:EchoStructSoapIn" />
+			<wsdl:output message="s0:EchoStructSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="EchoVoid">
+			<wsdl:input message="s0:EchoVoidSoapIn" />
+			<wsdl:output message="s0:EchoVoidSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="EchoList">
+			<wsdl:input message="s0:EchoListSoapIn" />
+			<wsdl:output message="s0:EchoListSoapOut" />
+		</wsdl:operation>
+		<wsdl:operation name="GetOrder">
+			<wsdl:input message="s0:GetOrderSoapIn" />
+			<wsdl:output message="s0:GetOrderSoapOut" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="TestServiceSoap" type="s0:TestServiceSoap">
+		<wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="EchoSynthetic">
+			<wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoSynthetic" style="document" />
+			<wsdl:input>
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="EchoStruct">
+			<wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoStruct" style="document" />
+			<wsdl:input>
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="EchoVoid">
+			<wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoVoid" style="document" />
+			<wsdl:input>
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="EchoList">
+			<wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoList" style="document" />
+			<wsdl:input>
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetOrder">
+			<wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/GetOrder" style="document" />
+			<wsdl:input>
+				<wsdlsoap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<wsdlsoap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="TestService">
+		<wsdl:port binding="s0:TestServiceSoap" name="TestServiceSoap">
+			<wsdlsoap:address location="http://localhost:9080/wstest-soap" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

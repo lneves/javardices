@@ -1,0 +1,11 @@
+
+USE stocktrader;
+GO
+
+UPDATE STATISTICS account;
+UPDATE STATISTICS accountprofile;
+UPDATE STATISTICS orders;
+UPDATE STATISTICS holding;
+UPDATE STATISTICS quote;
+
+GO

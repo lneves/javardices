@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/javardices.common.libs"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="conf"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/org.caudexorigo.jdbc.v3"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

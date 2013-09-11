@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<!DOCTYPE html>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for simple template</title>
+</head>
+<body>
+<h2>
+<tal:template>
+<script> @{$this.value.toUpperCase()} </script>
+</tal:template>
+</h2>
+</body>
+</html>

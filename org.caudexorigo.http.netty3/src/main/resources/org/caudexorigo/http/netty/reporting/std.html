@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Error Information</title>
+		<style type="text/css">
+<!--
+html, body {padding:0px; margin:0px; }
+caption {color:white; background-color:#2F437C; padding:5px; text-align:left; font-size:1.8em; font-weight:bold}
+body {font-family:sans-serif; color:black; background-color:white; }
+table {border:1px solid black; border-collapse:collapse}
+th {background-color:#F8E8C5; color:black; text-align:left; font-size:1.0em; }
+-->
+		</style>
+	</head>
+	<body>
+		<table cellpadding="5" width="100%%" border="1">
+			<caption>Error Report</caption>
+			<tr>
+				<th>Status Code</th>
+				<td><strong>%s</strong></td>
+			</tr>
+
+			<tr>
+				<th>Description</th>
+				<td>%s</td>
+			</tr>
+
+			<tr>
+				<th>Request Method</th>
+				<td>%s</td>
+			</tr>
+
+			<tr>
+				<th>Error Detail</th>
+				<td>
+					<pre>
+%s
+					</pre>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

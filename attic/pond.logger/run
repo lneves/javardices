@@ -1,0 +1,16 @@
+#!/bin/sh
+# Supervise run command for Pond-Logger
+exec 2>&1
+
+cd $(dirname $0)
+
+exec /opt/sapojvm/bin/java -Dapp=pond-logger -Xmx128M \
+  -server \
+  -Xverify:none \
+  -Djava.awt.headless=true \
+  -Djava.net.preferIPv4Stack=true \
+  -Djava.net.preferIPv6Addresses=false \
+  -Dfile.encoding=UTF-8 \
+  -Djava.net.preferIPv6Addresses=false \
+  -classpath "./lib/*:./conf" \
+  pt.pond.logger.PondLogger

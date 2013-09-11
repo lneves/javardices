@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+		<title>Sapo-Broker Monitorization Console</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+        <script type="text/javascript" src="js/jquery.sparkline.js" ></script>
+        <script type="text/javascript" src="http://js.sapo.pt/SAPO/"></script>
+        <script type="text/javascript" src="http://js.sapo.pt/SAPO/Utility/Url/1.1/"></script>  
+        <script type="text/javascript" src="js/SAPOKpi.js"></script>
+        <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/monitor.js"></script>
+		<link rel="stylesheet" href="css/style_new.css" type="text/css" />
+		<script type="text/javascript">
+			$(document).ready(agentMonitorizationInit);
+		</script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <div id="logo">
+                    <a href="main.html" class="logo"><img src="./images/broker_console_text.png" alt="Broker Console" title="Broker Console" border="0" /></a>			
+				</div>
+				<div id="menu-items">
+					<p class="menu-item"><a href="main.html">Main</a></p>
+					<p class="menu-item"><a href="agents.html">Agents</a></p>
+					<p class="menu-item"><a href="queues.html">Queues</a></p>
+					<p class="menu-item"><a href="topics.html">Topics</a></p>
+				</div>
+			</div>
+
+            <div id="container">
+		<div>
+			<span class='info-pannel-label'>agent://</span><span class='info-pannel' id='host_name'></span>
+		</div>
+                <div id="main-stats">
+			    <div id="status-box">
+			    	<!--<img src="./images/danger_small.png" border="0" />
+					<h2><a href="agents.html">3 agents are down</a></h2> -->
+			    </div>
+		            <div class="stat-widget">
+				<h1>Queued Messages</h1>
+				<p><span title="Queued Messages" id="img_queue_size_rate"></span></p>
+				<p><span id="queue_size_rate"></span></p>
+			    </div>
+		            <div class="stat-widget">
+				<h1>Input Rate</h1>
+				<p><span title="Input Rate" id="img_input_rate"></span></p>
+				<p><span id="count_input_rate"></span></p>
+			    </div>
+		            <div class="stat-widget">
+				<h1>Output Rate</h1>
+				<p><span title="Output Rate" id="img_output_rate"></span></p>
+				<p><span id="count_output_rate"></span></p>
+			    </div>
+		            <div class="stat-widget">
+				<h1>Error Rate</h1>
+				<p><span title="Error Rate" id="img_error_rate"></span></p>
+				<p><span id="count_error_rate"></span></p>
+			    </div>
+		</div>
+                <div id="dashboard">
+                    <div class="dashboard-widget">
+                        <table cellspacing="0" cellpadding="7" border="0">
+                            <caption>Generic Information</caption>
+                            <thead>
+								<tr>
+                                    <td>Type</td>
+                                    <td>Value</td>
+                                </tr>
+                            </thead>
+                            <tbody id="misc_info">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="dashboard-widget">
+                        <table cellspacing="0" cellpadding="7" border="0">
+                            <caption>Queue Size</caption>
+                            <thead>
+                                <tr>
+                                    <td>Queue Name</td>
+                                    <td colspan="2">Size</td>
+                                </tr>
+                            </thead>
+                            <tbody id='queue_size'>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<div class="dashboard-widget">
+                        <table cellspacing="0" cellpadding="7" border="0">
+                            <caption>Errors</caption>
+                            <thead>
+                                <tr>
+                                    <td>Message</td>
+                                </tr>
+                            </thead>
+                            <tbody id="errors">
+                            </tbody>
+                        </table>
+                    </div> -->
+                    <div class="dashboard-widget">
+                        <table cellspacing="0" cellpadding="7" border="0">
+                            <caption>Subscriptions</caption>
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Count</td>
+                                </tr>
+                            </thead>
+                            <tbody id="subscriptions">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+	<div class="footer">
+		<span class="jsLink" onclick="subscriptionsPage()">[Agent's subscriptions]</span>   
+	</div>
+    </body>
+</html>

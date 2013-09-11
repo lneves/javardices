@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="ConsoleAppender">
+		<encoder>
+			<pattern>%m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger level="error" additivity="false" name="org.apache">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
+
+	<root level="info">
+		<appender-ref ref="ConsoleAppender" />
+	</root>
+
+</configuration>

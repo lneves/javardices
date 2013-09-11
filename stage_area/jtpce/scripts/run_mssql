@@ -1,0 +1,13 @@
+#!/bin/sh
+cd $(dirname $0)
+
+java \
+-server \
+ -Xms64M \
+ -Xmx512M \
+ -Djava.awt.headless=true \
+ -Djava.net.preferIPv4Stack=true \
+ -Djava.net.preferIPv6Addresses=false \
+ -Dfile.encoding=UTF-8 \
+ -classpath './etc/mssql:./lib/*' \
+ db.tpce.driver.LoadDriver $*

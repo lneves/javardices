@@ -1,0 +1,9 @@
+
+#this is a comment
+
+#HTTP_VERB	URL_PATH	TEMPLATE_PATH
+
+*	/clients/<id>				/clients.jpt?
+GET	/uri/foo<id>	  			/tal<id>.jpt
+*	/products/<prod>/tal<id>		/location/<prod>/tal<id>.jpt
+

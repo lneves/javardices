@@ -1,0 +1,47 @@
+
+<project name="org.caudexorigo.twitter.stream.client" default="dist" basedir=".">
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="dist"/>
+  <property name="build-example" location="build-example"/>
+
+  <target name="compile">
+    <mkdir dir="${build}"/>
+    <javac srcdir="${src}/com/gist" destdir="${build}">
+      <classpath>
+        <fileset dir="lib">
+          <include name="*.jar"/>
+        </fileset>
+
+		<fileset dir="../common.libs/">
+			<include name="**/*.jar" />
+		</fileset>
+
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile">
+    <mkdir dir="${dist}"/>
+    <jar jarfile="${dist}/twitterclient.jar" basedir="${build}"/>
+  </target>
+
+  <target name="example" depends="dist">
+    <mkdir dir="${build-example}"/>
+    <javac srcdir="${src}/example" destdir="${build-example}">
+      <classpath>
+        <fileset dir="lib">
+          <include name="*.jar"/>
+        </fileset>
+        <fileset file="dist/*.jar"/>
+      </classpath>
+    </javac>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+    <delete dir="${build-example}"/>
+  </target>
+</project>
+

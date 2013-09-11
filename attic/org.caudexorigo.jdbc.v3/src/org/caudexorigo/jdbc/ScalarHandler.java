@@ -1,0 +1,68 @@
+package org.caudexorigo.jdbc;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.caudexorigo.text.StringUtils;
+
+public class ScalarHandler<T> implements ResultSetHandler<T>
+{
+
+	private int columnIndex;
+	private String columnName;
+	private final Class<T> clazz;
+
+
+	public ScalarHandler(int columnIndex, Class<T> clazz)
+	{
+		super();
+		this.columnIndex = columnIndex;
+		this.clazz = clazz;
+	}
+
+	public ScalarHandler(String columnName, Class<T> clazz)
+	{
+		super();
+		this.columnName = columnName;
+		this.clazz = clazz;
+	}
+
+	@Override
+	public T process(ResultSet rs)
+	{
+		if ((columnIndex < 1) && (StringUtils.isBlank(columnName)))
+		{
+			throw new IllegalStateException("A column name or a column index must be suplied");
+		}
+
+		try
+		{
+
+			if ((columnIndex >= 1) && (StringUtils.isBlank(columnName)))
+			{
+				return getValue(rs, columnIndex);
+			}
+			else
+			{
+				return getValue(rs, columnName);
+			}
+
+		}
+		catch (SQLException e)
+		{
+			throw new RuntimeException(e);
+		}
+	}
+
+	private T getValue(ResultSet rs, int ix) throws SQLException
+	{
+		return (T) rs.getObject(ix);
+	}
+	
+	private T getValue(ResultSet rs, String field) throws SQLException
+	{
+		return (T) rs.getObject(field);
+	}
+
+
+}

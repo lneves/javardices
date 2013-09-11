@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="pt.sapo.websocket.labs">
+
+	<path id="project.classpath">
+		<fileset dir="./lib/">
+			<include name="**/*.jar" />
+		</fileset>
+
+		<fileset dir="../common.libs/">
+			<include name="**/*.jar" />
+		</fileset>
+
+	</path>
+
+	<target name="init" depends="clean">
+		<mkdir dir="bin" />
+	</target>
+
+	<target name="clean">
+		<delete dir="bin" />
+		<delete dir="dist" />
+	</target>
+
+	<target depends="init" name="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac destdir="bin" debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6">
+			<src path="src" />
+			<classpath refid="project.classpath" />
+		</javac>
+		<copy todir="bin">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="package" depends="build">
+		<jar destfile="org.caudexorigo.twitter.scroll.jar" basedir="bin" />
+	</target>
+
+	<target name="dist" depends="build">
+		<mkdir dir="dist" />
+
+		<mkdir dir="dist/lib" />
+		<jar destfile="dist/lib/org.caudexorigo.twitter.scroll.jar" basedir="bin" />
+		<copy todir="dist/lib">
+			<fileset dir="lib" />
+		</copy>
+
+		<mkdir dir="dist/conf" />
+		<copy todir="dist/conf">
+			<fileset dir="conf" />
+		</copy>
+
+		<mkdir dir="dist/wwwroot" />
+		<copy todir="dist/wwwroot">
+			<fileset dir="wwwroot" />
+		</copy>
+
+		<copy file="start" todir="dist"/>
+		<copy file="start.bat" todir="dist"/>
+		<chmod file="dist/start" perm="ugo+rx"/>
+	</target>
+
+</project>

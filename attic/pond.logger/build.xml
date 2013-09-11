@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="pond-logger">
+
+	<path id="project.classpath">
+
+		<fileset dir="lib/">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- show list of targets -->
+	<target name="help">
+		<echo message="Targets are:" />
+		<echo />
+		<echo message="clean      delete all class files and generated code" />
+		<echo message="build    compile class files as a separate step" />
+
+	</target>
+
+	<target name="init">
+		<mkdir dir="bin" />
+	</target>
+
+	<target name="clean">
+		<delete dir="bin" />
+	</target>
+
+
+
+	<target name="build" depends="init">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac destdir="bin" encoding="UTF-8">
+			<src path="src" />
+			<classpath refid="project.classpath" />
+		</javac>
+		<copy todir="bin">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="package" depends="build">
+		<jar destfile="pond-logger.jar" basedir="bin" />
+	</target>
+
+
+</project>

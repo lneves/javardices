@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>PT Tweets, a WebSockets experiment</title>
+<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="swfobject.js"></script>
+<script type="text/javascript" src="FABridge.js"></script>
+<script type="text/javascript" src="web_socket.js"></script>
+<script type="text/javascript">
+
+WebSocket.__swfLocation = "WebSocketMain.swf";
+var ws_host = "ws://" + window.location.host + "/websocket/twitter";
+var ws;
+
+
+var counter = 0;
+var max_stack = 10;
+var speed = 200;
+var re_url = new RegExp("(\\s|^)(http://[^\\s$]+)", "g");
+var re_tuser = new RegExp("(\\s|^)@([\\w$]+)", "g");
+var placeholder = '<li></li>';
+
+
+function setMaxStack() {
+
+	var h = Math.floor($("#body").height() -  (1.5 * ( $("#log").height() + $("#title").height())));
+
+	$("ul#listticker").css("height", h);
+	max_stack = Math.floor($("ul#listticker").height() / 56);
+}
+
+function init() {
+
+	setMaxStack();
+	
+	for (var x = 1; x <= max_stack; x++) {
+		$("ul#listticker").append(placeholder);
+	}
+
+	$(window).resize(function () {		
+
+		setMaxStack();
+
+		var c_len = $("ul#listticker").children().length;
+
+		if (c_len > max_stack) {
+			while ($("ul#listticker").children().length > max_stack) {
+				removeFirst();
+			}
+		}
+
+		if (c_len < max_stack) {
+			while ($("ul#listticker").children().length < max_stack) {
+				$("ul#listticker").prepend(placeholder);
+			}
+		}
+	});
+
+	if (window.WebSocket) {
+
+		ws = new WebSocket(ws_host);
+		output("Your browser rocks! It supports Web Sockets.");
+	} else {
+		output("This sucks! Your browser doesn't have Web Sockets.");
+	}
+
+	ws.onopen = function () {
+		output("Web Socket Opened");
+	};
+	ws.onmessage = function (event) {
+
+		try {
+
+			try {
+				addLast(JSON.parse(event.data));
+			}
+			catch (e) {
+				addLast(eval('(' + event.data + ')'));
+			}
+		}
+		catch (err) {
+			output("oops! something is wrong: " + err.message);
+		}
+	};
+	ws.onclose = function () {
+		output("Web Socket Closed");
+		setTimeout("location.reload(true);", 10000);
+	};
+}
+
+function removeFirst() {
+	$('ul#listticker li:first').animate({
+		opacity: 0
+	}, speed).fadeOut(speed, function () {
+		$(this).remove();
+	});
+	$('ul#listticker li:first').remove();
+}
+
+function addLast(obj) {
+
+	removeFirst();
+
+
+	var text = obj.text.replace(re_url, ' <a href=\"$2\" target=\"_blank\">$2</a>');
+	text = text.replace(re_tuser, ' <a href=\"http://twitter.com/$2\" target=\"_blank\">@$2</a>');
+
+
+	var last = '<li style="display:none">';
+	last += '<img src="' + obj.profile_image_url + '" width="48" height="48" border="0"/>';
+	last += '<div><a href="http://twitter.com/' + obj.from_user + '/status/' + obj.id + '" class="item-title">' + obj.from_user + '</a></div>';
+	last += '<span class="item-text">' + text + '</span>';
+	last += '</li>';
+	$('ul#listticker').append(last);
+	$('ul#listticker li:last').animate({
+		opacity: 1
+	}, speed).fadeIn(speed);
+}
+
+function output(str) {
+	$('#log').text(str);
+}
+</script>
+<style type="text/css">
+
+* {
+margin:0;
+}
+
+html, body {
+height: 100%;
+}
+
+body {
+font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;font-size:76%;
+}
+
+body {
+font-family:"Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;font-size:76%; color:#444;
+}
+
+#title {
+margin-left:50px;_height:40px; min-height:40px;
+}
+
+#log {
+_height:20px; min-height:20px;padding:0.5em;
+}
+
+#listticker {
+min-width:95%; width:95%; overflow:hidden; border-bottom:solid 1px black;
+}
+
+
+#listticker li {
+height:48px; list-style:none; padding:0px;overflow:hidden; margin-top:8px;
+}
+
+#listticker a {
+text-decoration:none;
+}
+
+#listticker .item-title {
+font-weight:bold; font-size:1.0em;
+}
+
+
+#listticker .item-text {
+display:block; font-size:1.8em;
+}
+
+#listticker img {
+float:left; margin-right:5px; padding:0px;
+}
+</style>
+
+</head>
+
+<body id="body" onload="init();">
+
+<h1 id="title">PT Tweets, a WebSockets experiment</h1>
+<ul id="listticker"></ul>
+<div id="log"></div>
+</body>
+</html>

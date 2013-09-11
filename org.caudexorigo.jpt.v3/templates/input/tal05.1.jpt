@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for "tal:attributes and tal:conditionalAttributes"</title>
+</head>
+<body>
+<h2>Test for "tal:attributes"</h2>
+<p>
+<a tal:attributes="href $this.link">clicky</a>
+<a tal:attributes="href $this.link; class $this.cssLink">clicky</a>
+<a tal:attributes="href $this.link; class $this.cssLink">clicky</a>
+</p>
+
+<select >
+	<option value="1">Show</option>
+	<option tal:condition="false" value="2">Don't show</option>
+	<option tal:attributes="value 3">Show with attributes</option>
+	<option tal:conditionalAttributes="selected false 'selected'" value="4">Selected value</option>
+	<!-- Supports multiple conditional attributes. If no condition is present (b case) then the attribute is rendered -->
+	<option tal:conditionalAttributes="a true 'a'; b 'b'; c false 'c'" value="4">Selected value</option>
+</select>
+
+</body>
+</html>

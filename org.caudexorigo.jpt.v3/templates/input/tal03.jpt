@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for "tal:content"</title>
+</head>
+<body>
+<h2>Test for "tal:content"</h2>
+<div>
+<p>String before</p>
+<p tal:content="$this.value">foo bar baz</p>
+<p>String after</p>
+</div>
+
+</body>
+</html>

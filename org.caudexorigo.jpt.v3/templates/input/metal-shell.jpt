@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.MacroContext"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html tal:attributes="xml:lang $this.userLanguage;lang $this.userLanguage;"  xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" metal:define-macro="outer-shell">
+	<head metal:define-slot="head">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+		<style type="text/css" media="screen">
+			body{margin:0,padding;0}
+		</style>
+	</head>
+	<body>
+	<h1>Header</h1>
+	<div metal:define-slot="wrapped">content goes here.</div>
+	<div>Footer</div>
+
+	</body>
+</html>

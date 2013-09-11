@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext2"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for "tal:repeat"</title>
+</head>
+<body>
+<h2>Test for "tal:repeat"</h2>
+
+
+<table border="1" cellspacing="0" cellpadding="5" width="450">
+	
+	<tr tal:repeat="var=person;source=$this.persons" bgcolor="#EEEBCC">
+		<td align="left" nowrap="nowrap" tal:content="person.age">age</td>
+		<td align="left" nowrap="nowrap" tal:content="person.name">name</td>
+		<td align="left" nowrap="nowrap" tal:content="$this.value">value</td>
+	</tr>
+
+</table>
+
+<h3>Salut without behavior</h3>
+<p tal:content="$this.getSalut()"></p>
+
+<h3>Salut without TEXT behavior</h3>
+<p tal:content="text $this.getSalut()"></p>
+
+<h3>Salut without STRUCTURE behavior</h3>
+<p tal:content="structure $this.getSalut()"></p>
+</body>
+</html>

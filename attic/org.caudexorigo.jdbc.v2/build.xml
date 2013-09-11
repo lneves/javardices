@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="build" name="org.caudexorigo.jdbc.v2">
+	<property name="org.caudexorigo.jdbc.location" value="." />
+	<property name="broker.dir" value="${user.home}/Work/ActiveProjects/sapo/BrokerV4/BrokerPublicRepo/monitorization/lib" />
+	<property name="alertas.dir" value="${user.home}/Work/ActiveProjects/sapo/Alertas/common-libs" />
+	<property name="webanalytics.dir" value="${user.home}/Work/ActiveProjects/sapo/webanalytics/aggregator/lib" />
+	
+
+	<available file="${broker.dir}" type="dir" property="broker.dir.present" />
+	<available file="${alertas.dir}" type="dir" property="alertas.dir.present" />
+	<available file="${webanalytics.dir}" type="dir" property="webanalytics.dir.present" />
+
+	<path id="project.classpath">
+		<pathelement location="bin" />
+
+		<fileset dir="../common.libs/">
+			<include name="**/*.jar" />
+		</fileset>
+
+		<fileset dir="./lib/">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="init">
+		<mkdir dir="bin" />
+	</target>
+
+	<target name="clean">
+		<delete dir="bin" />
+		<delete dir="dist" />
+	</target>
+	
+	<target depends="init" name="build">
+		<echo message="${ant.project.name}: ${ant.file}" />
+		<javac destdir="bin"  debug="on" debuglevel="lines,vars,source" source="1.6" target="1.6">
+			<src path="src" />
+			<classpath refid="project.classpath" />
+		</javac>
+	</target>
+	
+	<target name="package" depends="build">
+		<mkdir dir="dist"/>
+		<jar destfile="dist/org.caudexorigo.jdbc.v2.jar" basedir="bin"/>
+
+		<antcall target="copy.broker" />
+		<antcall target="copy.alertas" />
+		<antcall target="copy.webanalytics" />
+	</target>
+
+	<target name="copy.broker">
+		<copy file="dist/org.caudexorigo.jdbc.v2.jar" todir="${broker.dir}" verbose="true" />
+	</target>
+
+	<target name="copy.alertas">
+		<copy file="dist/org.caudexorigo.jdbc.v2.jar" todir="${alertas.dir}" verbose="true" />
+	</target>
+
+	<target name="copy.webanalytics">
+		<copy file="dist/org.caudexorigo.jdbc.v2.jar" todir="${webanalytics.dir}" verbose="true" />
+	</target>
+
+</project>

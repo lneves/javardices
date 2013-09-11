@@ -1,0 +1,16 @@
+Customer-Position Mid-Heavy  R/O    13
+Broker-Volume    Mid-Heavy  R/O    4.9
+Market-Watch      Medium    R/O    18
+Trade-Status      Light    R/O    19
+
+Trade-Lookup      Medium    R/O     8
+Security-Detail   Medium    R/O    14
+
+
+
+Trade-Order      Heavy     R/W   10.1
+Trade-Result     Heavy     R/W    10
+Market-Feed      Medium    R/W     1
+Trade-Update     Medium    R/W     2
+Data-Maintenance    Light    R/W     -
+Trade-Cleanup     Medium    R/W   -

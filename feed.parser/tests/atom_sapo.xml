@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!---->
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>urn:lj:blogs.sapo.pt:atom1:poingg</id>
+  <title>Poingg</title>
+  <subtitle>poingg</subtitle>
+  <author>
+    <name>poingg</name>
+  </author>
+  <link rel="alternate" type="text/html" href="http://poingg.com/"/>
+  <link rel="self" type="text/xml" href="http://blogs.sapo.pt/users/poingg/data/atom"/>
+  <updated>2009-12-31T10:12:44Z</updated>
+  <link rel="service.feed" type="application/x.atom+xml" href="http://blogs.sapo.pt/users/poingg/data/atom" title="Poingg"/>
+
+  <entry>
+    <id>urn:lj:blogs.sapo.pt:atom1:poingg:26221</id>
+    <author>
+      <name>Eduardo</name>
+    </author>
+    <link rel="alternate" type="text/html" href="http://poingg.com/26221.html"/>
+    <issued>2009-09-28T13:57:06</issued>
+    <title>Vem aí Suzuka de novo!</title>
+    <published>2009-09-28T12:59:07Z</published>
+    <updated>2009-09-28T12:59:07Z</updated>
+    <category term="carros"/>
+    <category term="desporto"/>
+    <content type="html">&lt;p&gt; &lt;/p&gt;&lt;p&gt;E quem fala de Suzuka, fala de Senna e do inominável francês.&lt;/p&gt;&lt;p&gt;A propósito, descobri este vídeo que me dá enorme vontade de aprender japonês.&lt;/p&gt;&lt;p&gt;Os comentários devem ser fabulosos.&lt;/p&gt;&lt;p&gt; &lt;/p&gt;&lt;p&gt; &lt;/p&gt;&lt;p&gt; &lt;/p&gt;
+
+&lt;div&gt;&lt;object width="420" height="339"&gt;&lt;param name="movie" value="http://www.dailymotion.com/swf/x16j80" /&gt;&lt;param name="allowFullScreen" value="true" /&gt;&lt;param name="allowScriptAccess" value="always" /&gt;&lt;embed src="http://www.dailymotion.com/swf/x16j80" type="application/x-shockwave-flash" width="420" height="339" allowfullscreen="true" allowscriptaccess="always"&gt;&lt;/embed&gt;&lt;/object&gt;&lt;br /&gt;&lt;b&gt;&lt;a href="http://www.dailymotion.com/swf/x16j80"&gt;Ayrton Senna vs Alain Prost - Battles&lt;/a&gt;&lt;/b&gt;&lt;br /&gt;&lt;i&gt;by &lt;a href="http://www.dailymotion.com/christophemallet"&gt;christophemallet&lt;/a&gt;&lt;/i&gt;&lt;/div&gt;</content>
+  </entry>
+</feed>
