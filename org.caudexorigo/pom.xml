@@ -20,6 +20,8 @@
 		</plugins>
 	</build>
 
+</project>
+
 <!-- 
   
 mvn install:install-file  \
@@ -33,5 +35,3 @@ mvn install:install-file  \
 -DlocalRepositoryPath=$HOME/CloudPT/m2repo
 
 -->
-
-</project>

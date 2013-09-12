@@ -11,6 +11,10 @@
 			<id>personal-cloudpt</id>
 			<name>Personal Repo</name>
 			<url>https://cld.pt/dl/download/9e76a086-067a-4adc-900f-5f7fdc756136/m2repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
 		</repository>
 	</repositories>
 
