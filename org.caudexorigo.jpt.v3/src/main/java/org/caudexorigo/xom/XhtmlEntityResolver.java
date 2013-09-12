@@ -29,7 +29,7 @@ public class XhtmlEntityResolver implements EntityResolver2
 	public InputSource getExternalSubset(String name, String baseURI) throws SAXException, IOException
 	{
 		if ("html".equals(name))
-			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/xhtml1-20020801/dtd/xhtml1-transitional.dtd"));
+			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html50/html.dtd"));
 		else
 			return new InputSource(new StringReader(""));
 	}
@@ -43,6 +43,7 @@ public class XhtmlEntityResolver implements EntityResolver2
 			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/xhtml1-20020801/dtd/xhtml1-transitional.dtd"));
 		if (systemID.contains("xhtml1-frameset.dtd"))
 			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/xhtml1-20020801/dtd/xhtml1-frameset.dtd"));
+		
 		if (systemID.contains("xhtml-lat1.ent"))
 			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/xhtml1-20020801/dtd/xhtml-lat1.ent"));
 		if (systemID.contains("xhtml-symbol.ent"))
@@ -51,6 +52,14 @@ public class XhtmlEntityResolver implements EntityResolver2
 			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/xhtml1-20020801/dtd/xhtml-special.ent"));
 		if (systemID.contains("xhtml11.dtd"))
 			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/xhtml11-20010531/dtd/xhtml11-flat.dtd"));
+
+		if (systemID.contains("html-lat1.ent"))
+			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html50/html-lat1.ent"));
+		if (systemID.contains("html-symbol.ent"))
+			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html50/html-symbol.ent"));
+		if (systemID.contains("html-special.ent"))
+			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html50/html-special.ent"));
+		
 		else
 			return new InputSource(new StringReader(""));
 	}
