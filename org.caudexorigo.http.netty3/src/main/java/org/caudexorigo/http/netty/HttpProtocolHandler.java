@@ -27,7 +27,7 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);
 
 	private final HttpAction defaultAction;
-
+	
 	private final RequestRouter _requestMapper;
 
 	// private boolean _hasWebSocketSupport;
@@ -201,8 +201,8 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 		}
 		catch (Throwable t)
 		{
-			response.setStatus(HttpResponseStatus.INTERNAL_SERVER_ERROR);
-			defaultAction.process(ctx, request, response);
+			HttpAction errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.getCode()));
+			errorAction.process(ctx, request, response);
 		}
 	}
 
