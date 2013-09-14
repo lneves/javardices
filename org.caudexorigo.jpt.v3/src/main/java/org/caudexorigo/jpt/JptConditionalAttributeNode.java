@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import nu.xom.Attribute;
 
 import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
+import org.mvel2.ParserContext;
 
 public class JptConditionalAttributeNode extends JptNode
 {
@@ -25,8 +28,12 @@ public class JptConditionalAttributeNode extends JptNode
 	private boolean _isInSlot;
 
 	private Serializable _compiled_exp;
-	
+
 	private Serializable _condition_compiled_exp;
+
+	private ParserContext _parser_context;
+
+	private String[] new_attr_exps;
 
 	JptConditionalAttributeNode(Attribute attribute, boolean isInSlot)
 	{
@@ -34,19 +41,8 @@ public class JptConditionalAttributeNode extends JptNode
 
 		_attribute_name = attribute.getQualifiedName().toCharArray();
 		_attr_exp = attribute.getValue().replace("\'", "\"").trim();
-		
-		String[] new_attr_exp = StringUtils.split(_attr_exp, " ", 2);
 
-		if(new_attr_exp.length == 1)
-		{
-			_condition_compiled_exp = MVEL.compileExpression("true");
-			_compiled_exp = MVEL.compileExpression(_attr_exp);
-		}
-		else
-		{
-			_condition_compiled_exp = MVEL.compileExpression(new_attr_exp[0]);
-			_compiled_exp = MVEL.compileExpression(new_attr_exp[1]);
-		}
+		new_attr_exps = StringUtils.split(_attr_exp, " ", 2);
 	}
 
 	public int getChildCount()
@@ -61,6 +57,29 @@ public class JptConditionalAttributeNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
+		if (_parser_context == null)
+		{
+			_parser_context = ParserContext.create();
+
+			Set<Entry<String, Object>> ctx_entries = context.entrySet();
+
+			for (Entry<String, Object> entry : ctx_entries)
+			{
+				_parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+			}
+
+			if (new_attr_exps.length == 1)
+			{
+				_condition_compiled_exp = MVEL.compileExpression("true");
+				_compiled_exp = MVEL.compileExpression(_attr_exp, _parser_context);
+			}
+			else
+			{
+				_condition_compiled_exp = MVEL.compileExpression(new_attr_exps[0]);
+				_compiled_exp = MVEL.compileExpression(new_attr_exps[1], _parser_context);
+			}
+		}
+
 		boolean condition = (Boolean) MVEL.executeExpression(_condition_compiled_exp, context);
 
 		if (condition)
@@ -72,7 +91,7 @@ public class JptConditionalAttributeNode extends JptNode
 			out.write(QUOTE, 0, 1);
 			out.write(sout);
 			out.write(QUOTE, 0, 1);
-		}		
+		}
 	}
 
 	public boolean isInSlot()

@@ -14,7 +14,7 @@
 		</style>
 	</head>
 	<body>
-		<h1>Custom&eacute;r List</h1>
+		<h1>Customer List</h1>
 		<table class="decorated">
 			<thead>
 				<tr>
@@ -25,7 +25,7 @@
 					<td>Options</td>
 				</tr>
 			</thead>
-			<!-- tbody>
+			<tbody>
 				<tr tal:repeat="source=$this.customers;var=customer">
 					<td tal:content="customer.firstName">Mike</td>
 					<td tal:content="customer.lastName">Smith</td>
@@ -36,7 +36,7 @@
 					<a href="#" tal:attributes="href 'CustomerList.jpt?action=edit&amp;id=' + customer.id">Edit</a>
 					</td>
 				</tr>
-			</tbody -->
+			</tbody>
 		</table>
 	</body>
 </html>

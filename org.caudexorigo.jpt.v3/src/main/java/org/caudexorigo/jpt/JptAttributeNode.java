@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import nu.xom.Attribute;
 
 import org.caudexorigo.text.StringEscapeUtils;
 import org.mvel2.MVEL;
+import org.mvel2.ParserContext;
 
 public class JptAttributeNode extends JptNode
 {
@@ -24,6 +27,7 @@ public class JptAttributeNode extends JptNode
 
 	private boolean _isInSlot;
 
+	private ParserContext _parser_context;
 	private Serializable _compiled_exp;
 
 	JptAttributeNode(Attribute attribute, boolean isInSlot)
@@ -32,9 +36,6 @@ public class JptAttributeNode extends JptNode
 
 		_attribute_name = attribute.getQualifiedName().toCharArray();
 		_attr_exp = attribute.getValue().replace("\'", "\"").trim();
-
-		// Compile the expression.
-		_compiled_exp = MVEL.compileExpression(_attr_exp);
 	}
 
 	public int getChildCount()
@@ -49,6 +50,20 @@ public class JptAttributeNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
+		if (_parser_context == null)
+		{
+			_parser_context = ParserContext.create();
+
+			Set<Entry<String, Object>> ctx_entries = context.entrySet();
+
+			for (Entry<String, Object> entry : ctx_entries)
+			{
+				_parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+			}
+			// Compile the expression.
+			_compiled_exp = MVEL.compileExpression(_attr_exp, _parser_context);
+		}
+
 		String sout = StringEscapeUtils.escapeXml(String.valueOf(MVEL.executeExpression(_compiled_exp, context)));
 		out.write(SPACE, 0, 1);
 		out.write(_attribute_name, 0, _attribute_name.length);
