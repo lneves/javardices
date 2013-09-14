@@ -13,28 +13,33 @@ public class Shutdown
 
 	public static void now()
 	{
-		if (is_shuttingdown.getAndSet(true))
-		{
-			return;
-		}
-
 		System.out.println("\nExiting... ");
-
-		while (true)
-		{
-			System.exit(-1);
-		}
+		exit();
 	}
 
 	public static void now(Throwable t)
 	{
 		Throwable root = ErrorAnalyser.findRootCause(t);
 		root.printStackTrace();
-		now();
+		System.err.println("\nExiting... ");
+		exit();
 	}
 
 	public static boolean isShutingDown()
 	{
 		return is_shuttingdown.get();
+	}
+
+	private static void exit()
+	{
+		if (is_shuttingdown.getAndSet(true))
+		{
+			return;
+		}
+
+		while (true)
+		{
+			System.exit(-1);
+		}
 	}
 }
