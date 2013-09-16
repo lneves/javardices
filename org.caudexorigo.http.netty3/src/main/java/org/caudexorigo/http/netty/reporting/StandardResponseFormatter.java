@@ -30,7 +30,7 @@ public class StandardResponseFormatter
 	}
 
 	public void formatResponse(HttpRequest request, HttpResponse response, Throwable error)
-	{		
+	{
 		if (MessageBody.allow(response.getStatus().getCode()))
 		{
 			try
@@ -52,9 +52,9 @@ public class StandardResponseFormatter
 	{
 		if (error != null)
 		{
-
 			if (fullInfo)
 			{
+				log.error(error.getMessage(), error);
 				UnsynchronizedStringWriter sw = new UnsynchronizedStringWriter();
 				PrintWriter pw = new PrintWriter(sw);
 				error.printStackTrace(pw);
