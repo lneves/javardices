@@ -15,7 +15,6 @@ public class JptTemplateNode extends JptNode
 {
 	private boolean _isInSlot;
 
-	private ParserContext _parser_context;
 	private CompiledTemplate _compiled_template;
 
 	private String _template;
@@ -38,17 +37,17 @@ public class JptTemplateNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_parser_context == null)
+		if (_compiled_template == null)
 		{
-			_parser_context = ParserContext.create();
+			ParserContext parser_context = ParserContext.create();
 
 			Set<Entry<String, Object>> ctx_entries = context.entrySet();
 
 			for (Entry<String, Object> entry : ctx_entries)
 			{
-				_parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
 			}
-			_compiled_template = TemplateCompiler.compileTemplate(_template, _parser_context);
+			_compiled_template = TemplateCompiler.compileTemplate(_template, parser_context);
 		}
 
 		String sout = String.valueOf(TemplateRuntime.execute(_compiled_template, context));

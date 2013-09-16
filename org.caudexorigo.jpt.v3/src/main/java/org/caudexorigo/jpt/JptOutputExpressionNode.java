@@ -22,7 +22,6 @@ public class JptOutputExpressionNode extends JptNode
 
 	private final boolean escape;
 
-	private ParserContext _parser_context;
 	private String _evaluation_exp;
 
 	JptOutputExpressionNode(String jpt_exp, boolean isInSlot)
@@ -59,18 +58,18 @@ public class JptOutputExpressionNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_parser_context == null)
+		if (_compiled_exp == null)
 		{
-			_parser_context = ParserContext.create();
+			ParserContext parser_context = ParserContext.create();
 
 			Set<Entry<String, Object>> ctx_entries = context.entrySet();
 
 			for (Entry<String, Object> entry : ctx_entries)
 			{
-				_parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
 			}
 			// Compile the expression.
-			_compiled_exp = MVEL.compileExpression(_evaluation_exp, _parser_context);
+			_compiled_exp = MVEL.compileExpression(_evaluation_exp, parser_context);
 		}
 
 		String result = String.valueOf(MVEL.executeExpression(_compiled_exp, context));

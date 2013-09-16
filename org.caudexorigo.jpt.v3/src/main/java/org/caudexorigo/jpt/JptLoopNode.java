@@ -6,8 +6,8 @@ import java.io.Writer;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
@@ -18,7 +18,6 @@ public class JptLoopNode extends JptParentNode
 
 	private RepeatElements _repeatElements;
 
-	private ParserContext _parser_context;
 	private Serializable _compiled_exp;
 
 	JptLoopNode(RepeatElements repeatElements, boolean isInSlot)
@@ -29,18 +28,18 @@ public class JptLoopNode extends JptParentNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_parser_context == null)
+		if (_compiled_exp == null)
 		{
-			_parser_context = ParserContext.create();
+			ParserContext parser_context = ParserContext.create();
 
 			Set<Entry<String, Object>> ctx_entries = context.entrySet();
 
 			for (Entry<String, Object> entry : ctx_entries)
 			{
-				_parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
 			}
 			// Compile the expression.
-			_compiled_exp = MVEL.compileExpression(_repeatElements.getLoopSourceExpression(), _parser_context);
+			_compiled_exp = MVEL.compileExpression(_repeatElements.getLoopSourceExpression(), parser_context);
 		}
 
 		int child_count = getChildCount();
