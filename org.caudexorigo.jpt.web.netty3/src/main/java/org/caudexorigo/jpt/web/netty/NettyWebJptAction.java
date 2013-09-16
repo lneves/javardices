@@ -74,13 +74,13 @@ public class NettyWebJptAction extends HttpAction
 	}
 
 	// code values must be ordered
-	private static final int[] NO_CONTENTT_STATUS_CODES = new int[] { 204, 205, 301, 302, 303, 304, 305, 307 };
+	private static final int[] NO_CONTENT_STATUS_CODES = new int[] { 204, 205, 301, 302, 303, 304, 305, 307 };
 
 	private static boolean allowsContent(int httpStatusCode)
 	{
-		for (int i = 0; i != NO_CONTENTT_STATUS_CODES.length && NO_CONTENTT_STATUS_CODES[i] <= httpStatusCode; ++i)
+		for (int i = 0; i != NO_CONTENT_STATUS_CODES.length && NO_CONTENT_STATUS_CODES[i] <= httpStatusCode; ++i)
 		{
-			if (NO_CONTENTT_STATUS_CODES[i] == httpStatusCode)
+			if (NO_CONTENT_STATUS_CODES[i] == httpStatusCode)
 				return false;
 		}
 
