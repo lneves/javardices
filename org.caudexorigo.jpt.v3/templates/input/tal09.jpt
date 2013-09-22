@@ -10,6 +10,16 @@
 <tal:template>
 <script> @{$this.value.toUpperCase()} </script>
 </tal:template>
+
+
+<ul>
+<tal:template>@foreach{person : $this.persons}
+<li>@{person.name}</li>
+@end{}
+</tal:template>
+<li>static</li>
+</ul>
+
 </h2>
 </body>
 </html>
