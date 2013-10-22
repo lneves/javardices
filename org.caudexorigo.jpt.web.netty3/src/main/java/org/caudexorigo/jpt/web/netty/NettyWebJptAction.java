@@ -14,12 +14,10 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NettyWebJptAction extends HttpAction
 {
-	private static final Logger log = LoggerFactory.getLogger(NettyWebJptAction.class);
+	private static final int[] NO_CONTENT_STATUS_CODES = new int[] { 204, 205, 301, 302, 303, 304, 305, 307 }; // code values must be ordered
 	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	private final URI _templateURI;
@@ -43,7 +41,7 @@ public class NettyWebJptAction extends HttpAction
 		try
 		{
 			NettyJptProcessor aweb_jpt_processor = new NettyJptProcessor(ctx, request, response);
-			JptInstance jpt = JptInstanceBuilder.getJptInstance(getTemplateURI());
+			JptInstance jpt = JptInstanceBuilder.getJptInstance(_templateURI);
 
 			HttpJptContext jpt_ctx = new HttpJptContext(aweb_jpt_processor, getTemplateURI());
 			HttpJptController page_controller = (HttpJptController) Class.forName(jpt.getCtxObjectType()).newInstance();
@@ -72,9 +70,6 @@ public class NettyWebJptAction extends HttpAction
 			throw new RuntimeException(t);
 		}
 	}
-
-	// code values must be ordered
-	private static final int[] NO_CONTENT_STATUS_CODES = new int[] { 204, 205, 301, 302, 303, 304, 305, 307 };
 
 	private static boolean allowsContent(int httpStatusCode)
 	{
