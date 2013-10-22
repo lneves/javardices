@@ -43,6 +43,7 @@ Thumbs.db
 .settings
 .classpath
 .project
+bin
 
 # Maven stuff #
 ######################
