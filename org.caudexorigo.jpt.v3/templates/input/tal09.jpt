@@ -13,7 +13,8 @@
 
 
 <ul>
-<tal:template>@foreach{person : $this.persons}
+<tal:template>
+@foreach{person : $this.persons}
 <li>@{person.name}</li>
 @end{}
 </tal:template>
