@@ -17,8 +17,8 @@
 	<table border="1" cellspacing="0" cellpadding="5" width="450">
 	
 	<tr tal:repeat="var=person;source=persons" bgcolor="#EEEBCC">
-		<td align="left" nowrap="nowrap" tal:content="person.age">age</td>
-		<td align="left" nowrap="nowrap" tal:content="person.name">name</td>
+		<td tal:content="person.age">age</td>
+		<td tal:content="person.name">name</td>
 	</tr>
 
 </table>
