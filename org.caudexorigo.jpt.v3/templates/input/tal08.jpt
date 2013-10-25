@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?jpt template-class="jpt.test.SimpleContext"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" metal:use-macro="metal-shell.jpt?macro=outer-shell">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" metal:use-macro="metal-shell.jpt?macro=outer-shell&amp;persons=$this.persons&amp;xpto=zbroing">
 	<head metal:append-to-slot="head">
 		<title tal:content="$this.title">foobar</title>
 		<style type="text/css" >

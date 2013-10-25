@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?jpt template-class="jpt.test.MacroContext"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html tal:attributes="xml:lang $this.userLanguage;lang $this.userLanguage;"  xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" metal:define-macro="outer-shell">
 	<head metal:define-slot="head">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,6 +11,19 @@
 	</head>
 	<body>
 	<h1>Header</h1>
+
+	<h3 tal:content="xpto"> parameter xpto should go here</h3>
+	
+	<table border="1" cellspacing="0" cellpadding="5" width="450">
+	
+	<tr tal:repeat="var=person;source=persons" bgcolor="#EEEBCC">
+		<td align="left" nowrap="nowrap" tal:content="person.age">age</td>
+		<td align="left" nowrap="nowrap" tal:content="person.name">name</td>
+	</tr>
+
+</table>
+
+
 	<div metal:define-slot="wrapped">content goes here.</div>
 	<div>Footer</div>
 

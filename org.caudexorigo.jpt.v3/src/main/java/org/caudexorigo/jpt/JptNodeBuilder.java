@@ -2,6 +2,7 @@ package org.caudexorigo.jpt;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -169,10 +170,23 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		((JptParentNode) pnodes.peek()).appendChild(sf);
 	}
 
-	private String extractMacroName(String uri_qs)
+	private Map<String, String> extractMacroParams(String uri_qs)
 	{
-		int pos = uri_qs.indexOf("=") + 1;
-		return uri_qs.substring(pos);
+		try
+		{
+			Map<String, String> query_pairs = new HashMap<String, String>();
+			String[] pairs = uri_qs.split("&");
+			for (String pair : pairs)
+			{
+				int idx = pair.indexOf("=");
+				query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+			}
+			return query_pairs;
+		}
+		catch (Throwable t)
+		{
+			throw new RuntimeException(t);
+		}
 	}
 
 	private void findSlotActorsInDocument(Node node)
@@ -214,8 +228,13 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		}
 	}
 
-	private void prepareMacro(Document macroDocument, Node useMacroNode, String macroName, String macroPath) throws ValidityException, ParsingException, IOException
+	private void prepareMacro(Document macroDocument, Node useMacroNode, String macroPath, Map<String, String> macroParams) throws ValidityException, ParsingException, IOException
 	{
+		
+		String macroName = macroParams.get("macro");
+		System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
+		System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
+
 		Document macro_doc = macroDocument.getDocument();
 		findSlotActorsInDocument(macroDocument);
 		prepareSlotsActorsInDocument();
@@ -223,7 +242,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 		String object_class_name = ContextBuilder.objectNameFromInstructions(macro_doc);
 
-		JptMacroNode jpt_macro_node = new JptMacroNode(object_class_name, _isInSlot);
+		JptMacroNode jpt_macro_node = new JptMacroNode(object_class_name, _isInSlot, macroParams);
 
 		JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
 		((JptParentNode) pnodes.peek()).appendChild(sf_pre);
@@ -397,13 +416,15 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			el.removeAttribute(attribute);
 			String use_macro_value = attribute.getValue();
 			URI macroURI = _templateUri.resolve(use_macro_value);
-			String macroName = extractMacroName(macroURI.getQuery());
+			//String macroName = extractMacroName(macroURI.getQuery());
 			String macroPath = macroURI.getPath();
 			URI macroUri = _templateUri.resolve(macroPath);
 			Dependency d = new Dependency(macroUri);
 			_dependecies.add(d);
+			
+			Map<String, String> macroParams = extractMacroParams(macroURI.getQuery());
 			Document document_macro = XomDocumentBuilder.getDocument(macroUri);
-			prepareMacro(document_macro, el, macroName, macroPath);
+			prepareMacro(document_macro, el, macroPath, macroParams);
 		}
 	}
 
