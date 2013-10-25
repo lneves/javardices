@@ -8,9 +8,12 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.mvel2.MVEL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JptMacroNode extends JptParentNode
 {
+	private static final Logger log = LoggerFactory.getLogger(JptMacroNode.class);
 
 	private boolean _isInSlot;
 
@@ -37,7 +40,7 @@ public class JptMacroNode extends JptParentNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		System.out.println("JptMacroNode.render.context: " + context);
+		// System.out.println("JptMacroNode.render.context: " + context);
 
 		Map<String, Object> macroContext = new HashMap<String, Object>();
 
@@ -45,42 +48,47 @@ public class JptMacroNode extends JptParentNode
 
 		for (Entry<String, String> entry : param_entries)
 		{
-			System.out.println("JptMacroNode.render.paramName: " + entry.getKey());
-			System.out.println("JptMacroNode.render.paramValue: " + entry.getValue());
-
-			if (entry.getValue().startsWith("$this."))
+			if ("macro".equals(entry.getKey()))
 			{
-				Object value = MVEL.eval(entry.getValue(), context);
-				System.out.println("JptMacroNode.parsedParamVvalue: " + value);
+				continue;
+			}
+
+			// System.out.println("JptMacroNode.render.paramName: " + entry.getKey());
+			// System.out.println("JptMacroNode.render.paramValue: " + entry.getValue());
+
+			try
+			{
+				Object value = MVEL.eval(entry.getValue().toString(), context);
+				// System.out.println("JptMacroNode.parsedParamVvalue: " + value);
 				macroContext.put(entry.getKey(), value);
+			}
+			catch (org.mvel2.PropertyAccessException t)
+			{
+				log.warn(String.format("PropertyAccessException for parameter value: '%s'. Using the value as string", entry.getValue()));
+				// System.out.printf("PropertyAccessException for parameter value: '%s'. Using the value as string%n", entry.getValue());
+				macroContext.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		Set<String> keys = context.keySet();
+
+		for (String key : keys)
+		{
+			if (key.equals("$this"))
+			{
+				macroContext.put("$parent", context.get(key));
 			}
 			else
 			{
-				macroContext.put(entry.getKey(), entry.getValue());
+				macroContext.put(key, context.get(key));
 			}
 		}
 
 		try
 		{
-			Set<String> keys = context.keySet();
-
-			System.out.println("JptMacroNode.render.keys: " + keys);
-			for (String key : keys)
-			{
-				if (key.equals("$this"))
-				{
-					macroContext.put("$parent", context.get(key));
-				}
-				else
-				{
-					macroContext.put(key, context.get(key));
-				}
-			}
-
 			Object oCtx = Class.forName(_ctx_object_type).newInstance();
 			macroContext.put("$this", oCtx);
-
-			System.out.println("JptMacroNode.render.macroContext: " + macroContext);
+			// System.out.println("JptMacroNode.render.macroContext: " + macroContext);
 		}
 		catch (Throwable t)
 		{

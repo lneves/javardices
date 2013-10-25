@@ -230,10 +230,10 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 	private void prepareMacro(Document macroDocument, Node useMacroNode, String macroPath, Map<String, String> macroParams) throws ValidityException, ParsingException, IOException
 	{
-		
+
 		String macroName = macroParams.get("macro");
-		System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
-		System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
+		// System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
+		// System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
 
 		Document macro_doc = macroDocument.getDocument();
 		findSlotActorsInDocument(macroDocument);
@@ -416,12 +416,12 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			el.removeAttribute(attribute);
 			String use_macro_value = attribute.getValue();
 			URI macroURI = _templateUri.resolve(use_macro_value);
-			//String macroName = extractMacroName(macroURI.getQuery());
+			// String macroName = extractMacroName(macroURI.getQuery());
 			String macroPath = macroURI.getPath();
 			URI macroUri = _templateUri.resolve(macroPath);
 			Dependency d = new Dependency(macroUri);
 			_dependecies.add(d);
-			
+
 			Map<String, String> macroParams = extractMacroParams(macroURI.getQuery());
 			Document document_macro = XomDocumentBuilder.getDocument(macroUri);
 			prepareMacro(document_macro, el, macroPath, macroParams);
