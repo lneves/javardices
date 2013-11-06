@@ -503,8 +503,10 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
 			((JptParentNode) pnodes.peek()).appendChild(sf_pre);
 
-			int nl = _sb.lastIndexOf("\n");
-			String padding = _sb.substring(nl, _sb.length());
+			//int nl = _sb.lastIndexOf("\n");
+			//String padding = _sb.substring(nl, _sb.length());
+			
+			String padding = "";
 
 			_sb.delete(0, _sb.length());
 			el.removeAttribute(attribute);
