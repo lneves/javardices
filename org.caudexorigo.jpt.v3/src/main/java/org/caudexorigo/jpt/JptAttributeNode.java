@@ -10,6 +10,7 @@ import java.util.Set;
 import nu.xom.Attribute;
 
 import org.caudexorigo.text.StringEscapeUtils;
+import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 
@@ -64,12 +65,16 @@ public class JptAttributeNode extends JptNode
 		}
 
 		String sout = StringEscapeUtils.escapeXml(String.valueOf(MVEL.executeExpression(_compiled_exp, context)));
-		out.write(SPACE, 0, 1);
-		out.write(_attribute_name, 0, _attribute_name.length);
-		out.write(EQUAL_SIGN, 0, 1);
-		out.write(QUOTE, 0, 1);
-		out.write(sout);
-		out.write(QUOTE, 0, 1);
+
+		if (StringUtils.isNotBlank(sout))
+		{
+			out.write(SPACE, 0, 1);
+			out.write(_attribute_name, 0, _attribute_name.length);
+			out.write(EQUAL_SIGN, 0, 1);
+			out.write(QUOTE, 0, 1);
+			out.write(sout);
+			out.write(QUOTE, 0, 1);
+		}
 	}
 
 	public boolean isInSlot()
