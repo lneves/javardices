@@ -64,10 +64,11 @@ public class JptAttributeNode extends JptNode
 			_compiled_exp = MVEL.compileExpression(_attr_exp, parser_context);
 		}
 
-		String sout = StringEscapeUtils.escapeXml(String.valueOf(MVEL.executeExpression(_compiled_exp, context)));
+		String v = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
 
-		if (StringUtils.isNotBlank(sout))
+		if (StringUtils.isNotBlank(v))
 		{
+			String sout = StringEscapeUtils.escapeXml(v);
 			out.write(SPACE, 0, 1);
 			out.write(_attribute_name, 0, _attribute_name.length);
 			out.write(EQUAL_SIGN, 0, 1);
