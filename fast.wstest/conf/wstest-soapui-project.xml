@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="wstest" resourceRoot="" soapui-version="4.6.1" abortOnError="false" runType="SEQUENTIAL" activeEnvironment="Default" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="TestServiceSoap" type="wsdl" bindingName="{uri:WSTestWeb-TestService}TestServiceSoap" soapVersion="1_1" anonymous="optional" definition="file:/home/lneves/Work/ActiveProjects/experiments/fast_wstest/conf/wstest.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/home/lneves/Work/ActiveProjects/experiments/fast_wstest/conf/wstest.wsdl"><con:part><con:url>file:/home/lneves/Work/ActiveProjects/experiments/fast_wstest/conf/wstest.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="uri:WSTestWeb-TestService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="uri:WSTestWeb-TestService" xmlns:intf="uri:WSTestWeb-TestService" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="uri:WSTestWeb-TestService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <schema elementFormDefault="qualified" targetNamespace="uri:WSTestWeb-TestService" xmlns="http://www.w3.org/2001/XMLSchema">
+      <complexType name="TestStruct">
+        <sequence>
+          <element name="i" type="xsd:int"/>
+          <element name="f" nillable="true" type="xsd:float"/>
+          <element name="s" nillable="true" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <complexType name="COfTestStruct">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="1" name="l" type="s0:TestStruct"/>
+        </sequence>
+      </complexType>
+      <complexType name="TestNode">
+        <complexContent mixed="false">
+          <extension base="s0:TestStruct">
+            <sequence>
+              <element maxOccurs="1" minOccurs="0" name="Next" type="s0:TestNode"/>
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <complexType name="LineItem">
+        <sequence>
+          <element maxOccurs="1" minOccurs="1" name="OrderId" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="ItemId" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="ProductId" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="ProductDescription" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="OrderQuantity" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="UnitPrice" type="xsd:float"/>
+        </sequence>
+      </complexType>
+      <complexType name="COfLineItem">
+        <sequence>
+          <element maxOccurs="unbounded" minOccurs="0" name="LineItem" nillable="true" type="s0:LineItem"/>
+        </sequence>
+      </complexType>
+      <complexType name="Address">
+        <sequence>
+          <element maxOccurs="1" minOccurs="1" name="FirstName" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="LastName" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="Address1" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="Address2" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="City" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="State" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="Zip" type="xsd:string"/>
+        </sequence>
+      </complexType>
+      <complexType name="Customer">
+        <sequence>
+          <element maxOccurs="1" minOccurs="1" name="CustomerId" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="ContactFirstName" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="ContactLastName" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="ContactPhone" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="LastActivityDate" type="xsd:dateTime"/>
+          <element maxOccurs="1" minOccurs="1" name="CreditCardNumber" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="CreditCardExpirationDate" type="xsd:string"/>
+          <element maxOccurs="1" minOccurs="1" name="BillingAddress" type="s0:Address"/>
+          <element maxOccurs="1" minOccurs="1" name="ShippingAddress" type="s0:Address"/>
+        </sequence>
+      </complexType>
+      <complexType name="Order">
+        <sequence>
+          <element maxOccurs="1" minOccurs="1" name="OrderId" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="OrderStatus" type="xsd:int"/>
+          <element maxOccurs="1" minOccurs="1" name="OrderDate" type="xsd:dateTime"/>
+          <element maxOccurs="1" minOccurs="1" name="OrderTotalAmount" type="xsd:float"/>
+          <element maxOccurs="1" minOccurs="1" name="Customer" type="s0:Customer"/>
+          <element maxOccurs="1" minOccurs="1" name="LineItems" type="s0:COfLineItem"/>
+        </sequence>
+      </complexType>
+      <s:element name="EchoSynthetic">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="synth" type="s0:Synthetic"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Synthetic">
+        <s:sequence>
+          <s:element maxOccurs="1" minOccurs="0" name="Strng" type="s:string"/>
+          <s:element maxOccurs="1" minOccurs="0" name="Strct" type="s0:TestStruct"/>
+          <s:element maxOccurs="1" minOccurs="0" name="Barray" type="s:base64Binary"/>
+        </s:sequence>
+      </s:complexType>
+      <s:element name="EchoSyntheticResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="EchoSyntheticResult" type="s0:Synthetic"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <element name="EchoStruct">
+        <complexType>
+          <sequence>
+            <element name="array" type="s0:COfTestStruct"/>
+          </sequence>
+        </complexType>
+      </element>
+      <s:element name="EchoStructResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="EchoStructResult" type="s0:COfTestStruct"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <element name="EchoVoid">
+        <complexType/>
+      </element>
+      <element name="EchoVoidResponse">
+        <complexType/>
+      </element>
+      <element name="EchoList">
+        <complexType>
+          <sequence>
+            <element maxOccurs="1" minOccurs="0" name="list" type="s0:TestNode"/>
+          </sequence>
+        </complexType>
+      </element>
+      <s:element name="EchoListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="0" name="EchoListResult" type="s0:TestNode"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <element name="GetOrder">
+        <complexType>
+          <sequence>
+            <element maxOccurs="1" minOccurs="1" name="orderId" type="xsd:int"/>
+            <element maxOccurs="1" minOccurs="1" name="customerId" type="xsd:int"/>
+            <element maxOccurs="1" minOccurs="1" name="messageSize" type="xsd:int"/>
+          </sequence>
+        </complexType>
+      </element>
+      <s:element name="GetOrderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="1" minOccurs="1" name="GetOrderResult" type="s0:Order"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="EchoListSoapOut">
+    <wsdl:part element="s0:EchoListResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoListSoapIn">
+    <wsdl:part element="s0:EchoList" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoVoidSoapIn">
+    <wsdl:part element="s0:EchoVoid" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoSyntheticSoapOut">
+    <wsdl:part element="s0:EchoSyntheticResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoStructSoapOut">
+    <wsdl:part element="s0:EchoStructResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrderSoapIn">
+    <wsdl:part element="s0:GetOrder" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="GetOrderSoapOut">
+    <wsdl:part element="s0:GetOrderResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoVoidSoapOut">
+    <wsdl:part element="s0:EchoVoidResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoSyntheticSoapIn">
+    <wsdl:part element="s0:EchoSynthetic" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="EchoStructSoapIn">
+    <wsdl:part element="s0:EchoStruct" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="TestServiceSoap">
+    <wsdl:operation name="EchoSynthetic">
+      <wsdl:input message="s0:EchoSyntheticSoapIn"/>
+      <wsdl:output message="s0:EchoSyntheticSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="EchoStruct">
+      <wsdl:input message="s0:EchoStructSoapIn"/>
+      <wsdl:output message="s0:EchoStructSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="EchoVoid">
+      <wsdl:input message="s0:EchoVoidSoapIn"/>
+      <wsdl:output message="s0:EchoVoidSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="EchoList">
+      <wsdl:input message="s0:EchoListSoapIn"/>
+      <wsdl:output message="s0:EchoListSoapOut"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrder">
+      <wsdl:input message="s0:GetOrderSoapIn"/>
+      <wsdl:output message="s0:GetOrderSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TestServiceSoap" type="s0:TestServiceSoap">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="EchoSynthetic">
+      <wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoSynthetic" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EchoStruct">
+      <wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoStruct" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EchoVoid">
+      <wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoVoid" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EchoList">
+      <wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/EchoList" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrder">
+      <wsdlsoap:operation soapAction="uri:WSTestWeb-TestService/GetOrder" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TestService">
+    <wsdl:port binding="s0:TestServiceSoap" name="TestServiceSoap">
+      <wsdlsoap:address location="http://localhost:9080/WSTest/services/TestServiceSoap"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/wstest</con:endpoint></con:endpoints><con:operation isOneWay="false" action="uri:WSTestWeb-TestService/EchoList" name="EchoList" bindingOperationName="EchoList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="EchoListRequest" outgoingWss="" incomingWss=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="uri:WSTestWeb-TestService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <EchoList>
+         <list>
+            <i>1</i>
+            <f>2.0</f>
+            <s>wstest</s>
+            <Next>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+               <Next>
+                  <i>7</i>
+                  <f>2.0</f>
+                  <s>wstest</s>
+                  <Next>
+                     <i>7</i>
+                     <f>2.0</f>
+                     <s>wstest</s>
+                     <Next>
+                        <i>7</i>
+                        <f>2.0</f>
+                        <s>wstest</s>
+                        <Next>
+                           <i>7</i>
+                           <f>2.0</f>
+                           <s>wstest</s>
+                           <Next>
+                              <i>7</i>
+                              <f>2.0</f>
+                              <s>wstest</s>
+                              <Next>
+                                 <i>7</i>
+                                 <f>2.0</f>
+                                 <s>wstest</s>
+                                 <Next>
+                                    <i>7</i>
+                                    <f>2.0</f>
+                                    <s>wstest</s>
+                                    <Next>
+                                       <i>7</i>
+                                       <f>2.0</f>
+                                       <s>wstest</s>
+                                       <Next>
+                                          <i>7</i>
+                                          <f>2.0</f>
+                                          <s>wstest</s>
+                                          <Next>
+                                             <i>7</i>
+                                             <f>2.0</f>
+                                             <s>wstest</s>
+                                             <Next>
+                                                <i>7</i>
+                                                <f>2.0</f>
+                                                <s>wstest</s>
+                                                <Next>
+                                                   <i>4</i>
+                                                   <f>2.0</f>
+                                                   <s>wstest</s>
+                                                   <Next>
+                                                      <i>7</i>
+                                                      <f>2.0</f>
+                                                      <s>wstest</s>
+                                                      <Next>
+                                                         <i>7</i>
+                                                         <f>2.0</f>
+                                                         <s>wstest</s>
+                                                         <Next>
+                                                            <i>7</i>
+                                                            <f>2.0</f>
+                                                            <s>wstest</s>
+                                                            <Next>
+                                                               <i>7</i>
+                                                               <f>2.0</f>
+                                                               <s>wstest</s>
+                                                               <Next>
+                                                                  <i>7</i>
+                                                                  <f>2.0</f>
+                                                                  <s>wstest</s>
+                                                                  <Next>
+                                                                     <i>7</i>
+                                                                     <f>2.0</f>
+                                                                     <s>wstest</s>
+                                                                     <Next>
+                                                                        <i>7</i>
+                                                                        <f>2.0</f>
+                                                                        <s>wstest</s>
+                                                                        <Next>
+                                                                           <i>7</i>
+                                                                           <f>2.0</f>
+                                                                           <s>wstest</s>
+                                                                        </Next>
+                                                                     </Next>
+                                                                  </Next>
+                                                               </Next>
+                                                            </Next>
+                                                         </Next>
+                                                      </Next>
+                                                   </Next>
+                                                </Next>
+                                             </Next>
+                                          </Next>
+                                       </Next>
+                                    </Next>
+                                 </Next>
+                              </Next>
+                           </Next>
+                        </Next>
+                     </Next>
+                  </Next>
+               </Next>
+            </Next>
+         </list>
+      </EchoList>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="uri:WSTestWeb-TestService/EchoStruct" name="EchoStruct" bindingOperationName="EchoStruct" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="EchoStructRequest" outgoingWss="" incomingWss=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <EchoStruct xmlns="uri:WSTestWeb-TestService">
+         <array>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+         </array>
+      </EchoStruct>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoStructRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="uri:WSTestWeb-TestService/EchoSynthetic" name="EchoSynthetic" bindingOperationName="EchoSynthetic" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="EchoSyntheticRequest" outgoingWss="" incomingWss=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:WSTestWeb-TestService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:EchoSynthetic>
+         <uri:synth>
+            <uri:Strng>wstest_a</uri:Strng>
+            <uri:Strct>
+               <uri:i>1</uri:i>
+               <uri:f>3.0</uri:f>
+               <uri:s>wstest_b</uri:s>
+            </uri:Strct>
+            <uri:Barray>cid:1116720610211</uri:Barray>
+         </uri:synth>
+      </uri:EchoSynthetic>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoSyntheticRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="uri:WSTestWeb-TestService/EchoVoid" name="EchoVoid" bindingOperationName="EchoVoid" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1" outgoingWss="" incomingWss=""><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:WSTestWeb-TestService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:EchoVoid/>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/></con:credentials><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoVoidRequest"/></con:call></con:operation><con:operation isOneWay="false" action="uri:WSTestWeb-TestService/GetOrder" name="GetOrder" bindingOperationName="GetOrder" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="GetOrderRequest" outgoingWss="" incomingWss=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="uri:WSTestWeb-TestService">
+   <soapenv:Body>
+      <GetOrder>
+         <orderId>1</orderId>
+         <customerId>2</customerId>
+         <messageSize>20</messageSize>
+      </GetOrder>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/GetOrderRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite name="BenchSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="BenchCase" searchProperties="true" id="46889a47-4776-47ab-ae3a-1bd0598fb8c0"><con:settings/><con:testStep type="request" name="EchoList - EchoListRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>TestServiceSoap</con:interface><con:operation>EchoList</con:operation><con:request name="EchoList - EchoListRequest" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType=""><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="uri:WSTestWeb-TestService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <EchoList>
+         <list>
+            <i>1</i>
+            <f>2.0</f>
+            <s>wstest</s>
+            <Next>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+               <Next>
+                  <i>7</i>
+                  <f>2.0</f>
+                  <s>wstest</s>
+                  <Next>
+                     <i>7</i>
+                     <f>2.0</f>
+                     <s>wstest</s>
+                     <Next>
+                        <i>7</i>
+                        <f>2.0</f>
+                        <s>wstest</s>
+                        <Next>
+                           <i>7</i>
+                           <f>2.0</f>
+                           <s>wstest</s>
+                           <Next>
+                              <i>7</i>
+                              <f>2.0</f>
+                              <s>wstest</s>
+                              <Next>
+                                 <i>7</i>
+                                 <f>2.0</f>
+                                 <s>wstest</s>
+                                 <Next>
+                                    <i>7</i>
+                                    <f>2.0</f>
+                                    <s>wstest</s>
+                                    <Next>
+                                       <i>7</i>
+                                       <f>2.0</f>
+                                       <s>wstest</s>
+                                       <Next>
+                                          <i>7</i>
+                                          <f>2.0</f>
+                                          <s>wstest</s>
+                                          <Next>
+                                             <i>7</i>
+                                             <f>2.0</f>
+                                             <s>wstest</s>
+                                             <Next>
+                                                <i>7</i>
+                                                <f>2.0</f>
+                                                <s>wstest</s>
+                                                <Next>
+                                                   <i>4</i>
+                                                   <f>2.0</f>
+                                                   <s>wstest</s>
+                                                   <Next>
+                                                      <i>7</i>
+                                                      <f>2.0</f>
+                                                      <s>wstest</s>
+                                                      <Next>
+                                                         <i>7</i>
+                                                         <f>2.0</f>
+                                                         <s>wstest</s>
+                                                         <Next>
+                                                            <i>7</i>
+                                                            <f>2.0</f>
+                                                            <s>wstest</s>
+                                                            <Next>
+                                                               <i>7</i>
+                                                               <f>2.0</f>
+                                                               <s>wstest</s>
+                                                               <Next>
+                                                                  <i>7</i>
+                                                                  <f>2.0</f>
+                                                                  <s>wstest</s>
+                                                                  <Next>
+                                                                     <i>7</i>
+                                                                     <f>2.0</f>
+                                                                     <s>wstest</s>
+                                                                     <Next>
+                                                                        <i>7</i>
+                                                                        <f>2.0</f>
+                                                                        <s>wstest</s>
+                                                                        <Next>
+                                                                           <i>7</i>
+                                                                           <f>2.0</f>
+                                                                           <s>wstest</s>
+                                                                        </Next>
+                                                                     </Next>
+                                                                  </Next>
+                                                               </Next>
+                                                            </Next>
+                                                         </Next>
+                                                      </Next>
+                                                   </Next>
+                                                </Next>
+                                             </Next>
+                                          </Next>
+                                       </Next>
+                                    </Next>
+                                 </Next>
+                              </Next>
+                           </Next>
+                        </Next>
+                     </Next>
+                  </Next>
+               </Next>
+            </Next>
+         </list>
+      </EchoList>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoListRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="EchoStruct - EchoStructRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>TestServiceSoap</con:interface><con:operation>EchoStruct</con:operation><con:request name="EchoStruct - EchoStructRequest" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType=""><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Body>
+      <EchoStruct xmlns="uri:WSTestWeb-TestService">
+         <array>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>4</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+            <l>
+               <i>1</i>
+               <f>2.0</f>
+               <s>wstest</s>
+            </l>
+         </array>
+      </EchoStruct>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoStructRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="GetOrder - GetOrderRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>TestServiceSoap</con:interface><con:operation>GetOrder</con:operation><con:request name="GetOrder - GetOrderRequest" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType=""><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="uri:WSTestWeb-TestService">
+   <soapenv:Body>
+      <GetOrder>
+         <orderId>1</orderId>
+         <customerId>2</customerId>
+         <messageSize>20</messageSize>
+      </GetOrder>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/GetOrderRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="EchoSynthetic - EchoSyntheticRequest"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>TestServiceSoap</con:interface><con:operation>EchoSynthetic</con:operation><con:request name="EchoSynthetic - EchoSyntheticRequest" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/wstest</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:uri="uri:WSTestWeb-TestService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <uri:EchoSynthetic>
+         <uri:synth>
+            <uri:Strng>wstest_a</uri:Strng>
+            <uri:Strct>
+               <uri:i>1</uri:i>
+               <uri:f>3.0</uri:f>
+               <uri:s>wstest_b</uri:s>
+            </uri:Strct>
+            <uri:Barray>cid:1116720610211</uri:Barray>
+         </uri:synth>
+      </uri:EchoSynthetic>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" name="SOAP Response"/><con:assertion type="Schema Compliance" name="Schema Compliance"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" name="Not SOAP Fault"/><con:credentials><con:username xsi:nil="true"/><con:password xsi:nil="true"/><con:domain xsi:nil="true"/><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="uri:WSTestWeb-TestService/TestServiceSoap/EchoSyntheticRequest"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:loadTest name="LoadTest 1"><con:settings><con:setting id="HttpSettings@close-connections">false</con:setting></con:settings><con:threadCount>5</con:threadCount><con:startDelay>0</con:startDelay><con:sampleInterval>250</con:sampleInterval><con:calculateTPSOnTimePassed>true</con:calculateTPSOnTimePassed><con:resetStatisticsOnThreadCountChange>true</con:resetStatisticsOnThreadCountChange><con:historyLimit>-1</con:historyLimit><con:testLimit>60</con:testLimit><con:limitType>TIME</con:limitType><con:loadStrategy><con:type>Simple</con:type><con:config><testDelay>1</testDelay><randomFactor>0.5</randomFactor></con:config></con:loadStrategy><con:assertion type="Step Status" name="Step Status"/><con:maxAssertionErrors>100</con:maxAssertionErrors><con:statisticsLogFolder/><con:statisticsLogInterval>0</con:statisticsLogInterval><con:logStatisticsOnThreadChange>false</con:logStatisticsOnThreadChange><con:cancelOnReachedLimit>false</con:cancelOnReachedLimit><con:cancelExcessiveThreads>true</con:cancelExcessiveThreads><con:strategyInterval>500</con:strategyInterval><con:updateStatisticsPerTestStep>false</con:updateStatisticsPerTestStep></con:loadTest><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/></con:soapui-project>

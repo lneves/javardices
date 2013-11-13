@@ -1,0 +1,6 @@
+<binding trim-whitespace="true">
+
+	<include path="soap_binding.xml" />
+	<include path="srv_binding.xml" />
+
+</binding>

@@ -1,0 +1,15 @@
+#!/bin/sh
+# Supervise run command for WSTest HTTP XML API
+exec 2>&1
+
+cd $(dirname $0)
+
+java \
+  -server -XX:+UseParallelGC -XX:+UseNUMA \
+  -Xms32M -Xmx256M \
+  -Djava.awt.headless=true \
+  -Djava.net.preferIPv4Stack=true \
+  -Djava.net.preferIPv6Addresses=false \
+  -Dfile.encoding=UTF-8 \
+  -classpath "./bin:./lib/*" \
+  wstest.srv.netty.NettyWSTestSrv
