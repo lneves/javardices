@@ -3,6 +3,7 @@ package org.caudexorigo.http.netty;
 import java.nio.charset.Charset;
 
 import org.caudexorigo.ErrorAnalyser;
+import org.caudexorigo.http.netty.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
@@ -22,6 +23,7 @@ public abstract class HttpAction
 	public abstract void service(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response);
 
 	private HttpRequest request = null;
+	private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
 
 	public HttpAction()
 	{
@@ -79,6 +81,8 @@ public abstract class HttpAction
 
 	private void handleError(HttpRequest request, HttpResponse response, Throwable ex)
 	{
+		ex.printStackTrace();
+		
 		request = (this.request != null) ? this.request : request;
 
 		response.clearHeaders();
@@ -115,11 +119,11 @@ public abstract class HttpAction
 		}
 	}
 
-	protected void writeStandardResponse(HttpRequest request, HttpResponse response, Throwable rootCause)
+	private void writeStandardResponse(HttpRequest request, HttpResponse response, Throwable rootCause)
 	{
 		request = (this.request != null) ? this.request : request;
 
-		StandardResponseFormatter stdFrm = new StandardResponseFormatter(getShowFullErrorInfo());
+		ResponseFormatter rspFrm = getResponseFormatter();
 
 		if (rootCause != null)
 		{
@@ -130,7 +134,7 @@ public abstract class HttpAction
 					response.setStatus(HttpResponseStatus.INTERNAL_SERVER_ERROR);
 				}
 
-				stdFrm.formatResponse(request, response, rootCause);
+				rspFrm.formatResponse(request, response, rootCause);
 			}
 			catch (Throwable e)
 			{
@@ -144,13 +148,13 @@ public abstract class HttpAction
 		this.request = request;
 	}
 
-	public boolean getShowFullErrorInfo()
-	{
-		return false;
-	}
-	
 	public Charset getCharset()
 	{
 		return null;
+	}
+
+	protected ResponseFormatter getResponseFormatter()
+	{
+		return defaultRspFmt;
 	}
 }

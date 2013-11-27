@@ -7,12 +7,12 @@ import org.caudexorigo.text.StringUtils;
 
 public class HttpSslContext
 {
-	private final int _sslPort;
+	private final int sslPort;
 	private final String keyPasswordStr;
 	private final String keyStoreLocation;
 	private final String keyStorePasswordStr;
 
-	public HttpSslContext(int _sslPort, String keyStoreLocation, String keyStorePasswordStr, String keyPasswordStr)
+	public HttpSslContext(int sslPort, String keyStoreLocation, String keyStorePasswordStr, String keyPasswordStr)
 	{
 		super();
 
@@ -31,7 +31,7 @@ public class HttpSslContext
 			throw new IllegalArgumentException("Invalid key password provided");
 		}
 
-		this._sslPort = _sslPort;
+		this.sslPort = sslPort;
 		this.keyStoreLocation = keyStoreLocation;
 		this.keyStorePasswordStr = keyStorePasswordStr;
 		this.keyPasswordStr = keyPasswordStr;
@@ -39,7 +39,7 @@ public class HttpSslContext
 
 	public int getSslPort()
 	{
-		return _sslPort;
+		return this.sslPort;
 	}
 
 	public javax.net.ssl.SSLContext getSSLContext() throws Exception

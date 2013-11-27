@@ -1,8 +1,7 @@
 package org.caudexorigo.http.netty;
 
-import java.net.URI;
-
 import org.caudexorigo.cli.CliFactory;
+import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
 import org.jboss.netty.logging.InternalLoggerFactory;
 import org.jboss.netty.logging.Slf4JLoggerFactory;
 
@@ -10,15 +9,14 @@ public class DefaultServer
 {
 	public static void main(String[] args) throws Exception
 	{
-		final CliArgs cargs = CliFactory.parseArguments(CliArgs.class, args);
+		final NettyHttpServerCliArgs cargs = CliFactory.parseArguments(NettyHttpServerCliArgs.class, args);
 
 		InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
-		String dir = cargs.getRootDirectory();
-		URI root_dir = URI.create(dir);
-		NettyHttpServer server = new NettyHttpServer(root_dir, true);
+		NettyHttpServer server = new NettyHttpServer(true);
 		server.setPort(cargs.getPort());
 		server.setHost(cargs.getHost());
 		server.setRouter(new DefaultRouter());
+		server.setResponseFormtter(new StandardResponseFormatter(false));
 		server.start();
 	}
 }

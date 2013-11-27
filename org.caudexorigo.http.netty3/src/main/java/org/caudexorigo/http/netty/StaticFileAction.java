@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.Date;
 
+import org.caudexorigo.http.netty.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
 import org.caudexorigo.text.StringUtils;
 import org.caudexorigo.text.UrlCodec;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -31,17 +33,24 @@ public class StaticFileAction extends HttpAction
 	private final String rootDirectoryPath;
 
 	private final long cacheAge;
+	private ResponseFormatter rspFmt;
 
 	public StaticFileAction(URI root_path)
 	{
-		this(root_path, 0);
+		this(root_path, new StandardResponseFormatter(false), 0);
 	}
 
-	public StaticFileAction(URI root_path, long cache_age)
+	public StaticFileAction(URI root_path, ResponseFormatter rspFmt)
+	{
+		this(root_path, rspFmt, 0);
+	}
+
+	public StaticFileAction(URI root_path, ResponseFormatter rspFmt, long cache_age)
 	{
 
 		rootDirectory = new File(root_path);
 		rootDirectoryPath = rootDirectory.getAbsolutePath();
+		this.rspFmt = rspFmt;
 
 		this.cacheAge = cache_age;
 
@@ -164,6 +173,12 @@ public class StaticFileAction extends HttpAction
 		}
 	}
 
+	@Override
+	protected ResponseFormatter getResponseFormatter()
+	{
+		return this.rspFmt;
+	}
+
 	// this method serves as optional overload hook
 	public String getContentEncoding()
 	{
@@ -262,5 +277,4 @@ public class StaticFileAction extends HttpAction
 
 		return rootDirectoryPath + File.separator + path;
 	}
-
 }

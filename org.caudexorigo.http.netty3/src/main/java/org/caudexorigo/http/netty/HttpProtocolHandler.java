@@ -1,8 +1,10 @@
 package org.caudexorigo.http.netty;
 
-import java.net.URI;
+import java.io.FileNotFoundException;
 
 import org.caudexorigo.ErrorAnalyser;
+import org.caudexorigo.http.netty.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandler.Sharable;
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -26,29 +28,40 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 {
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);
 
-	private final HttpAction defaultAction;
-	
+	private final ResponseFormatter _rspFmt;
 	private final RequestRouter _requestMapper;
+	private final RequestObserver _requestObserver;
 
 	// private boolean _hasWebSocketSupport;
 	// private Map<String, WebSocketHandler> _webSocketHandlers = new ConcurrentHashMap<String, WebSocketHandler>();
 
 	public HttpProtocolHandler(RequestRouter requestMapper)
 	{
-		this(null, requestMapper);
+		_requestMapper = requestMapper;
+		_rspFmt = new StandardResponseFormatter(false);
+		_requestObserver = new DefaultObserver();
 	}
 
-	public HttpProtocolHandler(URI root_directory, RequestRouter requestMapper)
+	public HttpProtocolHandler(RequestRouter requestMapper, RequestObserver customObserver, ResponseFormatter customResponseFormtter)
 	{
 		_requestMapper = requestMapper;
 
-		if (root_directory != null)
+		if (customResponseFormtter == null)
 		{
-			defaultAction = new StaticFileAction(root_directory);
+			_rspFmt = new StandardResponseFormatter(false);
 		}
 		else
 		{
-			defaultAction = new DefaultAction();
+			_rspFmt = customResponseFormtter;
+		}
+
+		if (customObserver == null)
+		{
+			_requestObserver = new DefaultObserver();
+		}
+		else
+		{
+			_requestObserver = customObserver;
 		}
 	}
 
@@ -187,7 +200,9 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 
 		try
 		{
-			HttpAction action = _requestMapper.map(request);
+			HttpAction action = _requestMapper.map(ctx, request);
+
+			observeBegin(ctx, request, response);
 
 			if (action != null)
 			{
@@ -195,14 +210,44 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 			}
 			else
 			{
-				response.setStatus(HttpResponseStatus.NOT_FOUND);
-				defaultAction.process(ctx, request, response);
+				HttpAction errorAction = new ErrorAction(new WebException(new FileNotFoundException(), HttpResponseStatus.NOT_FOUND.getCode()), _rspFmt);
+				errorAction.process(ctx, request, response);
 			}
 		}
 		catch (Throwable t)
 		{
-			HttpAction errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.getCode()));
+			HttpAction errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.getCode()), _rspFmt);
 			errorAction.process(ctx, request, response);
+		}
+		finally
+		{
+			observeEnd(ctx, request, response);
+		}
+	}
+
+	private void observeBegin(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
+	{
+		try
+		{
+			_requestObserver.begin(ctx, request, response);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			log.error(r.getMessage(), r);
+		}
+	}
+
+	private void observeEnd(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
+	{
+		try
+		{
+			_requestObserver.end(ctx, request, response);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			log.error(r.getMessage(), r);
 		}
 	}
 

@@ -3,6 +3,7 @@ package org.caudexorigo.http.netty.reporting;
 import java.io.PrintWriter;
 
 import org.caudexorigo.io.UnsynchronizedStringWriter;
+import org.caudexorigo.text.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
@@ -11,7 +12,7 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StandardResponseFormatter
+public class StandardResponseFormatter implements ResponseFormatter
 {
 	private static Logger log = LoggerFactory.getLogger(StandardResponseFormatter.class);
 
@@ -24,14 +25,28 @@ public class StandardResponseFormatter
 		this.showFullErrorInfo = showFullErrorInfo;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.caudexorigo.http.netty.reporting.ResponseFormtter#formatResponse(org.jboss.netty.handler.codec.http.HttpRequest, org.jboss.netty.handler.codec.http.HttpResponse)
+	 */
+	@Override
 	public void formatResponse(HttpRequest request, HttpResponse response)
 	{
 		formatResponse(request, response, null);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.caudexorigo.http.netty.reporting.ResponseFormtter#formatResponse(org.jboss.netty.handler.codec.http.HttpRequest, org.jboss.netty.handler.codec.http.HttpResponse, java.lang.Throwable)
+	 */
+	@Override
 	public void formatResponse(HttpRequest request, HttpResponse response, Throwable error)
 	{
-		if (MessageBody.allow(response.getStatus().getCode()))
+		int rsp_code = response.getStatus().getCode();
+
+		if (MessageBody.allow(rsp_code))
 		{
 			try
 			{
@@ -59,11 +74,12 @@ public class StandardResponseFormatter
 				PrintWriter pw = new PrintWriter(sw);
 				error.printStackTrace(pw);
 				pw.flush();
-				return sw.toString();
+				String emsg = sw.toString();
+				return emsg;
 			}
 			else
 			{
-				return error.getMessage();
+				return StringUtils.defaultIfEmpty(error.getMessage(), "N/A");
 			}
 		}
 		else
