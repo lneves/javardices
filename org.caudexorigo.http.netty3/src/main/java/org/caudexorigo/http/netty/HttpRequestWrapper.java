@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,7 +17,6 @@ import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpVersion;
-import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
 public class HttpRequestWrapper implements HttpRequest
 {
@@ -62,10 +62,10 @@ public class HttpRequestWrapper implements HttpRequest
 	{
 		if (parameters == null)
 		{
-			// parameters = new HashMap<String, List<String>>();
-			// setParameters(getQueryString());
+			parameters = new HashMap<String, List<String>>();
+			setParameters(getQueryString());
 
-			parameters = (new QueryStringDecoder(request.getUri(), charset, true)).getParameters();
+			//parameters = (new QueryStringDecoder(request.getUri(), charset, true)).getParameters();
 
 			String content_type = request.getHeader(HttpHeaders.Names.CONTENT_TYPE);
 
@@ -77,7 +77,7 @@ public class HttpRequestWrapper implements HttpRequest
 				}
 				setParameters(request.getContent().toString(charset));
 
-				parameters.putAll((new QueryStringDecoder(request.getContent().toString(charset), charset, false)).getParameters());
+				//parameters.putAll((new QueryStringDecoder(request.getContent().toString(charset), charset, false)).getParameters());
 			}
 		}
 	}
