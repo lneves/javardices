@@ -9,6 +9,7 @@ import org.caudexorigo.http.netty.RequestRouter;
 import org.caudexorigo.jersey.JerseyHttpAction;
 import org.glassfish.jersey.server.ApplicationHandler;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 
 public class SampleJerseyRouter implements RequestRouter
@@ -65,7 +66,7 @@ public class SampleJerseyRouter implements RequestRouter
 	}
 
 	@Override
-	public HttpAction map(HttpRequest req)
+	public HttpAction map(ChannelHandlerContext ctx, HttpRequest req)
 	{
 		return jerseyAction;
 	}

@@ -1,8 +1,8 @@
 package wstest.srv.netty;
 
 import org.caudexorigo.cli.CliFactory;
-import org.caudexorigo.http.netty.CliArgs;
 import org.caudexorigo.http.netty.NettyHttpServer;
+import org.caudexorigo.http.netty.NettyHttpServerCliArgs;
 import org.jboss.netty.logging.InternalLoggerFactory;
 import org.jboss.netty.logging.Slf4JLoggerFactory;
 import org.slf4j.Logger;
@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 public class NettyWSTestSrv
 {
 	private static Logger log = LoggerFactory.getLogger(NettyWSTestSrv.class);
-
-	private static final int PORT = 8012;
 
 	public static void main(String[] args) throws Exception
 	{
@@ -35,7 +33,7 @@ public class NettyWSTestSrv
 			log.warn("Aalto was not found in the classpath, will fallback to use the native parser");
 		}
 
-		final CliArgs cargs = CliFactory.parseArguments(CliArgs.class, args);
+		final NettyHttpServerCliArgs cargs = CliFactory.parseArguments(NettyHttpServerCliArgs.class, args);
 
 		InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
 		NettyHttpServer server = new NettyHttpServer();

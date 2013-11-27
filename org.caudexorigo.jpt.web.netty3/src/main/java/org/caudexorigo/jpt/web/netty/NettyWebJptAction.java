@@ -86,10 +86,4 @@ public class NettyWebJptAction extends HttpAction
 	{
 		return _templateURI;
 	}
-
-	@Override
-	public boolean getShowFullErrorInfo()
-	{
-		return _showFullErrorInfo;
-	}
 }
