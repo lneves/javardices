@@ -1,0 +1,91 @@
+<binding xmlns:s0="uri:WSTestWeb-TestService" name="binding" package="wstest.srv.actors" trim-whitespace="true">
+  <namespace uri="uri:WSTestWeb-TestService" default="elements" prefix="s0"/>
+  <mapping abstract="true" type-name="s0:TestStruct" class="wstest.srv.actors.TestStruct">
+    <value style="element" name="i" get-method="getI" set-method="setI"/>
+    <value style="element" name="f" get-method="getF" set-method="setF" usage="optional"/>
+    <value style="element" name="s" get-method="getS" set-method="setS" usage="optional"/>
+  </mapping>
+  <mapping abstract="true" type-name="s0:COfTestStruct" class="wstest.srv.actors.COfTestStruct">
+    <collection get-method="getLs" set-method="setLs" create-type="java.util.ArrayList">
+      <structure map-as="s0:TestStruct" name="l"/>
+    </collection>
+  </mapping>
+  <mapping abstract="true" type-name="s0:TestNode" class="wstest.srv.actors.TestNode">
+    <structure map-as="s0:TestStruct"/>
+    <structure map-as="s0:TestNode" get-method="getNext" set-method="setNext" usage="optional" name="Next"/>
+  </mapping>
+  <mapping abstract="true" type-name="s0:LineItem" class="wstest.srv.actors.LineItem">
+    <value style="element" name="OrderId" get-method="getOrderId" set-method="setOrderId"/>
+    <value style="element" name="ItemId" get-method="getItemId" set-method="setItemId"/>
+    <value style="element" name="ProductId" get-method="getProductId" set-method="setProductId"/>
+    <value style="element" name="ProductDescription" get-method="getProductDescription" set-method="setProductDescription"/>
+    <value style="element" name="OrderQuantity" get-method="getOrderQuantity" set-method="setOrderQuantity"/>
+    <value style="element" name="UnitPrice" get-method="getUnitPrice" set-method="setUnitPrice"/>
+  </mapping>
+  <mapping abstract="true" type-name="s0:COfLineItem" class="wstest.srv.actors.COfLineItem">
+    <collection get-method="getLineItems" set-method="setLineItems" create-type="java.util.ArrayList">
+      <structure map-as="s0:LineItem" name="LineItem"/>
+    </collection>
+  </mapping>
+  <mapping abstract="true" type-name="s0:Address" class="wstest.srv.actors.Address">
+    <value style="element" name="FirstName" get-method="getFirstName" set-method="setFirstName"/>
+    <value style="element" name="LastName" get-method="getLastName" set-method="setLastName"/>
+    <value style="element" name="Address1" get-method="getAddress1" set-method="setAddress1"/>
+    <value style="element" name="Address2" get-method="getAddress2" set-method="setAddress2"/>
+    <value style="element" name="City" get-method="getCity" set-method="setCity"/>
+    <value style="element" name="State" get-method="getState" set-method="setState"/>
+    <value style="element" name="Zip" get-method="getZip" set-method="setZip"/>
+  </mapping>
+  <mapping abstract="true" type-name="s0:Customer" class="wstest.srv.actors.Customer">
+    <value style="element" name="CustomerId" get-method="getCustomerId" set-method="setCustomerId"/>
+    <value style="element" name="ContactFirstName" get-method="getContactFirstName" set-method="setContactFirstName"/>
+    <value style="element" name="ContactLastName" get-method="getContactLastName" set-method="setContactLastName"/>
+    <value style="element" name="ContactPhone" get-method="getContactPhone" set-method="setContactPhone"/>
+    <value style="element" name="LastActivityDate" get-method="getLastActivityDate" set-method="setLastActivityDate"/>
+    <value style="element" name="CreditCardNumber" get-method="getCreditCardNumber" set-method="setCreditCardNumber"/>
+    <value style="element" name="CreditCardExpirationDate" get-method="getCreditCardExpirationDate" set-method="setCreditCardExpirationDate"/>
+    <structure map-as="s0:Address" get-method="getBillingAddress" set-method="setBillingAddress" name="BillingAddress"/>
+    <structure map-as="s0:Address" get-method="getShippingAddress" set-method="setShippingAddress" name="ShippingAddress"/>
+  </mapping>
+  <mapping abstract="true" type-name="s0:Order" class="wstest.srv.actors.Order">
+    <value style="element" name="OrderId" get-method="getOrderId" set-method="setOrderId"/>
+    <value style="element" name="OrderStatus" get-method="getOrderStatus" set-method="setOrderStatus"/>
+    <value style="element" name="OrderDate" get-method="getOrderDate" set-method="setOrderDate"/>
+    <value style="element" name="OrderTotalAmount" get-method="getOrderTotalAmount" set-method="setOrderTotalAmount"/>
+    <structure map-as="s0:Customer" get-method="getCustomer" set-method="setCustomer" name="Customer"/>
+    <structure map-as="s0:COfLineItem" get-method="getLineItems" set-method="setLineItems" name="LineItems"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.EchoSynthetic" name="EchoSynthetic">
+    <structure map-as="s0:Synthetic" get-method="getSynth" set-method="setSynth" usage="optional" name="synth"/>
+  </mapping>
+  <mapping abstract="true" type-name="s0:Synthetic" class="wstest.srv.actors.Synthetic">
+    <value style="element" name="Strng" get-method="getStrng" set-method="setStrng" usage="optional"/>
+    <structure map-as="s0:TestStruct" get-method="getStrct" set-method="setStrct" usage="optional" name="Strct"/>
+    <value style="element" name="Barray" get-method="getBarray" set-method="setBarray" usage="optional"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.EchoSyntheticResponse" name="EchoSyntheticResponse">
+    <structure map-as="s0:Synthetic" get-method="getEchoSyntheticResult" set-method="setEchoSyntheticResult" usage="optional" name="EchoSyntheticResult"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.EchoStruct" name="EchoStruct">
+    <structure map-as="s0:COfTestStruct" get-method="getArray" set-method="setArray" name="array"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.EchoStructResponse" name="EchoStructResponse">
+    <structure map-as="s0:COfTestStruct" get-method="getEchoStructResult" set-method="setEchoStructResult" name="EchoStructResult"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.EchoVoid" name="EchoVoid"/>
+  <mapping class="wstest.srv.actors.EchoVoidResponse" name="EchoVoidResponse"/>
+  <mapping class="wstest.srv.actors.EchoList" name="EchoList">
+    <structure map-as="s0:TestNode" get-method="getList" set-method="setList" usage="optional" name="list"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.EchoListResponse" name="EchoListResponse">
+    <structure map-as="s0:TestNode" get-method="getEchoListResult" set-method="setEchoListResult" usage="optional" name="EchoListResult"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.GetOrder" name="GetOrder">
+    <value style="element" name="orderId" get-method="getOrderId" set-method="setOrderId"/>
+    <value style="element" name="customerId" get-method="getCustomerId" set-method="setCustomerId"/>
+    <value style="element" name="messageSize" get-method="getMessageSize" set-method="setMessageSize"/>
+  </mapping>
+  <mapping class="wstest.srv.actors.GetOrderResponse" name="GetOrderResponse">
+    <structure map-as="s0:Order" get-method="getGetOrderResult" set-method="setGetOrderResult" name="GetOrderResult"/>
+  </mapping>
+</binding>

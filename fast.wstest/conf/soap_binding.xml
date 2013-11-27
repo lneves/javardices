@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<binding>
+	
+	<namespace uri="http://schemas.xmlsoap.org/soap/envelope/" prefix="soap" />
+
+	<mapping name="Envelope" class="wstest.ws.xml.SoapEnvelope" ns="http://schemas.xmlsoap.org/soap/envelope/">
+		<structure field="header" usage="optional" />
+		<structure field="body" usage="required" />
+	</mapping>
+
+	<mapping name="Header" class="wstest.ws.xml.SoapHeader" ns="http://schemas.xmlsoap.org/soap/envelope/" />
+
+	<mapping name="Body" class="wstest.ws.xml.SoapBody" ns="http://schemas.xmlsoap.org/soap/envelope/">
+		<structure field="echoList" usage="optional" />
+		<structure field="echoListResponse" usage="optional" />
+		<structure field="echoStruct" usage="optional" />
+		<structure field="echoStructResponse" usage="optional" />
+		<structure field="echoSynthetic" usage="optional" />
+		<structure field="echoSyntheticResponse" usage="optional" />
+		<structure field="echoVoid" usage="optional" />
+		<structure field="echoVoidResponse" usage="optional" />
+		<structure field="getOrder" usage="optional" />
+		<structure field="getOrderResponse" usage="optional" />
+		<structure field="fault" usage="optional" />
+	</mapping>
+
+
+	<mapping name="Fault" class="wstest.ws.xml.SoapFault" ns="http://schemas.xmlsoap.org/soap/envelope/" ordered="false" flexible="true">
+		<value name="faultcode" field="faultCode" usage="optional" />
+		<value name="faultstring" field="faultString" usage="optional" />
+		<value name="detail" field="detail" usage="optional" />
+	</mapping>
+
+</binding>

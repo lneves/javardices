@@ -1,0 +1,1 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns="uri:WSTestWeb-TestService"><soapenv:Body><GetOrder><orderId>1</orderId><customerId>2</customerId><messageSize>100</messageSize></GetOrder></soapenv:Body></soapenv:Envelope>
