@@ -29,4 +29,19 @@ public class IOUtils
 		}
 		return out.toString();
 	}
+
+	public static byte[] toByteArray(InputStream in) throws IOException
+	{
+		UnsynchronizedByteArrayOutputStream out = new UnsynchronizedByteArrayOutputStream();
+
+		int b;
+		while ((b = in.read()) > -1)
+		{
+			out.write(b);
+		}
+
+		byte[] buf = out.toByteArray();
+		out.close();
+		return buf;
+	}
 }
