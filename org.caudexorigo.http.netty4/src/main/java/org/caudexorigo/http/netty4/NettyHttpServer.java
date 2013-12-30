@@ -7,10 +7,11 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.net.InetSocketAddress;
-import java.net.URI;
 
 import javax.net.ssl.SSLContext;
 
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,21 +26,33 @@ public class NettyHttpServer
 	private String _host;
 
 	private RequestRouter _mapper;
+	private RequestObserver _requestObserver;
+	private ResponseFormatter _rspFmt;
 
 	private int _port;
-
-	private URI _rootDirectory;
+	private final boolean _is_compression_enabled;
 
 	public NettyHttpServer()
 	{
-		this(null);
+		this(DEFAULT_HOST, DEFAULT_PORT, false);
 	}
 
-	public NettyHttpServer(URI root_directory)
+	public NettyHttpServer(int port)
 	{
-		_host = DEFAULT_HOST;
-		_port = DEFAULT_PORT;
-		_rootDirectory = root_directory;
+		this(DEFAULT_HOST, port, false);
+	}
+
+	public NettyHttpServer(String host, int port)
+	{
+		this(host, port, false);
+	}
+
+	public NettyHttpServer(String host, int port, boolean is_compression_enabled)
+	{
+		_host = host;
+		_port = port;
+		_is_compression_enabled = is_compression_enabled;
+
 	}
 
 	public String getHost()
@@ -72,6 +85,40 @@ public class NettyHttpServer
 		_mapper = mapper;
 	}
 
+	private ResponseFormatter getResponseFormtter()
+	{
+		if (_rspFmt != null)
+		{
+			return _rspFmt;
+		}
+		else
+		{
+			return new StandardResponseFormatter(false);
+		}
+	}
+
+	protected RequestObserver getRequestObserver()
+	{
+		if (_requestObserver != null)
+		{
+			return _requestObserver;
+		}
+		else
+		{
+			return new DefaultObserver();
+		}
+	}
+
+	public void setRequestObserver(RequestObserver requestObserver)
+	{
+		_requestObserver = requestObserver;
+	}
+
+	public void setResponseFormtter(ResponseFormatter rspFmt)
+	{
+		_rspFmt = rspFmt;
+	}
+
 	public synchronized void start()
 	{
 		log.info("Starting Httpd");
@@ -80,15 +127,16 @@ public class NettyHttpServer
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try
 		{
-			HttpProtocolHandler http_handler = new HttpProtocolHandler(_rootDirectory, _mapper, false);
-			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler);
+			HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
+			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler, _is_compression_enabled);
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
 			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(server_init);
 
-			InetSocketAddress inet = new InetSocketAddress("0.0.0.0", _port);
-			log.info("Httpd started. Listening on port: {}", _port);
-			b.bind(inet).sync().channel().closeFuture().sync();			
+			InetSocketAddress inet = new InetSocketAddress(_host, _port);
+			log.info("Httpd started. Listening on {}:{}", _host, _port);
+			System.out.printf("Httpd started. Listening on %s:%s%n", _host, _port);
+			b.bind(inet).sync().channel().closeFuture().sync();
 		}
 		catch (Throwable t)
 		{
@@ -119,7 +167,7 @@ public class NettyHttpServer
 
 		try
 		{
-			HttpProtocolHandler http_handler = new HttpProtocolHandler(_rootDirectory, _mapper, true);
+			HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
 			NettySslHttpServerInitializer server_init = new NettySslHttpServerInitializer(sslContext, http_handler);
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
@@ -153,9 +201,9 @@ public class NettyHttpServer
 	{
 		bossGroup.shutdownGracefully();
 		workerGroup.shutdownGracefully();
-        
-        // Wait until all threads are terminated.
-        try
+
+		// Wait until all threads are terminated.
+		try
 		{
 			bossGroup.terminationFuture().sync();
 		}
@@ -163,7 +211,7 @@ public class NettyHttpServer
 		{
 			Thread.currentThread().interrupt();
 		}
-        try
+		try
 		{
 			workerGroup.terminationFuture().sync();
 		}

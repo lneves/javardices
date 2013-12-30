@@ -10,7 +10,7 @@ import org.caudexorigo.io.UnsynchronizedStringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StandardResponseFormatter
+public class StandardResponseFormatter implements ResponseFormatter
 {
 	private static Logger log = LoggerFactory.getLogger(StandardResponseFormatter.class);
 
@@ -23,11 +23,13 @@ public class StandardResponseFormatter
 		this.showFullErrorInfo = showFullErrorInfo;
 	}
 
+	@Override
 	public void formatResponse(FullHttpRequest request, FullHttpResponse response)
 	{
 		formatResponse(request, response, null);
 	}
 
+	@Override
 	public void formatResponse(FullHttpRequest request, FullHttpResponse response, Throwable error)
 	{
 		if (MessageBody.allow(response.getStatus().code()))

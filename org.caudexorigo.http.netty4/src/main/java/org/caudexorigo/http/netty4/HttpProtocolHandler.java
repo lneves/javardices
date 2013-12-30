@@ -1,18 +1,24 @@
 package org.caudexorigo.http.netty4;
 
+import static io.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
+import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
+import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
-import java.net.URI;
+import java.io.FileNotFoundException;
 
 import org.caudexorigo.ErrorAnalyser;
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,26 +27,37 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 {
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);
 
-	private final HttpAction defaultAction;
-
+	private final ResponseFormatter _rspFmt;
 	private final RequestRouter _requestMapper;
+	private final RequestObserver _requestObserver;
 
-	public HttpProtocolHandler(RequestRouter requestMapper, boolean useSsl)
+	public HttpProtocolHandler(RequestRouter requestMapper)
 	{
-		this(null, requestMapper, useSsl);
+		_requestMapper = requestMapper;
+		_rspFmt = new StandardResponseFormatter(false);
+		_requestObserver = new DefaultObserver();
 	}
 
-	public HttpProtocolHandler(URI root_directory, RequestRouter requestMapper, boolean useSsl)
+	public HttpProtocolHandler(RequestRouter requestMapper, RequestObserver customObserver, ResponseFormatter customResponseFormtter)
 	{
 		_requestMapper = requestMapper;
 
-		if (root_directory != null)
+		if (customResponseFormtter == null)
 		{
-			defaultAction = new StaticFileAction(root_directory, useSsl);
+			_rspFmt = new StandardResponseFormatter(false);
 		}
 		else
 		{
-			defaultAction = new DefaultAction();
+			_rspFmt = customResponseFormtter;
+		}
+
+		if (customObserver == null)
+		{
+			_requestObserver = new DefaultObserver();
+		}
+		else
+		{
+			_requestObserver = customObserver;
 		}
 	}
 
@@ -69,34 +86,65 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		{
 			DefaultFullHttpRequest request = (DefaultFullHttpRequest) msg;
 
+			if (is100ContinueExpected(request))
+			{
+				ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
+			}
+
+			ByteBuf buf = ctx.alloc().buffer();
+			FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
+
 			try
 			{
 				HttpAction action = _requestMapper.map(ctx, request);
 
+				observeBegin(ctx, request, response);
+
 				if (action != null)
 				{
-					action.process(ctx, request);
+					action.process(ctx, request, response);
 				}
 				else
 				{
-					defaultAction.process(ctx, request);
+					HttpAction errorAction = new ErrorAction(new WebException(new FileNotFoundException(), HttpResponseStatus.NOT_FOUND.code()), _rspFmt);
+					errorAction.process(ctx, request, response);
 				}
 			}
 			catch (Throwable t)
 			{
-				try
-				{
-					ByteBuf buf = ctx.alloc().buffer();
-					FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, buf);
-					DefaultAction error_action = new DefaultAction();
-					error_action.service(ctx, request, response);
-					error_action.commitResponse(ctx, response, false);
-				}
-				catch (Throwable e)
-				{
-					log.error(e.getMessage(), e);
-				}
+				HttpAction errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
+				errorAction.process(ctx, request, response);
 			}
+			finally
+			{
+				observeEnd(ctx, request, response);
+			}
+		}
+	}
+
+	private void observeBegin(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	{
+		try
+		{
+			_requestObserver.begin(ctx, request, response);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			log.error(r.getMessage(), r);
+		}
+	}
+
+	private void observeEnd(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	{
+		try
+		{
+			_requestObserver.end(ctx, request, response);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			log.error(r.getMessage(), r);
 		}
 	}
 }

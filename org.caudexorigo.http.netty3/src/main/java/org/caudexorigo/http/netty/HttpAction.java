@@ -81,8 +81,6 @@ public abstract class HttpAction
 
 	private void handleError(HttpRequest request, HttpResponse response, Throwable ex)
 	{
-		ex.printStackTrace();
-		
 		request = (this.request != null) ? this.request : request;
 
 		response.clearHeaders();

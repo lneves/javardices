@@ -1,5 +1,9 @@
 package org.caudexorigo.http.netty;
 
+import static org.jboss.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
+import static org.jboss.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
+import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+
 import java.io.FileNotFoundException;
 
 import org.caudexorigo.ErrorAnalyser;
@@ -9,6 +13,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandler.Sharable;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
@@ -95,11 +100,19 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception
 	{
-
 		Object msg = e.getMessage();
+		Channel ch = e.getChannel();
+
 		if (msg instanceof HttpRequest)
 		{
-			handleHttpRequest(ctx, (HttpRequest) msg);
+			HttpRequest req = (HttpRequest) msg;
+
+			if (is100ContinueExpected(req))
+			{
+				Channels.write(ctx, Channels.future(ch), new DefaultHttpResponse(HTTP_1_1, CONTINUE));
+			}
+
+			handleHttpRequest(ctx, req);
 		}
 		else
 		{

@@ -7,7 +7,7 @@ import org.caudexorigo.cli.Option;
  * 
  */
 
-public interface CliArgs
+public interface NettyHttpServerCliArgs
 {
 
 	/**

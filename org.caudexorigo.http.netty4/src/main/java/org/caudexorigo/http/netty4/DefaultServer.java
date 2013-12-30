@@ -3,27 +3,29 @@ package org.caudexorigo.http.netty4;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import io.netty.util.internal.logging.Slf4JLoggerFactory;
 
-import java.net.URI;
-
+import org.caudexorigo.Shutdown;
 import org.caudexorigo.cli.CliFactory;
+import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 
 public class DefaultServer
 {
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args)
 	{
-		final CliArgs cargs = CliFactory.parseArguments(CliArgs.class, args);
+		try
+		{
+			final NettyHttpServerCliArgs cargs = CliFactory.parseArguments(NettyHttpServerCliArgs.class, args);
 
-		InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
-		String dir = cargs.getRootDirectory();
-
-		System.out.println("DefaultServer.main.root_dir: " + dir);
-		URI root_dir = URI.create("file://" + dir);
-		System.out.println("DefaultServer.main.root_uri: " + root_dir.toString());
-
-		NettyHttpServer server = new NettyHttpServer(root_dir);
-		server.setPort(cargs.getPort());
-		server.setHost(cargs.getHost());
-		server.setRouter(new DefaultRouter());
-		server.start();
+			InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
+			NettyHttpServer server = new NettyHttpServer("0.0.0.0", 8080, false);
+			server.setPort(cargs.getPort());
+			server.setHost(cargs.getHost());
+			server.setRouter(new DefaultRouter());
+			server.setResponseFormtter(new StandardResponseFormatter(false));
+			server.start();
+		}
+		catch (Throwable t)
+		{
+			Shutdown.now(t);
+		}
 	}
 }

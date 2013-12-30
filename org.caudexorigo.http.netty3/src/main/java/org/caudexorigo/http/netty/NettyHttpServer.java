@@ -3,7 +3,6 @@ package org.caudexorigo.http.netty;
 import static org.jboss.netty.channel.Channels.pipeline;
 
 import java.net.InetSocketAddress;
-import java.net.URI;
 import java.util.concurrent.Executor;
 
 import javax.net.ssl.SSLContext;
@@ -52,20 +51,26 @@ public class NettyHttpServer
 
 	public NettyHttpServer()
 	{
-		this(false);
+		this(DEFAULT_HOST, DEFAULT_PORT, false);
 	}
 
-	public NettyHttpServer(boolean is_compression_enabled)
+	public NettyHttpServer(String host, int port)
 	{
-		_host = DEFAULT_HOST;
-		_port = DEFAULT_PORT;
+
+		this(host, port, false);
+	}
+
+	public NettyHttpServer(String host, int port, boolean is_compression_enabled)
+	{
+		_host = host;
+		_port = port;
 		_is_compression_enabled = is_compression_enabled;
-		// _hasWebSocketSupport = hasWebSocketSupport;
+
 	}
 
-	public NettyHttpServer(URI root_directory, boolean is_compression_enabled, Executor boss_executor, Executor worker_executor)
+	public NettyHttpServer(String host, int port, boolean is_compression_enabled, Executor boss_executor, Executor worker_executor)
 	{
-		this(is_compression_enabled);
+		this(host, port, is_compression_enabled);
 		_bossExecutor = boss_executor;
 		_workerExecutor = worker_executor;
 	}

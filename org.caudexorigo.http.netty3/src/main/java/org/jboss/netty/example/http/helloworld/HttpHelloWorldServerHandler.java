@@ -40,7 +40,6 @@ import org.jboss.netty.handler.codec.http.HttpResponse;
 
 public class HttpHelloWorldServerHandler extends SimpleChannelUpstreamHandler
 {
-
 	private static final byte[] CONTENT = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd' };
 
 	@Override

@@ -8,10 +8,8 @@ import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 
 public class DefaultAction extends HttpAction
 {
-	private StandardResponseFormatter _stdFrm = new StandardResponseFormatter(false);
-
 	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
-		_stdFrm.formatResponse(request, response);
+		super.getResponseFormatter().formatResponse(request, response);
 	}
 }

@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpHeaders.Names;
-import io.netty.handler.codec.http.HttpHeaders.Values;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 
@@ -128,7 +127,7 @@ public class NettyRequest
 
 	public long getContentLength()
 	{
-		String contentLength = getHeader(Names.CONTENT_LENGTH);
+		String contentLength = getHeader(Names.CONTENT_LENGTH.toString());
 		if (contentLength != null)
 		{
 			return Long.parseLong(contentLength);
@@ -229,20 +228,7 @@ public class NettyRequest
 
 	public boolean isKeepAlive()
 	{
-		String connection = getHeader(Names.CONNECTION);
-		if (Values.CLOSE.equalsIgnoreCase(connection))
-		{
-			return false;
-		}
-
-		if (request.getProtocolVersion().isKeepAliveDefault())
-		{
-			return !Values.CLOSE.equalsIgnoreCase(connection);
-		}
-		else
-		{
-			return Values.KEEP_ALIVE.equalsIgnoreCase(connection);
-		}
+		return HttpHeaders.isKeepAlive(request);
 	}
 
 	public void removeHeader(String name)
