@@ -2,16 +2,18 @@
 <configuration>
 
 	<appender class="ch.qos.logback.core.ConsoleAppender" name="ConsoleAppender">
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-		</filter>
-		<layout class="ch.qos.logback.classic.PatternLayout">
-			<!--  pattern>%5p #%C# [%t] %d{dd MMM yyyy HH:mm:ss} - %m%n</pattern -->
-			<pattern>%d{dd MMM yyyy HH:mm:ss} - %m%n</pattern>
-		</layout>
+		<encoder>
+			<pattern>%d{dd MMM yyyy HH:mm:ss} %5p #%C# - %m%n</pattern>
+		</encoder>
 	</appender>
+
+	<logger level="error" additivity="false" name="org.apache">
+		<appender-ref ref="ConsoleAppender" />
+	</logger>
 	
-	<root>
-		<level value="info" />
+
+	<root level="info">
 		<appender-ref ref="ConsoleAppender" />
 	</root>
+
 </configuration>
