@@ -14,7 +14,7 @@ public class NettyWSTestSrv
 
 	public static void main(String[] args) throws Exception
 	{
-		log.info("Starting Httpd");
+		log.info("Starting WSTest Http daemon");
 
 		try
 		{
