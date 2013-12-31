@@ -9,8 +9,7 @@ import org.jibx.runtime.JiBXException;
 
 public class SoapSerializer
 {
-
-	public static void ToXml(SoapEnvelope soapEnv, OutputStream out)
+	public static void toXml(SoapEnvelope soapEnv, OutputStream out)
 	{
 		try
 		{
@@ -24,7 +23,7 @@ public class SoapSerializer
 		}
 	}
 
-	public static SoapEnvelope FromXml(InputStream in)
+	public static SoapEnvelope fromXml(InputStream in)
 	{
 		try
 		{

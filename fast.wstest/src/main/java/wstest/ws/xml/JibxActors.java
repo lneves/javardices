@@ -9,7 +9,6 @@ import org.jibx.runtime.JiBXException;
 
 public class JibxActors
 {
-
 	private static final JibxActors instance = new JibxActors();
 
 	private IBindingFactory bfact;
@@ -42,7 +41,6 @@ public class JibxActors
 			{
 				throw new RuntimeException(e);
 			}
-
 		}
 	};
 
@@ -61,7 +59,6 @@ public class JibxActors
 			{
 				throw new RuntimeException(e);
 			}
-
 		}
 	};
 

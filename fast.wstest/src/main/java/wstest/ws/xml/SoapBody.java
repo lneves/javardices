@@ -35,5 +35,4 @@ public class SoapBody
 	public GetOrder getOrder;
 	
 	public GetOrderResponse getOrderResponse;
-
 }

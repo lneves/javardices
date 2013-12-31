@@ -7,7 +7,6 @@ import wstest.srv.actors.TestNode;
 
 public class WSTestImpl implements IWSTest
 {
-
 	@Override
 	public TestNode echoList(TestNode list)
 	{
@@ -38,5 +37,4 @@ public class WSTestImpl implements IWSTest
 		OrderBL bl = new OrderBL();
 		return bl.getOrder(orderId, customerId, messageSize);
 	}
-
 }

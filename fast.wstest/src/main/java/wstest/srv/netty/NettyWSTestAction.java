@@ -55,7 +55,7 @@ public class NettyWSTestAction extends HttpAction
 
 		try
 		{
-			SoapEnvelope req_message = SoapSerializer.FromXml(new ChannelBufferInputStream(request.getContent()));
+			SoapEnvelope req_message = SoapSerializer.fromXml(new ChannelBufferInputStream(request.getContent()));
 
 			if (req_message.body.echoList != null)
 			{
@@ -99,7 +99,7 @@ public class NettyWSTestAction extends HttpAction
 		ChannelBuffer outbuff = ChannelBuffers.dynamicBuffer(32 * 1024);
 		OutputStream out = new ChannelBufferOutputStream(outbuff);
 
-		SoapSerializer.ToXml(s, out);
+		SoapSerializer.toXml(s, out);
 
 		try
 		{
@@ -111,7 +111,6 @@ public class NettyWSTestAction extends HttpAction
 		}
 		response.setHeader(HttpHeaders.Names.CONTENT_TYPE, content_type);
 		response.setContent(outbuff);
-
 	}
 
 	private void fault(SoapEnvelope s, Throwable t)
