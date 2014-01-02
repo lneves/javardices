@@ -61,6 +61,12 @@ public class JptLoopNode extends JptParentNode
 			return;
 		}
 
+		if (collection instanceof Collection)
+		{
+			collectionLoop(context, out, (Collection) collection, child_count, increment, loopVar, pad);
+			return;
+		}
+
 		if (collection instanceof Iterable)
 		{
 			iterableLoop(context, out, (Iterable) collection, child_count, increment, loopVar, pad);
@@ -73,17 +79,12 @@ public class JptLoopNode extends JptParentNode
 			return;
 		}
 
-		if (collection instanceof Collection)
-		{
-			collectionLoop(context, out, (Collection) collection, child_count, increment, loopVar, pad);
-			return;
-		}
-
 		arrayLoop(context, out, new Object[0], child_count, increment, loopVar, pad);
 	}
 
 	private void arrayLoop(Map<String, Object> context, Writer out, Object[] items, int child_count, int increment, String loopVar, String pad) throws IOException
 	{
+		context.put("$length", items.length);
 		for (int n = 0; n < items.length; n = n + increment)
 		{
 			context.put(loopVar, items[n]);
@@ -99,6 +100,7 @@ public class JptLoopNode extends JptParentNode
 
 		context.remove(loopVar);
 		context.remove("$index");
+		context.remove("$length");
 	}
 
 	private void iteratorLoop(Map<String, Object> context, Writer out, Iterator items, int child_count, int increment, String loopVar, String pad) throws IOException
@@ -108,6 +110,7 @@ public class JptLoopNode extends JptParentNode
 		{
 			Object item = items.next();
 			index++;
+
 			if (index % increment == 0)
 			{
 				context.put(loopVar, item);
@@ -129,7 +132,9 @@ public class JptLoopNode extends JptParentNode
 	{
 		if (items != null)
 		{
+			context.put("$length", -1);
 			iteratorLoop(context, out, items.iterator(), child_count, increment, loopVar, pad);
+			context.remove("$length");
 		}
 	}
 
@@ -137,7 +142,9 @@ public class JptLoopNode extends JptParentNode
 	{
 		if (items != null)
 		{
+			context.put("$length", items.size());
 			iteratorLoop(context, out, items.iterator(), child_count, increment, loopVar, pad);
+			context.remove("$length");
 		}
 	}
 
