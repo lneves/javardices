@@ -28,10 +28,8 @@
 	<build>
 
 		<pluginManagement>
-			<plugins>
-			
-			
-	<!-- Ignore/Execute plugin execution -->
+			<plugins>			
+				<!-- Ignore/Execute plugin execution -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -39,7 +37,7 @@
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
-                   				<!-- copy-dependency plugin -->
+							<!-- copy-dependency plugin -->
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>org.apache.maven.plugins</groupId>

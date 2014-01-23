@@ -12,5 +12,6 @@
 </p>
 
 
+<span tal:condition="isdef $this.link">"$this.xpto" undefined</span>
 </body>
 </html>

@@ -18,7 +18,8 @@ package io.netty.example.http.helloworld;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 
 public class HttpHelloWorldServerInitializer extends ChannelInitializer<SocketChannel>
 {
@@ -32,7 +33,8 @@ public class HttpHelloWorldServerInitializer extends ChannelInitializer<SocketCh
 		// engine.setUseClientMode(false);
 		// p.addLast("ssl", new SslHandler(engine));
 
-		p.addLast("codec", new HttpServerCodec());
+		p.addLast("decoder", new HttpRequestDecoder(4096, 8192, 8192, false));
+		p.addLast("encoder", new HttpResponseEncoder());
 		p.addLast("handler", new HttpHelloWorldServerHandler());
 	}
 }

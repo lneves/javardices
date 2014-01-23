@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
-import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
@@ -35,22 +34,24 @@ public class JptConditionalNode extends JptParentNode
 	{
 		try
 		{
-
-			if (_compiled_exp == null)
-			{
-				ParserContext parser_context = ParserContext.create();
-
-				Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-				for (Entry<String, Object> entry : ctx_entries)
-				{
-					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-				}
-				// Compile the expression.
-				_compiled_exp = MVEL.compileExpression(_bool_exp, parser_context);
-			}
-
-			boolean condition = (Boolean) MVEL.executeExpression(_compiled_exp, context);
+			// if (_compiled_exp == null)
+			// {
+			// ParserContext parser_context = ParserContext.create();
+			//
+			// Set<Entry<String, Object>> ctx_entries = context.entrySet();
+			//
+			// for (Entry<String, Object> entry : ctx_entries)
+			// {
+			// parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+			// }
+			// // Compile the expression.
+			// _compiled_exp = MVEL.compileExpression(_bool_exp, parser_context);
+			// }
+			//
+			// boolean condition = (Boolean) MVEL.executeExpression(_compiled_exp, context);
+			boolean condition = (Boolean) MVEL.evalToBoolean(_bool_exp, context);
+			
+			System.out.printf("JptConditionalNode.render.condition: %s -> %s%n", _bool_exp, condition);
 
 			if (condition)
 			{
@@ -64,11 +65,8 @@ public class JptConditionalNode extends JptParentNode
 		}
 		catch (Throwable t)
 		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			System.err.println("Error class: " + r.getClass().getCanonicalName());
-			r.printStackTrace();
+			throw new RuntimeException(t);
 		}
-
 	}
 
 	public boolean isInSlot()

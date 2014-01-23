@@ -39,10 +39,14 @@ public class DbHandler
 		{
 			rs = db.fetchResultSetWithPreparedStatment(sql, params);
 
+			row_handler.beforeFirst(rs);
+
 			while (rs.next())
 			{
 				row_handler.process(rs);
 			}
+
+			row_handler.afterLast(rs);
 		}
 		catch (Throwable ex)
 		{
