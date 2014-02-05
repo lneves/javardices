@@ -79,6 +79,8 @@ public class Db
 
 	private Statement statement;
 
+	private Object mutex = new Object();
+
 	public Db(DbInfo dbinfo)
 	{
 		super();
@@ -285,24 +287,27 @@ public class Db
 
 	private PreparedStatement buildPreparedStatment(String sql)
 	{
-		try
+		synchronized (mutex)
 		{
-			PreparedStatement prepStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-
 			try
 			{
-				prepStatement.setQueryTimeout(dbinfo.getQueryTimeout());
-			}
-			catch (Throwable t)
-			{
-				log.warn("'setQueryTimeout(int)' is not yet implemented");
-			}
+				PreparedStatement prepStatement = connection.prepareStatement(sql, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 
-			return prepStatement;
-		}
-		catch (SQLException e)
-		{
-			throw new RuntimeException(e);
+				try
+				{
+					prepStatement.setQueryTimeout(dbinfo.getQueryTimeout());
+				}
+				catch (Throwable t)
+				{
+					log.warn("'setQueryTimeout(int)' is not yet implemented");
+				}
+
+				return prepStatement;
+			}
+			catch (SQLException e)
+			{
+				throw new RuntimeException(e);
+			}
 		}
 	}
 
@@ -389,6 +394,13 @@ public class Db
 				return executeCallableStatement(++retryCount, spName, params);
 			}
 		}
+		finally
+		{
+			if (!dbinfo.getUseCache())
+			{
+				closeQuietly(cs);
+			}
+		}
 	}
 
 	private int executePreparedStatement(int retryCount, String sql, Object... params)
@@ -414,6 +426,13 @@ public class Db
 				log.warn("Error: '{}'. Will try to execute database command one more time", t.getMessage());
 				init();
 				return executePreparedStatement(++retryCount, sql, params);
+			}
+		}
+		finally
+		{
+			if (!dbinfo.getUseCache())
+			{
+				closeQuietly(prepStatement);
 			}
 		}
 	}
@@ -539,46 +558,59 @@ public class Db
 		return (rs);
 	}
 
-	private CallableStatement getCallableStatement(String spName, int param_lenght)
+	private synchronized CallableStatement getCallableStatement(String spName, int param_lenght)
 	{
-		String cacheKey = spName + param_lenght;
-
-		CallableStatementEntry cse = call_statement_cache.get(cacheKey);
-
-		if ((cse == null) || cse.isStale())
+		if (dbinfo.getUseCache())
 		{
-			if (cse != null)
+			synchronized (mutex)
 			{
-				closeQuietly(cse.get());
+				String cacheKey = spName + param_lenght;
+
+				CallableStatementEntry cse = call_statement_cache.get(cacheKey);
+
+				if ((cse == null) || cse.isStale())
+				{
+					if (cse != null)
+					{
+						closeQuietly(cse.get());
+					}
+
+					CallableStatement cs = buildCallableStatement(spName, param_lenght);
+					cse = new CallableStatementEntry(dbinfo.getTtl(), cs);
+					call_statement_cache.put(cacheKey, cse);
+				}
+
+				return cse.get();
 			}
-
-			CallableStatement cs = buildCallableStatement(spName, param_lenght);
-			cse = new CallableStatementEntry(dbinfo.getTtl(), cs);
-			call_statement_cache.put(cacheKey, cse);
 		}
-
-		return cse.get();
+		else
+		{
+			return buildCallableStatement(spName, param_lenght);
+		}
 	}
 
 	private PreparedStatement getPreparedStatment(String sql)
 	{
 		if (dbinfo.getUseCache())
 		{
-			PreparedStatementEntry pse = prep_statement_cache.get(sql);
-
-			if ((pse == null) || pse.isStale())
+			synchronized (mutex)
 			{
-				if (pse != null)
+				PreparedStatementEntry pse = prep_statement_cache.get(sql);
+
+				if ((pse == null) || pse.isStale())
 				{
-					closeQuietly(pse.get());
+					if (pse != null)
+					{
+						closeQuietly(pse.get());
+					}
+
+					PreparedStatement cs = buildPreparedStatment(sql);
+					pse = new PreparedStatementEntry(dbinfo.getTtl(), cs);
+					prep_statement_cache.put(sql, pse);
 				}
 
-				PreparedStatement cs = buildPreparedStatment(sql);
-				pse = new PreparedStatementEntry(dbinfo.getTtl(), cs);
-				prep_statement_cache.put(sql, pse);
+				return pse.get();
 			}
-
-			return pse.get();
 		}
 		else
 		{
