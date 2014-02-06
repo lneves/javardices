@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.MacroContext"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal">
+<div metal:define-macro="component1">
+
+<h2>macro = component1</h2>
+<h3 tal:content="$this.title"> macro title should go here</h3>
+</div>
+
+<div metal:define-macro="component2">
+<h2>macro = component2  </h2>
+<h3 tal:content="$this.title">  macro title should go here</h3>
+</div>
+</html>

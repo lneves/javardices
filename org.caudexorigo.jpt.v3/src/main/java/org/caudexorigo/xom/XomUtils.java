@@ -18,9 +18,10 @@ public class XomUtils
 	{
 	}
 
-	public static Node findSpecificMacro(Node node, String macro_name)
+	public static void findSpecificMacro(Node node, String macro_name, Element[] defined_macro)
 	{
 		int child_count = node.getChildCount();
+
 		for (int i = 0; i < child_count; i++)
 		{
 			Node childNode = node.getChild(i);
@@ -28,12 +29,18 @@ public class XomUtils
 			{
 				Element childElement = (Element) childNode;
 				Attribute attr = childElement.getAttribute("define-macro", "http://xml.zope.org/namespaces/metal");
-				if (attr != null)
-					return childElement;
+
+				if ((attr != null) && attr.getValue().equals(macro_name))
+				{
+					defined_macro[0] = childElement;
+					break;
+				}
+				else
+				{
+					findSpecificMacro(childNode, macro_name, defined_macro);
+				}
 			}
-			findSpecificMacro(childNode, macro_name);
 		}
-		return null;
 	}
 
 	public static String textValueFromPath(Document doc, String path)
@@ -51,15 +58,22 @@ public class XomUtils
 
 	public static Attribute getAttribute(Element el, String attr_name_to_find)
 	{
-		int numAttr = el.getAttributeCount();
-		for (int i = 0; i < numAttr; i++)
+		if (el != null)
 		{
-			Attribute curr_attr = el.getAttribute(i);
-			String curr_attr_name = curr_attr.getQualifiedName();
-			if (attr_name_to_find.equals(curr_attr_name))
-				return curr_attr;
+			int numAttr = el.getAttributeCount();
+			for (int i = 0; i < numAttr; i++)
+			{
+				Attribute curr_attr = el.getAttribute(i);
+				String curr_attr_name = curr_attr.getQualifiedName();
+				if (attr_name_to_find.equals(curr_attr_name))
+					return curr_attr;
+			}
+			return null;
 		}
-		return null;
+		else
+		{
+			throw new IllegalStateException(String.format("can not get attribute '%s' from null element", attr_name_to_find));
+		}
 	}
 
 	public static Attribute[] getAttributes(Element el)

@@ -9,6 +9,8 @@ import java.net.URI;
 
 import nu.xom.Builder;
 import nu.xom.Document;
+import nu.xom.NodeFactory;
+import nu.xom.Nodes;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import nu.xom.XMLException;

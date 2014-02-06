@@ -28,15 +28,30 @@ public class XhtmlEntityResolver implements EntityResolver2
 	@Override
 	public InputSource getExternalSubset(String name, String baseURI) throws SAXException, IOException
 	{
-		if ("html".equals(name))
-			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html/html.dtd"));
-		else
-			return new InputSource(new StringReader(""));
+		// System.out.println("*************************************************");
+		// System.out.println("XhtmlEntityResolver.getExternalSubset.name: " + name);
+		// System.out.println("XhtmlEntityResolver.getExternalSubset.baseURI: " + baseURI);
+
+		// if ("html".equals(name))
+		//
+		// return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html/html.dtd"));
+		// else
+		// return new InputSource(new StringReader(""));
+
+		// always return the html dtd
+		return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html/html.dtd"));
+
 	}
 
 	@Override
 	public InputSource resolveEntity(String name, String publicID, String baseURI, String systemID) throws SAXException, IOException
 	{
+		// System.out.println("*************************************************");
+		// System.out.println("XhtmlEntityResolver.resolveEntity.name: " + name);
+		// System.out.println("XhtmlEntityResolver.resolveEntity.publicID: " + publicID);
+		// System.out.println("XhtmlEntityResolver.resolveEntity.baseURI: " + baseURI);
+		// System.out.println("XhtmlEntityResolver.resolveEntity.systemID: " + systemID);
+
 		if (systemID.contains(".dtd"))
 			return new InputSource(getClass().getResourceAsStream("/org/caudexorigo/etc/catalogs/html/html.dtd"));
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal">
+	<head>
+		<title tal:content="$this.title">foobar</title>
+		<style type="text/css" >
+		.txt_small{color:red;}
+		</style>
+	</head>
+<body>
+
+<div metal:use-macro="metal-simple.jpt?macro=component2"></div>
+
+</body>
+</html>

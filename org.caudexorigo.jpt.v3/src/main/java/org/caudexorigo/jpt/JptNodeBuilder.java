@@ -238,7 +238,14 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		Document macro_doc = macroDocument.getDocument();
 		findSlotActorsInDocument(macroDocument);
 		prepareSlotsActorsInDocument();
-		Element subtree = (Element) XomUtils.findSpecificMacro(macro_doc, macroName);
+		Element[] defined_macro = new Element[1];
+		XomUtils.findSpecificMacro(macro_doc, macroName, defined_macro);
+		Element subtree = defined_macro[0];
+
+		if (subtree == null)
+		{
+			throw new IllegalArgumentException(String.format("could not find macro '%s' in template '%s'", macroName, macroPath));
+		}
 
 		String object_class_name = ContextBuilder.objectNameFromInstructions(macro_doc);
 
@@ -503,9 +510,9 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
 			((JptParentNode) pnodes.peek()).appendChild(sf_pre);
 
-			//int nl = _sb.lastIndexOf("\n");
-			//String padding = _sb.substring(nl, _sb.length());
-			
+			// int nl = _sb.lastIndexOf("\n");
+			// String padding = _sb.substring(nl, _sb.length());
+
 			String padding = "";
 
 			_sb.delete(0, _sb.length());
