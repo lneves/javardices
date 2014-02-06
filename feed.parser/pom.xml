@@ -54,15 +54,3 @@
 	</dependencies>
 
 </project>
-
-<!--
-mvn install:install-file \
--Dfile=target/feed-parser-1.0-SNAPSHOT.jar \
--DgroupId=org.caudexorigo \
--DartifactId=feed-parser \
--Dversion=1.0-SNAPSHOT \
--Dpackaging=jar \
--DpomFile=pom.xml \
--DcreateChecksum=true \
--DlocalRepositoryPath=$HOME/CloudPT/m2repo
--->

@@ -50,19 +50,4 @@
 			<version>LATEST</version>
 		</dependency>
 	</dependencies>
-
-<!-- 
-  
-mvn install:install-file  \
--Dfile=target/org-caudexorigo-jdbc-v4-1.0-SNAPSHOT.jar \
--DgroupId=org.caudexorigo \
--DartifactId=org-caudexorigo-jdbc-v4 \
--Dversion=1.0-SNAPSHOT \
--Dpackaging=jar \
--DpomFile=pom.xml \
--DcreateChecksum=true \
--DlocalRepositoryPath=$HOME/CloudPT/m2repo
-
--->
-
 </project>
