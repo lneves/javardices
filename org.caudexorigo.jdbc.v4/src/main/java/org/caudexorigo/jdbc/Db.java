@@ -576,7 +576,7 @@ public class Db
 					}
 
 					CallableStatement cs = buildCallableStatement(spName, param_lenght);
-					cse = new CallableStatementEntry(dbinfo.getTtl(), cs);
+					cse = new CallableStatementEntry(dbinfo.getTtl(), cs, cacheKey);
 					call_statement_cache.put(cacheKey, cse);
 				}
 
@@ -604,8 +604,8 @@ public class Db
 						closeQuietly(pse.get());
 					}
 
-					PreparedStatement cs = buildPreparedStatment(sql);
-					pse = new PreparedStatementEntry(dbinfo.getTtl(), cs);
+					PreparedStatement ps = buildPreparedStatment(sql);
+					pse = new PreparedStatementEntry(dbinfo.getTtl(), ps, sql);
 					prep_statement_cache.put(sql, pse);
 				}
 
