@@ -11,6 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -294,7 +295,15 @@ public class DbPool
 		int r;
 		try
 		{
-			r = Integer.parseInt(intValue);
+			if (StringUtils.isBlank(intValue))
+			{
+				log.warn(String.format("Apply default value for '%s': %s", fieldName, defaultValue));
+				r = defaultValue;
+			}
+			else
+			{
+				r = Integer.parseInt(intValue);
+			}
 		}
 		catch (Throwable t)
 		{
@@ -309,7 +318,15 @@ public class DbPool
 		boolean r;
 		try
 		{
-			r = Boolean.parseBoolean(boolValue);
+			if (StringUtils.isBlank(boolValue))
+			{
+				log.warn(String.format("Apply default value for '%s': %s", fieldName, defaultValue));
+				r = defaultValue;
+			}
+			else
+			{
+				r = Boolean.parseBoolean(boolValue);
+			}
 		}
 		catch (Throwable t)
 		{

@@ -469,9 +469,11 @@ public class Db
 
 		validateConnection();
 
+		CallableStatement cs = null;
+
 		try
 		{
-			CallableStatement cs = getCallableStatement(spName, params.length);
+			cs = getCallableStatement(spName, params.length);
 			if (isOracle)
 			{
 				// oracle.jdbc.driver.OracleTypes.CURSOR
@@ -502,18 +504,27 @@ public class Db
 				return fetchResultSetWithPreparedStatment(++retryCount, spName, params);
 			}
 		}
+		finally
+		{
+			if (!dbinfo.getUseCache())
+			{
+				closeQuietly(cs);
+			}
+		}
+
 	}
 
 	private ResultSet fetchResultSetWithPreparedStatment(int retryCount, String sql, Object... params)
 	{
 		validateConnection();
 
-		PreparedStatement prepStatement = getPreparedStatment(sql);
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try
 		{
-			setPreparedStatementParameters(prepStatement, params);
-			rs = prepStatement.executeQuery();
+			ps = getPreparedStatment(sql);
+			setPreparedStatementParameters(ps, params);
+			rs = ps.executeQuery();
 
 			return (rs);
 		}
@@ -529,6 +540,13 @@ public class Db
 				log.warn("Error: '{}'. Will try to execute database command one more time", t.getMessage());
 				init();
 				return fetchResultSetWithPreparedStatment(++retryCount, sql, params);
+			}
+		}
+		finally
+		{
+			if (!dbinfo.getUseCache())
+			{
+				closeQuietly(ps);
 			}
 		}
 	}
