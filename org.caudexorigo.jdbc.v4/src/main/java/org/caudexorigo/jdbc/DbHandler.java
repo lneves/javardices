@@ -39,7 +39,7 @@ public class DbHandler
 
 		try
 		{
-			ps = db.buildPreparedStatment(sql);
+			ps = db.getPreparedStatment(sql);
 			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			row_handler.beforeFirst(rs);

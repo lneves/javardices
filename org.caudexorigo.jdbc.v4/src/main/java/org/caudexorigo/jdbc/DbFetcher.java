@@ -32,7 +32,7 @@ public class DbFetcher<T>
 
 		try
 		{
-			ps = db.buildPreparedStatment(sql);
+			ps = db.getPreparedStatment(sql);
 			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			List<T> lst = new ArrayList<T>();
@@ -114,7 +114,7 @@ public class DbFetcher<T>
 
 		try
 		{
-			ps = db.buildPreparedStatment(sql);
+			ps = db.getPreparedStatment(sql);
 			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			if (rs.next())

@@ -290,7 +290,7 @@ public class Db
 		}
 	}
 
-	PreparedStatement buildPreparedStatment(String sql)
+	private PreparedStatement buildPreparedStatment(String sql)
 	{
 		synchronized (mutex)
 		{
@@ -592,7 +592,7 @@ public class Db
 		}
 	}
 
-	private PreparedStatement getPreparedStatment(String sql)
+	PreparedStatement getPreparedStatment(String sql)
 	{
 		if (dbinfo.getUseCache())
 		{
