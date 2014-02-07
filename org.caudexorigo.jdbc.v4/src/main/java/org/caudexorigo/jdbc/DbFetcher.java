@@ -1,5 +1,6 @@
 package org.caudexorigo.jdbc;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class DbFetcher<T>
 	public List<T> fetchList(final Db db, final String sql, RowConverter<T> extractor, Object... params)
 	{
 		ResultSet rs = null;
+		PreparedStatement ps = null;
 
 		if (db == null)
 		{
@@ -30,7 +32,8 @@ public class DbFetcher<T>
 
 		try
 		{
-			rs = db.fetchResultSetWithPreparedStatment(sql, params);
+			ps = db.buildPreparedStatment(sql);
+			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			List<T> lst = new ArrayList<T>();
 
@@ -49,6 +52,10 @@ public class DbFetcher<T>
 		finally
 		{
 			Db.closeQuietly(rs);
+			if (!db.useStatementCache())
+			{
+				Db.closeQuietly(ps);
+			}
 		}
 	}
 
@@ -103,10 +110,12 @@ public class DbFetcher<T>
 	public T fetchObject(final Db db, final String sql, final RowConverter<T> extractor, Object... params)
 	{
 		ResultSet rs = null;
+		PreparedStatement ps = null;
 
 		try
 		{
-			rs = db.fetchResultSetWithPreparedStatment(sql, params);
+			ps = db.buildPreparedStatment(sql);
+			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			if (rs.next())
 			{
@@ -125,6 +134,10 @@ public class DbFetcher<T>
 		finally
 		{
 			Db.closeQuietly(rs);
+			if (!db.useStatementCache())
+			{
+				Db.closeQuietly(ps);
+			}
 		}
 	}
 }

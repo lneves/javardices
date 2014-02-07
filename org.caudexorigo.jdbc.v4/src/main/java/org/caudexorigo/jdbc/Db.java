@@ -88,6 +88,11 @@ public class Db
 		init();
 	}
 
+	protected boolean useStatementCache()
+	{
+		return dbinfo.getUseCache();
+	}
+
 	public void beginTransaction()
 	{
 		try
@@ -285,7 +290,7 @@ public class Db
 		}
 	}
 
-	private PreparedStatement buildPreparedStatment(String sql)
+	PreparedStatement buildPreparedStatment(String sql)
 	{
 		synchronized (mutex)
 		{
@@ -460,7 +465,7 @@ public class Db
 		}
 	}
 
-	private ResultSet fetchResultSetWithCallableStatement(int retryCount, String spName, Object... params)
+	private ResultSet fetchResultSetWithCallableStatement(int retryCount, CallableStatement cs, Object... params)
 	{
 		if (params == null)
 		{
@@ -469,11 +474,8 @@ public class Db
 
 		validateConnection();
 
-		CallableStatement cs = null;
-
 		try
 		{
-			cs = getCallableStatement(spName, params.length);
 			if (isOracle)
 			{
 				// oracle.jdbc.driver.OracleTypes.CURSOR
@@ -501,28 +503,18 @@ public class Db
 				destroy();
 				log.warn("Error: '{}'. Will try to execute database command one more time", t.getMessage());
 				init();
-				return fetchResultSetWithPreparedStatment(++retryCount, spName, params);
+				return fetchResultSetWithPreparedStatment(++retryCount, cs, params);
 			}
 		}
-		finally
-		{
-			if (!dbinfo.getUseCache())
-			{
-				closeQuietly(cs);
-			}
-		}
-
 	}
 
-	private ResultSet fetchResultSetWithPreparedStatment(int retryCount, String sql, Object... params)
+	private ResultSet fetchResultSetWithPreparedStatment(int retryCount, PreparedStatement ps, Object... params)
 	{
 		validateConnection();
 
-		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try
 		{
-			ps = getPreparedStatment(sql);
 			setPreparedStatementParameters(ps, params);
 			rs = ps.executeQuery();
 
@@ -539,14 +531,7 @@ public class Db
 				destroy();
 				log.warn("Error: '{}'. Will try to execute database command one more time", t.getMessage());
 				init();
-				return fetchResultSetWithPreparedStatment(++retryCount, sql, params);
-			}
-		}
-		finally
-		{
-			if (!dbinfo.getUseCache())
-			{
-				closeQuietly(ps);
+				return fetchResultSetWithPreparedStatment(++retryCount, ps, params);
 			}
 		}
 	}
@@ -798,19 +783,19 @@ public class Db
 		return executeStatement(0, sql);
 	}
 
-	public ResultSet fetchResultSetWithCallableStatement(String spName)
+	public ResultSet fetchResultSetWithCallableStatement(CallableStatement cs)
 	{
-		return fetchResultSetWithCallableStatement(spName, new Object[0]);
+		return fetchResultSetWithCallableStatement(cs, new Object[0]);
 	}
 
-	public ResultSet fetchResultSetWithCallableStatement(String spName, Object... params)
+	public ResultSet fetchResultSetWithCallableStatement(CallableStatement cs, Object... params)
 	{
-		return fetchResultSetWithCallableStatement(0, spName, params);
+		return fetchResultSetWithCallableStatement(0, cs, params);
 	}
 
-	public ResultSet fetchResultSetWithPreparedStatment(String sql, Object... params)
+	public ResultSet fetchResultSetWithPreparedStatment(PreparedStatement ps, Object... params)
 	{
-		return fetchResultSetWithPreparedStatment(0, sql, params);
+		return fetchResultSetWithPreparedStatment(0, ps, params);
 	}
 
 	public ResultSet fetchResultSetWithStatment(String sql)

@@ -1,5 +1,6 @@
 package org.caudexorigo.jdbc;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DbHandler
@@ -34,10 +35,12 @@ public class DbHandler
 	public void handle(final Db db, final String sql, final RowHandler row_handler, final Object... params)
 	{
 		ResultSet rs = null;
+		PreparedStatement ps = null;
 
 		try
 		{
-			rs = db.fetchResultSetWithPreparedStatment(sql, params);
+			ps = db.buildPreparedStatment(sql);
+			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			row_handler.beforeFirst(rs);
 
@@ -55,6 +58,10 @@ public class DbHandler
 		finally
 		{
 			Db.closeQuietly(rs);
+			if (!db.useStatementCache())
+			{
+				Db.closeQuietly(ps);
+			}
 		}
 	}
 }
