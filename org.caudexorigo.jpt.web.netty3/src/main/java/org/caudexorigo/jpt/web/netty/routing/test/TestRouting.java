@@ -11,6 +11,7 @@ import org.caudexorigo.http.netty.HttpRequestWrapper;
 import org.caudexorigo.jpt.web.netty.NettyWebJptAction;
 import org.caudexorigo.jpt.web.netty.routing.RoutingManager;
 import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpVersion;
@@ -134,7 +135,6 @@ public class TestRouting
 				System.out.println("TestRouting.getRequestWrapper().new HttpRequest() {...}.removeHeader()");
 			}
 
-			@Override
 			public boolean isKeepAlive()
 			{
 				System.out.println("TestRouting.getRequestWrapper().new HttpRequest() {...}.isKeepAlive()");
@@ -183,19 +183,6 @@ public class TestRouting
 				return null;
 			}
 
-			@Override
-			public long getContentLength(long arg0)
-			{
-				System.out.println("TestRouting.getRequestWrapper().new HttpRequest() {...}.getContentLength()");
-				return 0;
-			}
-
-			@Override
-			public long getContentLength()
-			{
-				System.out.println("TestRouting.getRequestWrapper().new HttpRequest() {...}.getContentLength()");
-				return 0;
-			}
 
 			@Override
 			public ChannelBuffer getContent()
@@ -246,6 +233,13 @@ public class TestRouting
 			public HttpMethod getMethod()
 			{
 				System.out.println("TestRouting.getRequestWrapper().new HttpRequest() {...}.getMethod()");
+				return null;
+			}
+
+			@Override
+			public HttpHeaders headers()
+			{
+				// TODO Auto-generated method stub
 				return null;
 			}
 		};
