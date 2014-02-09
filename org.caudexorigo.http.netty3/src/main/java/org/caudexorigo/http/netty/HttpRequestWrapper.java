@@ -65,9 +65,9 @@ public class HttpRequestWrapper implements HttpRequest
 			parameters = new HashMap<String, List<String>>();
 			setParameters(getQueryString());
 
-			//parameters = (new QueryStringDecoder(request.getUri(), charset, true)).getParameters();
+			// parameters = (new QueryStringDecoder(request.getUri(), charset, true)).getParameters();
 
-			String content_type = request.getHeader(HttpHeaders.Names.CONTENT_TYPE);
+			String content_type = request.headers().get(HttpHeaders.Names.CONTENT_TYPE);
 
 			if (request.getMethod().equals(HttpMethod.POST) && (StringUtils.contains(content_type, X_WWW_FORM_URLENCODED)) && (HttpHeaders.getContentLength(request) > 0))
 			{
@@ -77,7 +77,7 @@ public class HttpRequestWrapper implements HttpRequest
 				}
 				setParameters(request.getContent().toString(charset));
 
-				//parameters.putAll((new QueryStringDecoder(request.getContent().toString(charset), charset, false)).getParameters());
+				// parameters.putAll((new QueryStringDecoder(request.getContent().toString(charset), charset, false)).getParameters());
 			}
 		}
 	}
@@ -96,7 +96,7 @@ public class HttpRequestWrapper implements HttpRequest
 	@Override
 	public void addHeader(String name, Object value)
 	{
-		request.addHeader(name, value);
+		request.headers().add(name, value);
 	}
 
 	public void addParameter(String name, String value)
@@ -115,13 +115,13 @@ public class HttpRequestWrapper implements HttpRequest
 	@Override
 	public void clearHeaders()
 	{
-		request.clearHeaders();
+		request.headers().clear();
 	}
 
 	@Override
 	public boolean containsHeader(String name)
 	{
-		return request.containsHeader(name);
+		return request.headers().contains(name);
 	}
 
 	@Override
@@ -130,41 +130,33 @@ public class HttpRequestWrapper implements HttpRequest
 		return request.getContent();
 	}
 
-	@Override
 	public long getContentLength()
 	{
-		return request.getContentLength();
-	}
-
-	@Override
-	public long getContentLength(long arg0)
-	{
-
-		return request.getContentLength(arg0);
+		return HttpHeaders.getContentLength(request);
 	}
 
 	@Override
 	public String getHeader(String name)
 	{
-		return request.getHeader(name);
+		return request.headers().get(name);
 	}
 
 	@Override
 	public Set<String> getHeaderNames()
 	{
-		return request.getHeaderNames();
+		return request.headers().names();
 	}
 
 	@Override
 	public List<Entry<String, String>> getHeaders()
 	{
-		return request.getHeaders();
+		return request.headers().entries();
 	}
 
 	@Override
 	public List<String> getHeaders(String name)
 	{
-		return request.getHeaders(name);
+		return request.headers().getAll(name);
 	}
 
 	@Override
@@ -241,16 +233,15 @@ public class HttpRequestWrapper implements HttpRequest
 		return request.isChunked();
 	}
 
-	@Override
 	public boolean isKeepAlive()
 	{
-		return request.isKeepAlive();
+		return HttpHeaders.isKeepAlive(request);
 	}
 
 	@Override
 	public void removeHeader(String name)
 	{
-		request.removeHeader(name);
+		request.headers().remove(name);
 
 	}
 
@@ -270,14 +261,13 @@ public class HttpRequestWrapper implements HttpRequest
 	@Override
 	public void setHeader(String name, Iterable<?> values)
 	{
-		request.setHeader(name, values);
-
+		request.headers().set(name, values);
 	}
 
 	@Override
 	public void setHeader(String name, Object value)
 	{
-		request.setHeader(name, value);
+		request.headers().set(name, value);
 	}
 
 	@Override
@@ -348,5 +338,11 @@ public class HttpRequestWrapper implements HttpRequest
 	public void setUri(String uri)
 	{
 		request.setUri(uri);
+	}
+
+	@Override
+	public HttpHeaders headers()
+	{
+		return request.headers();
 	}
 }
