@@ -52,8 +52,8 @@ public class MimeTable
 		TABLE.put("gtar", "application/x-gtar");
 		TABLE.put("hdf", "application/x-hdf");
 		TABLE.put("hqx", "application/mac-binhex40");
-		TABLE.put("htm", "text/html");
-		TABLE.put("html", "text/html");
+		TABLE.put("htm", "text/html; charset=UTF-8");
+		TABLE.put("html", "text/html; charset=UTF-8");
 		TABLE.put("ice", "x-conference/x-cooltalk");
 		TABLE.put("ico", "image/x-icon");
 		TABLE.put("ics", "text/calendar");
@@ -173,7 +173,7 @@ public class MimeTable
 		TABLE.put("wsdl", "application/xml");
 		TABLE.put("xbm", "image/x-xbitmap");
 		TABLE.put("xht", "application/xhtml+xml");
-		TABLE.put("xhtml", "application/xhtml+xml");
+		TABLE.put("xhtml", "application/xhtml+xml; charset=UTF-8");
 		TABLE.put("xls", "application/vnd.ms-excel");
 		TABLE.put("xml", "application/xml");
 		TABLE.put("xpm", "image/x-xpixmap");
