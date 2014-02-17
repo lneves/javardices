@@ -123,15 +123,18 @@ public final class XomDocumentBuilder
 
 	public static Document getDocument(InputStream in) throws ValidityException, ParsingException, IOException
 	{
-		if (reader == null)
+		synchronized (reader)
 		{
-			XMLReader singularity_reader = findParser();
-			Builder builder = new Builder(singularity_reader, false);
+			if (reader == null)
+			{
+				XMLReader singularity_reader = findParser();
+				Builder builder = new Builder(singularity_reader, false);
+				return builder.build(in);
+			}
+
+			Builder builder = new Builder(reader, false);
 			return builder.build(in);
 		}
-
-		Builder builder = new Builder(reader, false);
-		return builder.build(in);
 	}
 
 	public static Document getDocument(URI templateUri) throws ValidityException, ParsingException, IOException
@@ -155,8 +158,11 @@ public final class XomDocumentBuilder
 			throw new JptNotFoundException(e);
 		}
 
-		Builder builder = new Builder(reader, false);
-		return builder.build(fis);
+		synchronized (reader)
+		{
+			Builder builder = new Builder(reader, false);
+			return builder.build(fis);
+		}
 	}
 
 	private XomDocumentBuilder()
