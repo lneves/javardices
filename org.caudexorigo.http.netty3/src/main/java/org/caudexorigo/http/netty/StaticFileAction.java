@@ -101,9 +101,8 @@ public class StaticFileAction extends HttpAction
 		{
 			long expires = System.currentTimeMillis() + (1000L * cacheAge);
 
-			response.setHeader(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheAge));
-			response.setHeader(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
-			response.setHeader(HttpHeaders.Names.EXPIRES, HttpDateFormat.getHttpDate(new Date(expires)));
+			response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheAge));
+			response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
 		}
 
 		Channel channel = ctx.getChannel();
