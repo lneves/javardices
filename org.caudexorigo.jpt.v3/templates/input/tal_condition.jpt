@@ -8,6 +8,7 @@
 <h2>Test for "tal:condition"</h2>
 <p>
 <span tal:condition="$this.boolt">this should appear</span>
+<span tal:condition=""> empty condition, this should appear</span>
 <span tal:condition="!$this.boolt">this should not appear</span>
 </p>
 

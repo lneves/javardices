@@ -22,7 +22,7 @@ public class JptConditionalNode extends JptParentNode
 	JptConditionalNode(String jpt_exp, boolean isInSlot)
 	{
 		_isInSlot = isInSlot;
-		_bool_exp = StringUtils.replace(jpt_exp, "\'", "\"");
+		_bool_exp = StringUtils.isBlank(jpt_exp) ? "true" : StringUtils.replace(jpt_exp, "\'", "\"");
 	}
 
 	boolean isConditionalNode()
@@ -34,24 +34,22 @@ public class JptConditionalNode extends JptParentNode
 	{
 		try
 		{
-			// if (_compiled_exp == null)
-			// {
-			// ParserContext parser_context = ParserContext.create();
-			//
-			// Set<Entry<String, Object>> ctx_entries = context.entrySet();
-			//
-			// for (Entry<String, Object> entry : ctx_entries)
-			// {
-			// parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-			// }
-			// // Compile the expression.
-			// _compiled_exp = MVEL.compileExpression(_bool_exp, parser_context);
-			// }
-			//
-			// boolean condition = (Boolean) MVEL.executeExpression(_compiled_exp, context);
-			boolean condition = (Boolean) MVEL.evalToBoolean(_bool_exp, context);
-			
-			System.out.printf("JptConditionalNode.render.condition: %s -> %s%n", _bool_exp, condition);
+			if (_compiled_exp == null)
+			{
+				ParserContext parser_context = ParserContext.create();
+
+				Set<Entry<String, Object>> ctx_entries = context.entrySet();
+
+				for (Entry<String, Object> entry : ctx_entries)
+				{
+					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				}
+				// Compile the expression.
+				_compiled_exp = MVEL.compileExpression(_bool_exp, parser_context);
+			}
+
+			boolean condition = (Boolean) MVEL.executeExpression(_compiled_exp, context);
+			// boolean condition = (Boolean) MVEL.evalToBoolean(_bool_exp, context);
 
 			if (condition)
 			{
