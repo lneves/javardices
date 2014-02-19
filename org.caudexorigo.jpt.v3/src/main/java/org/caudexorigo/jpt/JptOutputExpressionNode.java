@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.caudexorigo.text.StringEscapeUtils;
+import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 
@@ -27,6 +28,11 @@ public class JptOutputExpressionNode extends JptNode
 	JptOutputExpressionNode(String jpt_exp, boolean isInSlot)
 	{
 		_isInSlot = isInSlot;
+
+		if (StringUtils.isBlank(jpt_exp))
+		{
+			throw new IllegalArgumentException("tal expression can not be blank");
+		}
 
 		_evaluation_exp = jpt_exp;
 
