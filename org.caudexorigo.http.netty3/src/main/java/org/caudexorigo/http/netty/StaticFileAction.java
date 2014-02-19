@@ -67,22 +67,22 @@ public class StaticFileAction extends HttpAction
 		validateRequest(request, response);
 		File file = getFile(request, response);
 
-		validateFile(response, file);
+		validateFile(response, file, request.getUri());
 
 		String abs_path = getFileAbsolutePath(response, file);
 
-		response.setHeader(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
-		response.setHeader(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(file.length()));
+		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
+		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(file.length()));
 
 		String ctype = MimeTable.getContentType(abs_path);
 		if (StringUtils.isNotBlank(ctype))
 		{
-			response.setHeader(HttpHeaders.Names.CONTENT_TYPE, ctype);
+			response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);
 		}
 
 		if (StringUtils.isNotBlank(getContentEncoding()))
 		{
-			response.setHeader(HttpHeaders.Names.CONTENT_ENCODING, getContentEncoding());
+			response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, getContentEncoding());
 		}
 
 		RandomAccessFile raf = null;
@@ -99,8 +99,6 @@ public class StaticFileAction extends HttpAction
 
 		if (cacheAge > 0)
 		{
-			long expires = System.currentTimeMillis() + (1000L * cacheAge);
-
 			response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheAge));
 			response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
 		}
@@ -118,7 +116,7 @@ public class StaticFileAction extends HttpAction
 
 		if (is_keep_alive)
 		{
-			response.setHeader(HttpHeaders.Names.CONNECTION, "Keep-Alive");
+			response.headers().set(HttpHeaders.Names.CONNECTION, "Keep-Alive");
 		}
 
 		channel.write(response);
@@ -211,11 +209,11 @@ public class StaticFileAction extends HttpAction
 		return file;
 	}
 
-	protected void validateFile(HttpResponse response, File file)
+	protected void validateFile(HttpResponse response, File file, String path)
 	{
 		if (file.isHidden() || !file.exists())
 		{
-			throw new WebException(new FileNotFoundException("File not found"), HttpResponseStatus.NOT_FOUND.getCode());
+			throw new WebException(new FileNotFoundException(String.format("File not found: '%s'", path)), HttpResponseStatus.NOT_FOUND.getCode());
 		}
 
 		if (!file.isFile())
