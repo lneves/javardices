@@ -16,6 +16,7 @@ import nu.xom.Node;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 
+import org.caudexorigo.text.StringUtils;
 import org.caudexorigo.xom.XomDocumentBuilder;
 import org.caudexorigo.xom.XomUtils;
 
@@ -75,6 +76,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			processMetalDefineSlot(el);
 			return;
 		}
+
 		if (XomUtils.getAttribute(el, "tal:condition") != null)
 		{
 			processTalCondition(el);
@@ -100,6 +102,13 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			processTalInclude(el);
 			return;
 		}
+
+		if (XomUtils.getAttribute(el, "tal:omit-tag") != null)
+		{
+			processTalOmitTag(el);
+			return;
+		}
+
 		if ("template".equals(el.getLocalName()) && TAL_NS.equals(el.getNamespaceURI()))
 		{
 			processTalTemplate(el);
@@ -114,9 +123,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 	private void processTalTemplate(Element el)
 	{
-		JptStaticFragment sf = new JptStaticFragment(_sb.toString());
-		((JptParentNode) pnodes.peek()).appendChild(sf);
-		_sb.delete(0, _sb.length());
+		addStaticFragments();
 
 		StringBuilder template = new StringBuilder();
 
@@ -146,9 +153,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		if (attribute != null)
 		{
 			el.removeAttribute(attribute);
-			JptStaticFragment sf = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf);
-			_sb.delete(0, _sb.length());
+			addStaticFragments();
 			el.removeChildren();
 			JptIncludeNode jinclude = new JptIncludeNode(attribute.getValue(), _isInSlot);
 			removePNodeChildren();
@@ -251,9 +256,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 		JptMacroNode jpt_macro_node = new JptMacroNode(object_class_name, _isInSlot, macroParams);
 
-		JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
-		((JptParentNode) pnodes.peek()).appendChild(sf_pre);
-		_sb.delete(0, _sb.length());
+		addStaticFragments();
 		pnodes.push(jpt_macro_node);
 		_isInSlot = false;
 
@@ -264,6 +267,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		((JptParentNode) pnodes.peek()).appendChild(jpt_macro_node);
 	}
 
+	@Override
 	protected void process(Element element)
 	{
 		try
@@ -308,9 +312,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 				if (attr_to_remove != null)
 					el.removeAttribute(attr_to_remove);
 			}
-			JptStaticFragment sf = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf);
-			_sb.delete(0, _sb.length());
+			addStaticFragments();
 			Attribute aattribute1[] = tal_attributes;
 			int k = 0;
 
@@ -340,9 +342,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 				if (attr_to_remove != null)
 					el.removeAttribute(attr_to_remove);
 			}
-			JptStaticFragment sf = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf);
-			_sb.delete(0, _sb.length());
+			addStaticFragments();
 			Attribute aattribute1[] = tal_attributes;
 			int k = 0;
 
@@ -361,24 +361,98 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		Attribute attribute = XomUtils.getAttribute(el, "tal:condition");
 		if (attribute != null)
 		{
+			// System.out.println("JptNodeBuilder.processTalCondition.el: " + el.toXML());
+
 			String current_attribute_value = attribute.getValue();
-			JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf_pre);
-			_sb.delete(0, _sb.length());
+
+			// System.out.println("JptNodeBuilder.processTalCondition.sb: »»»»" + _sb.toString() + "«««");
+
+			addStaticFragments();
 			el.removeAttribute(attribute);
+
+			processTalOmitTag(el);
 
 			JptConditionalNode jcond = new JptConditionalNode(current_attribute_value, _isInSlot);
 			pnodes.push(jcond);
-			process(el);
+
 			JptStaticFragment sf_post = new JptStaticFragment(_sb.toString());
 			jcond.appendChild(sf_post);
 			_sb.delete(0, _sb.length());
+
 			processTalRepeat(el);
 			processTalReplace(el);
 			processTalContent(el);
+
 			pnodes.pop();
 			((JptParentNode) pnodes.peek()).appendChild(jcond);
 		}
+	}
+
+	private void processTalOmitTag(Element el)
+	{
+		Attribute omit_tag_attr = XomUtils.getAttribute(el, "tal:omit-tag");
+
+		if (omit_tag_attr != null)
+		{
+			// System.out.println("JptNodeBuilder.processTalOmitTag.parent.begin: " + (((JptParentNode) pnodes.peek())).getClass().getCanonicalName());
+			// System.out.println("JptNodeBuilder.processTalOmitTag.el: " + el.toXML());
+
+			el.removeAttribute(omit_tag_attr);
+
+			addStaticFragments();
+
+			String omit_tag_condition = StringUtils.isBlank(omit_tag_attr.getValue()) ? "false" : String.format("!%s", omit_tag_attr.getValue());// conditional nodes output on true, revert the logic, should not output on true
+
+			JptHolderNode holder_node = new JptHolderNode(_isInSlot);
+			((JptParentNode) pnodes.peek()).appendChild(holder_node);
+			pnodes.push(holder_node);
+
+			JptConditionalNode start_cond = new JptConditionalNode(omit_tag_condition, _isInSlot);
+			pnodes.push(start_cond);
+
+			processStartTag(el);
+
+			addStaticFragments();
+
+			pnodes.pop(); //remove conditional node
+			((JptParentNode) pnodes.peek()).appendChild(start_cond);
+
+			int child_count = el.getChildCount();
+
+			for (int i = 0; i < child_count; i++)
+			{
+				Node c = el.getChild(i);
+				processChild(c);
+			}
+
+			addStaticFragments();
+
+			JptConditionalNode end_cond = new JptConditionalNode(omit_tag_condition, _isInSlot);
+			pnodes.push(end_cond);
+
+			processEndTag(el);
+			addStaticFragments();
+
+			pnodes.pop(); //remove conditional node
+			((JptParentNode) pnodes.peek()).appendChild(end_cond);
+
+			pnodes.pop(); // remove holder node
+
+			// System.out.println("JptNodeBuilder.processTalOmitTag.parent.end: " + (((JptParentNode) pnodes.peek())).getClass().getCanonicalName());
+		}
+		else
+		{
+			process(el);
+		}
+	}
+
+	private void addStaticFragments()
+	{
+		JptStaticFragment sf = new JptStaticFragment(_sb.toString());
+		JptParentNode parent = ((JptParentNode) pnodes.peek());
+		// System.out.println("JptNodeBuilder.addStaticFragments.parent: " + parent.getClass().getCanonicalName());
+		parent.appendChild(sf);
+		_sb.delete(0, _sb.length());
 	}
 
 	private void processTalContent(Element el)
@@ -387,11 +461,40 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		if (attribute != null)
 		{
 			el.removeAttribute(attribute);
-			removePNodeChildren();
-			processStartTag(el);
-			JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf_pre);
-			_sb.delete(0, _sb.length());
+			
+			addStaticFragments();
+
+			Attribute omit_tag_attr = XomUtils.getAttribute(el, "tal:omit-tag");
+
+			if (omit_tag_attr != null)
+			{
+				el.removeAttribute(omit_tag_attr);
+
+				String omit_tag_condition = StringUtils.isBlank(omit_tag_attr.getValue()) ? "false" : String.format("!%s", omit_tag_attr.getValue());// conditional nodes output on true, revert the logic, should not output on true
+
+				JptHolderNode holder_node = new JptHolderNode(_isInSlot);
+				((JptParentNode) pnodes.peek()).appendChild(holder_node);
+				pnodes.push(holder_node);
+
+				JptConditionalNode start_cond = new JptConditionalNode(omit_tag_condition, _isInSlot);
+				pnodes.push(start_cond);
+
+				processStartTag(el);
+
+				addStaticFragments();
+
+				pnodes.pop();
+				((JptParentNode) pnodes.peek()).appendChild(start_cond);
+				pnodes.pop();
+				// processStartTag(el);
+			}
+			else
+			{
+				removePNodeChildren();
+				processStartTag(el);
+			}
+
+			addStaticFragments();
 			processTalAttributes(el);
 
 			JptOutputExpressionNode jout;
@@ -404,14 +507,27 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 				jout = new JptOutputExpressionNode(attribute.getValue(), _isInSlot);
 			}
 
-			// JptOutputExpressionNode jout = new
-			// JptOutputExpressionNode(attribute.getValue(), _isInSlot);
 			((JptParentNode) pnodes.peek()).appendChild(jout);
-			processEndTag(el);
+
+			if (omit_tag_attr != null)
+			{
+				String omit_tag_condition = StringUtils.isBlank(omit_tag_attr.getValue()) ? "false" : String.format("!%s", omit_tag_attr.getValue());// conditional nodes output on true, revert the logic, should not output on true
+				JptConditionalNode end_cond = new JptConditionalNode(omit_tag_condition, _isInSlot);
+				pnodes.push(end_cond);
+
+				processEndTag(el);
+				addStaticFragments();
+
+				pnodes.pop(); // remove conditional node
+				((JptParentNode) pnodes.peek()).appendChild(end_cond);
+			}
+			else
+			{
+				processEndTag(el);
+			}
+
 			el.removeChildren();
-			JptStaticFragment sf_post = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf_post);
-			_sb.delete(0, _sb.length());
+			addStaticFragments();
 		}
 	}
 
@@ -429,7 +545,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			Dependency d = new Dependency(macroUri);
 			_dependecies.add(d);
 
-			Map<String, String> macroParams = extractMacroParams(macroURI.getQuery());
+			Map<String, String> macroParams = extractMacroParams(macroURI.getRawQuery());
 			Document document_macro = XomDocumentBuilder.getDocument(macroUri);
 			prepareMacro(document_macro, el, macroPath, macroParams);
 		}
@@ -468,7 +584,6 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 	private void processMetalDefineSlot(Element el) throws ValidityException, ParsingException, IOException
 	{
-
 		Attribute attribute = XomUtils.getAttribute(el, "metal:define-slot");
 		if (attribute != null)
 		{
@@ -506,36 +621,25 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		Attribute attribute = XomUtils.getAttribute(el, "tal:repeat");
 		if (attribute != null)
 		{
+			//System.out.println("JptNodeBuilder.processTalRepeat.el: »»»" + el.toXML() + "«««");
+			el.removeAttribute(attribute);
 			String current_attribute_value = attribute.getValue();
-			JptStaticFragment sf_pre = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf_pre);
 
-			// int nl = _sb.lastIndexOf("\n");
-			// String padding = _sb.substring(nl, _sb.length());
+			addStaticFragments();
 
 			String padding = "";
 
-			_sb.delete(0, _sb.length());
-			el.removeAttribute(attribute);
-
 			RepeatElements relements = new RepeatElements(current_attribute_value, padding);
 
-			// JptLoopNode jloop = new
-			// JptLoopNode(relements.getLoopSourceExpression(), _isInSlot,
-			// param_clazz, param_names);
-			// JptLoopNode jloop = new
-			// JptLoopNode(relements.getLoopSourceExpression(), _isInSlot,
-			// param_clazz, param_names, relements.getLoopIncrement());
 			JptLoopNode jloop = new JptLoopNode(relements, _isInSlot);
 
 			pnodes.push(jloop);
 			process(el);
-			JptStaticFragment sf_post = new JptStaticFragment(_sb.toString());
-			jloop.appendChild(sf_post);
-			_sb.delete(0, _sb.length());
 
-			processTalReplace(el);
-			processTalContent(el);
+			addStaticFragments();
+
+			// processTalReplace(el);
+			// processTalContent(el);
 
 			pnodes.pop();
 
@@ -549,9 +653,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		if (attribute != null)
 		{
 			el.removeAttribute(attribute);
-			JptStaticFragment sf = new JptStaticFragment(_sb.toString());
-			((JptParentNode) pnodes.peek()).appendChild(sf);
-			_sb.delete(0, _sb.length());
+			addStaticFragments();
 
 			el.removeChildren();
 

@@ -23,6 +23,7 @@ public class JptConditionalNode extends JptParentNode
 	{
 		_isInSlot = isInSlot;
 		_bool_exp = StringUtils.isBlank(jpt_exp) ? "true" : StringUtils.replace(jpt_exp, "\'", "\"");
+		// System.out.println("JptConditionalNode.JptConditionalNode.jpt_exp: " + jpt_exp);
 	}
 
 	boolean isConditionalNode()
@@ -49,6 +50,7 @@ public class JptConditionalNode extends JptParentNode
 			}
 
 			boolean condition = (Boolean) MVEL.executeExpression(_compiled_exp, context);
+			// System.out.println("JptConditionalNode.render.condition: " + condition);
 			// boolean condition = (Boolean) MVEL.evalToBoolean(_bool_exp, context);
 
 			if (condition)

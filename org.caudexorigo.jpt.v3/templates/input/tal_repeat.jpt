@@ -14,7 +14,7 @@
 		<td align="left" nowrap="nowrap" tal:content="person.name">name</td>
 		<td align="left" nowrap="nowrap" tal:content="$this.value">value</td>
 	</tr>
-	</table>
+</table>
 
 </body>
 </html>

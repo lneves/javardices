@@ -23,6 +23,10 @@
 
 </table>
 
+<div tal:repeat="var=person;source=persons" bgcolor="#EEEBCC" tal:omit-tag="">
+	<p tal:content="person.name">name</p>
+</div>
+
 
 	<div metal:define-slot="wrapped">content goes here.</div>
 	<div>Footer</div>

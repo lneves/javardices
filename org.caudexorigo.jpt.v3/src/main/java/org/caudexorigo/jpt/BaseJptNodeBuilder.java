@@ -118,7 +118,7 @@ public class BaseJptNodeBuilder
 	}
 
 	protected void process(DocType doctype)
-	{		
+	{
 		_buffer.append("<!DOCTYPE ");
 		_buffer.append(doctype.getRootElementName());
 		if (doctype.getPublicID() != null)

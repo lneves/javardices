@@ -9,7 +9,7 @@
 <p>
 <span tal:condition="$this.boolt">this should appear</span>
 <span tal:condition=""> empty condition, this should appear</span>
-<span tal:condition="!$this.boolt">this should not appear</span>
+Must be empty quotes: "<span tal:condition="!$this.boolt">this should not appear</span>"
 </p>
 
 

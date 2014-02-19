@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for "tal:omit-tag"</title>
+</head>
+<body>
+<h2>Test for "tal:omit-tag"</h2>
+
+##########################################################################
+<p tal:omit-tag="">empty omit-tag, should see text without wrapper</p>
+##########################################################################
+<p tal:omit-tag="$this.boolt">boolean omit-tag, should see text without wrapper</p>
+##########################################################################
+<p tal:omit-tag="!$this.boolt">boolean omit-tag, should see text with wrapper</p>
+##########################################################################
+<p tal:omit-tag="false">dada</p>
+##########################################################################
+TAL:CONDITION# <span tal:condition="$this.boolt" tal:omit-tag="true">gugu</span>
+##########################################################################
+NESTED TAL:CONTENT# <span tal:omit-tag="true"><span tal:content="$this.value">gugu</span></span>
+##########################################################################
+NESTED TAL:REPLACE# <span tal:omit-tag="true"><span tal:replace="$this.value">gugu</span></span>
+##########################################################################
+TAL:REPEAT#
+<div tal:repeat="var=person;source=$this.persons" tal:omit-tag="">
+<p tal:content="person.name" tal:omit-tag="true">name</p>
+</div>
+##########################################################################
+TAL:CONTENT# <span tal:omit-tag="true" tal:content="$this.value">gugu</span>
+##########################################################################
+</body>
+</html>

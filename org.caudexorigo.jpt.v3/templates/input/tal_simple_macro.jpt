@@ -9,7 +9,7 @@
 	</head>
 <body>
 
-<div metal:use-macro="metal-simple.jpt?macro=component2"></div>
+<div metal:use-macro="metal-simple.jpt?macro=component2&amp;xpto=gugu%26dada"></div>
 
 </body>
 </html>
