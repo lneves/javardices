@@ -154,7 +154,6 @@ public class NettyHttpServer
 
 			InetSocketAddress inet = new InetSocketAddress(_host, _port);
 			log.info("Httpd started. Listening on {}:{}", _host, _port);
-			System.out.printf("Httpd started. Listening on %s:%s%n", _host, _port);
 			b.bind(inet).sync().channel().closeFuture().sync();
 		}
 		catch (Throwable t)
