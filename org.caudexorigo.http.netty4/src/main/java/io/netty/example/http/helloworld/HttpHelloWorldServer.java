@@ -19,8 +19,13 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import org.caudexorigo.text.StringUtils;
 
 /**
  * An HTTP server that sends back the content of the received HTTP request in a pretty plaintext form.
@@ -38,13 +43,29 @@ public class HttpHelloWorldServer
 	public void run() throws Exception
 	{
 		// Configure the server.
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
+
+		String os = System.getProperty("os.name").toLowerCase();
+
+		boolean is_linux = StringUtils.contains(os, "linux");
+		
+		if (is_linux)
+		{
+			doRun(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
+		}
+		else
+		{
+			doRun(new NioEventLoopGroup(), new NioEventLoopGroup(), NioServerSocketChannel.class);
+		}
+	}
+
+	private void doRun(EventLoopGroup bossGroup, EventLoopGroup workerGroup, Class<? extends ServerChannel> serverChannelClass) throws InterruptedException
+	{
 		try
 		{
 			ServerBootstrap b = new ServerBootstrap();
 			b.option(ChannelOption.SO_BACKLOG, 1024);
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new HttpHelloWorldServerInitializer());
+
+			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(new HttpHelloWorldServerInitializer());
 
 			Channel ch = b.bind(port).sync().channel();
 			ch.closeFuture().sync();

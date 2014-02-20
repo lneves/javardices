@@ -3,6 +3,9 @@ package org.caudexorigo.http.netty4;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
@@ -12,6 +15,7 @@ import javax.net.ssl.SSLContext;
 
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
+import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +56,6 @@ public class NettyHttpServer
 		_host = host;
 		_port = port;
 		_is_compression_enabled = is_compression_enabled;
-
 	}
 
 	public String getHost()
@@ -123,15 +126,31 @@ public class NettyHttpServer
 	{
 		log.info("Starting Httpd");
 
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		String os = System.getProperty("os.name").toLowerCase();
+
+		boolean is_linux = StringUtils.contains(os, "linux");
+
+		if (is_linux)
+		{
+			log.info("netty-transport: linux epoll");
+			doStart(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
+		}
+		else
+		{
+			log.info("netty-transport: nio");
+			doStart(new NioEventLoopGroup(), new NioEventLoopGroup(), NioServerSocketChannel.class);
+		}
+	}
+
+	private void doStart(EventLoopGroup bossGroup, EventLoopGroup workerGroup, Class<? extends ServerChannel> serverChannelClass)
+	{
 		try
 		{
 			HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
 			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler, _is_compression_enabled);
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(server_init);
+			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(server_init);
 
 			InetSocketAddress inet = new InetSocketAddress(_host, _port);
 			log.info("Httpd started. Listening on {}:{}", _host, _port);
