@@ -361,27 +361,25 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		Attribute attribute = XomUtils.getAttribute(el, "tal:condition");
 		if (attribute != null)
 		{
-			// System.out.println("JptNodeBuilder.processTalCondition.el: " + el.toXML());
 
 			String current_attribute_value = attribute.getValue();
-
+			// System.out.println("JptNodeBuilder.processTalCondition.el: " + el.toXML());
+			// System.out.println("JptNodeBuilder.processTalCondition.expression: " + current_attribute_value);
 			// System.out.println("JptNodeBuilder.processTalCondition.sb: »»»»" + _sb.toString() + "«««");
 
 			addStaticFragments();
 			el.removeAttribute(attribute);
 
-			processTalOmitTag(el);
-
 			JptConditionalNode jcond = new JptConditionalNode(current_attribute_value, _isInSlot);
 			pnodes.push(jcond);
 
-			JptStaticFragment sf_post = new JptStaticFragment(_sb.toString());
-			jcond.appendChild(sf_post);
-			_sb.delete(0, _sb.length());
+			process(el);
 
-			processTalRepeat(el);
-			processTalReplace(el);
-			processTalContent(el);
+			addStaticFragments();
+
+			// processTalRepeat(el);
+			// processTalReplace(el);
+			// processTalContent(el);
 
 			pnodes.pop();
 			((JptParentNode) pnodes.peek()).appendChild(jcond);
@@ -414,7 +412,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 			addStaticFragments();
 
-			pnodes.pop(); //remove conditional node
+			pnodes.pop(); // remove conditional node
 			((JptParentNode) pnodes.peek()).appendChild(start_cond);
 
 			int child_count = el.getChildCount();
@@ -433,7 +431,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			processEndTag(el);
 			addStaticFragments();
 
-			pnodes.pop(); //remove conditional node
+			pnodes.pop(); // remove conditional node
 			((JptParentNode) pnodes.peek()).appendChild(end_cond);
 
 			pnodes.pop(); // remove holder node
@@ -461,7 +459,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		if (attribute != null)
 		{
 			el.removeAttribute(attribute);
-			
+
 			addStaticFragments();
 
 			Attribute omit_tag_attr = XomUtils.getAttribute(el, "tal:omit-tag");
@@ -621,7 +619,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		Attribute attribute = XomUtils.getAttribute(el, "tal:repeat");
 		if (attribute != null)
 		{
-			//System.out.println("JptNodeBuilder.processTalRepeat.el: »»»" + el.toXML() + "«««");
+			// System.out.println("JptNodeBuilder.processTalRepeat.el: »»»" + el.toXML() + "«««");
 			el.removeAttribute(attribute);
 			String current_attribute_value = attribute.getValue();
 
@@ -638,8 +636,8 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 			addStaticFragments();
 
-			// processTalReplace(el);
-			// processTalContent(el);
+			processTalReplace(el);
+			processTalContent(el);
 
 			pnodes.pop();
 

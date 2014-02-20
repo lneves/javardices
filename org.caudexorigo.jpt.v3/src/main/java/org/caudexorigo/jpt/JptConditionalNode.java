@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
@@ -50,7 +51,7 @@ public class JptConditionalNode extends JptParentNode
 			}
 
 			boolean condition = (Boolean) MVEL.executeExpression(_compiled_exp, context);
-			// System.out.println("JptConditionalNode.render.condition: " + condition);
+			// System.out.printf("JptConditionalNode.render -> expression: '%s'; condition: %s%n", _bool_exp, condition);
 			// boolean condition = (Boolean) MVEL.evalToBoolean(_bool_exp, context);
 
 			if (condition)
@@ -65,7 +66,8 @@ public class JptConditionalNode extends JptParentNode
 		}
 		catch (Throwable t)
 		{
-			throw new RuntimeException(t);
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			throw new RuntimeException(String.format("Error processing JptConditionalNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", _bool_exp, context, r.getMessage()));
 		}
 	}
 

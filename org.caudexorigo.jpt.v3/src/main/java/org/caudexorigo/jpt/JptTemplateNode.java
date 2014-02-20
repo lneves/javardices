@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.ParserContext;
 import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateCompiler;
@@ -37,18 +38,27 @@ public class JptTemplateNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_compiled_template == null)
+		try
 		{
-			ParserContext parser_context = ParserContext.create();
-
-			Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-			for (Entry<String, Object> entry : ctx_entries)
+			if (_compiled_template == null)
 			{
-				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-			}
-			_compiled_template = TemplateCompiler.compileTemplate(_template, parser_context);
+				ParserContext parser_context = ParserContext.create();
+
+				Set<Entry<String, Object>> ctx_entries = context.entrySet();
+
+				for (Entry<String, Object> entry : ctx_entries)
+				{
+					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				}
+				_compiled_template = TemplateCompiler.compileTemplate(_template, parser_context);
+			}	
 		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			throw new RuntimeException(String.format("Error processing template:%ncontext: %s;%nmessage: '%s'", context, r.getMessage()));
+		}
+
 
 		String sout = String.valueOf(TemplateRuntime.execute(_compiled_template, context));
 		out.write(sout);

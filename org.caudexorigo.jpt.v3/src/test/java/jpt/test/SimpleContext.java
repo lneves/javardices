@@ -1,5 +1,7 @@
 package jpt.test;
 
+import java.util.Arrays;
+
 public class SimpleContext
 {
 
@@ -38,4 +40,10 @@ public class SimpleContext
 	{
 		return "SimpleContext Title";
 	}
+
+//	@Override
+//	public String toString()
+//	{
+//		return String.format("SimpleContext [getValue()=%s, getLink()=%s, getCssLink()=%s, isBoolt()=%s, getPersons()=%s, getTitle()=%s]", getValue(), getLink(), getCssLink(), isBoolt(), Arrays.toString(getPersons()), getTitle());
+//	}
 }

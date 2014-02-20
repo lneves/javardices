@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 
@@ -47,39 +48,47 @@ public class JptLoopNode extends JptParentNode
 		String loopVar = _repeatElements.getLoopVar();
 		String pad = _repeatElements.getPadding();
 
-		Object collection = MVEL.executeExpression(_compiled_exp, context);
-
-		if (collection == null)
+		try
 		{
+			Object collection = MVEL.executeExpression(_compiled_exp, context);
+
+			if (collection == null)
+			{
+				arrayLoop(context, out, new Object[0], child_count, increment, loopVar, pad);
+				return;
+			}
+
+			if (collection.getClass().isArray())
+			{
+				arrayLoop(context, out, (Object[]) collection, child_count, increment, loopVar, pad);
+				return;
+			}
+
+			if (collection instanceof Collection)
+			{
+				collectionLoop(context, out, (Collection) collection, child_count, increment, loopVar, pad);
+				return;
+			}
+
+			if (collection instanceof Iterable)
+			{
+				iterableLoop(context, out, (Iterable) collection, child_count, increment, loopVar, pad);
+				return;
+			}
+
+			if (collection instanceof Iterator)
+			{
+				iteratorLoop(context, out, (Iterator) collection, child_count, increment, loopVar, pad);
+				return;
+			}
+
 			arrayLoop(context, out, new Object[0], child_count, increment, loopVar, pad);
-			return;
 		}
-
-		if (collection.getClass().isArray())
+		catch (Throwable t)
 		{
-			arrayLoop(context, out, (Object[]) collection, child_count, increment, loopVar, pad);
-			return;
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			throw new RuntimeException(String.format("Error processing JptLoopNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", loopVar, context, r.getMessage()));
 		}
-
-		if (collection instanceof Collection)
-		{
-			collectionLoop(context, out, (Collection) collection, child_count, increment, loopVar, pad);
-			return;
-		}
-
-		if (collection instanceof Iterable)
-		{
-			iterableLoop(context, out, (Iterable) collection, child_count, increment, loopVar, pad);
-			return;
-		}
-
-		if (collection instanceof Iterator)
-		{
-			iteratorLoop(context, out, (Iterator) collection, child_count, increment, loopVar, pad);
-			return;
-		}
-
-		arrayLoop(context, out, new Object[0], child_count, increment, loopVar, pad);
 	}
 
 	private void arrayLoop(Map<String, Object> context, Writer out, Object[] items, int child_count, int increment, String loopVar, String pad) throws IOException
@@ -105,6 +114,11 @@ public class JptLoopNode extends JptParentNode
 
 	private void iteratorLoop(Map<String, Object> context, Writer out, Iterator items, int child_count, int increment, String loopVar, String pad) throws IOException
 	{
+		if (!context.containsKey("$length"))
+		{
+			context.put("$length", -1);
+		}
+
 		int index = 0;
 		for (; items.hasNext();)
 		{
@@ -122,19 +136,22 @@ public class JptLoopNode extends JptParentNode
 					jpt_node.render(context, out);
 				}
 				out.write(pad);
+
+				context.remove(loopVar);
 			}
 		}
+
 		context.remove(loopVar);
 		context.remove("$index");
+		context.remove("$length");
+
 	}
 
 	private void iterableLoop(Map<String, Object> context, Writer out, Iterable items, int child_count, int increment, String loopVar, String pad) throws IOException
 	{
 		if (items != null)
 		{
-			context.put("$length", -1);
 			iteratorLoop(context, out, items.iterator(), child_count, increment, loopVar, pad);
-			context.remove("$length");
 		}
 	}
 
@@ -144,7 +161,6 @@ public class JptLoopNode extends JptParentNode
 		{
 			context.put("$length", items.size());
 			iteratorLoop(context, out, items.iterator(), child_count, increment, loopVar, pad);
-			context.remove("$length");
 		}
 	}
 

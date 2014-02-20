@@ -1,5 +1,8 @@
 package jpt.test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Person
 {
 	private int age;
@@ -33,4 +36,17 @@ public class Person
 		this.name = name;
 	}
 
+	public List<Integer> getSubItems()
+	{
+		List<Integer> l = new ArrayList<>();
+		l.add(1);
+		l.add(2);
+		return l;
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("Person [age=%s, name=%s, getSubItems()=%s]", age, name, getSubItems());
+	}	
 }

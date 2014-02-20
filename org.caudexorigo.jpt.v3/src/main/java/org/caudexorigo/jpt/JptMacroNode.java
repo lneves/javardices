@@ -40,8 +40,6 @@ public class JptMacroNode extends JptParentNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		// System.out.println("JptMacroNode.render.context: " + context);
-
 		Map<String, Object> macroContext = new HashMap<String, Object>();
 
 		Set<Entry<String, String>> param_entries = _macroParams.entrySet();

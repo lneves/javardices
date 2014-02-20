@@ -9,6 +9,7 @@ import java.util.Set;
 
 import nu.xom.Attribute;
 
+import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.text.StringEscapeUtils;
 import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
@@ -50,31 +51,41 @@ public class JptAttributeNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_compiled_exp == null)
+		try
 		{
-			ParserContext parser_context = ParserContext.create();
-
-			Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-			for (Entry<String, Object> entry : ctx_entries)
+			if (_compiled_exp == null)
 			{
-				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				ParserContext parser_context = ParserContext.create();
+
+				Set<Entry<String, Object>> ctx_entries = context.entrySet();
+
+				for (Entry<String, Object> entry : ctx_entries)
+				{
+					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				}
+				// Compile the expression.
+				_compiled_exp = MVEL.compileExpression(_attr_exp, parser_context);
 			}
-			// Compile the expression.
-			_compiled_exp = MVEL.compileExpression(_attr_exp, parser_context);
+			
+			//System.err.println(String.format("attribute expression: '%s';%n\tcontext: %s", _attr_exp, context));
+
+			String v = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
+
+			if (StringUtils.isNotBlank(v))
+			{
+				String sout = StringEscapeUtils.escapeXml(v);
+				out.write(SPACE, 0, 1);
+				out.write(_attribute_name, 0, _attribute_name.length);
+				out.write(EQUAL_SIGN, 0, 1);
+				out.write(QUOTE, 0, 1);
+				out.write(sout);
+				out.write(QUOTE, 0, 1);
+			}
 		}
-
-		String v = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
-
-		if (StringUtils.isNotBlank(v))
+		catch (Throwable t)
 		{
-			String sout = StringEscapeUtils.escapeXml(v);
-			out.write(SPACE, 0, 1);
-			out.write(_attribute_name, 0, _attribute_name.length);
-			out.write(EQUAL_SIGN, 0, 1);
-			out.write(QUOTE, 0, 1);
-			out.write(sout);
-			out.write(QUOTE, 0, 1);
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			throw new RuntimeException(String.format("Error processing JptAttributeNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", _attr_exp, context, r.getMessage()));
 		}
 	}
 

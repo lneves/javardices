@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?jpt template-class="jpt.test.MacroContext"?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal">
 <div metal:define-macro="component1">
 
@@ -10,5 +11,25 @@
 <div metal:define-macro="component2">
 <h2>macro = component2  </h2>
 <h3 tal:content="$this.title">  macro title should go here</h3>
+<h3 tal:content="$this.title" tal:omit-tag="">  macro title should go here</h3>
+
+
+
+
+
+<nav tal:condition="context.persons != null" role="navigation" id="menu">
+	<a class="toggle l-hide s-show" href="/" data-target="#menu ul" data-kpi="menu,0,0">Servi&ccedil;os</a>
+	<ul class="center s-hide" data-kpi="menu,1,0">
+		<li tal:repeat="source=context.persons;var=item" tal:attributes="class $index == 1 ? 'first' : $index == $length ? 'last' : ''">
+			<a tal:attributes="href item.name; class item.name != null ? 'submenu' : ''" target="_blank" tal:content="structure item.name"></a>
+			<ul class="submenu" tal:condition="item.name != null">
+				<li tal:repeat="source=item.subItems;var=xitem">
+					<a tal:attributes="href xitem" target="_blank" tal:content="structure xitem"></a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</nav>
+
 </div>
 </html>

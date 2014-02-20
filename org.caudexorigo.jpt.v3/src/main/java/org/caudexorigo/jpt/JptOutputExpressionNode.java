@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.text.StringEscapeUtils;
 import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
@@ -64,23 +65,40 @@ public class JptOutputExpressionNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_compiled_exp == null)
+		if (context == null)
 		{
-			ParserContext parser_context = ParserContext.create();
-
-			Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-			for (Entry<String, Object> entry : ctx_entries)
-			{
-				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-			}
-			// Compile the expression.
-			_compiled_exp = MVEL.compileExpression(_evaluation_exp, parser_context);
+			throw new IllegalArgumentException("render context can not be null");
 		}
 
-		String result = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
-		String sout = escape ? StringEscapeUtils.escapeXml(result) : result;
-		out.write(sout);
+		String result = null;
+
+		try
+		{
+			if (_compiled_exp == null)
+			{
+				ParserContext parser_context = ParserContext.create();
+
+				Set<Entry<String, Object>> ctx_entries = context.entrySet();
+
+				for (Entry<String, Object> entry : ctx_entries)
+				{
+					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+				}
+				// Compile the expression.
+				_compiled_exp = MVEL.compileExpression(_evaluation_exp, parser_context);
+
+			}
+
+			result = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
+
+			String sout = escape ? StringEscapeUtils.escapeXml(result) : result;
+			out.write(sout);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			throw new RuntimeException(String.format("Error processing JptOutputExpressionNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", _evaluation_exp, context, r.getMessage()));
+		}
 	}
 
 	public boolean isInSlot()
