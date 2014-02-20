@@ -18,6 +18,7 @@ package org.jboss.netty.example.http.helloworld;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import org.caudexorigo.Shutdown;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
@@ -26,7 +27,6 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
  */
 public class HttpHelloWorldServer
 {
-
 	private final int port;
 
 	public HttpHelloWorldServer(int port)
@@ -52,15 +52,22 @@ public class HttpHelloWorldServer
 
 	public static void main(String[] args)
 	{
-		int port;
-		if (args.length > 0)
+		try
 		{
-			port = Integer.parseInt(args[0]);
+			int port;
+			if (args.length > 0)
+			{
+				port = Integer.parseInt(args[0]);
+			}
+			else
+			{
+				port = 8080;
+			}
+			new HttpHelloWorldServer(port).run();
 		}
-		else
+		catch (Throwable t)
 		{
-			port = 8080;
+			Shutdown.now(t);
 		}
-		new HttpHelloWorldServer(port).run();
 	}
 }
