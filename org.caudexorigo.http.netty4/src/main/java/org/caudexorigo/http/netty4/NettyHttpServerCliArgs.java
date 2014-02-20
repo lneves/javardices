@@ -9,12 +9,11 @@ import org.caudexorigo.cli.Option;
 
 public interface NettyHttpServerCliArgs
 {
-
 	/**
 	 * 
 	 * @return Listening Port.
 	 */
-	@Option(shortName = "p", longName = "port", defaultValue = "8080")
+	@Option(shortName = "p", longName = "port", defaultValue = "8082")
 	int getPort();
 
 	/**
@@ -30,5 +29,4 @@ public interface NettyHttpServerCliArgs
 	 */
 	@Option(shortName = "r", longName = "root-directory", defaultValue = ".")
 	String getRootDirectory();
-
 }
