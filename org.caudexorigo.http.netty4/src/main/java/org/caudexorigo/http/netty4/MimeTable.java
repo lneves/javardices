@@ -190,5 +190,4 @@ public class MimeTable
 		String extension = StringUtils.substringAfterLast(file, ".");
 		return TABLE.get(extension);
 	}
-
 }
