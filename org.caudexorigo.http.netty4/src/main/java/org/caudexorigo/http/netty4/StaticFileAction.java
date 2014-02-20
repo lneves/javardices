@@ -90,11 +90,8 @@ public class StaticFileAction extends HttpAction
 
 		if (cacheAge > 0)
 		{
-			long expires = System.currentTimeMillis() + (1000L * cacheAge);
-
 			response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheAge));
 			response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
-			response.headers().set(HttpHeaders.Names.EXPIRES, HttpDateFormat.getHttpDate(new Date(expires)));
 		}
 
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
@@ -170,15 +167,15 @@ public class StaticFileAction extends HttpAction
 		}
 
 		File file = new File(path);
-		validateFile(file);
+		validateFile(file, request.getUri());
 		return file;
 	}
 
-	protected void validateFile(File file)
+	protected void validateFile(File file, String path)
 	{
 		if (file.isHidden() || !file.exists())
 		{
-			throw new WebException(new FileNotFoundException("File not found"), HttpResponseStatus.NOT_FOUND.code());
+			throw new WebException(new FileNotFoundException(String.format("File not found: '%s'", path)), HttpResponseStatus.NOT_FOUND.code());
 		}
 
 		if (!file.isFile())
