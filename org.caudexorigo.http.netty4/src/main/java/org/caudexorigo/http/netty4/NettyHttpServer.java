@@ -35,6 +35,7 @@ public class NettyHttpServer
 
 	private int _port;
 	private final boolean _is_compression_enabled;
+	private boolean _validate_headers;
 
 	public NettyHttpServer()
 	{
@@ -56,6 +57,7 @@ public class NettyHttpServer
 		_host = host;
 		_port = port;
 		_is_compression_enabled = is_compression_enabled;
+		_validate_headers = false;
 	}
 
 	public String getHost()
@@ -71,6 +73,11 @@ public class NettyHttpServer
 	public RequestRouter getRouter()
 	{
 		return _mapper;
+	}
+
+	private boolean getValidateHeaders()
+	{
+		return _validate_headers;
 	}
 
 	public void setHost(String host)
@@ -122,6 +129,11 @@ public class NettyHttpServer
 		_rspFmt = rspFmt;
 	}
 
+	public void setValidateHeaders(boolean validate_headers)
+	{
+		_validate_headers = validate_headers;
+	}
+
 	public synchronized void start()
 	{
 		log.info("Starting Httpd");
@@ -147,7 +159,7 @@ public class NettyHttpServer
 		try
 		{
 			HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
-			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler, _is_compression_enabled);
+			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler, _is_compression_enabled, getValidateHeaders());
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
 			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(server_init);
