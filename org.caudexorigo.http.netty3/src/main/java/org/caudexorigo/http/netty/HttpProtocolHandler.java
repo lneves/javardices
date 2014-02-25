@@ -17,6 +17,8 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
+import org.jboss.netty.handler.codec.http.DefaultHttpChunk;
+import org.jboss.netty.handler.codec.http.DefaultHttpRequest;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
@@ -102,7 +104,7 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 	{
 		Object msg = e.getMessage();
 		Channel ch = e.getChannel();
-
+		
 		if (msg instanceof HttpRequest)
 		{
 			HttpRequest req = (HttpRequest) msg;
@@ -110,13 +112,32 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 			if (is100ContinueExpected(req))
 			{
 				Channels.write(ctx, Channels.future(ch), new DefaultHttpResponse(HTTP_1_1, CONTINUE));
+				ctx.setAttachment(new DefaultHttpRequest(HttpVersion.HTTP_1_1, req.getMethod(), req.getUri()));
 			}
 
 			handleHttpRequest(ctx, req);
 		}
+		else if (msg instanceof DefaultHttpChunk)
+		{
+			DefaultHttpChunk req = (DefaultHttpChunk) msg;
+
+			Object a = ctx.getAttachment();
+			if (a != null)
+			{
+				if (a instanceof DefaultHttpRequest)
+				{
+					DefaultHttpRequest real_request = (DefaultHttpRequest) a;
+
+					real_request.setContent(req.getContent());
+					
+					handleHttpRequest(ctx, real_request);
+					ctx.setAttachment(null);
+				}
+			}
+		}
 		else
 		{
-			throw new IllegalArgumentException("Invalid Object type received by HttpHandler");
+			throw new IllegalArgumentException(String.format("Invalid Object type received by HttpHandler: '%s'", msg.getClass().getCanonicalName()));
 		}
 		// else if (msg instanceof WebSocketFrame)
 		// {
