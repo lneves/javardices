@@ -48,7 +48,7 @@ public class MessageBody
 		status.put(505, true);
 	}
 
-	protected static boolean allow(int code)
+	public static boolean allow(int code)
 	{
 		return status.get(code);
 	}
