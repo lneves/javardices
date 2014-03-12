@@ -93,11 +93,12 @@ public class JptLoopNode extends JptParentNode
 
 	private void arrayLoop(Map<String, Object> context, Writer out, Object[] items, int child_count, int increment, String loopVar, String pad) throws IOException
 	{
-		context.put("$length", items.length);
+
 		for (int n = 0; n < items.length; n = n + increment)
 		{
 			context.put(loopVar, items[n]);
 			context.put("$index", n + 1);
+			context.put("$length", items.length);
 			for (int i = 0; i < child_count; i++)
 			{
 				JptNode jpt_node = getChild(i);
@@ -114,9 +115,11 @@ public class JptLoopNode extends JptParentNode
 
 	private void iteratorLoop(Map<String, Object> context, Writer out, Iterator items, int child_count, int increment, String loopVar, String pad) throws IOException
 	{
-		if (!context.containsKey("$length"))
+		int len = -1;
+
+		if (context.containsKey("$length"))
 		{
-			context.put("$length", -1);
+			len = ((Integer) context.get("$length")).intValue();
 		}
 
 		int index = 0;
@@ -129,6 +132,7 @@ public class JptLoopNode extends JptParentNode
 			{
 				context.put(loopVar, item);
 				context.put("$index", index);
+				context.put("$length", len);
 
 				for (int i = 0; i < child_count; i++)
 				{
