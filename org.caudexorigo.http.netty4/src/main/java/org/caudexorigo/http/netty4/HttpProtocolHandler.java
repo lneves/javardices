@@ -106,8 +106,7 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 				}
 				else
 				{
-					HttpAction errorAction = new ErrorAction(new WebException(new FileNotFoundException(), HttpResponseStatus.NOT_FOUND.code()), _rspFmt);
-					errorAction.process(ctx, request, response);
+					throw new WebException(new FileNotFoundException("No available HttpAction for the request"), HttpResponseStatus.NOT_FOUND.code());
 				}
 			}
 			catch (Throwable t)
@@ -124,7 +123,6 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 				}
 				
 				errorAction.process(ctx, request, response);
-
 			}
 			finally
 			{
