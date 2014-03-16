@@ -112,8 +112,19 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			}
 			catch (Throwable t)
 			{
-				HttpAction errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
+				HttpAction errorAction;
+				if (t instanceof WebException)
+				{
+					WebException we = (WebException) t;
+					errorAction = new ErrorAction(we, _rspFmt);
+				}
+				else
+				{
+					errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
+				}
+				
 				errorAction.process(ctx, request, response);
+
 			}
 			finally
 			{
