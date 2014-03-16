@@ -186,6 +186,7 @@ public class DbPool implements Closeable
 				}
 				catch (Throwable ex)
 				{
+					log.error("Ping error: '{}'", ex.getMessage());
 					db.destroy();
 				}
 				finally
