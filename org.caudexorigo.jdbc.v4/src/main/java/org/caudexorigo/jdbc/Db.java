@@ -412,7 +412,7 @@ public class Db
 	{
 		validateConnection();
 
-		PreparedStatement prepStatement = getPreparedStatment(sql);
+		PreparedStatement prepStatement = getPreparedStatement(sql);
 		try
 		{
 
@@ -439,6 +439,19 @@ public class Db
 			{
 				closeQuietly(prepStatement);
 			}
+		}
+	}
+
+	protected int executePreparedStatement(PreparedStatement pstmt, Object... params)
+	{
+		try
+		{
+			setPreparedStatementParameters(pstmt, params);
+			return pstmt.executeUpdate();
+		}
+		catch (Throwable t)
+		{
+			throw new RuntimeException(t);
 		}
 	}
 
@@ -592,7 +605,7 @@ public class Db
 		}
 	}
 
-	PreparedStatement getPreparedStatment(String sql)
+	PreparedStatement getPreparedStatement(String sql)
 	{
 		if (dbinfo.getUseCache())
 		{
@@ -763,6 +776,25 @@ public class Db
 		__closeQuietly(connection);
 	}
 
+	protected int executeCallableStatement(CallableStatement cs, Object... params)
+	{
+		if (params == null)
+		{
+			params = new Object[0];
+		}
+
+		setCallableStatementParameters(cs, params);
+
+		try
+		{
+			return cs.executeUpdate(); // run the stored procedure
+		}
+		catch (Throwable t)
+		{
+			throw new RuntimeException(t);
+		}
+	}
+
 	protected int executeCallableStatement(String spName)
 	{
 		return executeCallableStatement(0, spName, new Object[0]);
@@ -807,4 +839,11 @@ public class Db
 	{
 		return isActive;
 	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("Db [dbinfo=%s]", dbinfo);
+	}
+
 }

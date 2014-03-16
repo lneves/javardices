@@ -5,15 +5,12 @@ import java.sql.ResultSet;
 
 public class DbHandler
 {
-	private final DbPool dbPool;
-
-	public DbHandler(final DbPool dbPool)
+	public DbHandler()
 	{
 		super();
-		this.dbPool = dbPool;
 	}
 
-	public void handle(final String sql, final RowHandler row_handler, Object... params)
+	public void handle(final DbPool dbPool, final String sql, final RowHandler row_handler, Object... params)
 	{
 		Db db = null;
 
@@ -34,13 +31,33 @@ public class DbHandler
 
 	public void handle(final Db db, final String sql, final RowHandler row_handler, final Object... params)
 	{
-		ResultSet rs = null;
 		PreparedStatement ps = null;
 
 		try
 		{
-			ps = db.getPreparedStatment(sql);
-			rs = db.fetchResultSetWithPreparedStatment(ps, params);
+			ps = db.getPreparedStatement(sql);
+			handle(db, ps, row_handler, params);
+		}
+		catch (Throwable ex)
+		{
+			throw new RuntimeException(ex);
+		}
+		finally
+		{
+			if (!db.useStatementCache())
+			{
+				Db.closeQuietly(ps);
+			}
+		}
+	}
+
+	public void handle(final Db db, final PreparedStatement pstmt, final RowHandler row_handler, final Object... params)
+	{
+		ResultSet rs = null;
+
+		try
+		{
+			rs = db.fetchResultSetWithPreparedStatment(pstmt, params);
 
 			row_handler.beforeFirst(rs);
 
@@ -58,10 +75,6 @@ public class DbHandler
 		finally
 		{
 			Db.closeQuietly(rs);
-			if (!db.useStatementCache())
-			{
-				Db.closeQuietly(ps);
-			}
 		}
 	}
 }

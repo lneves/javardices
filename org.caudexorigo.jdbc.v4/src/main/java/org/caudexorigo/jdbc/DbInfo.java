@@ -67,6 +67,6 @@ class DbInfo
 	@Override
 	public String toString()
 	{
-		return String.format("DbInfo [con_name=%s, driver_class=%s, driver_url=%s, user=%s, ttl=%s, queryTimeout=%s, useCache=%s]", con_name, driver_class, driver_url, user, ttl, queryTimeout, useCache);
+		return String.format("DbInfo [driver_url=%s, con_name=%s, driver_class=%s, user=%s, ttl=%s, queryTimeout=%s, useCache=%s]", driver_url, con_name, driver_class, user, ttl, queryTimeout, useCache);
 	}
 }

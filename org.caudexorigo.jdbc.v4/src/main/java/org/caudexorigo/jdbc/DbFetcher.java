@@ -7,12 +7,9 @@ import java.util.List;
 
 public class DbFetcher<T>
 {
-	private final DbPool dbPool;
-
-	public DbFetcher(final DbPool dbPool)
+	public DbFetcher()
 	{
 		super();
-		this.dbPool = dbPool;
 	}
 
 	public List<T> fetchList(final Db db, final String sql, RowConverter<T> extractor)
@@ -32,7 +29,7 @@ public class DbFetcher<T>
 
 		try
 		{
-			ps = db.getPreparedStatment(sql);
+			ps = db.getPreparedStatement(sql);
 			rs = db.fetchResultSetWithPreparedStatment(ps, params);
 
 			List<T> lst = new ArrayList<T>();
@@ -59,7 +56,7 @@ public class DbFetcher<T>
 		}
 	}
 
-	public List<T> fetchList(final String sql, final RowConverter<T> extractor, Object... params)
+	public List<T> fetchList(final DbPool dbPool, final String sql, final RowConverter<T> extractor, Object... params)
 	{
 		Db db = null;
 
@@ -78,12 +75,12 @@ public class DbFetcher<T>
 		}
 	}
 
-	public List<T> fetchList(final String sql, final RowConverter<T> extractor)
+	public List<T> fetchList(final DbPool dbPool, final String sql, final RowConverter<T> extractor)
 	{
-		return fetchList(sql, extractor, new Object[0]);
+		return fetchList(dbPool, sql, extractor, new Object[0]);
 	}
 
-	public T fetchObject(final String sql, final RowConverter<T> extractor, Object... params)
+	public T fetchObject(final DbPool dbPool, final String sql, final RowConverter<T> extractor, Object... params)
 	{
 		Db db = null;
 
@@ -102,20 +99,41 @@ public class DbFetcher<T>
 		}
 	}
 
-	public T fetchObject(final String sql, final RowConverter<T> extractor)
+	public T fetchObject(final DbPool dbPool, final String sql, final RowConverter<T> extractor)
 	{
-		return fetchObject(sql, extractor, new Object[0]);
+		return fetchObject(dbPool, sql, extractor, new Object[0]);
 	}
 
 	public T fetchObject(final Db db, final String sql, final RowConverter<T> extractor, Object... params)
 	{
-		ResultSet rs = null;
 		PreparedStatement ps = null;
 
 		try
 		{
-			ps = db.getPreparedStatment(sql);
-			rs = db.fetchResultSetWithPreparedStatment(ps, params);
+			ps = db.getPreparedStatement(sql);
+			return fetchObject(db, ps, extractor, params);
+
+		}
+		catch (Throwable ex)
+		{
+			throw new RuntimeException(ex);
+		}
+		finally
+		{
+			if (!db.useStatementCache())
+			{
+				Db.closeQuietly(ps);
+			}
+		}
+	}
+
+	public T fetchObject(final Db db, final PreparedStatement pstmt, final RowConverter<T> extractor, Object... params)
+	{
+		ResultSet rs = null;
+
+		try
+		{
+			rs = db.fetchResultSetWithPreparedStatment(pstmt, params);
 
 			if (rs.next())
 			{
@@ -134,10 +152,6 @@ public class DbFetcher<T>
 		finally
 		{
 			Db.closeQuietly(rs);
-			if (!db.useStatementCache())
-			{
-				Db.closeQuietly(ps);
-			}
 		}
 	}
 }

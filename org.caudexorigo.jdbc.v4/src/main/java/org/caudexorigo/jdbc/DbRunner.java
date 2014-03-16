@@ -1,13 +1,13 @@
 package org.caudexorigo.jdbc;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+
 public class DbRunner
 {
-	private final DbPool dbPool;
-
-	public DbRunner(DbPool dbPool)
+	public DbRunner()
 	{
 		super();
-		this.dbPool = dbPool;
 	}
 
 	public int executeCallableStatement(Db db, String proc)
@@ -20,12 +20,17 @@ public class DbRunner
 		return db.executeCallableStatement(proc, params);
 	}
 
-	public int executeCallableStatement(String proc)
+	public int executeCallableStatement(Db db, CallableStatement cs, Object... params)
 	{
-		return executeCallableStatement(proc, new Object[0]);
+		return db.executeCallableStatement(cs, params);
 	}
 
-	public int executeCallableStatement(String proc, Object... params)
+	public int executeCallableStatement(final DbPool dbPool, String proc)
+	{
+		return executeCallableStatement(dbPool, proc, new Object[0]);
+	}
+
+	public int executeCallableStatement(final DbPool dbPool, String proc, Object... params)
 	{
 		Db db = null;
 
@@ -56,7 +61,12 @@ public class DbRunner
 		}
 	}
 
-	public int executePreparedStatement(String sql, Object... params)
+	public int executePreparedStatement(Db db, PreparedStatement pstmt, Object... params)
+	{
+		return db.executePreparedStatement(pstmt, params);
+	}
+
+	public int executePreparedStatement(final DbPool dbPool, String sql, Object... params)
 	{
 		Db db = null;
 
@@ -80,8 +90,8 @@ public class DbRunner
 		return executePreparedStatement(db, sql, new Object[0]);
 	}
 
-	public int executeStatement(String sql)
+	public int executeStatement(final DbPool dbPool, String sql)
 	{
-		return executePreparedStatement(sql, new Object[0]);
+		return executePreparedStatement(dbPool, sql, new Object[0]);
 	}
 }
