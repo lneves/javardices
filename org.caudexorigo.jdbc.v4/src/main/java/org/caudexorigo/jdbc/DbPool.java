@@ -1,5 +1,6 @@
 package org.caudexorigo.jdbc;
 
+import java.io.Closeable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Properties;
@@ -15,7 +16,7 @@ import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DbPool
+public class DbPool implements Closeable
 {
 	private static final int DEFAULT_MAX_POOL_SIZE = 20;
 
