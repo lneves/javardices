@@ -161,7 +161,7 @@ public class DbPool implements Closeable
 		pools.clear();
 	}
 
-	public void ping(String sql, RowHandler row_handler)
+	public void ping(String sql, PingHandler ping_handler)
 	{
 		Collection<BlockingQueue<Db>> inner_pools = pools.values();
 
@@ -175,19 +175,20 @@ public class DbPool implements Closeable
 				{
 					rs = db.fetchResultSetWithStatment(sql);
 
-					row_handler.beforeFirst(rs);
+					ping_handler.beforeFirst(rs);
 
 					while (rs.next())
 					{
-						row_handler.process(rs);
+						ping_handler.process(rs);
 					}
 
-					row_handler.afterLast(rs);
+					ping_handler.afterLast(rs);
+					ping_handler.result(db, null);
 				}
 				catch (Throwable ex)
 				{
-					log.error("Ping error: '{}'", ex.getMessage());
 					db.destroy();
+					ping_handler.result(db, ex);
 				}
 				finally
 				{
