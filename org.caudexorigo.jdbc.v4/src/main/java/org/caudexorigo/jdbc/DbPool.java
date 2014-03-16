@@ -1,6 +1,7 @@
 package org.caudexorigo.jdbc;
 
 import java.io.Closeable;
+import java.sql.ResultSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Properties;
@@ -158,6 +159,41 @@ public class DbPool implements Closeable
 		}
 
 		pools.clear();
+	}
+
+	public void ping(String sql, RowHandler row_handler)
+	{
+		Collection<BlockingQueue<Db>> inner_pools = pools.values();
+
+		for (BlockingQueue<Db> bq : inner_pools)
+		{
+			for (Db db : bq)
+			{
+				ResultSet rs = null;
+
+				try
+				{
+					rs = db.fetchResultSetWithStatment(sql);
+
+					row_handler.beforeFirst(rs);
+
+					while (rs.next())
+					{
+						row_handler.process(rs);
+					}
+
+					row_handler.afterLast(rs);
+				}
+				catch (Throwable ex)
+				{
+					db.destroy();
+				}
+				finally
+				{
+					Db.closeQuietly(rs);
+				}
+			}
+		}
 	}
 
 	public Db pick()
