@@ -181,8 +181,7 @@ public class MimeTable
 		TABLE.put("xslt", "application/xslt+xml");
 		TABLE.put("xul", "application/vnd.mozilla.xul+xml");
 		TABLE.put("xwd", "image/x-xwindowdump");
-		TABLE.put("xyz", "chemical/x-xyz");	
-
+		TABLE.put("xyz", "chemical/x-xyz");
 		TABLE.put("otf", "application/vnd.ms-opentype");
 		TABLE.put("eot", "application/vnd.ms-fontobject");
 		TABLE.put("ttf", "application/x-font-ttf");

@@ -104,7 +104,7 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 	{
 		Object msg = e.getMessage();
 		Channel ch = e.getChannel();
-		
+
 		if (msg instanceof HttpRequest)
 		{
 			HttpRequest req = (HttpRequest) msg;
@@ -129,7 +129,7 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 					DefaultHttpRequest real_request = (DefaultHttpRequest) a;
 
 					real_request.setContent(req.getContent());
-					
+
 					handleHttpRequest(ctx, real_request);
 					ctx.setAttachment(null);
 				}
@@ -244,13 +244,22 @@ public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 			}
 			else
 			{
-				HttpAction errorAction = new ErrorAction(new WebException(new FileNotFoundException(), HttpResponseStatus.NOT_FOUND.getCode()), _rspFmt);
-				errorAction.process(ctx, request, response);
+				throw new WebException(new FileNotFoundException(), HttpResponseStatus.NOT_FOUND.getCode());
 			}
 		}
 		catch (Throwable t)
 		{
-			HttpAction errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.getCode()), _rspFmt);
+			HttpAction errorAction;
+			if (t instanceof WebException)
+			{
+				WebException we = (WebException) t;
+				errorAction = new ErrorAction(we, _rspFmt);
+			}
+			else
+			{
+				errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.getCode()), _rspFmt);
+			}
+
 			errorAction.process(ctx, request, response);
 		}
 		finally

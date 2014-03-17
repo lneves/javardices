@@ -183,6 +183,10 @@ public class MimeTable
 		TABLE.put("xwd", "image/x-xwindowdump");
 		TABLE.put("xyz", "chemical/x-xyz");
 		TABLE.put("zip", "application/zip");
+		TABLE.put("otf", "application/vnd.ms-opentype");
+		TABLE.put("eot", "application/vnd.ms-fontobject");
+		TABLE.put("ttf", "application/x-font-ttf");
+		TABLE.put("woff", "application/octet-stream");
 	}
 
 	public static final String getContentType(String file)
