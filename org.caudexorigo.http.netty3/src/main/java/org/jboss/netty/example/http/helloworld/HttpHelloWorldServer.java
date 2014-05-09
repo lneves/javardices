@@ -47,7 +47,9 @@ public class HttpHelloWorldServer
 		bootstrap.setPipelineFactory(new HttpHelloWorldServerPipelineFactory());
 
 		// Bind and start to accept incoming connections.
-		bootstrap.bind(new InetSocketAddress(port));
+		InetSocketAddress inet = new InetSocketAddress(port);
+		bootstrap.bind(inet);
+		System.out.printf("Httpd started. Listening on: %s%n", inet.toString());
 	}
 
 	public static void main(String[] args)

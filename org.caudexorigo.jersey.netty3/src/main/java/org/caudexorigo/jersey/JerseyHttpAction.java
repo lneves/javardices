@@ -85,4 +85,10 @@ public class JerseyHttpAction extends HttpAction implements Container
 		webappHandler = new ApplicationHandler(resConf);
 		containerListener.onReload(this);
 	}
+
+	@Override
+	public ApplicationHandler getApplicationHandler()
+	{
+		return webappHandler;
+	}
 }
