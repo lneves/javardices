@@ -8,6 +8,8 @@ import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 import java.net.InetSocketAddress;
 
@@ -15,7 +17,6 @@ import javax.net.ssl.SSLContext;
 
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
-import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,7 +141,7 @@ public class NettyHttpServer
 
 		String os = System.getProperty("os.name").toLowerCase();
 
-		boolean is_linux = StringUtils.contains(os, "linux");
+		boolean is_linux = false;// StringUtils.contains(os, "linux");
 
 		if (is_linux)
 		{
@@ -162,7 +163,8 @@ public class NettyHttpServer
 			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler, _is_compression_enabled, getValidateHeaders());
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
-			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(server_init);
+
+			b.group(bossGroup, workerGroup).channel(serverChannelClass).handler(new LoggingHandler(LogLevel.INFO)).childHandler(server_init);
 
 			InetSocketAddress inet = new InetSocketAddress(_host, _port);
 			log.info("Httpd started. Listening on {}:{}", _host, _port);

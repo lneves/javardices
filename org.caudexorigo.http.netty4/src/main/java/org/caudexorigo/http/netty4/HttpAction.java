@@ -32,23 +32,34 @@ public abstract class HttpAction
 
 	protected final void process(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
-		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
-		if (!is_keep_alive)
+		if (this instanceof StaticFileAction)
 		{
-			response.headers().set(HttpHeaders.Names.CONNECTION, "Close");
+			try
+			{
+				service(ctx, request, response);
+			}
+			catch (Throwable ex)
+			{
+				handleError(ctx, request, response, ex);
+				commitResponse(ctx, response, false);
+			}
 		}
+		else
+		{
+			boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 
-		try
-		{
-			service(ctx, request, response);
-		}
-		catch (Throwable ex)
-		{
-			handleError(ctx, request, response, ex);
-		}
-		finally
-		{
-			commitResponse(ctx, response, is_keep_alive);
+			try
+			{
+				service(ctx, request, response);
+			}
+			catch (Throwable ex)
+			{
+				handleError(ctx, request, response, ex);
+			}
+			finally
+			{
+				commitResponse(ctx, response, is_keep_alive);
+			}
 		}
 	}
 

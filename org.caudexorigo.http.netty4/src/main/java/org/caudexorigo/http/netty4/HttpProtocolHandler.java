@@ -5,8 +5,7 @@ import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
@@ -22,8 +21,9 @@ import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Sharable
-public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
+//@Sharable
+//public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
+public class HttpProtocolHandler extends SimpleChannelInboundHandler<FullHttpRequest>
 {
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);
 
@@ -73,14 +73,15 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		ctx.close();
 	}
 
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx)
-	{
-		ctx.flush();
-	}
+//	@Override
+//	public void channelReadComplete(ChannelHandlerContext ctx)
+//	{
+//		ctx.flush();
+//	}
 
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
+	// public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
+	protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception
 	{
 		if (msg instanceof DefaultFullHttpRequest)
 		{
@@ -88,6 +89,7 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 
 			if (is100ContinueExpected(request))
 			{
+				System.out.println("is100ContinueExpected");
 				ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
 			}
 
@@ -121,7 +123,7 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 				{
 					errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
 				}
-				
+
 				errorAction.process(ctx, request, response);
 			}
 			finally

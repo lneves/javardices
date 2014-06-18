@@ -14,9 +14,6 @@
 <span tal:condition=""> empty condition, this should appear</span>
 <p tal:condition="!$this.boolt"><span tal:content="$this.value">this should not appear</span> this should not appear</p>
 
-
-
-
 <span tal:condition="isdef $this.link">"$this.xpto" undefined</span>
 </body>
 </html>

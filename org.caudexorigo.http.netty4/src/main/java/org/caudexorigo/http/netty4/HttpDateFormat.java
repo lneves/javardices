@@ -1,5 +1,7 @@
 package org.caudexorigo.http.netty4;
 
+import io.netty.util.internal.FastThreadLocal;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -20,7 +22,7 @@ public class HttpDateFormat
 	/**
 	 * Thread local <code>HttpDateFormat</code>
 	 */
-	private static final ThreadLocal<HttpDateFormat> FORMAT_LOCAL = new ThreadLocal<HttpDateFormat>()
+	private static final FastThreadLocal<HttpDateFormat> FORMAT_LOCAL = new FastThreadLocal<HttpDateFormat>()
 	{
 		@Override
 		protected HttpDateFormat initialValue()

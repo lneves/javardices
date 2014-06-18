@@ -41,9 +41,11 @@ public class SimpleContext
 		return "SimpleContext Title";
 	}
 
-//	@Override
-//	public String toString()
-//	{
-//		return String.format("SimpleContext [getValue()=%s, getLink()=%s, getCssLink()=%s, isBoolt()=%s, getPersons()=%s, getTitle()=%s]", getValue(), getLink(), getCssLink(), isBoolt(), Arrays.toString(getPersons()), getTitle());
-//	}
+	@Override
+	public String toString()
+	{
+		return String.format("SimpleContext [calue()=%s, link()=%s, cssLink()=%s, boolt()=%s, persons()=%s, title()=%s]", getValue(), getLink(), getCssLink(), isBoolt(), Arrays.toString(getPersons()), getTitle());
+	}
+
+
 }

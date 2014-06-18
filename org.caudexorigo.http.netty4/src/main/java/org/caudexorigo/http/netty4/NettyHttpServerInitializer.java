@@ -7,6 +7,8 @@ import io.netty.handler.codec.http.HttpContentCompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.codec.http.HttpServerCodec;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel>
 {
@@ -37,14 +39,19 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 		int maxHeaderSize = 8192;
 		int maxChunkSize = 8192;
 
-		pipeline.addLast("decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
-		pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
-		pipeline.addLast("encoder", new HttpResponseEncoder());
+//		pipeline.addLast("decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
+//		pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
+//		pipeline.addLast("encoder", new HttpResponseEncoder());
+		
+		
+		pipeline.addLast(new HttpServerCodec());
+		pipeline.addLast(new HttpObjectAggregator(65536));
+		pipeline.addLast(new ChunkedWriteHandler());
 
-		if (is_compression_enabled)
-		{
-			pipeline.addLast("http-compression", new HttpContentCompressor());
-		}
+//		if (is_compression_enabled)
+//		{
+//			pipeline.addLast("http-compression", new HttpContentCompressor());
+//		}
 
 		pipeline.addLast("handler", handler);
 	}
