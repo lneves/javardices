@@ -11,13 +11,4 @@ public class ErrorAnalyser
 		}
 		return error_ex;
 	}
-
-	public static void exitIfOOM(Throwable t)
-	{
-		if (t instanceof OutOfMemoryError)
-		{
-			System.err.println("Giving up, reason: " + t.getMessage());
-			Shutdown.now();
-		}
-	}
 }

@@ -4,12 +4,14 @@ import static io.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
 import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
@@ -21,9 +23,9 @@ import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//@Sharable
-//public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
-public class HttpProtocolHandler extends SimpleChannelInboundHandler<FullHttpRequest>
+@Sharable
+// public class HttpProtocolHandler
+public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 {
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);
 
@@ -73,71 +75,73 @@ public class HttpProtocolHandler extends SimpleChannelInboundHandler<FullHttpReq
 		ctx.close();
 	}
 
-//	@Override
-//	public void channelReadComplete(ChannelHandlerContext ctx)
-//	{
-//		ctx.flush();
-//	}
-
 	@Override
-	// public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
-	protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest msg) throws Exception
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
 	{
 		if (msg instanceof DefaultFullHttpRequest)
 		{
 			DefaultFullHttpRequest request = (DefaultFullHttpRequest) msg;
-
-			if (is100ContinueExpected(request))
-			{
-				System.out.println("is100ContinueExpected");
-				ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
-			}
-
-			ByteBuf buf = ctx.alloc().buffer();
-			FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
-
-			try
-			{
-				HttpAction action = _requestMapper.map(ctx, request);
-
-				observeBegin(ctx, request, response);
-
-				if (action != null)
-				{
-					action.process(ctx, request, response);
-				}
-				else
-				{
-					throw new WebException(new FileNotFoundException("No available HttpAction for the request"), HttpResponseStatus.NOT_FOUND.code());
-				}
-			}
-			catch (Throwable t)
-			{
-				HttpAction errorAction;
-				if (t instanceof WebException)
-				{
-					WebException we = (WebException) t;
-					errorAction = new ErrorAction(we, _rspFmt);
-				}
-				else
-				{
-					errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
-				}
-
-				errorAction.process(ctx, request, response);
-			}
-			finally
-			{
-				observeEnd(ctx, request, response);
-			}
+			handleRead(ctx, request);
 		}
 	}
 
-	private void observeBegin(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	public void handleRead(ChannelHandlerContext ctx, DefaultFullHttpRequest request)
+	{
+		if (is100ContinueExpected(request))
+		{
+			ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
+		}
+
+		HttpAction action = _requestMapper.map(ctx, request);
+
+		try
+		{
+			observeBegin(ctx, request);
+
+			if (action != null)
+			{
+				if (action instanceof StaticFileAction)
+				{
+					action.process(ctx, request, null);
+				}
+				else
+				{
+					ByteBuf buf = ctx.alloc().buffer();
+					FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
+					action.process(ctx, request, response);
+				}
+			}
+			else
+			{
+				throw new WebException(new FileNotFoundException("No available HttpAction for the request"), HttpResponseStatus.NOT_FOUND.code());
+			}
+		}
+		catch (Throwable t)
+		{
+			HttpAction errorAction;
+			if (t instanceof WebException)
+			{
+				WebException we = (WebException) t;
+				errorAction = new ErrorAction(we, _rspFmt);
+			}
+			else
+			{
+				errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
+			}
+
+			ByteBuf ebuf = ctx.alloc().buffer();
+			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, ebuf);
+
+			errorAction.process(ctx, request, eresponse);
+			observeEnd(ctx, request, eresponse);
+		}
+	}
+
+	private void observeBegin(ChannelHandlerContext ctx, HttpRequest request)
 	{
 		try
 		{
-			_requestObserver.begin(ctx, request, response);
+			_requestObserver.begin(ctx, request);
 		}
 		catch (Throwable t)
 		{
@@ -146,7 +150,7 @@ public class HttpProtocolHandler extends SimpleChannelInboundHandler<FullHttpReq
 		}
 	}
 
-	private void observeEnd(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	private void observeEnd(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
 	{
 		try
 		{

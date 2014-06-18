@@ -1,16 +1,18 @@
 package org.caudexorigo.http.netty4;
 
 import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
+import static io.netty.handler.codec.http.HttpResponseStatus.OK;
+import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelProgressiveFuture;
-import io.netty.channel.ChannelProgressiveFutureListener;
 import io.netty.channel.DefaultFileRegion;
+import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.handler.stream.ChunkedFile;
@@ -54,17 +56,18 @@ public class StaticFileAction extends HttpAction
 	}
 
 	@Override
-	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse rsp)
 	{
 		validateRequest(request);
+
+		// rsp is null at this time
+		HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
+
 		File file = getFile(request);
 
 		String abs_path = getFileAbsolutePath(file);
 
 		long clen = file.length();
-
-		System.out.println("StaticFileAction.service.abs_path: " + abs_path);
-		System.out.println("StaticFileAction.service.clen1: " + clen);
 
 		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
 
@@ -100,52 +103,29 @@ public class StaticFileAction extends HttpAction
 
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 
-		if (is_keep_alive)
-		{
-			response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-		}
+		// if (is_keep_alive)
+		// {
+		// response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+		// }
 
 		ctx.write(response);
 
-		ChannelFuture sendFileFuture;
 		try
 		{
 			if (useSsl)
 			{
 				is_keep_alive = false;
-				sendFileFuture = ctx.write(new ChunkedFile(raf, 0, clen, 8192*2), ctx.newProgressivePromise());
+				ctx.write(new ChunkedFile(raf, 0, clen, 8192 * 2), ctx.voidPromise());
 			}
 			else
 			{
-				System.out.println("StaticFileAction.service(no ssl)");
-				sendFileFuture = ctx.write(new DefaultFileRegion(raf.getChannel(), 0, clen), ctx.newProgressivePromise());
-				//sendFileFuture = ctx.write(new ChunkedFile(raf, 0, clen, 8192*2), ctx.newProgressivePromise());
+				ctx.write(new DefaultFileRegion(raf.getChannel(), 0, clen), ctx.voidPromise());
 			}
 		}
 		catch (IOException e)
 		{
 			throw new RuntimeException(e);
 		}
-
-		sendFileFuture.addListener(new ChannelProgressiveFutureListener()
-		{
-			public void operationProgressed(ChannelProgressiveFuture future, long progress, long total)
-			{
-				if (total < 0)
-				{ // total unknown
-					System.out.println(future.channel() + " Transfer progress: " + progress);
-				}
-				else
-				{
-					System.out.println(future.channel() + " Transfer progress: " + progress + " / " + total);
-				}
-			}
-
-			public void operationComplete(ChannelProgressiveFuture future)
-			{
-				System.out.println(future.channel() + " Transfer complete.");
-			}
-		});
 
 		// Write the end marker
 		ChannelFuture lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
@@ -155,17 +135,6 @@ public class StaticFileAction extends HttpAction
 		{
 			// Close the connection when the whole content is written out.
 			lastContentFuture.addListener(ChannelFutureListener.CLOSE);
-		}
-		else
-		{
-			lastContentFuture.addListener(new ChannelFutureListener()
-			{
-				@Override
-				public void operationComplete(ChannelFuture future) throws Exception
-				{
-					System.out.println(future.channel() + " Transfer End.");
-				}
-			});
 		}
 	}
 

@@ -17,6 +17,7 @@ import javax.net.ssl.SSLContext;
 
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
+import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,11 +142,11 @@ public class NettyHttpServer
 
 		String os = System.getProperty("os.name").toLowerCase();
 
-		boolean is_linux = false;// StringUtils.contains(os, "linux");
+		boolean is_linux = StringUtils.contains(os, "linux");
 
 		if (is_linux)
 		{
-			log.info("netty-transport: linux epoll");
+			log.info("netty-transport: linux-epoll");
 			doStart(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
 		}
 		else
@@ -164,7 +165,7 @@ public class NettyHttpServer
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
 
-			b.group(bossGroup, workerGroup).channel(serverChannelClass).handler(new LoggingHandler(LogLevel.INFO)).childHandler(server_init);
+			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(server_init);
 
 			InetSocketAddress inet = new InetSocketAddress(_host, _port);
 			log.info("Httpd started. Listening on {}:{}", _host, _port);
