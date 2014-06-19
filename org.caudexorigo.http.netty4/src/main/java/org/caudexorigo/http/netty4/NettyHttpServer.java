@@ -225,6 +225,8 @@ public class NettyHttpServer
 		bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
 		bootstrap.childOption(ChannelOption.SO_RCVBUF, 128 * 1024);
 		bootstrap.childOption(ChannelOption.SO_SNDBUF, 128 * 1024);
+		bootstrap.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 32 * 1024);
+		bootstrap.childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK, 8 * 1024);
 
 		bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 		bootstrap.option(ChannelOption.SO_REUSEADDR, true);

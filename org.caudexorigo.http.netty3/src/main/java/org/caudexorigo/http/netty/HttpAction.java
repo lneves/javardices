@@ -51,7 +51,7 @@ public abstract class HttpAction
 			boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 			if (!is_keep_alive)
 			{
-				response.setHeader(HttpHeaders.Names.CONNECTION, "Close");
+				response.headers().set(HttpHeaders.Names.CONNECTION, "Close");
 			}
 
 			try
@@ -83,7 +83,7 @@ public abstract class HttpAction
 	{
 		request = (this.request != null) ? this.request : request;
 
-		response.clearHeaders();
+		response.headers().clear();
 		Throwable rootCause = ErrorAnalyser.findRootCause(ex);
 
 		if (ex instanceof WebException)
@@ -106,8 +106,8 @@ public abstract class HttpAction
 
 	private void commitResponse(ChannelHandlerContext ctx, HttpResponse response, boolean is_keep_alive)
 	{
-		response.setHeader(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
-		response.setHeader(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(response.getContent().writerIndex()));
+		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
+		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(response.getContent().writerIndex()));
 		Channel channel = ctx.getChannel();
 		ChannelFuture future = channel.write(response);
 
