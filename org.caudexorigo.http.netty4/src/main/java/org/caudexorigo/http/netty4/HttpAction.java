@@ -1,6 +1,5 @@
 package org.caudexorigo.http.netty4;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,6 +7,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.LastHttpContent;
 
 import java.nio.charset.Charset;
 
@@ -36,12 +36,11 @@ public abstract class HttpAction
 		{
 			try
 			{
-				service(ctx, request, response);
+				service(ctx, request, null);
 			}
 			catch (Throwable ex)
 			{
-				handleError(ctx, request, response, ex);
-				commitResponse(ctx, response, false);
+				throw new RuntimeException(ex);
 			}
 		}
 		else
@@ -90,11 +89,12 @@ public abstract class HttpAction
 	{
 		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(response.content().readableBytes()));
 		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
-		Channel channel = ctx.channel();
-		ChannelFuture future = channel.write(response);
+		ChannelFuture future = ctx.writeAndFlush(response);
 
+		// Decide whether to close the connection or not.
 		if (!is_keep_alive)
 		{
+			// Close the connection when the whole content is written out.
 			future.addListener(ChannelFutureListener.CLOSE);
 		}
 	}
