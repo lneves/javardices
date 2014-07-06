@@ -6,8 +6,8 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpHeaders.Names;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.LastHttpContent;
 
 import java.nio.charset.Charset;
 
@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 public abstract class HttpAction
 {
+	private static final CharSequence CONTENT_LENGTH_ENTITY = HttpHeaders.newEntity(Names.CONTENT_LENGTH);
+	private static final CharSequence DATE_ENTITY = HttpHeaders.newEntity(Names.DATE);
 	private static Logger log = LoggerFactory.getLogger(HttpAction.class);
 
 	private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
@@ -32,7 +34,7 @@ public abstract class HttpAction
 
 	protected final void process(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
-		if (this instanceof StaticFileAction)
+		if (response == null)
 		{
 			try
 			{
@@ -87,8 +89,8 @@ public abstract class HttpAction
 
 	void commitResponse(ChannelHandlerContext ctx, FullHttpResponse response, boolean is_keep_alive)
 	{
-		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(response.content().readableBytes()));
-		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
+		response.headers().set(CONTENT_LENGTH_ENTITY, String.valueOf(response.content().readableBytes()));
+		response.headers().set(DATE_ENTITY, HttpDateFormat.getCurrentHttpDate());
 		ChannelFuture future = ctx.writeAndFlush(response);
 
 		// Decide whether to close the connection or not.

@@ -28,19 +28,22 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
+import org.jboss.netty.channel.ChannelHandler.Sharable;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
+import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpHeaders.Values;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 
+@Sharable
 public class HttpHelloWorldServerHandler extends SimpleChannelUpstreamHandler
 {
-	private static final byte[] CONTENT = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd' };
+	private static final byte[] CONTENT = "Hello World".getBytes();
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception
@@ -58,9 +61,10 @@ public class HttpHelloWorldServerHandler extends SimpleChannelUpstreamHandler
 
 			boolean keepAlive = isKeepAlive(req);
 			HttpResponse response = new DefaultHttpResponse(HTTP_1_1, OK);
+			HttpHeaders hh = response.headers();
 			response.setContent(ChannelBuffers.wrappedBuffer(CONTENT));
-			response.setHeader(CONTENT_TYPE, "text/plain");
-			response.setHeader(CONTENT_LENGTH, CONTENT.length);
+			hh.set(CONTENT_TYPE, "text/plain");
+			hh.set(CONTENT_LENGTH, CONTENT.length);
 
 			if (!keepAlive)
 			{
@@ -70,7 +74,7 @@ public class HttpHelloWorldServerHandler extends SimpleChannelUpstreamHandler
 			}
 			else
 			{
-				response.setHeader(CONNECTION, Values.KEEP_ALIVE);
+				hh.set(CONNECTION, Values.KEEP_ALIVE);
 				Channels.write(ctx, Channels.future(ch), response);
 			}
 		}
@@ -79,7 +83,7 @@ public class HttpHelloWorldServerHandler extends SimpleChannelUpstreamHandler
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception
 	{
-		e.getCause().printStackTrace();
+		// e.getCause().printStackTrace();
 		e.getChannel().close();
 	}
 }

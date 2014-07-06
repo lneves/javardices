@@ -1,6 +1,7 @@
 package org.caudexorigo.http.netty4;
 
-import io.netty.util.internal.FastThreadLocal;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.util.concurrent.FastThreadLocal;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,7 +10,6 @@ import java.util.TimeZone;
 
 public class HttpDateFormat
 {
-
 	/**
 	 * By default, we update the format if it is more than a second old
 	 */
@@ -44,7 +44,7 @@ public class HttpDateFormat
 	/**
 	 * The current formatted HTTP date
 	 */
-	private String currentHTTPDate;
+	private CharSequence currentHTTPDate;
 
 	private HttpDateFormat()
 	{
@@ -54,12 +54,11 @@ public class HttpDateFormat
 	}
 
 	/**
-	 * Returns the current time formatted as specified in the HTTP 1.1
-	 * specification.
+	 * Returns the current time formatted as specified in the HTTP 1.1 specification.
 	 * 
 	 * @return The formatted date
 	 */
-	public static String getCurrentHttpDate()
+	public static CharSequence getCurrentHttpDate()
 	{
 		return FORMAT_LOCAL.get().getCurrentDate();
 	}
@@ -70,26 +69,23 @@ public class HttpDateFormat
 	}
 
 	/**
-	 * Provides the current formatted date to be employed. If we haven't updated
-	 * our view of the time in the last 'granularity' ms, we format a fresh
-	 * value.
+	 * Provides the current formatted date to be employed. If we haven't updated our view of the time in the last 'granularity' ms, we format a fresh value.
 	 * 
 	 * @return The current http date
 	 */
-	private String getCurrentDate()
+	private CharSequence getCurrentDate()
 	{
 		long currentTime = System.currentTimeMillis();
 		if (currentTime - timeLastGenerated > granularity)
 		{
 			timeLastGenerated = currentTime;
-			currentHTTPDate = dateFormat.format(new Date(currentTime));
+			currentHTTPDate = HttpHeaders.newEntity(dateFormat.format(new Date(currentTime)));
 		}
 		return currentHTTPDate;
-	}
+	} 
 
 	private String getDate(Date d)
 	{
 		return dateFormat.format(d);
 	}
-
 }

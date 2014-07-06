@@ -186,10 +186,6 @@ public class NettyHttpServer
 			{
 				try
 				{
-					final HttpRequestDecoder httpRequestDecoder = new HttpRequestDecoder(4096, 8192, 256 * 1024);
-					final HttpResponseEncoder httpResponseEncoder = new HttpResponseEncoder();
-					final HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
-
 					// Create a default pipeline implementation.
 					ChannelPipeline pipeline = pipeline();
 
@@ -198,8 +194,8 @@ public class NettyHttpServer
 					// pipeline.addLast("policy-file", new PolicyFileRequestDecoder(getPort()));
 					// }
 
-					pipeline.addLast("http-decoder", httpRequestDecoder);
-					pipeline.addLast("http-encoder", httpResponseEncoder);
+					pipeline.addLast("http-decoder", new HttpRequestDecoder(4096, 8192, 256 * 1024));
+					pipeline.addLast("http-encoder", new HttpResponseEncoder());
 
 					if (_is_compression_enabled)
 					{
@@ -216,7 +212,7 @@ public class NettyHttpServer
 					// }
 					// }
 
-					pipeline.addLast("http-handler", http_handler);
+					pipeline.addLast("http-handler", new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter()));
 					return pipeline;
 				}
 				catch (Throwable t)
