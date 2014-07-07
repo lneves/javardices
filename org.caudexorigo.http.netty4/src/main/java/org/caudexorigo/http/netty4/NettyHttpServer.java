@@ -24,8 +24,6 @@ import org.slf4j.LoggerFactory;
 
 public class NettyHttpServer
 {
-	private static int IO_THREADS = Runtime.getRuntime().availableProcessors() * 2;
-
 	private static final String DEFAULT_HOST = "0.0.0.0";
 
 	private static final int DEFAULT_PORT = 8080;
@@ -221,7 +219,7 @@ public class NettyHttpServer
 
 	private void setupBootStrap(ServerBootstrap bootstrap)
 	{
-		bootstrap.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true, IO_THREADS, IO_THREADS, 8192, 11));
+		bootstrap.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true));
 		bootstrap.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 		bootstrap.childOption(ChannelOption.SO_REUSEADDR, true);
 		bootstrap.option(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
