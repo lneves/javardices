@@ -1,23 +1,24 @@
 package wstest.srv.netty;
 
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponse;
+import io.netty.handler.codec.http.HttpResponseStatus;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import org.caudexorigo.ErrorAnalyser;
-import org.caudexorigo.http.netty.HttpAction;
+import org.caudexorigo.http.netty4.HttpAction;
 import org.caudexorigo.text.StringBuilderWriter;
 import org.caudexorigo.text.StringUtils;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBufferInputStream;
-import org.jboss.netty.buffer.ChannelBufferOutputStream;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.http.HttpHeaders;
-import org.jboss.netty.handler.codec.http.HttpMethod;
-import org.jboss.netty.handler.codec.http.HttpRequest;
-import org.jboss.netty.handler.codec.http.HttpResponse;
-import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.jibx.runtime.JiBXException;
 import org.jibx.runtime.JiBXParseException;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class NettyWSTestAction extends HttpAction
 	private static final IWSTest _srv = new WSTestImpl();
 
 	@Override
-	public void service(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
+	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
 		validateRequest(request, response);
 
@@ -55,7 +56,7 @@ public class NettyWSTestAction extends HttpAction
 
 		try
 		{
-			SoapEnvelope req_message = SoapSerializer.fromXml(new ChannelBufferInputStream(request.getContent()));
+			SoapEnvelope req_message = SoapSerializer.fromXml(new ByteBufInputStream(request.content()));
 
 			if (req_message.body.echoList != null)
 			{
@@ -96,8 +97,9 @@ public class NettyWSTestAction extends HttpAction
 			fault(s, t);
 		}
 
-		ChannelBuffer outbuff = ChannelBuffers.dynamicBuffer(32 * 1024);
-		OutputStream out = new ChannelBufferOutputStream(outbuff);
+		response.headers().set(HttpHeaders.Names.CONTENT_TYPE, content_type);
+
+		OutputStream out = new ByteBufOutputStream(response.content());
 
 		SoapSerializer.toXml(s, out);
 
@@ -109,8 +111,6 @@ public class NettyWSTestAction extends HttpAction
 		{
 			throw new RuntimeException(e);
 		}
-		response.setHeader(HttpHeaders.Names.CONTENT_TYPE, content_type);
-		response.setContent(outbuff);
 	}
 
 	private void fault(SoapEnvelope s, Throwable t)
@@ -139,13 +139,13 @@ public class NettyWSTestAction extends HttpAction
 		if (request.getMethod() != HttpMethod.POST)
 		{
 			response.setStatus(HttpResponseStatus.METHOD_NOT_ALLOWED);
-			throw new IllegalArgumentException(HttpResponseStatus.METHOD_NOT_ALLOWED.getReasonPhrase());
+			throw new IllegalArgumentException(HttpResponseStatus.METHOD_NOT_ALLOWED.reasonPhrase());
 		}
 
-		if (request.isChunked())
+		if (HttpHeaders.isTransferEncodingChunked(request))
 		{
 			response.setStatus(HttpResponseStatus.BAD_REQUEST);
-			throw new IllegalArgumentException(HttpResponseStatus.BAD_REQUEST.getReasonPhrase());
+			throw new IllegalArgumentException(HttpResponseStatus.BAD_REQUEST.reasonPhrase());
 		}
 
 		String path = request.getUri();
@@ -153,7 +153,7 @@ public class NettyWSTestAction extends HttpAction
 		if (StringUtils.isBlank(path))
 		{
 			response.setStatus(HttpResponseStatus.FORBIDDEN);
-			throw new IllegalArgumentException(HttpResponseStatus.FORBIDDEN.getReasonPhrase());
+			throw new IllegalArgumentException(HttpResponseStatus.FORBIDDEN.reasonPhrase());
 		}
 	}
 
