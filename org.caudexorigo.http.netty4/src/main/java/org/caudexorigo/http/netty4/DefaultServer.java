@@ -16,9 +16,7 @@ public class DefaultServer
 			final NettyHttpServerCliArgs cargs = CliFactory.parseArguments(NettyHttpServerCliArgs.class, args);
 
 			InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
-			NettyHttpServer server = new NettyHttpServer("0.0.0.0", 8082, false);
-			server.setPort(cargs.getPort());
-			server.setHost(cargs.getHost());
+			NettyHttpServer server = new NettyHttpServer(cargs.getHost(), cargs.getPort(), false);
 			server.setRouter(new DefaultRouter());
 			server.setResponseFormtter(new StandardResponseFormatter(false));
 			server.start();

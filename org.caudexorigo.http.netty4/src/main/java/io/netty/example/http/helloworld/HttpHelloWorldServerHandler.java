@@ -17,24 +17,36 @@ package io.netty.example.http.helloworld;
 
 import static io.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
 import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_LENGTH;
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONTENT_TYPE;
 import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpHeaders.Names;
 import io.netty.handler.codec.http.HttpHeaders.Values;
 import io.netty.handler.codec.http.HttpRequest;
 
+@Sharable
 public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter
 {
-	private static final byte[] CONTENT = { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd' };
+	private static final CharSequence CONTENT_LENGTH_ENTITY = HttpHeaders.newEntity(Names.CONTENT_LENGTH);
+	private static final CharSequence CONNECTION_ENTITY = HttpHeaders.newEntity(Names.CONNECTION);
+	private static final CharSequence CONTENT_TYPE_ENTITY = HttpHeaders.newEntity(Names.CONTENT_TYPE);
+
+	private static final CharSequence KEEP_ALIVE = HttpHeaders.newEntity(Values.KEEP_ALIVE);
+	private static final CharSequence TEXT_PLAIN = HttpHeaders.newEntity("text/plain");
+
+	private static final byte[] CONTENT = "Hello World".getBytes();
+
+	private static final ByteBuf CONTENT_BUFFER = Unpooled.unreleasableBuffer(Unpooled.directBuffer().writeBytes(CONTENT));
+	private static final CharSequence contentLength = HttpHeaders.newEntity(String.valueOf(CONTENT_BUFFER.readableBytes()));
 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx)
@@ -55,9 +67,10 @@ public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter
 			}
 
 			boolean keepAlive = isKeepAlive(req);
-			FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, Unpooled.wrappedBuffer(CONTENT));
-			response.headers().set(CONTENT_TYPE, "text/plain");
-			response.headers().set(CONTENT_LENGTH, response.content().readableBytes());
+			FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, CONTENT_BUFFER.duplicate(), false);
+			HttpHeaders hh = response.headers();
+			hh.set(CONTENT_TYPE_ENTITY, TEXT_PLAIN);
+			hh.set(CONTENT_LENGTH_ENTITY, contentLength);
 
 			if (!keepAlive)
 			{
@@ -65,7 +78,7 @@ public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter
 			}
 			else
 			{
-				response.headers().set(CONNECTION, Values.KEEP_ALIVE);
+				hh.set(CONNECTION_ENTITY, KEEP_ALIVE);
 				ctx.write(response);
 			}
 		}
@@ -74,7 +87,7 @@ public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception
 	{
-		cause.printStackTrace();
+		// cause.printStackTrace();
 		ctx.close();
 	}
 }

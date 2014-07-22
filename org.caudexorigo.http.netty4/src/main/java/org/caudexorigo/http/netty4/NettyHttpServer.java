@@ -1,15 +1,17 @@
 package org.caudexorigo.http.netty4;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
+import io.netty.util.ResourceLeakDetector;
+import io.netty.util.ResourceLeakDetector.Level;
 
 import java.net.InetSocketAddress;
 
@@ -17,7 +19,6 @@ import javax.net.ssl.SSLContext;
 
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
-import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +61,8 @@ public class NettyHttpServer
 		_port = port;
 		_is_compression_enabled = is_compression_enabled;
 		_validate_headers = false;
+
+		ResourceLeakDetector.setLevel(Level.DISABLED);
 	}
 
 	public String getHost()
@@ -140,11 +143,7 @@ public class NettyHttpServer
 	{
 		log.info("Starting Httpd");
 
-		String os = System.getProperty("os.name").toLowerCase();
-
-		boolean is_linux = StringUtils.contains(os, "linux");
-
-		if (is_linux)
+		if (Epoll.isAvailable())
 		{
 			log.info("netty-transport: linux-epoll");
 			doStart(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
@@ -160,8 +159,7 @@ public class NettyHttpServer
 	{
 		try
 		{
-			HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
-			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(http_handler, _is_compression_enabled, getValidateHeaders());
+			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(_mapper, getRequestObserver(), getResponseFormtter(), _is_compression_enabled, getValidateHeaders());
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
 
@@ -221,13 +219,10 @@ public class NettyHttpServer
 
 	private void setupBootStrap(ServerBootstrap bootstrap)
 	{
-		bootstrap.childOption(ChannelOption.TCP_NODELAY, true);
-		bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
-		bootstrap.childOption(ChannelOption.SO_RCVBUF, 128 * 1024);
-		bootstrap.childOption(ChannelOption.SO_SNDBUF, 128 * 1024);
-		bootstrap.childOption(ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK, 32 * 1024);
-		bootstrap.childOption(ChannelOption.WRITE_BUFFER_LOW_WATER_MARK, 8 * 1024);
-
+		bootstrap.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true));
+		bootstrap.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
+		bootstrap.childOption(ChannelOption.SO_REUSEADDR, true);
+		bootstrap.option(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 		bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 		bootstrap.option(ChannelOption.SO_REUSEADDR, true);
 	}

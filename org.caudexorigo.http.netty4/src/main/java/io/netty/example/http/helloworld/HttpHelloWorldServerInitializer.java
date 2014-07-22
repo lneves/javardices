@@ -23,6 +23,11 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
 
 public class HttpHelloWorldServerInitializer extends ChannelInitializer<SocketChannel>
 {
+	public HttpHelloWorldServerInitializer()
+	{
+		super();
+	}
+
 	@Override
 	public void initChannel(SocketChannel ch) throws Exception
 	{

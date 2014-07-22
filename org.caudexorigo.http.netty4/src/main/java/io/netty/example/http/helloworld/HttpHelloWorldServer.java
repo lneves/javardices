@@ -16,6 +16,7 @@
 package io.netty.example.http.helloworld;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -32,7 +33,7 @@ import org.caudexorigo.text.StringUtils;
  */
 public class HttpHelloWorldServer
 {
-
+	private static int IO_THREADS = Runtime.getRuntime().availableProcessors() * 2;
 	private final int port;
 
 	public HttpHelloWorldServer(int port)
@@ -48,12 +49,15 @@ public class HttpHelloWorldServer
 
 		boolean is_linux = StringUtils.contains(os, "linux");
 		
+
 		if (is_linux)
 		{
+			System.out.println("netty-transport: linux-epoll");
 			doRun(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
 		}
 		else
 		{
+			System.out.println("netty-transport: nio");
 			doRun(new NioEventLoopGroup(), new NioEventLoopGroup(), NioServerSocketChannel.class);
 		}
 	}
@@ -63,11 +67,19 @@ public class HttpHelloWorldServer
 		try
 		{
 			ServerBootstrap b = new ServerBootstrap();
+			b.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true, IO_THREADS, IO_THREADS, 8192, 11));
+			b.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
+			b.childOption(ChannelOption.SO_REUSEADDR, true);
+			b.option(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 			b.option(ChannelOption.SO_BACKLOG, 1024);
+			b.option(ChannelOption.SO_REUSEADDR, true);
 
 			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(new HttpHelloWorldServerInitializer());
 
 			Channel ch = b.bind(port).sync().channel();
+			
+			System.out.printf("Httpd started. Listening on: %s%n", ch.localAddress().toString());
+			
 			ch.closeFuture().sync();
 		}
 		finally

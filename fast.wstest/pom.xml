@@ -174,7 +174,7 @@
 
 		<dependency>
 			<groupId>org.caudexorigo</groupId>
-			<artifactId>org-caudexorigo-http-netty3</artifactId>
+			<artifactId>org-caudexorigo-http-netty4</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 

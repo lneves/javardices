@@ -7,19 +7,23 @@ import io.netty.handler.codec.http.HttpContentCompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
-import io.netty.handler.codec.http.HttpServerCodec;
-import io.netty.handler.stream.ChunkedWriteHandler;
+
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 
 public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel>
 {
-	private final HttpProtocolHandler handler;
 	private boolean is_compression_enabled;
 	private boolean validate_headers;
+	private RequestRouter mapper;
+	private RequestObserver requestObserver;
+	private ResponseFormatter responseFormatter;
 
-	public NettyHttpServerInitializer(HttpProtocolHandler handler, boolean is_compression_enabled, boolean validate_headers)
+	public NettyHttpServerInitializer(RequestRouter mapper, RequestObserver requestObserver, ResponseFormatter responseFormatter, boolean is_compression_enabled, boolean validate_headers)
 	{
 		super();
-		this.handler = handler;
+		this.mapper = mapper;
+		this.requestObserver = requestObserver;
+		this.responseFormatter = responseFormatter;
 		this.is_compression_enabled = is_compression_enabled;
 		this.validate_headers = validate_headers;
 	}
@@ -39,20 +43,19 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 		int maxHeaderSize = 8192;
 		int maxChunkSize = 8192;
 
-//		pipeline.addLast("decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
-//		pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
-//		pipeline.addLast("encoder", new HttpResponseEncoder());
-		
-		
-		pipeline.addLast(new HttpServerCodec());
-		pipeline.addLast(new HttpObjectAggregator(65536));
-		pipeline.addLast(new ChunkedWriteHandler());
+		pipeline.addLast("decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
+		pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
+		pipeline.addLast("encoder", new HttpResponseEncoder());
 
-//		if (is_compression_enabled)
-//		{
-//			pipeline.addLast("http-compression", new HttpContentCompressor());
-//		}
+		// pipeline.addLast(new HttpServerCodec());
+		// pipeline.addLast(new HttpObjectAggregator(65536));
+		// pipeline.addLast(new ChunkedWriteHandler());
 
-		pipeline.addLast("handler", handler);
+		if (is_compression_enabled)
+		{
+			pipeline.addLast("http-compression", new HttpContentCompressor());
+		}
+
+		pipeline.addLast("handler", new HttpProtocolHandler(mapper, requestObserver, responseFormatter));
 	}
 }

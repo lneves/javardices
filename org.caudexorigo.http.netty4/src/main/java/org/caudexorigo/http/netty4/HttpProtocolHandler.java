@@ -4,7 +4,6 @@ import static io.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
 import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
@@ -24,8 +23,6 @@ import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Sharable
-// public class HttpProtocolHandler
 public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 {
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);

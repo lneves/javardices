@@ -1,10 +1,11 @@
 package wstest.srv.netty;
 
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Slf4JLoggerFactory;
+
 import org.caudexorigo.cli.CliFactory;
-import org.caudexorigo.http.netty.NettyHttpServer;
-import org.caudexorigo.http.netty.NettyHttpServerCliArgs;
-import org.jboss.netty.logging.InternalLoggerFactory;
-import org.jboss.netty.logging.Slf4JLoggerFactory;
+import org.caudexorigo.http.netty4.NettyHttpServer;
+import org.caudexorigo.http.netty4.NettyHttpServerCliArgs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

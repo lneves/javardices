@@ -10,7 +10,6 @@ import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.http.netty.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
 import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandler.Sharable;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.Channels;
@@ -30,7 +29,6 @@ import org.slf4j.LoggerFactory;
 //import org.jboss.netty.handler.codec.http.websocket.WebSocketFrameDecoder;
 //import org.jboss.netty.handler.codec.http.websocket.WebSocketFrameEncoder;
 
-@Sharable
 public class HttpProtocolHandler extends SimpleChannelUpstreamHandler
 {
 	private static Logger log = LoggerFactory.getLogger(HttpProtocolHandler.class);
