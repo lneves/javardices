@@ -43,7 +43,8 @@ public class NettyJptProcessor implements HttpJptProcessor
 
 	private final String _encoding;
 
-	private final ChannelHandlerContext ctx;
+	private final ChannelHandlerContext _ctx;
+	private boolean _use_compression;
 
 	public NettyJptProcessor(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
 	{
@@ -52,13 +53,14 @@ public class NettyJptProcessor implements HttpJptProcessor
 
 	public NettyJptProcessor(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, boolean use_compression)
 	{
-		this.ctx = ctx;
+		_ctx = ctx;
+		_use_compression = use_compression;
 		try
 		{
 			_req = (HttpRequestWrapper) request;
 			_res = response;
 			ChannelBuffer buf = ChannelBuffers.dynamicBuffer();
-			_out = new ChannelBufferOutputStream(buf);
+
 			response.setContent(buf);
 			_encoding = JptConfiguration.encoding();
 
@@ -71,22 +73,24 @@ public class NettyJptProcessor implements HttpJptProcessor
 				if (gzip_output)
 				{
 					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, GZIP_ENCODING);
-					_writer = new OutputStreamWriter(new GZIPOutputStream(_out, true), _encoding);
+					_out = new GZIPOutputStream(new ChannelBufferOutputStream(buf), true);
 				}
 				else if (deflate_output)
 				{
 					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, DEFLATE_ENCODING);
-					_writer = new OutputStreamWriter(new DeflaterOutputStream(_out, true), _encoding);
+					_out = new DeflaterOutputStream(new ChannelBufferOutputStream(buf), true);
 				}
 				else
 				{
-					_writer = new OutputStreamWriter(_out, _encoding);
+					_out = new ChannelBufferOutputStream(buf);
 				}
 			}
 			else
 			{
-				_writer = new OutputStreamWriter(_out, _encoding);
+				_out = new ChannelBufferOutputStream(buf);
 			}
+
+			_writer = new OutputStreamWriter(_out, _encoding);
 		}
 		catch (Throwable t)
 		{
@@ -194,12 +198,24 @@ public class NettyJptProcessor implements HttpJptProcessor
 	@Override
 	public InetSocketAddress getClientLocalAddress()
 	{
-		return (InetSocketAddress) ctx.getChannel().getLocalAddress();
+		return (InetSocketAddress) _ctx.getChannel().getLocalAddress();
 	}
 
 	@Override
 	public InetSocketAddress getClientRemoteAddress()
 	{
-		return (InetSocketAddress) ctx.getChannel().getRemoteAddress();
+		return (InetSocketAddress) _ctx.getChannel().getRemoteAddress();
+	}
+
+	public void flush()
+	{
+		try
+		{
+			_writer.close();
+		}
+		catch (Throwable t)
+		{
+			throw new RuntimeException(t);
+		}
 	}
 }

@@ -64,7 +64,7 @@ public class NettyWebJptAction extends HttpAction
 				renderContext.put("$jpt", jpt_ctx);
 
 				jpt.render(renderContext, aweb_jpt_processor.getWriter());
-				aweb_jpt_processor.getWriter().flush();
+				aweb_jpt_processor.flush();
 
 				response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
 			}

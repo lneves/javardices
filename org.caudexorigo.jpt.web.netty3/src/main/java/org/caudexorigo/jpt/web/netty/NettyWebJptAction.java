@@ -67,11 +67,13 @@ public class NettyWebJptAction extends HttpAction
 				Map<String, Object> renderContext = new HashMap<String, Object>();
 				renderContext.put("$this", page_controller);
 				renderContext.put("$jpt", jpt_ctx);
+				
+				response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
 
 				jpt.render(renderContext, aweb_jpt_processor.getWriter());
-				aweb_jpt_processor.getWriter().flush();
+				aweb_jpt_processor.flush();
 
-				response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
+				
 			}
 		}
 		catch (Throwable t)

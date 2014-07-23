@@ -57,9 +57,6 @@ public class NettyJptProcessor implements HttpJptProcessor
 		{
 			_req = request;
 			_res = response;
-
-			_out = new ByteBufOutputStream(response.content());
-
 			String charsetName = JptConfiguration.encoding();
 			parameterDecoder = new ParameterDecoder(_req, Charset.forName(charsetName));
 
@@ -72,23 +69,24 @@ public class NettyJptProcessor implements HttpJptProcessor
 				if (gzip_output)
 				{
 					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, GZIP_ENCODING);
-					_writer = new OutputStreamWriter(new GZIPOutputStream(_out, true), charsetName);
+					_out = new GZIPOutputStream(new ByteBufOutputStream(response.content()), true);
 				}
 				else if (deflate_output)
 				{
 					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, DEFLATE_ENCODING);
-					_writer = new OutputStreamWriter(new DeflaterOutputStream(_out, true), charsetName);
+					_out = new DeflaterOutputStream(new ByteBufOutputStream(response.content()), true);
 				}
 				else
 				{
-					_writer = new OutputStreamWriter(_out, charsetName);
+					_out = new ByteBufOutputStream(response.content());
 				}
 			}
 			else
 			{
-				_writer = new OutputStreamWriter(_out, charsetName);
+				_out = new ByteBufOutputStream(response.content());
 			}
 
+			_writer = new OutputStreamWriter(_out, charsetName);
 		}
 		catch (Throwable t)
 		{
@@ -203,5 +201,17 @@ public class NettyJptProcessor implements HttpJptProcessor
 	public InetSocketAddress getClientRemoteAddress()
 	{
 		return (InetSocketAddress) ctx.channel().remoteAddress();
+	}
+
+	public void flush()
+	{
+		try
+		{
+			_writer.close();
+		}
+		catch (Throwable t)
+		{
+			throw new RuntimeException(t);
+		}
 	}
 }
