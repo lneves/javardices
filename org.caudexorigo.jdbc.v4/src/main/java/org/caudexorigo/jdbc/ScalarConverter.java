@@ -7,11 +7,9 @@ import org.caudexorigo.text.StringUtils;
 
 public class ScalarConverter<T> implements RowConverter<T>
 {
-
 	private int columnIndex;
 	private String columnName;
 	private final Class<T> clazz;
-
 
 	public ScalarConverter(int columnIndex, Class<T> clazz)
 	{
@@ -37,7 +35,6 @@ public class ScalarConverter<T> implements RowConverter<T>
 
 		try
 		{
-
 			if ((columnIndex >= 1) && (StringUtils.isBlank(columnName)))
 			{
 				return getValue(rs, columnIndex);
@@ -46,7 +43,6 @@ public class ScalarConverter<T> implements RowConverter<T>
 			{
 				return getValue(rs, columnName);
 			}
-
 		}
 		catch (SQLException e)
 		{
@@ -56,13 +52,11 @@ public class ScalarConverter<T> implements RowConverter<T>
 
 	private T getValue(ResultSet rs, int ix) throws SQLException
 	{
-		return (T) rs.getObject(ix);
+		return clazz.cast(rs.getObject(ix));
 	}
-	
+
 	private T getValue(ResultSet rs, String field) throws SQLException
 	{
-		return (T) rs.getObject(field);
+		return clazz.cast(rs.getObject(field));
 	}
-
-
 }
