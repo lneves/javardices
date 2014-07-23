@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.caudexorigo.http.netty.HttpAction;
+import org.caudexorigo.http.netty.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.JptInstance;
 import org.caudexorigo.jpt.JptInstanceBuilder;
@@ -21,7 +23,8 @@ public class NettyWebJptAction extends HttpAction
 	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	private final URI _templateURI;
-	private final boolean _showFullErrorInfo;
+	private final StandardResponseFormatter _rspFormatter;
+	private boolean _compress;
 
 	public NettyWebJptAction(URI templateURI)
 	{
@@ -30,9 +33,15 @@ public class NettyWebJptAction extends HttpAction
 
 	public NettyWebJptAction(URI templateURI, boolean showFullErrorInfo)
 	{
+		this(templateURI, showFullErrorInfo, false);
+	}
+
+	public NettyWebJptAction(URI templateURI, boolean showFullErrorInfo, boolean compress)
+	{
 		super();
 		_templateURI = templateURI;
-		_showFullErrorInfo = showFullErrorInfo;
+		_rspFormatter = new StandardResponseFormatter(showFullErrorInfo);
+		_compress = compress;
 	}
 
 	@Override
@@ -40,7 +49,7 @@ public class NettyWebJptAction extends HttpAction
 	{
 		try
 		{
-			NettyJptProcessor aweb_jpt_processor = new NettyJptProcessor(ctx, request, response);
+			NettyJptProcessor aweb_jpt_processor = new NettyJptProcessor(ctx, request, response, _compress);
 			JptInstance jpt = JptInstanceBuilder.getJptInstance(_templateURI);
 
 			HttpJptContext jpt_ctx = new HttpJptContext(aweb_jpt_processor, getTemplateURI());
@@ -62,7 +71,7 @@ public class NettyWebJptAction extends HttpAction
 				jpt.render(renderContext, aweb_jpt_processor.getWriter());
 				aweb_jpt_processor.getWriter().flush();
 
-				response.setHeader(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
+				response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
 			}
 		}
 		catch (Throwable t)
@@ -85,5 +94,11 @@ public class NettyWebJptAction extends HttpAction
 	public URI getTemplateURI()
 	{
 		return _templateURI;
+	}
+
+	@Override
+	protected ResponseFormatter getResponseFormatter()
+	{
+		return _rspFormatter;
 	}
 }

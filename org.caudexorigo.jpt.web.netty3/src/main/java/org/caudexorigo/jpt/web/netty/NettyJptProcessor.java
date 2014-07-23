@@ -8,22 +8,29 @@ import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.caudexorigo.http.netty.HttpRequestWrapper;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.web.HttpJptProcessor;
 import org.caudexorigo.jpt.web.Method;
+import org.caudexorigo.text.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBufferInputStream;
 import org.jboss.netty.buffer.ChannelBufferOutputStream;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 
 public class NettyJptProcessor implements HttpJptProcessor
 {
+	private static final String GZIP_ENCODING = "gzip";
+	private static final String DEFLATE_ENCODING = "deflate";
+
 	private final HttpRequestWrapper _req;
 
 	private final HttpResponse _res;
@@ -40,6 +47,11 @@ public class NettyJptProcessor implements HttpJptProcessor
 
 	public NettyJptProcessor(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
 	{
+		this(ctx, request, response, false);
+	}
+
+	public NettyJptProcessor(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, boolean use_compression)
+	{
 		this.ctx = ctx;
 		try
 		{
@@ -49,8 +61,32 @@ public class NettyJptProcessor implements HttpJptProcessor
 			_out = new ChannelBufferOutputStream(buf);
 			response.setContent(buf);
 			_encoding = JptConfiguration.encoding();
-			_writer = new OutputStreamWriter(_out, _encoding);
 
+			if (use_compression)
+			{
+				String accept_enconding = request.headers().get(HttpHeaders.Names.ACCEPT_ENCODING);
+				boolean gzip_output = StringUtils.containsIgnoreCase(accept_enconding, GZIP_ENCODING);
+				boolean deflate_output = StringUtils.containsIgnoreCase(accept_enconding, DEFLATE_ENCODING);
+
+				if (gzip_output)
+				{
+					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, GZIP_ENCODING);
+					_writer = new OutputStreamWriter(new GZIPOutputStream(_out, true), _encoding);
+				}
+				else if (deflate_output)
+				{
+					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, DEFLATE_ENCODING);
+					_writer = new OutputStreamWriter(new DeflaterOutputStream(_out, true), _encoding);
+				}
+				else
+				{
+					_writer = new OutputStreamWriter(_out, _encoding);
+				}
+			}
+			else
+			{
+				_writer = new OutputStreamWriter(_out, _encoding);
+			}
 		}
 		catch (Throwable t)
 		{
@@ -140,7 +176,7 @@ public class NettyJptProcessor implements HttpJptProcessor
 	@Override
 	public void setHeader(String headerName, String headerValue)
 	{
-		_res.setHeader(headerName, headerValue);
+		_res.headers().set(headerName, headerValue);
 	}
 
 	@Override

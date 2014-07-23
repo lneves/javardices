@@ -96,6 +96,4 @@ public class NettyWebJptAction extends HttpAction
 	{
 		return _rspFormatter;
 	}
-	
-	
 }

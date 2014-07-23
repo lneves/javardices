@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.io.IOException;
@@ -16,14 +17,20 @@ import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DeflaterOutputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.caudexorigo.http.netty4.ParameterDecoder;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.web.HttpJptProcessor;
 import org.caudexorigo.jpt.web.Method;
+import org.caudexorigo.text.StringUtils;
 
 public class NettyJptProcessor implements HttpJptProcessor
 {
+	private static final String GZIP_ENCODING = "gzip";
+	private static final String DEFLATE_ENCODING = "deflate";
+
 	private final FullHttpRequest _req;
 
 	private final FullHttpResponse _res;
@@ -40,6 +47,11 @@ public class NettyJptProcessor implements HttpJptProcessor
 
 	public NettyJptProcessor(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
+		this(ctx, request, response, false);
+	}
+
+	public NettyJptProcessor(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, boolean use_compression)
+	{
 		this.ctx = ctx;
 		try
 		{
@@ -50,7 +62,32 @@ public class NettyJptProcessor implements HttpJptProcessor
 
 			String charsetName = JptConfiguration.encoding();
 			parameterDecoder = new ParameterDecoder(_req, Charset.forName(charsetName));
-			_writer = new OutputStreamWriter(_out, charsetName);
+
+			if (use_compression)
+			{
+				String accept_enconding = request.headers().get(HttpHeaders.Names.ACCEPT_ENCODING);
+				boolean gzip_output = StringUtils.containsIgnoreCase(accept_enconding, GZIP_ENCODING);
+				boolean deflate_output = StringUtils.containsIgnoreCase(accept_enconding, DEFLATE_ENCODING);
+
+				if (gzip_output)
+				{
+					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, GZIP_ENCODING);
+					_writer = new OutputStreamWriter(new GZIPOutputStream(_out, true), charsetName);
+				}
+				else if (deflate_output)
+				{
+					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, DEFLATE_ENCODING);
+					_writer = new OutputStreamWriter(new DeflaterOutputStream(_out, true), charsetName);
+				}
+				else
+				{
+					_writer = new OutputStreamWriter(_out, charsetName);
+				}
+			}
+			else
+			{
+				_writer = new OutputStreamWriter(_out, charsetName);
+			}
 
 		}
 		catch (Throwable t)
