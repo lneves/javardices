@@ -3,7 +3,7 @@ package org.caudexorigo.http.netty4;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class WebException extends RuntimeException
 {

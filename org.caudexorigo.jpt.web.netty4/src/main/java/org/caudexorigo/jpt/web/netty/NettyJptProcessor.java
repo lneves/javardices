@@ -20,11 +20,11 @@ import java.util.Map;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPOutputStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty4.ParameterDecoder;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.web.HttpJptProcessor;
 import org.caudexorigo.jpt.web.Method;
-import org.caudexorigo.text.StringUtils;
 
 public class NettyJptProcessor implements HttpJptProcessor
 {

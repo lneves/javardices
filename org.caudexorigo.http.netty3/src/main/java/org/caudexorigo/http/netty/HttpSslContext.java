@@ -3,7 +3,7 @@ package org.caudexorigo.http.netty;
 import java.io.FileInputStream;
 import java.security.KeyStore;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class HttpSslContext
 {

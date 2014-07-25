@@ -6,9 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.text.HtmlStripper;
-import org.caudexorigo.text.StringEscapeUtils;
-import org.caudexorigo.text.StringUtils;
 
 public class FeedChannel
 {
@@ -58,7 +58,7 @@ public class FeedChannel
 
 	public String getDescription()
 	{
-		String cleanDescription = HtmlStripper.strip(StringEscapeUtils.unescapeHtml(attr.get("description")));
+		String cleanDescription = HtmlStripper.strip(StringEscapeUtils.unescapeHtml4(attr.get("description")));
 		return StringUtils.isBlank(cleanDescription) ? null : cleanDescription;
 	}
 
@@ -86,7 +86,7 @@ public class FeedChannel
 
 	public String getTitle()
 	{
-		String cleanTitle = HtmlStripper.strip(StringEscapeUtils.unescapeHtml(attr.get("title")));
+		String cleanTitle = HtmlStripper.strip(StringEscapeUtils.unescapeHtml4(attr.get("title")));
 		return StringUtils.isBlank(cleanTitle) ? null : cleanTitle;
 	}
 

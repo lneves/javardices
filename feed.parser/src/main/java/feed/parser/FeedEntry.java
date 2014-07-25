@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.text.HtmlStripper;
-import org.caudexorigo.text.StringEscapeUtils;
-import org.caudexorigo.text.StringUtils;
 
 public class FeedEntry
 {
@@ -71,7 +71,7 @@ public class FeedEntry
 	{
 		if (!is_clean_body_init)
 		{
-			cleanBody = StringUtils.trimToNull(HtmlStripper.strip(StringEscapeUtils.unescapeHtml(getBody())));
+			cleanBody = StringUtils.trimToNull(HtmlStripper.strip(StringEscapeUtils.unescapeHtml4(getBody())));
 			is_clean_body_init = true;
 		}
 
@@ -170,7 +170,7 @@ public class FeedEntry
 
 	public String getTitle()
 	{
-		String cleanTitle = HtmlStripper.strip(StringEscapeUtils.unescapeHtml(attr.get("title")));
+		String cleanTitle = HtmlStripper.strip(StringEscapeUtils.unescapeHtml4(attr.get("title")));
 		return StringUtils.trimToNull(cleanTitle);
 	}
 

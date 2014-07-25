@@ -9,9 +9,9 @@ import java.util.Set;
 
 import nu.xom.Attribute;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.ErrorAnalyser;
-import org.caudexorigo.text.StringEscapeUtils;
-import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 

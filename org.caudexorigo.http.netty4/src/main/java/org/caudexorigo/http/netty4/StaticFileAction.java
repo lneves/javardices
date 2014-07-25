@@ -1,6 +1,5 @@
 package org.caudexorigo.http.netty4;
 
-import static io.netty.handler.codec.http.HttpHeaders.Names.CONNECTION;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.channel.ChannelFuture;
@@ -15,6 +14,7 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.LastHttpContent;
+import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedFile;
 
 import java.io.File;
@@ -25,7 +25,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.Date;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.caudexorigo.text.UrlCodec;
 
 public class StaticFileAction extends HttpAction
@@ -34,20 +36,25 @@ public class StaticFileAction extends HttpAction
 	private final String rootDirectoryPath;
 
 	private final long cacheAge;
-	private boolean useSsl;
+	private ResponseFormatter rspFmt;
 
-	public StaticFileAction(URI root_path, boolean useSsl)
+	public StaticFileAction(URI rootPath)
 	{
-		this(root_path, useSsl, 0);
+		this(rootPath, new StandardResponseFormatter(false), 0);
 	}
 
-	public StaticFileAction(URI root_path, boolean useSsl, long cache_age)
+	public StaticFileAction(URI rootPath, ResponseFormatter rspFmt)
 	{
-		this.useSsl = useSsl;
-		rootDirectory = new File(root_path);
-		rootDirectoryPath = rootDirectory.getAbsolutePath();
+		this(rootPath, rspFmt, 0);
+	}
 
-		this.cacheAge = cache_age;
+	public StaticFileAction(URI root_path, ResponseFormatter rspFmt, long cacheAge)
+	{
+		this.rspFmt = rspFmt;
+		this.rootDirectory = new File(root_path);
+		this.rootDirectoryPath = rootDirectory.getAbsolutePath();
+
+		this.cacheAge = cacheAge;
 
 		if (!rootDirectory.isDirectory() || !rootDirectory.canRead() || rootDirectory.isHidden())
 		{
@@ -71,7 +78,7 @@ public class StaticFileAction extends HttpAction
 
 		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
 
-		String ctype = MimeTable.getContentType(abs_path);
+		CharSequence ctype = MimeTable.getContentType(abs_path);
 		if (StringUtils.isNotBlank(ctype))
 		{
 			response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);
@@ -103,15 +110,14 @@ public class StaticFileAction extends HttpAction
 
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 
-		// if (is_keep_alive)
-		// {
-		// response.headers().set(CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
-		// }
-
 		ctx.write(response);
 
 		try
 		{
+			boolean useSsl = (ctx.pipeline().get(SslHandler.class) != null);
+
+			System.out.println("StaticFileAction.service.useSsl: " + useSsl);
+
 			if (useSsl)
 			{
 				is_keep_alive = false;
@@ -234,5 +240,11 @@ public class StaticFileAction extends HttpAction
 		// Convert to absolute path.
 
 		return rootDirectoryPath + File.separator + path;
+	}
+
+	@Override
+	protected ResponseFormatter getResponseFormatter()
+	{
+		return rspFmt;
 	}
 }

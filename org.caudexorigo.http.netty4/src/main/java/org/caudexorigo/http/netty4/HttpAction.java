@@ -24,12 +24,21 @@ public abstract class HttpAction
 	private static Logger log = LoggerFactory.getLogger(HttpAction.class);
 
 	private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
+	private boolean useCompression;
+	private boolean useCache;
 
 	public abstract void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response);
 
 	public HttpAction()
 	{
+		this(false, false);
+	}
+	
+	public HttpAction(boolean useCompression, boolean useCache)
+	{
 		super();
+		this.useCompression = useCompression;
+		this.useCache = useCache;
 	}
 
 	protected final void process(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
@@ -122,6 +131,8 @@ public abstract class HttpAction
 			}
 		}
 	}
+	
+	
 
 	public Charset getCharset()
 	{

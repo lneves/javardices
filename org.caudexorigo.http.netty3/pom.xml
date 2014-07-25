@@ -54,7 +54,7 @@
 
 		<dependency>
 			<groupId>org.caudexorigo</groupId>
-			<artifactId>org-caudexorigo</artifactId>
+			<artifactId>org-caudexorigo-commons</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 

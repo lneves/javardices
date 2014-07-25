@@ -6,7 +6,7 @@ import nu.xom.Element;
 import nu.xom.Node;
 import nu.xom.Text;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

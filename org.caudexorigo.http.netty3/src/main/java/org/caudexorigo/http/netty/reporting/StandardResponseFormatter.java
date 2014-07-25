@@ -2,8 +2,8 @@ package org.caudexorigo.http.netty.reporting;
 
 import java.io.PrintWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.io.UnsynchronizedStringWriter;
-import org.caudexorigo.text.StringUtils;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.handler.codec.http.HttpHeaders;

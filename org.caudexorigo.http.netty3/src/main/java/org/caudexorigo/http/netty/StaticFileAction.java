@@ -8,9 +8,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
-import org.caudexorigo.text.StringUtils;
 import org.caudexorigo.text.UrlCodec;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -75,6 +75,7 @@ public class StaticFileAction extends HttpAction
 		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(file.length()));
 
 		String ctype = MimeTable.getContentType(abs_path);
+		System.out.println("StaticFileAction.service.ctype: " + ctype);
 		if (StringUtils.isNotBlank(ctype))
 		{
 			response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);

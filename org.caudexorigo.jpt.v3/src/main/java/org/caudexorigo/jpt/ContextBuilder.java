@@ -5,7 +5,7 @@ import java.util.HashMap;
 import nu.xom.Document;
 import nu.xom.ProcessingInstruction;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class ContextBuilder
 {

@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.ErrorAnalyser;
-import org.caudexorigo.text.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 

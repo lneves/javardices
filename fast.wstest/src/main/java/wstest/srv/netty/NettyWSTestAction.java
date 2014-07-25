@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.http.netty4.HttpAction;
-import org.caudexorigo.text.StringBuilderWriter;
-import org.caudexorigo.text.StringUtils;
+import org.caudexorigo.io.StringBuilderWriter;
 import org.jibx.runtime.JiBXException;
 import org.jibx.runtime.JiBXParseException;
 import org.slf4j.Logger;

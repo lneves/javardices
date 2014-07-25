@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 import java.util.Formatter;
 import java.util.Locale;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class JptFunctions
 {

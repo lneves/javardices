@@ -9,15 +9,13 @@ import java.net.URI;
 
 import nu.xom.Builder;
 import nu.xom.Document;
-import nu.xom.NodeFactory;
-import nu.xom.Nodes;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 import nu.xom.XMLException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.JptNotFoundException;
-import org.caudexorigo.text.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;

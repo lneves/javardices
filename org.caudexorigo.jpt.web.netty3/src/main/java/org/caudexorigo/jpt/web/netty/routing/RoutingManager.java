@@ -14,13 +14,13 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty.HttpAction;
 import org.caudexorigo.http.netty.HttpRequestWrapper;
 import org.caudexorigo.http.netty.WebException;
 import org.caudexorigo.jpt.web.netty.NettyWebJptAction;
 import org.caudexorigo.jpt.web.netty.routing.namedregexp.NamedMatcher;
 import org.caudexorigo.jpt.web.netty.routing.namedregexp.NamedPattern;
-import org.caudexorigo.text.StringUtils;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

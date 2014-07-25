@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.caudexorigo.text.DateUtil;
+import org.caudexorigo.time.ISO8601;
 
 public class DateParser
 {
@@ -108,7 +108,7 @@ public class DateParser
 
 		if (d != null)
 		{
-			System.out.println(DateUtil.formatISODate(d));
+			System.out.println(ISO8601.format(d));
 		}
 		else
 		{

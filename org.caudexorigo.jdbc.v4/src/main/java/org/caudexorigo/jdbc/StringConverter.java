@@ -3,7 +3,7 @@ package org.caudexorigo.jdbc;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class StringConverter implements RowConverter<String>
 {

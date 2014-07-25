@@ -2,7 +2,7 @@ package feed.parser;
 
 import javax.xml.stream.XMLStreamReader;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class AtomFeedChannelLinkProcessor implements FeedChannelProcessor, FeedEntryProcessor
 {

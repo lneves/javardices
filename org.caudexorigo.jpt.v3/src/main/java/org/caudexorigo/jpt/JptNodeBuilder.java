@@ -16,7 +16,7 @@ import nu.xom.Node;
 import nu.xom.ParsingException;
 import nu.xom.ValidityException;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.xom.XomDocumentBuilder;
 import org.caudexorigo.xom.XomUtils;
 

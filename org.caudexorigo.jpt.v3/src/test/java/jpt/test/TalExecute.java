@@ -4,10 +4,10 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URI;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.Shutdown;
 import org.caudexorigo.jpt.JptInstance;
 import org.caudexorigo.jpt.JptInstanceBuilder;
-import org.caudexorigo.text.StringUtils;
 
 public class TalExecute
 {

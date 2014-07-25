@@ -9,7 +9,7 @@ import java.util.Set;
 
 import nu.xom.Attribute;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 

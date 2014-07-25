@@ -1,6 +1,6 @@
 package org.caudexorigo.jpt;
 
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class RepeatElements
 {

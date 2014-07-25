@@ -1,8 +1,6 @@
 package org.caudexorigo.jpt;
 
-import javax.management.RuntimeErrorException;
-
-import org.caudexorigo.text.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
