@@ -11,6 +11,7 @@ public class MessageBody
 	{
 		status.put(100, true);
 		status.put(101, true);
+		status.put(200, true);
 		status.put(201, true);
 		status.put(202, true);
 		status.put(203, true);

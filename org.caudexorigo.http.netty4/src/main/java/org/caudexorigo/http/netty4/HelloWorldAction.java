@@ -8,6 +8,11 @@ public class HelloWorldAction extends HttpAction
 {
 	private byte[] hello = "Hello World".getBytes();
 
+	public HelloWorldAction()
+	{
+		super();
+	}
+
 	@Override
 	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{

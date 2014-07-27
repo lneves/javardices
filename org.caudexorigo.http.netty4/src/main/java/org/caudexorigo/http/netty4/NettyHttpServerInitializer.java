@@ -3,7 +3,6 @@ package org.caudexorigo.http.netty4;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.handler.codec.http.HttpContentCompressor;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
@@ -12,19 +11,17 @@ import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 
 public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel>
 {
-	private boolean is_compression_enabled;
 	private boolean validate_headers;
 	private RequestRouter mapper;
 	private RequestObserver requestObserver;
 	private ResponseFormatter responseFormatter;
 
-	public NettyHttpServerInitializer(RequestRouter mapper, RequestObserver requestObserver, ResponseFormatter responseFormatter, boolean is_compression_enabled, boolean validate_headers)
+	public NettyHttpServerInitializer(RequestRouter mapper, RequestObserver requestObserver, ResponseFormatter responseFormatter, boolean validate_headers)
 	{
 		super();
 		this.mapper = mapper;
 		this.requestObserver = requestObserver;
 		this.responseFormatter = responseFormatter;
-		this.is_compression_enabled = is_compression_enabled;
 		this.validate_headers = validate_headers;
 	}
 
@@ -43,19 +40,17 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 		int maxHeaderSize = 8192;
 		int maxChunkSize = 8192;
 
-		pipeline.addLast("decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
-		pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
-		pipeline.addLast("encoder", new HttpResponseEncoder());
+		pipeline.addLast("http-decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
+		pipeline.addLast("http-aggregator", new HttpObjectAggregator(65536));
+		pipeline.addLast("http-encoder", new HttpResponseEncoder());
 
 		// pipeline.addLast(new HttpServerCodec());
 		// pipeline.addLast(new HttpObjectAggregator(65536));
 		// pipeline.addLast(new ChunkedWriteHandler());
 
-		if (is_compression_enabled)
-		{
-			pipeline.addLast("http-compression", new HttpContentCompressor());
-		}
 
-		pipeline.addLast("handler", new HttpProtocolHandler(mapper, requestObserver, responseFormatter));
+		pipeline.addLast("http-protocol-handler", new HttpProtocolHandler(mapper, requestObserver, responseFormatter));
+		
+		
 	}
 }

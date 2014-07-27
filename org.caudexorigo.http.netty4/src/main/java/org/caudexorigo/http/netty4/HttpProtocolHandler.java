@@ -10,8 +10,6 @@ import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpRequest;
-import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 
@@ -94,20 +92,9 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 
 		try
 		{
-			observeBegin(ctx, request);
-
 			if (action != null)
 			{
-				if (action instanceof StaticFileAction)
-				{
-					action.process(ctx, request, null);
-				}
-				else
-				{
-					ByteBuf buf = ctx.alloc().buffer();
-					FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
-					action.process(ctx, request, response);
-				}
+				action.process(ctx, request, _requestObserver);
 			}
 			else
 			{
@@ -116,6 +103,9 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		}
 		catch (Throwable t)
 		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			r.printStackTrace();
+
 			HttpAction errorAction;
 			if (t instanceof WebException)
 			{
@@ -130,34 +120,7 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			ByteBuf ebuf = ctx.alloc().buffer();
 			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, ebuf);
 
-			errorAction.process(ctx, request, eresponse);
-			observeEnd(ctx, request, eresponse);
-		}
-	}
-
-	private void observeBegin(ChannelHandlerContext ctx, HttpRequest request)
-	{
-		try
-		{
-			_requestObserver.begin(ctx, request);
-		}
-		catch (Throwable t)
-		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			log.error(r.getMessage(), r);
-		}
-	}
-
-	private void observeEnd(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
-	{
-		try
-		{
-			_requestObserver.end(ctx, request, response);
-		}
-		catch (Throwable t)
-		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			log.error(r.getMessage(), r);
+			errorAction.doProcess(ctx, request, eresponse);
 		}
 	}
 }

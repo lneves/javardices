@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.io.IOException;
@@ -17,10 +16,7 @@ import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.DeflaterOutputStream;
-import java.util.zip.GZIPOutputStream;
 
-import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty4.ParameterDecoder;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.web.HttpJptProcessor;
@@ -28,9 +24,6 @@ import org.caudexorigo.jpt.web.Method;
 
 public class NettyJptProcessor implements HttpJptProcessor
 {
-	private static final String GZIP_ENCODING = "gzip";
-	private static final String DEFLATE_ENCODING = "deflate";
-
 	private final FullHttpRequest _req;
 
 	private final FullHttpResponse _res;
@@ -59,33 +52,7 @@ public class NettyJptProcessor implements HttpJptProcessor
 			_res = response;
 			String charsetName = JptConfiguration.encoding();
 			parameterDecoder = new ParameterDecoder(_req, Charset.forName(charsetName));
-
-			if (use_compression)
-			{
-				String accept_enconding = request.headers().get(HttpHeaders.Names.ACCEPT_ENCODING);
-				boolean gzip_output = StringUtils.containsIgnoreCase(accept_enconding, GZIP_ENCODING);
-				boolean deflate_output = StringUtils.containsIgnoreCase(accept_enconding, DEFLATE_ENCODING);
-
-				if (gzip_output)
-				{
-					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, GZIP_ENCODING);
-					_out = new GZIPOutputStream(new ByteBufOutputStream(response.content()), true);
-				}
-				else if (deflate_output)
-				{
-					response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, DEFLATE_ENCODING);
-					_out = new DeflaterOutputStream(new ByteBufOutputStream(response.content()), true);
-				}
-				else
-				{
-					_out = new ByteBufOutputStream(response.content());
-				}
-			}
-			else
-			{
-				_out = new ByteBufOutputStream(response.content());
-			}
-
+			_out = new ByteBufOutputStream(response.content());
 			_writer = new OutputStreamWriter(_out, charsetName);
 		}
 		catch (Throwable t)

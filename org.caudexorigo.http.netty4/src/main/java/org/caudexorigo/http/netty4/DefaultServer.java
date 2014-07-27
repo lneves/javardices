@@ -16,10 +16,12 @@ public class DefaultServer
 			final NettyHttpServerCliArgs cargs = CliFactory.parseArguments(NettyHttpServerCliArgs.class, args);
 
 			InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
-			NettyHttpServer server = new NettyHttpServer(cargs.getHost(), cargs.getPort(), false);
+			NettyHttpServer server = new NettyHttpServer(cargs.getHost(), cargs.getPort());
 			server.setRouter(new DefaultRouter());
 			server.setResponseFormtter(new StandardResponseFormatter(false));
+			System.out.printf("listening on: %s%n", cargs.getPort());
 			server.start();
+			
 		}
 		catch (Throwable t)
 		{

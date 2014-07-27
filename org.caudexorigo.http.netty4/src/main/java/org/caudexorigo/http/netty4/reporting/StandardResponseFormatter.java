@@ -44,7 +44,14 @@ public class StandardResponseFormatter implements ResponseFormatter
 			}
 			catch (Throwable t)
 			{
-				log.error(t.getMessage(), t);
+				if (showFullErrorInfo)
+				{
+					log.error(t.getMessage(), t);
+				}
+				else
+				{
+					log.error(t.getMessage());
+				}
 			}
 		}
 	}

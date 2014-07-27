@@ -1,15 +1,19 @@
 package org.caudexorigo.http.netty4;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.EmptyByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpHeaders.Names;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
-
-import java.nio.charset.Charset;
+import io.netty.handler.codec.http.HttpVersion;
 
 import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
@@ -21,33 +25,30 @@ public abstract class HttpAction
 {
 	private static final CharSequence CONTENT_LENGTH_ENTITY = HttpHeaders.newEntity(Names.CONTENT_LENGTH);
 	private static final CharSequence DATE_ENTITY = HttpHeaders.newEntity(Names.DATE);
+
 	private static Logger log = LoggerFactory.getLogger(HttpAction.class);
 
 	private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
-	private boolean useCompression;
-	private boolean useCache;
-
-	public abstract void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response);
 
 	public HttpAction()
 	{
-		this(false, false);
-	}
-	
-	public HttpAction(boolean useCompression, boolean useCache)
-	{
 		super();
-		this.useCompression = useCompression;
-		this.useCache = useCache;
 	}
 
-	protected final void process(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	public abstract void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response);
+
+	protected void process(ChannelHandlerContext ctx, FullHttpRequest request, RequestObserver requestObserver)
 	{
-		if (response == null)
+		observeBegin(ctx, request, requestObserver);
+
+		if (isZeroCopy())
 		{
 			try
 			{
-				service(ctx, request, null);
+				ByteBuf buf = new EmptyByteBuf(ctx.alloc());
+				FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
+				service(ctx, request, response);
+				observeEnd(ctx, request, response, requestObserver);
 			}
 			catch (Throwable ex)
 			{
@@ -56,24 +57,42 @@ public abstract class HttpAction
 		}
 		else
 		{
-			boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
-
-			try
-			{
-				service(ctx, request, response);
-			}
-			catch (Throwable ex)
-			{
-				handleError(ctx, request, response, ex);
-			}
-			finally
-			{
-				commitResponse(ctx, response, is_keep_alive);
-			}
+			FullHttpResponse response = buildResponse(ctx);
+			doProcess(ctx, request, response);
+			observeEnd(ctx, request, response, requestObserver);
 		}
 	}
 
-	private void handleError(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, Throwable ex)
+	void doProcess(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	{
+		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
+		try
+		{
+			service(ctx, request, response);
+		}
+		catch (Throwable ex)
+		{
+			handleError(ctx, request, response, ex);
+		}
+		finally
+		{
+			commitResponse(ctx, response, is_keep_alive);
+		}
+	}
+
+	protected FullHttpResponse buildResponse(ChannelHandlerContext ctx)
+	{
+		ByteBuf buf = ctx.alloc().buffer();
+		FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
+		return response;
+	}
+
+	protected boolean isZeroCopy()
+	{
+		return false;
+	}
+
+	void handleError(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, Throwable ex)
 	{
 		response.headers().clear();
 		Throwable rootCause = ErrorAnalyser.findRootCause(ex);
@@ -131,16 +150,35 @@ public abstract class HttpAction
 			}
 		}
 	}
-	
-	
-
-	public Charset getCharset()
-	{
-		return null;
-	}
 
 	protected ResponseFormatter getResponseFormatter()
 	{
 		return defaultRspFmt;
+	}
+
+	protected void observeBegin(ChannelHandlerContext ctx, HttpRequest request, RequestObserver requestObserver)
+	{
+		try
+		{
+			requestObserver.begin(ctx, request);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			log.error(r.getMessage(), r);
+		}
+	}
+
+	protected void observeEnd(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, RequestObserver requestObserver)
+	{
+		try
+		{
+			requestObserver.end(ctx, request, response);
+		}
+		catch (Throwable t)
+		{
+			Throwable r = ErrorAnalyser.findRootCause(t);
+			log.error(r.getMessage(), r);
+		}
 	}
 }

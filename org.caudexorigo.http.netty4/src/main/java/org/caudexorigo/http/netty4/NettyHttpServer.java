@@ -2,6 +2,7 @@ package org.caudexorigo.http.netty4;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.ServerChannel;
@@ -17,6 +18,7 @@ import java.net.InetSocketAddress;
 
 import javax.net.ssl.SSLContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
@@ -37,29 +39,22 @@ public class NettyHttpServer
 	private ResponseFormatter _rspFmt;
 
 	private int _port;
-	private final boolean _is_compression_enabled;
 	private boolean _validate_headers;
 
 	public NettyHttpServer()
 	{
-		this(DEFAULT_HOST, DEFAULT_PORT, false);
+		this(DEFAULT_HOST, DEFAULT_PORT);
 	}
 
 	public NettyHttpServer(int port)
 	{
-		this(DEFAULT_HOST, port, false);
+		this(DEFAULT_HOST, port);
 	}
 
 	public NettyHttpServer(String host, int port)
 	{
-		this(host, port, false);
-	}
-
-	public NettyHttpServer(String host, int port, boolean is_compression_enabled)
-	{
 		_host = host;
 		_port = port;
-		_is_compression_enabled = is_compression_enabled;
 		_validate_headers = false;
 
 		ResourceLeakDetector.setLevel(Level.DISABLED);
@@ -142,15 +137,18 @@ public class NettyHttpServer
 	public synchronized void start()
 	{
 		log.info("Starting Httpd");
+		String os_arch = System.getProperty("os.arch");
 
 		if (Epoll.isAvailable())
 		{
 			log.info("netty-transport: linux-epoll");
+			log.info("os-arch: {}", os_arch);
 			doStart(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
 		}
 		else
 		{
 			log.info("netty-transport: nio");
+			log.info("os-arch: {}", os_arch);
 			doStart(new NioEventLoopGroup(), new NioEventLoopGroup(), NioServerSocketChannel.class);
 		}
 	}
@@ -159,7 +157,7 @@ public class NettyHttpServer
 	{
 		try
 		{
-			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(_mapper, getRequestObserver(), getResponseFormtter(), _is_compression_enabled, getValidateHeaders());
+			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(_mapper, getRequestObserver(), getResponseFormtter(), getValidateHeaders());
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
 
@@ -219,7 +217,18 @@ public class NettyHttpServer
 
 	private void setupBootStrap(ServerBootstrap bootstrap)
 	{
-		bootstrap.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true));
+		String os_arch = System.getProperty("os.arch");
+		boolean isARM = StringUtils.contains(os_arch, "arm");
+
+		if (isARM)
+		{
+			bootstrap.childOption(ChannelOption.ALLOCATOR, new UnpooledByteBufAllocator(false));
+		}
+		else
+		{
+			bootstrap.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true));
+		}
+
 		bootstrap.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 		bootstrap.childOption(ChannelOption.SO_REUSEADDR, true);
 		bootstrap.option(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
