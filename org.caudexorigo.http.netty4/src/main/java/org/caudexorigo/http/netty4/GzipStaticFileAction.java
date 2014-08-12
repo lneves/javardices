@@ -68,6 +68,13 @@ public class GzipStaticFileAction extends StaticFileAction
 		return null;
 	}
 
+	@Override
+	protected CharSequence getMimeType(HttpRequest request, File file)
+	{
+		String original_req_path = StringUtils.substringBefore(request.getUri(), "?");
+		return MimeTable.getContentType(original_req_path);
+	}
+
 	private boolean allowsGzip(HttpRequest request)
 	{
 		String accept_enconding = request.headers().get(HttpHeaders.Names.ACCEPT_ENCODING);

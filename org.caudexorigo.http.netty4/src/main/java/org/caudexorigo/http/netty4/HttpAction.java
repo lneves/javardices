@@ -43,41 +43,32 @@ public abstract class HttpAction
 
 		if (isZeroCopy())
 		{
-			try
-			{
-				ByteBuf buf = new EmptyByteBuf(ctx.alloc());
-				FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
-				service(ctx, request, response);
-				observeEnd(ctx, request, response, requestObserver);
-			}
-			catch (Throwable ex)
-			{
-				throw new RuntimeException(ex);
-			}
+			ByteBuf buf = new EmptyByteBuf(ctx.alloc());
+			FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
+			service(ctx, request, response);
+			observeEnd(ctx, request, response, requestObserver);
 		}
 		else
 		{
 			FullHttpResponse response = buildResponse(ctx);
-			doProcess(ctx, request, response);
-			observeEnd(ctx, request, response, requestObserver);
+
+			try
+			{
+				doProcess(ctx, request, response);
+				observeEnd(ctx, request, response, requestObserver);
+			}
+			catch (Throwable ex)
+			{
+				handleError(ctx, request, ex, requestObserver);
+			}
 		}
 	}
 
 	void doProcess(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
-		try
-		{
-			service(ctx, request, response);
-		}
-		catch (Throwable ex)
-		{
-			handleError(ctx, request, response, ex);
-		}
-		finally
-		{
-			commitResponse(ctx, response, is_keep_alive);
-		}
+		service(ctx, request, response);
+		commitResponse(ctx, response, is_keep_alive);
 	}
 
 	protected FullHttpResponse buildResponse(ChannelHandlerContext ctx)
@@ -92,27 +83,26 @@ public abstract class HttpAction
 		return false;
 	}
 
-	void handleError(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, Throwable ex)
+	void handleError(ChannelHandlerContext ctx, FullHttpRequest request, Throwable ex, RequestObserver requestObserver)
 	{
-		response.headers().clear();
-		Throwable rootCause = ErrorAnalyser.findRootCause(ex);
+		ByteBuf ebuf = ctx.alloc().buffer();
+		FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, ebuf);
 
-		if (ex instanceof WebException)
+		Throwable error_ex = new Exception(ex);
+		while (error_ex.getCause() != null)
 		{
-			WebException w_ex = (WebException) ex;
-			response.setStatus(HttpResponseStatus.valueOf(w_ex.getHttpStatusCode()));
+			error_ex = error_ex.getCause();
+			if (error_ex instanceof WebException)
+			{
+				WebException w_ex = (WebException) error_ex;
+				eresponse.setStatus(HttpResponseStatus.valueOf(w_ex.getHttpStatusCode()));
+				break;
+			}
 		}
 
-		if (log.isDebugEnabled())
-		{
-			log.error(rootCause.getMessage(), rootCause);
-		}
-		else
-		{
-			log.error("http.netty.error: {}; path: {}", rootCause.getMessage(), request.getUri());
-		}
-
-		writeStandardResponse(request, response, rootCause);
+		writeStandardResponse(request, eresponse, error_ex);
+		commitResponse(ctx, eresponse, false);
+		observeEnd(ctx, request, eresponse, requestObserver);
 	}
 
 	void commitResponse(ChannelHandlerContext ctx, FullHttpResponse response, boolean is_keep_alive)

@@ -82,6 +82,11 @@ public class JptConfiguration
 		}
 	}
 
+	public static String active_enviroment()
+	{
+		return instance._active_enviroment;
+	}
+	
 	public static boolean checkModified()
 	{
 		return instance._check_modified;

@@ -6,6 +6,7 @@ import io.netty.handler.codec.http.HttpHeaders;
 
 import java.io.PrintWriter;
 
+import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.io.UnsynchronizedStringWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,23 +37,30 @@ public class StandardResponseFormatter implements ResponseFormatter
 		{
 			try
 			{
-				String html = String.format(ErrorTemplates.getTemplate(response.getStatus().code()), response.getStatus().code(), response.getStatus().reasonPhrase(), request.getMethod().toString(), getStackTrace(error, showFullErrorInfo));
+				Throwable root = ErrorAnalyser.findRootCause(error);
+				String html = String.format(ErrorTemplates.getTemplate(response.getStatus().code()), response.getStatus().code(), response.getStatus().reasonPhrase(), request.getMethod().toString(), getStackTrace(root, showFullErrorInfo));
 				byte[] bytes = html.toString().getBytes("UTF-8");
 
 				response.content().writeBytes(bytes);
 				response.headers().set(HttpHeaders.Names.CONTENT_TYPE, "text/html");
+				logError(root);
 			}
 			catch (Throwable t)
 			{
-				if (showFullErrorInfo)
-				{
-					log.error(t.getMessage(), t);
-				}
-				else
-				{
-					log.error(t.getMessage());
-				}
+				logError(t);
 			}
+		}
+	}
+
+	private void logError(Throwable t)
+	{
+		if (showFullErrorInfo)
+		{
+			log.error(t.getMessage(), t);
+		}
+		else
+		{
+			log.error(t.getMessage());
 		}
 	}
 

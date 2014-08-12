@@ -103,9 +103,10 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		}
 		catch (Throwable t)
 		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			r.printStackTrace();
-
+			
+			ByteBuf ebuf = ctx.alloc().buffer();
+			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, ebuf);
+			
 			HttpAction errorAction;
 			if (t instanceof WebException)
 			{
@@ -114,13 +115,14 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			}
 			else
 			{
-				errorAction = new ErrorAction(new WebException(t, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
+				Throwable r = ErrorAnalyser.findRootCause(t);
+				errorAction = new ErrorAction(new WebException(r, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
 			}
 
-			ByteBuf ebuf = ctx.alloc().buffer();
-			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, ebuf);
+
 
 			errorAction.doProcess(ctx, request, eresponse);
+			errorAction.observeEnd(ctx, request, eresponse, _requestObserver);
 		}
 	}
 }

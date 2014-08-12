@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.nio.file.Files;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -69,20 +70,18 @@ public class StaticFileAction extends HttpAction
 
 		File file = getFile(request);
 
-		String abs_path = getFileAbsolutePath(file);
-
 		long clen = file.length();
 
 		HttpResponse response = new DefaultHttpResponse(rsp.getProtocolVersion(), rsp.getStatus(), false);
 
 		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
 
-		CharSequence ctype = MimeTable.getContentType(abs_path);
+		CharSequence ctype = getMimeType(request, file);
+
 		if (StringUtils.isNotBlank(ctype))
 		{
 			response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);
 		}
-
 
 		RandomAccessFile raf = null;
 		try
@@ -103,12 +102,11 @@ public class StaticFileAction extends HttpAction
 			response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
 		}
 		String contentEncoding = getContentEncoding(request, file);
-		
+
 		if (StringUtils.isNotBlank(contentEncoding))
 		{
 			response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, contentEncoding);
 		}
-
 
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 
@@ -144,6 +142,28 @@ public class StaticFileAction extends HttpAction
 		{
 			// Close the connection when the whole content is written out.
 			lastContentFuture.addListener(ChannelFutureListener.CLOSE);
+		}
+	}
+
+	protected CharSequence getMimeType(HttpRequest request, File file)
+	{
+		try
+		{
+			// String req_path = StringUtils.substringBefore(request.getUri(), "?");
+			// String abs_path = getFileAbsolutePath(file);
+			String ctype = Files.probeContentType(file.toPath());
+			if (StringUtils.isNotBlank(ctype))
+			{
+				return ctype;
+			}
+			else
+			{
+				return MimeTable.getContentType(file.getPath());
+			}
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -194,7 +214,7 @@ public class StaticFileAction extends HttpAction
 
 		if (!file.isFile())
 		{
-			throw new WebException(new IllegalArgumentException("Forbidden"), HttpResponseStatus.FORBIDDEN.code());
+			throw new WebException(new IllegalArgumentException(), HttpResponseStatus.FORBIDDEN.code());
 		}
 	}
 

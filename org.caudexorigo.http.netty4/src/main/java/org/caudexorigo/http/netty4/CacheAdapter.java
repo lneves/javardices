@@ -39,12 +39,12 @@ public class CacheAdapter extends HttpAction
 	{
 		observeBegin(ctx, request, requestObserver);
 
-		FullHttpResponse response = cachedProcess(ctx, request);
+		FullHttpResponse response = cachedProcess(ctx, request, requestObserver);
 
 		observeEnd(ctx, request, response, requestObserver);
 	}
 
-	private FullHttpResponse cachedProcess(ChannelHandlerContext ctx, FullHttpRequest request)
+	private FullHttpResponse cachedProcess(ChannelHandlerContext ctx, FullHttpRequest request, RequestObserver requestObserver)
 	{
 		final CacheKey ck = cacheKeyBuilder.build(ctx, request);
 
@@ -56,7 +56,7 @@ public class CacheAdapter extends HttpAction
 			log.info("Cache miss for: {}", ck);
 
 			response.retain();
-			wrappedProcess(ctx, request, response);
+			wrappedProcess(ctx, request, response, requestObserver);
 
 			cachedContent.put(ck, response);
 
@@ -76,7 +76,7 @@ public class CacheAdapter extends HttpAction
 			{
 				log.warn("Empty cache hit for: {}, readable bytes: {}", ck, response.content().readableBytes());
 				evict(ck);
-				return cachedProcess(ctx, request);
+				return cachedProcess(ctx, request, requestObserver);
 			}
 			log.info("Cache hit for: {}", ck);
 			response.retain();
@@ -100,7 +100,7 @@ public class CacheAdapter extends HttpAction
 		return cachedContent.remove(ck);
 	}
 
-	private void wrappedProcess(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	private void wrappedProcess(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, RequestObserver requestObserver)
 	{
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 		try
@@ -109,7 +109,7 @@ public class CacheAdapter extends HttpAction
 		}
 		catch (Throwable ex)
 		{
-			handleError(ctx, request, response, ex);
+			handleError(ctx, request, ex, requestObserver);
 		}
 		finally
 		{

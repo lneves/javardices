@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.caudexorigo.http.netty4.HttpAction;
+import org.caudexorigo.http.netty4.WebException;
 import org.caudexorigo.http.netty4.reporting.MessageBody;
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
@@ -70,7 +71,6 @@ public class NettyWebJptAction extends HttpAction
 		}
 		catch (Throwable t)
 		{
-			t.printStackTrace();
 			throw new RuntimeException(t);
 		}
 	}
