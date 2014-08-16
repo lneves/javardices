@@ -17,12 +17,15 @@ public class CacheAdapter extends HttpAction
 {
 	private static Logger log = LoggerFactory.getLogger(HttpAction.class);
 	private static final ScheduledExecutorService schedExec = CustomExecutors.newScheduledThreadPool(2, "sched-exec");
+	private static final CharSequence ncache = HttpHeaders.newEntity("X-NCache");
+	private static final CharSequence hit = HttpHeaders.newEntity("hit");
+	private static final CharSequence lookup = HttpHeaders.newEntity("lookup");
 
 	private HttpAction wrapped;
 
 	private final ConcurrentMap<CacheKey, FullHttpResponse> cachedContent = new ConcurrentHashMap<CacheKey, FullHttpResponse>();
 	private CacheKeyBuilder cacheKeyBuilder;
-	
+
 	public CacheAdapter(HttpAction wrapped, CacheKeyBuilder cacheKeyBuilder)
 	{
 		this.wrapped = wrapped;
@@ -53,7 +56,8 @@ public class CacheAdapter extends HttpAction
 		if ((response == null))
 		{
 			response = buildResponse(ctx);
-			log.info("Cache miss for: {}", ck);
+			log.debug("Cache miss for: {}", ck);
+			response.headers().set(ncache, lookup);
 
 			response.retain();
 			wrappedProcess(ctx, request, response, requestObserver);
@@ -78,16 +82,19 @@ public class CacheAdapter extends HttpAction
 				evict(ck);
 				return cachedProcess(ctx, request, requestObserver);
 			}
-			log.info("Cache hit for: {}", ck);
+			log.debug("Cache hit for: {}", ck);
+			response.headers().set(ncache, hit);
+
 			response.retain();
 			doProcess(ctx, request, response);
 		}
+
 		return response;
 	}
 
 	private void evict(final CacheKey ck)
 	{
-		log.info("Evict entry '{}'", ck);
+		log.debug("Evict entry '{}'", ck);
 		FullHttpResponse rsp = cachedContent.remove(ck);
 		if (rsp != null)
 		{
