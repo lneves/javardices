@@ -17,10 +17,12 @@ package io.netty.example.http.helloworld;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
+import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.ServerChannel;
+import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.epoll.EpollServerSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -44,13 +46,7 @@ public class HttpHelloWorldServer
 	public void run() throws Exception
 	{
 		// Configure the server.
-
-		String os = System.getProperty("os.name").toLowerCase();
-
-		boolean is_linux = StringUtils.contains(os, "linux");
-		
-
-		if (is_linux)
+		if (Epoll.isAvailable())
 		{
 			System.out.println("netty-transport: linux-epoll");
 			doRun(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
@@ -66,8 +62,20 @@ public class HttpHelloWorldServer
 	{
 		try
 		{
+			String os_arch = System.getProperty("os.arch");
+			boolean isARM = StringUtils.contains(os_arch, "arm");
+
 			ServerBootstrap b = new ServerBootstrap();
-			b.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true, IO_THREADS, IO_THREADS, 8192, 11));
+			
+			if (isARM)
+			{
+				b.childOption(ChannelOption.ALLOCATOR, new UnpooledByteBufAllocator(false));
+			}
+			else
+			{
+				b.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true));
+			}
+
 			b.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 			b.childOption(ChannelOption.SO_REUSEADDR, true);
 			b.option(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
@@ -77,9 +85,9 @@ public class HttpHelloWorldServer
 			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(new HttpHelloWorldServerInitializer());
 
 			Channel ch = b.bind(port).sync().channel();
-			
+
 			System.out.printf("Httpd started. Listening on: %s%n", ch.localAddress().toString());
-			
+
 			ch.closeFuture().sync();
 		}
 		finally

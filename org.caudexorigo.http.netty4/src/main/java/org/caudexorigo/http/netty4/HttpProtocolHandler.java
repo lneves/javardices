@@ -6,9 +6,9 @@ import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.DefaultHttpResponse;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
@@ -64,8 +64,8 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 	{
 		if (log.isDebugEnabled())
 		{
-			Throwable rootCause = ErrorAnalyser.findRootCause(cause);
-			log.debug(rootCause.getMessage(), rootCause);
+			Throwable r = ErrorAnalyser.findRootCause(cause);
+			log.debug(r.getMessage(), r);
 		}
 
 		ctx.close();
@@ -74,14 +74,18 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
 	{
-		if (msg instanceof DefaultFullHttpRequest)
+		if (msg instanceof FullHttpRequest)
 		{
-			DefaultFullHttpRequest request = (DefaultFullHttpRequest) msg;
+			FullHttpRequest request = (FullHttpRequest) msg;
 			handleRead(ctx, request);
+		}
+		else
+		{
+			throw new IllegalArgumentException("Can only handle instances of FullHttpRequest messages");
 		}
 	}
 
-	public void handleRead(ChannelHandlerContext ctx, DefaultFullHttpRequest request)
+	public void handleRead(ChannelHandlerContext ctx, FullHttpRequest request)
 	{
 		if (is100ContinueExpected(request))
 		{
@@ -103,10 +107,10 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		}
 		catch (Throwable t)
 		{
-			
+
 			ByteBuf ebuf = ctx.alloc().buffer();
 			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, ebuf);
-			
+
 			HttpAction errorAction;
 			if (t instanceof WebException)
 			{
@@ -118,8 +122,6 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 				Throwable r = ErrorAnalyser.findRootCause(t);
 				errorAction = new ErrorAction(new WebException(r, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
 			}
-
-
 
 			errorAction.doProcess(ctx, request, eresponse);
 			errorAction.observeEnd(ctx, request, eresponse, _requestObserver);
