@@ -75,7 +75,7 @@ public class StaticFileAction extends HttpAction
 		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(file.length()));
 
 		String ctype = MimeTable.getContentType(abs_path);
-		System.out.println("StaticFileAction.service.ctype: " + ctype);
+
 		if (StringUtils.isNotBlank(ctype))
 		{
 			response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);
