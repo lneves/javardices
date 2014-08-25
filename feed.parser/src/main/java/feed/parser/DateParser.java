@@ -2,6 +2,7 @@ package feed.parser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import org.caudexorigo.time.ISO8601;
@@ -75,6 +76,26 @@ public class DateParser
 		}
 	};
 
+	private static final ThreadLocal<SimpleDateFormat[]> sdf_pt_local = new ThreadLocal<SimpleDateFormat[]>()
+	{
+		private final Locale pt = Locale.forLanguageTag("pt-PT");
+
+		@Override
+		protected SimpleDateFormat[] initialValue()
+		{
+			SimpleDateFormat[] date_formaters = new SimpleDateFormat[date_formats.length];
+
+			for (int i = 0; i < date_formaters.length; i++)
+			{
+				SimpleDateFormat sdf = new SimpleDateFormat(date_formats[i], pt);
+				sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+				date_formaters[i] = sdf;
+			}
+
+			return date_formaters;
+		}
+	};
+
 	public static Date parse(String d)
 	{
 		Date date = null;
@@ -85,6 +106,21 @@ public class DateParser
 		// d = p2.matcher(d).replaceAll(" $1ST"); // Correct W3C times
 
 		SimpleDateFormat[] date_formaters = sdf_local.get();
+
+		for (SimpleDateFormat formatter : date_formaters)
+		{
+			try
+			{
+				date = formatter.parse(d);
+				break;
+			}
+			catch (Exception e)
+			{
+				// Oh well. We tried
+			}
+		}
+
+		date_formaters = sdf_pt_local.get();
 
 		for (SimpleDateFormat formatter : date_formaters)
 		{

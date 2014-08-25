@@ -1,6 +1,6 @@
 package feed.parser;
 
-import java.io.FileInputStream;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.caudexorigo.Shutdown;
@@ -13,7 +13,11 @@ public class Test
 	{
 		try
 		{
-			String rss = IOUtils.toString(new FileInputStream("./tests/maissemanario.xml"), Charset.forName("UTF-8"));
+			// String rss = IOUtils.toString(new FileInputStream("./tests/maissemanario.xml"), Charset.forName("UTF-8"));
+
+			URL oracle = new URL("http://www.jornaldenegocios.pt/funcionalidades/Rss.aspx");
+			String rss = IOUtils.toString(oracle.openStream(), Charset.forName("latin1"));
+
 			FeedParser parser = new FeedParser();
 			FeedChannel feed = parser.parse(new UnsynchronizedStringReader(rss), true);
 
@@ -25,3 +29,5 @@ public class Test
 		}
 	}
 }
+
+// http://visao.sapo.pt/static/rss/opiniao_23424.xml
