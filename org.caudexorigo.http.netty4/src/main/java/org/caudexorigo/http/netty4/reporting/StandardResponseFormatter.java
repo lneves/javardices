@@ -6,6 +6,7 @@ import io.netty.handler.codec.http.HttpHeaders;
 
 import java.io.PrintWriter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.io.UnsynchronizedStringWriter;
 import org.slf4j.Logger;
@@ -56,11 +57,11 @@ public class StandardResponseFormatter implements ResponseFormatter
 	{
 		if (showFullErrorInfo)
 		{
-			log.error(t.getMessage(), t);
+			log.error(getMsg(t), t);
 		}
 		else
 		{
-			log.error(t.getMessage());
+			log.error(getMsg(t));
 		}
 	}
 
@@ -78,12 +79,17 @@ public class StandardResponseFormatter implements ResponseFormatter
 			}
 			else
 			{
-				return error.getMessage();
+				return getMsg(error);
 			}
 		}
 		else
 		{
 			return "N/A";
 		}
+	}
+
+	private String getMsg(Throwable error)
+	{
+		return StringUtils.defaultString(error.getMessage(), "N/A");
 	}
 }
