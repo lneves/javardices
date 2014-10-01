@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.io.UnsynchronizedStringWriter;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpHeaders;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.HttpResponse;
@@ -31,9 +32,9 @@ public class StandardResponseFormatter implements ResponseFormatter
 	 * @see org.caudexorigo.http.netty.reporting.ResponseFormtter#formatResponse(org.jboss.netty.handler.codec.http.HttpRequest, org.jboss.netty.handler.codec.http.HttpResponse)
 	 */
 	@Override
-	public void formatResponse(HttpRequest request, HttpResponse response)
+	public void formatResponse(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
 	{
-		formatResponse(request, response, null);
+		formatResponse(ctx, request, response, null);
 	}
 
 	/*
@@ -42,7 +43,7 @@ public class StandardResponseFormatter implements ResponseFormatter
 	 * @see org.caudexorigo.http.netty.reporting.ResponseFormtter#formatResponse(org.jboss.netty.handler.codec.http.HttpRequest, org.jboss.netty.handler.codec.http.HttpResponse, java.lang.Throwable)
 	 */
 	@Override
-	public void formatResponse(HttpRequest request, HttpResponse response, Throwable error)
+	public void formatResponse(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, Throwable error)
 	{
 		int rsp_code = response.getStatus().getCode();
 

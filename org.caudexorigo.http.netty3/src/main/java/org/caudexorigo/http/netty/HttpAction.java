@@ -42,7 +42,7 @@ public abstract class HttpAction
 			}
 			catch (Throwable ex)
 			{
-				handleError(request, response, ex);
+				handleError(ctx, request, response, ex);
 				commitResponse(ctx, response, false);
 			}
 		}
@@ -70,7 +70,7 @@ public abstract class HttpAction
 			}
 			catch (Throwable ex)
 			{
-				handleError(request, response, ex);
+				handleError(ctx ,request, response, ex);
 			}
 			finally
 			{
@@ -79,7 +79,7 @@ public abstract class HttpAction
 		}
 	}
 
-	private void handleError(HttpRequest request, HttpResponse response, Throwable ex)
+	private void handleError(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, Throwable ex)
 	{
 		request = (this.request != null) ? this.request : request;
 
@@ -101,7 +101,7 @@ public abstract class HttpAction
 			log.error("http.netty.error: {}; path: {}", rootCause.getMessage(), request.getUri());
 		}
 
-		writeStandardResponse(request, response, rootCause);
+		writeStandardResponse(ctx, request, response, rootCause);
 	}
 
 	private void commitResponse(ChannelHandlerContext ctx, HttpResponse response, boolean is_keep_alive)
@@ -117,7 +117,7 @@ public abstract class HttpAction
 		}
 	}
 
-	private void writeStandardResponse(HttpRequest request, HttpResponse response, Throwable rootCause)
+	private void writeStandardResponse(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, Throwable rootCause)
 	{
 		request = (this.request != null) ? this.request : request;
 
@@ -132,7 +132,7 @@ public abstract class HttpAction
 					response.setStatus(HttpResponseStatus.INTERNAL_SERVER_ERROR);
 				}
 
-				rspFrm.formatResponse(request, response, rootCause);
+				rspFrm.formatResponse(ctx, request, response, rootCause);
 			}
 			catch (Throwable e)
 			{

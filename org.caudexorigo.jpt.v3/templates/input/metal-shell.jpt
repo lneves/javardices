@@ -31,5 +31,6 @@
 	<div metal:define-slot="wrapped">content goes here.</div>
 	<div>Footer</div>
 
+	<script metal:define-slot="script">function xpto(){};</script>
 	</body>
 </html>

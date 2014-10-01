@@ -15,5 +15,7 @@
 <p tal:content="$this.value">foo bar baz</p>
 </div>
 
+<script metal:append-to-slot="script">function gugudada(){};</script>
+
 </body>
 </html>

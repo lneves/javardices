@@ -8,6 +8,6 @@ public class DefaultAction extends HttpAction
 {
 	public void service(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
 	{
-		super.getResponseFormatter().formatResponse(request, response);
+		super.getResponseFormatter().formatResponse(ctx, request, response);
 	}
 }

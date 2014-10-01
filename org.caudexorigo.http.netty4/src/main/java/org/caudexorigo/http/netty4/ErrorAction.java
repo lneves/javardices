@@ -21,12 +21,17 @@ public class ErrorAction extends HttpAction
 	@Override
 	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
-		throw _ex;
+		_rspFmt.formatResponse(request, response, _ex);
 	}
 
 	@Override
 	protected ResponseFormatter getResponseFormatter()
 	{
 		return _rspFmt;
+	}
+
+	public WebException getError()
+	{
+		return _ex;
 	}
 }

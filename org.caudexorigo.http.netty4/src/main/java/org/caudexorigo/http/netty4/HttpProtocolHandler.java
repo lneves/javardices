@@ -116,6 +116,7 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			{
 				WebException we = (WebException) t;
 				errorAction = new ErrorAction(we, _rspFmt);
+				eresponse.setStatus(HttpResponseStatus.valueOf(we.getHttpStatusCode()));
 			}
 			else
 			{
