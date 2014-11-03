@@ -233,7 +233,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		}
 	}
 
-	private void prepareMacro(Document macroDocument, Node useMacroNode, String macroPath, Map<String, String> macroParams) throws ValidityException, ParsingException, IOException
+	private void prepareMacro(URI muri, Document macroDocument, Node useMacroNode, String macroPath, Map<String, String> macroParams) throws ValidityException, ParsingException, IOException
 	{
 
 		String macroName = macroParams.get("macro");
@@ -254,7 +254,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 		String object_class_name = ContextBuilder.objectNameFromInstructions(macro_doc);
 
-		JptMacroNode jpt_macro_node = new JptMacroNode(object_class_name, _isInSlot, macroParams);
+		JptMacroNode jpt_macro_node = new JptMacroNode(muri, object_class_name, _isInSlot, macroParams);
 
 		addStaticFragments();
 		pnodes.push(jpt_macro_node);
@@ -545,7 +545,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 			Map<String, String> macroParams = extractMacroParams(macroURI.getRawQuery());
 			Document document_macro = XomDocumentBuilder.getDocument(macroUri);
-			prepareMacro(document_macro, el, macroPath, macroParams);
+			prepareMacro(macroURI, document_macro, el, macroPath, macroParams);
 		}
 	}
 

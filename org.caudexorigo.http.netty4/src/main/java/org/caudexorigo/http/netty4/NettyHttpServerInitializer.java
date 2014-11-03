@@ -15,6 +15,7 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 	private RequestRouter mapper;
 	private RequestObserver requestObserver;
 	private ResponseFormatter responseFormatter;
+	private static final int MAX_CONTENT_LENGHT = 1024 * 1012 * 4;
 
 	public NettyHttpServerInitializer(RequestRouter mapper, RequestObserver requestObserver, ResponseFormatter responseFormatter, boolean validate_headers)
 	{
@@ -41,7 +42,7 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 		int maxChunkSize = 8192;
 
 		pipeline.addLast("http-decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
-		pipeline.addLast("http-aggregator", new HttpObjectAggregator(65536));
+		pipeline.addLast("http-aggregator", new HttpObjectAggregator(MAX_CONTENT_LENGHT));
 		pipeline.addLast("http-encoder", new HttpResponseEncoder());
 
 		// pipeline.addLast(new HttpServerCodec());

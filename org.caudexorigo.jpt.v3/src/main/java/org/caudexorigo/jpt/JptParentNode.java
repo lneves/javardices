@@ -1,5 +1,7 @@
 package org.caudexorigo.jpt;
 
+import java.util.Map;
+
 public abstract class JptParentNode extends JptNode
 {
 
@@ -100,5 +102,13 @@ public abstract class JptParentNode extends JptNode
 	final boolean isParentNode()
 	{
 		return true;
+	}
+	
+	protected void checkAllowed(Map<String, Object> context, String variable)
+	{
+		if (context.get(variable) != null)
+		{
+			throw new IllegalStateException(String.format("Variable '%s' is already in context", variable));
+		}
 	}
 }

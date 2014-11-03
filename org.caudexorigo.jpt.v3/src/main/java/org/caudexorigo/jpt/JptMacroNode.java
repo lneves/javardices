@@ -2,6 +2,7 @@ package org.caudexorigo.jpt;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,8 +22,11 @@ public class JptMacroNode extends JptParentNode
 
 	private final Map<String, String> _macroParams;
 
-	public JptMacroNode(String ctx_object_type, boolean isInSlot, Map<String, String> macroParams)
+	private URI _muri;
+
+	public JptMacroNode(URI muri, String ctx_object_type, boolean isInSlot, Map<String, String> macroParams)
 	{
+		_muri = muri;
 		_ctx_object_type = ctx_object_type;
 		_isInSlot = isInSlot;
 		_macroParams = macroParams;
@@ -58,12 +62,12 @@ public class JptMacroNode extends JptParentNode
 			{
 				Object value = MVEL.eval(entry.getValue().toString(), context);
 				// System.out.println("JptMacroNode.parsedParamVvalue: " + value);
+
 				macroContext.put(entry.getKey(), value);
 			}
 			catch (org.mvel2.PropertyAccessException t)
 			{
 				log.warn(String.format("PropertyAccessException for parameter value: '%s'. Using the value as string", entry.getValue()));
-				// System.out.printf("PropertyAccessException for parameter value: '%s'. Using the value as string%n", entry.getValue());
 				macroContext.put(entry.getKey(), entry.getValue());
 			}
 		}
@@ -93,14 +97,23 @@ public class JptMacroNode extends JptParentNode
 			throw new RuntimeException(t);
 		}
 
-		int child_count = getChildCount();
-		for (int i = 0; i < child_count; i++)
+		try
 		{
-			JptNode jpt_node = getChild(i);
-			if (jpt_node.isInSlot())
-				jpt_node.render(context, out);
-			else
-				jpt_node.render(macroContext, out);
+			int child_count = getChildCount();
+			for (int i = 0; i < child_count; i++)
+			{
+				JptNode jpt_node = getChild(i);
+				if (jpt_node.isInSlot())
+					jpt_node.render(context, out);
+				else
+					jpt_node.render(macroContext, out);
+			}
+		}
+		catch (Throwable t)
+		{
+			String s = String.format("Error processing during the processing of '%s'", _muri);
+			log.error(s);
+			throw new RuntimeException(s, t);
 		}
 	}
 }
