@@ -123,4 +123,9 @@ public class CacheAdapter extends HttpAction
 			commitResponse(ctx, response, is_keep_alive);
 		}
 	}
+
+	public void clear()
+	{
+		cachedContent.clear();
+	}
 }
