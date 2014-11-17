@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.ParserContext;
 import org.mvel2.templates.CompiledTemplate;
@@ -22,7 +23,8 @@ public class JptTemplateNode extends JptNode
 
 	JptTemplateNode(String template, boolean isInSlot)
 	{
-		_template = template;
+		_template = StringEscapeUtils.unescapeXml(template);
+
 		_isInSlot = isInSlot;
 	}
 
@@ -51,7 +53,7 @@ public class JptTemplateNode extends JptNode
 					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
 				}
 				_compiled_template = TemplateCompiler.compileTemplate(_template, parser_context);
-			}	
+			}
 		}
 		catch (Throwable t)
 		{
@@ -59,8 +61,8 @@ public class JptTemplateNode extends JptNode
 			throw new RuntimeException(String.format("Error processing template:%ncontext: %s;%nmessage: '%s'", context, r.getMessage()));
 		}
 
-
 		String sout = String.valueOf(TemplateRuntime.execute(_compiled_template, context));
+
 		out.write(sout);
 	}
 

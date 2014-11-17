@@ -17,6 +17,11 @@
 @foreach{person : $this.persons}
 <li>@{person.name}</li>
 @end{}
+<script type='text/javascript'>
+/*<![CDATA[*/
+document.write ("'><\/scr"+"ipt>");
+/*]]>*/
+</script>
 </tal:template>
 <li>static</li>
 </ul>
