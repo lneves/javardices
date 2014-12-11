@@ -14,6 +14,7 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.util.ReferenceCountUtil;
 
 import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
@@ -47,9 +48,11 @@ public abstract class HttpAction
 			FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
 			service(ctx, request, response);
 			observeEnd(ctx, request, response, requestObserver);
+			ReferenceCountUtil.release(response);
 		}
 		else
 		{
+
 			FullHttpResponse response = buildResponse(ctx);
 
 			try
@@ -107,9 +110,11 @@ public abstract class HttpAction
 
 	void commitResponse(ChannelHandlerContext ctx, FullHttpResponse response, boolean is_keep_alive)
 	{
+
 		response.headers().set(CONTENT_LENGTH_ENTITY, String.valueOf(response.content().readableBytes()));
 		response.headers().set(DATE_ENTITY, HttpDateFormat.getCurrentHttpDate());
-		ChannelFuture future = ctx.writeAndFlush(response);
+
+		ChannelFuture future = ctx.writeAndFlush(response); // implicit response.release();
 
 		// Decide whether to close the connection or not.
 		if (!is_keep_alive)

@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.util.ReferenceCountUtil;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -59,7 +60,7 @@ public class CacheAdapter extends HttpAction
 			log.debug("Cache miss for: {}", ck);
 			response.headers().set(ncache, lookup);
 
-			response.retain();
+			ReferenceCountUtil.retain(response);
 			wrappedProcess(ctx, request, response, requestObserver);
 
 			cachedContent.put(ck, response);
@@ -85,7 +86,7 @@ public class CacheAdapter extends HttpAction
 			log.debug("Cache hit for: {}", ck);
 			response.headers().set(ncache, hit);
 
-			response.retain();
+			ReferenceCountUtil.retain(response);
 			doProcess(ctx, request, response);
 		}
 
@@ -98,7 +99,7 @@ public class CacheAdapter extends HttpAction
 		FullHttpResponse rsp = cachedContent.remove(ck);
 		if (rsp != null)
 		{
-			rsp.release();
+			ReferenceCountUtil.retain(rsp);
 		}
 	}
 

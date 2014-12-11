@@ -12,6 +12,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.util.ReferenceCountUtil;
 
 import java.io.FileNotFoundException;
 
@@ -78,6 +79,15 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		{
 			FullHttpRequest request = (FullHttpRequest) msg;
 			handleRead(ctx, request);
+
+			try
+			{
+				ReferenceCountUtil.release(request);
+			}
+			catch (Throwable t)
+			{
+				log.error(t.getMessage(), t);
+			}
 		}
 		else
 		{
