@@ -16,7 +16,7 @@ public class Shutdown
 	public static void now()
 	{
 		System.out.println("\nExiting... ");
-		exit();
+		exit(0);
 	}
 
 	public static void now(Throwable t)
@@ -24,7 +24,7 @@ public class Shutdown
 		Throwable root = ErrorAnalyser.findRootCause(t);
 		root.printStackTrace();
 		System.err.println("\nExiting... ");
-		exit();
+		exit(-1);
 	}
 
 	public static boolean isShutingDown()
@@ -32,7 +32,7 @@ public class Shutdown
 		return is_shuttingdown.get();
 	}
 
-	private static void exit()
+	private static void exit(int status)
 	{
 		if (is_shuttingdown.getAndSet(true))
 		{
@@ -41,7 +41,7 @@ public class Shutdown
 
 		while (true)
 		{
-			System.exit(-1);
+			System.exit(status);
 		}
 	}
 
