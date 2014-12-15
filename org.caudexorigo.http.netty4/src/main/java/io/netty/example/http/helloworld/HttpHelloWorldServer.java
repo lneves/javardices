@@ -35,7 +35,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class HttpHelloWorldServer
 {
-	private static int IO_THREADS = Runtime.getRuntime().availableProcessors() * 2;
 	private final int port;
 
 	public HttpHelloWorldServer(int port)
