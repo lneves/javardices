@@ -448,7 +448,6 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 	{
 		JptStaticFragment sf = new JptStaticFragment(_sb.toString());
 		JptParentNode parent = ((JptParentNode) pnodes.peek());
-		// System.out.println("JptNodeBuilder.addStaticFragments.parent: " + parent.getClass().getCanonicalName());
 		parent.appendChild(sf);
 		_sb.delete(0, _sb.length());
 	}

@@ -6,6 +6,7 @@ import nu.xom.DocType;
 import nu.xom.Document;
 import nu.xom.Element;
 import nu.xom.Node;
+import nu.xom.ParentNode;
 import nu.xom.ProcessingInstruction;
 import nu.xom.Text;
 import nu.xom.XMLException;
@@ -82,7 +83,7 @@ public class BaseJptNodeBuilder
 		_buffer.append('<');
 		_buffer.append(element.getQualifiedName());
 		processAttributes(element);
-		// processNamespaceDeclarations(element);
+		processNamespaceDeclarations(element);
 	}
 
 	protected void processAttributes(Element element)
@@ -94,6 +95,52 @@ public class BaseJptNodeBuilder
 			_buffer.append(' ');
 			process(attribute);
 		}
+	}
+
+	protected void processNamespaceDeclarations(Element element)
+	{
+		for (int i = 0; i < element.getNamespaceDeclarationCount(); i++)
+		{
+			String additionalPrefix = element.getNamespacePrefix(i);
+			String uri = element.getNamespaceURI(additionalPrefix);
+
+			if (isJptNs(uri))
+			{
+				continue;
+			}
+
+			ParentNode parentNode = element.getParent();
+
+			if (parentNode != null && (parentNode instanceof Element))
+			{
+				Element parentElement = (Element) parentNode;
+				if (uri.equals(parentElement.getNamespaceURI(additionalPrefix)))
+				{
+					continue;
+				}
+			}
+			else if (uri.length() == 0)
+			{
+				continue; // no need to say xmlns=""
+			}
+
+			_buffer.append(" xmlns");
+			if (additionalPrefix.length() > 0)
+			{
+				_buffer.append(':');
+				_buffer.append(additionalPrefix);
+			}
+			_buffer.append("=\"");
+			// _buffer.append(escape(uri));
+			_buffer.append(uri);
+			_buffer.append('"');
+		}
+
+	}
+
+	private boolean isJptNs(String uri)
+	{
+		return (uri.equals("http://xml.zope.org/namespaces/tal") || uri.equals("http://xml.zope.org/namespaces/metal") || uri.equals("http://xml.zope.org/namespaces/metal/append-to-slot"));
 	}
 
 	protected void process(Attribute attribute)
@@ -132,6 +179,11 @@ public class BaseJptNodeBuilder
 		_buffer.append(">\n");
 	}
 
+	private void process(ProcessingInstruction pi)
+	{
+		// ignore
+	}
+
 	protected void processChild(Node node)
 	{
 		if (node instanceof Element)
@@ -140,11 +192,13 @@ public class BaseJptNodeBuilder
 			process((Text) node);
 		else if (node instanceof Comment)
 			process((Comment) node);
-		else if (!(node instanceof ProcessingInstruction))
-			if (node instanceof DocType)
-				process((DocType) node);
-			else
-				throw new XMLException((new StringBuilder("Cannot process a ")).append(node.getClass().getName()).append(" from the processChild() method").toString());
+		else if (node instanceof ProcessingInstruction)
+			process((ProcessingInstruction) node);
+		else if (node instanceof DocType)
+			process((DocType) node);
+		else
+			throw new XMLException((new StringBuilder("Cannot process a ")).append(node.getClass().getName()).append(" from the processChild() method").toString());
+
 	}
 
 	protected final void processAttributeValue(String value)
