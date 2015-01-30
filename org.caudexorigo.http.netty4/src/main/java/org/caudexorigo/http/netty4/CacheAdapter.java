@@ -4,6 +4,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpMethod;
 import io.netty.util.ReferenceCountUtil;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -42,8 +43,17 @@ public class CacheAdapter extends HttpAction
 	protected void process(ChannelHandlerContext ctx, FullHttpRequest request, RequestObserver requestObserver)
 	{
 		observeBegin(ctx, request, requestObserver);
+		FullHttpResponse response;
 
-		FullHttpResponse response = cachedProcess(ctx, request, requestObserver);
+		if (request.getMethod().equals(HttpMethod.GET))
+		{
+			response = cachedProcess(ctx, request, requestObserver);
+		}
+		else
+		{
+			response = buildResponse(ctx);
+			wrappedProcess(ctx, request, response, requestObserver);
+		}
 
 		observeEnd(ctx, request, response, requestObserver);
 	}
