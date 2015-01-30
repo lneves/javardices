@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.caudexorigo.http.netty4.ParameterDecoder;
+import org.caudexorigo.io.NullOutputStream;
 import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.web.HttpJptProcessor;
 import org.caudexorigo.jpt.web.Method;
@@ -52,7 +54,16 @@ public class NettyJptProcessor implements HttpJptProcessor
 			_res = response;
 			String charsetName = JptConfiguration.encoding();
 			parameterDecoder = new ParameterDecoder(_req, Charset.forName(charsetName));
-			_out = new ByteBufOutputStream(response.content());
+
+			if (request.getMethod().equals(HttpMethod.HEAD))
+			{
+				_out = new NullOutputStream();
+			}
+			else
+			{
+				_out = new ByteBufOutputStream(response.content());
+			}
+
 			_writer = new OutputStreamWriter(_out, charsetName);
 		}
 		catch (Throwable t)
