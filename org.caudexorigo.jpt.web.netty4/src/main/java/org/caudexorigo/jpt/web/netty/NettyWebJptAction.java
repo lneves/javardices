@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.caudexorigo.http.netty4.HttpAction;
-import org.caudexorigo.http.netty4.WebException;
 import org.caudexorigo.http.netty4.reporting.MessageBody;
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
@@ -66,7 +65,10 @@ public class NettyWebJptAction extends HttpAction
 				jpt.render(renderContext, aweb_jpt_processor.getWriter());
 				aweb_jpt_processor.flush();
 
-				response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
+				if (!response.headers().contains(HttpHeaders.Names.CONTENT_TYPE))
+				{
+					response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
+				}
 			}
 		}
 		catch (Throwable t)
