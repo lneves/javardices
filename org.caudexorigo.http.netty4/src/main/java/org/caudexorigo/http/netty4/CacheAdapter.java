@@ -7,6 +7,8 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.util.ReferenceCountUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledExecutorService;
@@ -22,6 +24,7 @@ public class CacheAdapter extends HttpAction
 	private static final CharSequence ncache = HttpHeaders.newEntity("X-NCache");
 	private static final CharSequence hit = HttpHeaders.newEntity("hit");
 	private static final CharSequence lookup = HttpHeaders.newEntity("lookup");
+	private static final CharSequence pass_through = HttpHeaders.newEntity("pass-through");
 
 	private HttpAction wrapped;
 
@@ -30,6 +33,10 @@ public class CacheAdapter extends HttpAction
 
 	public CacheAdapter(HttpAction wrapped, CacheKeyBuilder cacheKeyBuilder)
 	{
+		List<String> headers = new ArrayList<String>();
+
+		headers.add("Set-Cookie");
+
 		this.wrapped = wrapped;
 		this.cacheKeyBuilder = cacheKeyBuilder;
 	}
@@ -60,6 +67,8 @@ public class CacheAdapter extends HttpAction
 
 	private FullHttpResponse cachedProcess(ChannelHandlerContext ctx, FullHttpRequest request, RequestObserver requestObserver)
 	{
+		prepareRequest(request);
+
 		final CacheKey ck = cacheKeyBuilder.build(ctx, request);
 
 		FullHttpResponse response = cachedContent.get(ck);
@@ -68,11 +77,21 @@ public class CacheAdapter extends HttpAction
 		{
 			response = buildResponse(ctx);
 			log.debug("Cache miss for: {}", ck);
-			response.headers().set(ncache, lookup);
 
 			ReferenceCountUtil.retain(response);
 			wrappedProcess(ctx, request, response, requestObserver);
 
+			prepareResponse(request, response);
+
+			if (!isCacheable(response))
+			{
+				log.warn("Response object for resource '{}' is not cacheable.", request.getUri());
+				response.headers().set(ncache, pass_through);
+				ReferenceCountUtil.release(response);
+				return response;
+			}
+
+			response.headers().set(ncache, lookup);
 			cachedContent.put(ck, response);
 
 			Runnable evictioner = new Runnable()
@@ -89,7 +108,7 @@ public class CacheAdapter extends HttpAction
 		{
 			if (response.content().readableBytes() == 0)
 			{
-				log.warn("Empty cache hit for: {}, readable bytes: {}", ck, response.content().readableBytes());
+				log.warn("Empty cache hit for: {}", ck, response.content());
 				evict(ck);
 				return cachedProcess(ctx, request, requestObserver);
 			}
@@ -103,13 +122,42 @@ public class CacheAdapter extends HttpAction
 		return response;
 	}
 
+	private boolean isCacheable(FullHttpResponse response)
+	{
+		if (response.content().readableBytes() == 0)
+		{
+			log.warn("netty bug 'response.content().readableBytes() == 0', pass-through");
+			return false;
+		}
+		
+
+		if (response.headers().contains(HttpHeaders.Names.SET_COOKIE))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+
+	public void prepareRequest(FullHttpRequest request)
+	{
+		// extension point
+	}
+
+	public void prepareResponse(FullHttpRequest request, FullHttpResponse response)
+	{
+		// extension point
+	}
+
 	private void evict(final CacheKey ck)
 	{
 		log.debug("Evict entry '{}'", ck);
 		FullHttpResponse rsp = cachedContent.remove(ck);
 		if (rsp != null)
 		{
-			ReferenceCountUtil.retain(rsp);
+			ReferenceCountUtil.release(rsp);
 		}
 	}
 
