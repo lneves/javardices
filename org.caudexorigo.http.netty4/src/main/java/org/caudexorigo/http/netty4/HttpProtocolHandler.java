@@ -102,10 +102,10 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			ctx.write(new DefaultHttpResponse(HTTP_1_1, CONTINUE));
 		}
 
-		HttpAction action = _requestMapper.map(ctx, request);
-
 		try
 		{
+			HttpAction action = _requestMapper.map(ctx, request);
+
 			if (action != null)
 			{
 				action.process(ctx, request, _requestObserver);
@@ -117,7 +117,6 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 		}
 		catch (Throwable t)
 		{
-
 			ByteBuf ebuf = ctx.alloc().buffer();
 			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, ebuf);
 
