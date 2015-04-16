@@ -74,8 +74,6 @@ public class StaticFileAction extends HttpAction
 
 		HttpResponse response = new DefaultHttpResponse(rsp.getProtocolVersion(), rsp.getStatus(), false);
 
-		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
-
 		CharSequence ctype = getMimeType(request, file);
 
 		if (StringUtils.isNotBlank(ctype))
@@ -110,23 +108,34 @@ public class StaticFileAction extends HttpAction
 
 		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 
-		ctx.write(response);
-
-		rsp.headers().set(response.headers());
-		rsp.setStatus(rsp.getStatus());
-
 		try
 		{
-			boolean useSsl = (ctx.pipeline().get(SslHandler.class) != null);
+			if (request.getMethod() == HttpMethod.GET)
+			{
+				response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
 
-			if (useSsl)
-			{
-				is_keep_alive = false;
-				ctx.write(new ChunkedFile(raf, 0, clen, 8192 * 2), ctx.voidPromise());
+				rsp.headers().set(response.headers());
+				rsp.setStatus(rsp.getStatus());
+				ctx.write(response);
+
+				boolean useSsl = (ctx.pipeline().get(SslHandler.class) != null);
+
+				if (useSsl)
+				{
+					is_keep_alive = false;
+					ctx.write(new ChunkedFile(raf, 0, clen, 8192 * 2), ctx.voidPromise());
+				}
+				else
+				{
+					ctx.write(new DefaultFileRegion(raf.getChannel(), 0, clen), ctx.voidPromise());
+				}
 			}
-			else
+			else if (request.getMethod() == HttpMethod.HEAD)
 			{
-				ctx.write(new DefaultFileRegion(raf.getChannel(), 0, clen), ctx.voidPromise());
+				response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, "0");
+				rsp.headers().set(response.headers());
+				rsp.setStatus(rsp.getStatus());
+				ctx.write(response);
 			}
 		}
 		catch (IOException e)
@@ -220,7 +229,7 @@ public class StaticFileAction extends HttpAction
 
 	protected void validateRequest(FullHttpRequest request)
 	{
-		if (request.getMethod() != HttpMethod.GET)
+		if (!((request.getMethod() == HttpMethod.GET) || (request.getMethod() == HttpMethod.HEAD)))
 		{
 			throw new WebException(new IllegalArgumentException("Method not allowed"), HttpResponseStatus.METHOD_NOT_ALLOWED.code());
 		}
