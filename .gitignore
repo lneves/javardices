@@ -38,12 +38,14 @@
 ehthumbs.db
 Thumbs.db
 
-# Eclipse stuff #
+# IDE stuff #
 ######################
 .settings
 .classpath
 .project
 bin
+*.iml
+.idea
 
 # Maven stuff #
 ######################
