@@ -63,6 +63,7 @@ public class StandardResponseFormatter implements ResponseFormatter
 		{
 			log.error(getMsg(t));
 		}
+		log.error(getMsg(t), t);
 	}
 
 	public String getStackTrace(Throwable error, boolean fullInfo)
