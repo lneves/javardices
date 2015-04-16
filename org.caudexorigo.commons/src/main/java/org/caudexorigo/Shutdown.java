@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Shutdown
 {
+	private static final String NO_SPACE_LEFT = "No space left on device".toLowerCase();
 	private static final String ULIMIT_ERROR_MESSAGE = "Too many open files".toLowerCase();
 	private static final String TIMER_CANCELED_ERROR_MESSAGE = "Timer already cancelled".toLowerCase();
 	private static final AtomicBoolean is_shuttingdown = new AtomicBoolean(false);
@@ -76,10 +77,20 @@ public class Shutdown
 		}
 	}
 
+	public static void exitIfNoSpaceLeft(Throwable t)
+	{
+		Throwable r = ErrorAnalyser.findRootCause(t);
+		if ((r instanceof java.io.IOException) && (NO_SPACE_LEFT.equalsIgnoreCase(r.getMessage())))
+		{
+			Shutdown.now(r);
+		}
+	}
+
 	public static void exitIfCritical(Throwable t)
 	{
 		exitIfOOM(t);
 		exitIfUlimit(t);
 		exitIfTimerCanceled(t);
+		exitIfNoSpaceLeft(t);
 	}
 }
