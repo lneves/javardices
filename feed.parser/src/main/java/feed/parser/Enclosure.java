@@ -1,34 +1,62 @@
 package feed.parser;
 
+import javax.xml.bind.annotation.XmlAttribute;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Enclosure
 {
-	private final int lenght;
-	private final String type;
-	private final String url;
+	private int length;
+	private String type;
+	private String url;
 
 	public enum Type
 	{
 		RSS, YAHOO_MEDIA
 	}
 
-	public Enclosure(int lenght, String type, String url)
+	public Enclosure()
 	{
 		super();
-		this.lenght = lenght;
+	}
+
+	public Enclosure(int length, String type, String url)
+	{
+		super();
+		this.length = length;
 		this.type = type;
 		this.url = url;
 	}
 
-	public int getLenght()
+	public void setLength(int length)
 	{
-		return lenght;
+		this.length = length;
 	}
 
+	public void setType(String type)
+	{
+		this.type = type;
+	}
+
+	public void setUrl(String url)
+	{
+		this.url = url;
+	}
+
+	@JsonIgnore
+	@XmlAttribute(name = "length")
+	public int getLength()
+	{
+		return length;
+	}
+
+	@XmlAttribute(name = "type")
 	public String getType()
 	{
 		return type;
 	}
 
+	@XmlAttribute(name = "url")
 	public String getUrl()
 	{
 		return url;
@@ -37,6 +65,6 @@ public class Enclosure
 	@Override
 	public String toString()
 	{
-		return String.format("Enclosure [lenght=%s, type=%s, url=%s]", lenght, type, url);
+		return String.format("Enclosure [length=%s, type=%s, url=%s]", length, type, url);
 	}
 }

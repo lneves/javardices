@@ -24,12 +24,17 @@ public class FeedParser
 
 	public FeedChannel parse(Reader reader)
 	{
-		return staxParser.parse(reader, true);
+		return staxParser.parse(reader, true, false);
 	}
 
 	public FeedChannel parse(Reader reader, boolean failOnError)
 	{
-		return staxParser.parse(reader, failOnError);
+		return staxParser.parse(reader, failOnError, false);
+	}
+
+	public FeedChannel parse(Reader reader, boolean failOnError, boolean stripHtml)
+	{
+		return staxParser.parse(reader, failOnError, stripHtml);
 	}
 
 	public FeedChannel parse(InputStream stream)
@@ -39,10 +44,15 @@ public class FeedParser
 
 	public FeedChannel parse(InputStream stream, boolean failOnError)
 	{
+		return parse(stream, failOnError, false);
+	}
+
+	public FeedChannel parse(InputStream stream, boolean failOnError, boolean stripHtml)
+	{
 		try
 		{
 			Reader reader = buildReader(stream);
-			return staxParser.parse(reader, failOnError);
+			return staxParser.parse(reader, failOnError, stripHtml);
 		}
 		catch (Throwable t)
 		{
@@ -70,7 +80,10 @@ public class FeedParser
 				bout.write(b);
 			}
 
-			return buildReader(new UnsynchronizedByteArrayInputStream(bout.toByteArray()));
+			Reader r = buildReader(new UnsynchronizedByteArrayInputStream(bout.toByteArray()));
+			bout.close();
+
+			return r;
 		}
 	}
 }

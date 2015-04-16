@@ -1,9 +1,9 @@
 package feed.parser;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class AtomContentProcessor implements FeedEntryProcessor
 {

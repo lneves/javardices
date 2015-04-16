@@ -7,6 +7,6 @@ public class AddFeedEntryProcessor implements FeedChannelProcessor
 	@Override
 	public void process(FeedChannel feedChannel, XMLStreamReader staxXmlReader)
 	{
-		feedChannel.addFeedEntry(new FeedEntry());
+		feedChannel.addFeedEntry(new FeedEntry(feedChannel.getStripHtml()));
 	}
 }

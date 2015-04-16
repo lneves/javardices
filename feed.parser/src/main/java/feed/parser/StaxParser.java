@@ -27,6 +27,8 @@ public class StaxParser
 
 	private static Map<String, FeedEntryProcessor> feed_entry_processors = new HashMap<String, FeedEntryProcessor>();
 
+	private boolean stripHtml;
+
 	static
 	{
 		ns_aliases.put("http://a9.com/-/spec/opensearchrss/1.0/", "opensearch");
@@ -166,11 +168,12 @@ public class StaxParser
 
 	public FeedChannel parse(Reader reader)
 	{
-		return parse(reader, true);
+		return parse(reader, true, false);
 	}
 
-	public FeedChannel parse(Reader reader, boolean failOnError)
+	public FeedChannel parse(Reader reader, boolean failOnError, boolean stripHtml)
 	{
+		this.stripHtml = stripHtml;
 		try
 		{
 			XMLStreamReader staxXmlReader = factory.createXMLStreamReader(reader);
@@ -196,7 +199,7 @@ public class StaxParser
 		int eventType = staxXmlReader.getEventType();
 
 		Stack<FeedXmlElement> stack = new Stack<FeedXmlElement>();
-		FeedChannel feed_channel = new FeedChannel();
+		FeedChannel feed_channel = new FeedChannel(stripHtml);
 
 		do
 		{
