@@ -14,6 +14,7 @@ import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty4.reporting.MessageBody;
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.io.UnsynchronizedByteArrayOutputStream;
 
 public class CompressionAdapter extends HttpAction
@@ -73,6 +74,12 @@ public class CompressionAdapter extends HttpAction
 				throw new RuntimeException(t);
 			}
 		}
+	}
+
+	@Override
+	protected ResponseFormatter getResponseFormatter()
+	{
+		return this.wrapped.getResponseFormatter();
 	}
 
 	private static void copy(InputStream input, OutputStream output) throws IOException
