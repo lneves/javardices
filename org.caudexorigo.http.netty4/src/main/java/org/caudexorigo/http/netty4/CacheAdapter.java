@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.caudexorigo.concurrent.CustomExecutors;
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -181,6 +182,12 @@ public class CacheAdapter extends HttpAction
 		{
 			commitResponse(ctx, response, is_keep_alive);
 		}
+	}
+	
+	@Override
+	protected ResponseFormatter getResponseFormatter()
+	{
+		return this.wrapped.getResponseFormatter();
 	}
 
 	public void clear()
