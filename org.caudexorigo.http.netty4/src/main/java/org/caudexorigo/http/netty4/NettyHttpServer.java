@@ -124,7 +124,7 @@ public class NettyHttpServer
 		_requestObserver = requestObserver;
 	}
 
-	public void setResponseFormtter(ResponseFormatter rspFmt)
+	public void setResponseFormatter(ResponseFormatter rspFmt)
 	{
 		_rspFmt = rspFmt;
 	}

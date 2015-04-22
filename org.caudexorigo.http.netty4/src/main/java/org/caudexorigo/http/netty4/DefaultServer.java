@@ -18,7 +18,7 @@ public class DefaultServer
 			InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
 			NettyHttpServer server = new NettyHttpServer(cargs.getHost(), cargs.getPort());
 			server.setRouter(new DefaultRouter());
-			server.setResponseFormtter(new StandardResponseFormatter(false));
+			server.setResponseFormatter(new StandardResponseFormatter(false));
 			System.out.printf("listening on: %s%n", cargs.getPort());
 			server.start();
 			
