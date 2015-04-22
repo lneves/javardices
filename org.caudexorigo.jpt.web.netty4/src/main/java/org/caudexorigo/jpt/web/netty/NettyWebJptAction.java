@@ -38,6 +38,13 @@ public class NettyWebJptAction extends HttpAction
 		_rspFormatter = new StandardResponseFormatter(showFullErrorInfo);
 	}
 
+	public NettyWebJptAction(URI templateURI, ResponseFormatter rspFmt)
+	{
+		super();
+		_templateURI = templateURI;
+		_rspFormatter = rspFmt;
+	}
+
 	@Override
 	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
