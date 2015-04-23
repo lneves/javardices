@@ -187,6 +187,7 @@ public class MimeTable
 		TABLE.put("eot", "application/vnd.ms-fontobject");
 		TABLE.put("ttf", "application/x-font-ttf");
 		TABLE.put("woff", "application/octet-stream");
+		TABLE.put("json", "application/json");
 	}
 
 	public static final String getContentType(String file)
