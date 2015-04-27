@@ -12,17 +12,18 @@ import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel>
 {
 	private boolean validate_headers;
-	private RequestRouter mapper;
-	private RequestObserver requestObserver;
-	private ResponseFormatter responseFormatter;
-	private static final int MAX_CONTENT_LENGHT = 1024 * 1012 * 4;
+	private final RequestRouter mapper;
+	private final RequestObserver requestObserver;
+	private final ResponseFormatter responseFormatter;
+	private int maxContentLength;
 
-	public NettyHttpServerInitializer(RequestRouter mapper, RequestObserver requestObserver, ResponseFormatter responseFormatter, boolean validate_headers)
+	public NettyHttpServerInitializer(RequestRouter mapper, RequestObserver requestObserver, ResponseFormatter responseFormatter, int maxLength, boolean validate_headers)
 	{
 		super();
 		this.mapper = mapper;
 		this.requestObserver = requestObserver;
 		this.responseFormatter = responseFormatter;
+		this.maxContentLength = maxLength;
 		this.validate_headers = validate_headers;
 	}
 
@@ -31,7 +32,6 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 	{
 		// Create a default pipeline implementation.
 		ChannelPipeline pipeline = ch.pipeline();
-
 
 		// Uncomment the following line if you want HTTPS
 		// SSLEngine engine = SecureChatSslContextFactory.getServerContext().createSSLEngine();
@@ -43,16 +43,14 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 		int maxChunkSize = 8192;
 
 		pipeline.addLast("http-decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
-		pipeline.addLast("http-aggregator", new HttpObjectAggregator(MAX_CONTENT_LENGHT));
+		pipeline.addLast("http-aggregator", new HttpObjectAggregator(maxContentLength));
 		pipeline.addLast("http-encoder", new HttpResponseEncoder());
 
 		// pipeline.addLast(new HttpServerCodec());
 		// pipeline.addLast(new HttpObjectAggregator(65536));
 		// pipeline.addLast(new ChunkedWriteHandler());
 
-
 		pipeline.addLast("http-protocol-handler", new HttpProtocolHandler(mapper, requestObserver, responseFormatter));
-		
-		
+
 	}
 }

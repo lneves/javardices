@@ -30,6 +30,8 @@ public class NettyHttpServer
 
 	private static final int DEFAULT_PORT = 8080;
 
+	private static final int DEFAULT_MAX_CONTENT_LENGHT = 1024 * 1024 * 4;
+
 	private static Logger log = LoggerFactory.getLogger(NettyHttpServer.class);
 
 	private String _host;
@@ -39,6 +41,7 @@ public class NettyHttpServer
 	private ResponseFormatter _rspFmt;
 
 	private int _port;
+	private int _maxContentLenght = -1;
 	private boolean _validate_headers;
 
 	public NettyHttpServer()
@@ -95,7 +98,7 @@ public class NettyHttpServer
 		_mapper = mapper;
 	}
 
-	private ResponseFormatter getResponseFormtter()
+	public ResponseFormatter getResponseFormtter()
 	{
 		if (_rspFmt != null)
 		{
@@ -107,7 +110,7 @@ public class NettyHttpServer
 		}
 	}
 
-	protected RequestObserver getRequestObserver()
+	public RequestObserver getRequestObserver()
 	{
 		if (_requestObserver != null)
 		{
@@ -134,6 +137,11 @@ public class NettyHttpServer
 		_validate_headers = validate_headers;
 	}
 
+	public void setMaxContentLenght(int maxContentLenght)
+	{
+		_maxContentLenght = maxContentLenght;
+	}
+
 	public synchronized void start()
 	{
 		log.info("Starting Httpd");
@@ -157,7 +165,7 @@ public class NettyHttpServer
 	{
 		try
 		{
-			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(_mapper, getRequestObserver(), getResponseFormtter(), getValidateHeaders());
+			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(_mapper, getRequestObserver(), getResponseFormtter(), getMaxContentLength(), getValidateHeaders());
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
 
@@ -174,6 +182,18 @@ public class NettyHttpServer
 		finally
 		{
 			stop(bossGroup, workerGroup);
+		}
+	}
+
+	public int getMaxContentLength()
+	{
+		if (_maxContentLenght > 0)
+		{
+			return _maxContentLenght;
+		}
+		else
+		{
+			return DEFAULT_MAX_CONTENT_LENGHT;
 		}
 	}
 
