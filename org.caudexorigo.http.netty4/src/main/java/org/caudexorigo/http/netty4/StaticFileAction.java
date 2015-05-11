@@ -252,16 +252,9 @@ public class StaticFileAction extends HttpAction
 		{
 			req_path = UrlCodec.decode(req_path, "ISO-8859-1");
 		}
-		catch (UnsupportedEncodingException e)
+		catch (Throwable e)
 		{
-			try
-			{
-				req_path = UrlCodec.decode(req_path, "UTF-8");
-			}
-			catch (UnsupportedEncodingException e1)
-			{
-				throw new RuntimeException(e1);
-			}
+			req_path = UrlCodec.decode(req_path, "UTF-8");
 		}
 
 		// Convert file separators.

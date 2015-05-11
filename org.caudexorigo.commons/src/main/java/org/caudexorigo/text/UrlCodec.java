@@ -2,7 +2,6 @@ package org.caudexorigo.text;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.BitSet;
 
@@ -40,76 +39,81 @@ public class UrlCodec
 		dontNeedEncoding.set('*');
 	}
 
-	public static String decode(String s, String enc) throws UnsupportedEncodingException
+	public static String decode(String s, String enc)
 	{
-		URLEncoder.encode(s, enc);
-
-		boolean needToChange = false;
-		int numChars = s.length();
-		StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
-		int i = 0;
-
-		if (enc.length() == 0)
+		try
 		{
-			throw new UnsupportedEncodingException("URLDecoder: empty string enc parameter");
-		}
+			boolean needToChange = false;
+			int numChars = s.length();
+			StringBuilder sb = new StringBuilder(numChars > 500 ? numChars / 2 : numChars);
+			int i = 0;
 
-		char c;
-		byte[] bytes = null;
-		while (i < numChars)
-		{
-			c = s.charAt(i);
-			switch (c)
+			if (enc.length() == 0)
 			{
-			case '+':
-				sb.append(' ');
-				i++;
-				needToChange = true;
-				break;
-			case '%':
-				/*
-				 * Starting with this instance of %, process all consecutive substrings of the form %xy. Each substring %xy will yield a byte. Convert all consecutive bytes obtained this way to whatever character(s) they represent in the provided encoding.
-				 */
-
-				try
-				{
-
-					// (numChars-i)/3 is an upper bound for the number
-					// of remaining bytes
-					if (bytes == null)
-						bytes = new byte[(numChars - i) / 3];
-					int pos = 0;
-
-					while (((i + 2) < numChars) && (c == '%'))
-					{
-						bytes[pos++] = (byte) Integer.parseInt(s.substring(i + 1, i + 3), 16);
-						i += 3;
-						if (i < numChars)
-							c = s.charAt(i);
-					}
-
-					// A trailing, incomplete byte encoding such as
-					// "%x" will cause an exception to be thrown
-
-					if ((i < numChars) && (c == '%'))
-						throw new IllegalArgumentException("URLDecoder: Incomplete trailing escape (%) pattern");
-
-					sb.append(new String(bytes, 0, pos, enc));
-				}
-				catch (NumberFormatException e)
-				{
-					throw new IllegalArgumentException("URLDecoder: Illegal hex characters in escape (%) pattern - " + e.getMessage());
-				}
-				needToChange = true;
-				break;
-			default:
-				sb.append(c);
-				i++;
-				break;
+				throw new UnsupportedEncodingException("URLDecoder: empty string enc parameter");
 			}
-		}
 
-		return (needToChange ? sb.toString() : s);
+			char c;
+			byte[] bytes = null;
+			while (i < numChars)
+			{
+				c = s.charAt(i);
+				switch (c)
+				{
+				case '+':
+					sb.append(' ');
+					i++;
+					needToChange = true;
+					break;
+				case '%':
+					/*
+					 * Starting with this instance of %, process all consecutive substrings of the form %xy. Each substring %xy will yield a byte. Convert all consecutive bytes obtained this way to whatever character(s) they represent in the provided encoding.
+					 */
+
+					try
+					{
+
+						// (numChars-i)/3 is an upper bound for the number
+						// of remaining bytes
+						if (bytes == null)
+							bytes = new byte[(numChars - i) / 3];
+						int pos = 0;
+
+						while (((i + 2) < numChars) && (c == '%'))
+						{
+							bytes[pos++] = (byte) Integer.parseInt(s.substring(i + 1, i + 3), 16);
+							i += 3;
+							if (i < numChars)
+								c = s.charAt(i);
+						}
+
+						// A trailing, incomplete byte encoding such as
+						// "%x" will cause an exception to be thrown
+
+						if ((i < numChars) && (c == '%'))
+							throw new IllegalArgumentException("URLDecoder: Incomplete trailing escape (%) pattern");
+
+						sb.append(new String(bytes, 0, pos, enc));
+					}
+					catch (NumberFormatException e)
+					{
+						throw new IllegalArgumentException("URLDecoder: Illegal hex characters in escape (%) pattern - " + e.getMessage());
+					}
+					needToChange = true;
+					break;
+				default:
+					sb.append(c);
+					i++;
+					break;
+				}
+			}
+
+			return (needToChange ? sb.toString() : s);
+		}
+		catch (Throwable t)
+		{
+			throw new RuntimeException(t);
+		}
 	}
 
 	/**
