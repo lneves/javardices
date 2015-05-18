@@ -6,6 +6,7 @@ import java.io.Writer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule;
 
 public class JsonConverter<T>
 {
@@ -23,11 +24,20 @@ public class JsonConverter<T>
 		super();
 		this.clazz = clazz;
 		this.mapper = new ObjectMapper();
+		this.mapper.registerModule(new AfterburnerModule());
 
 		if (prettyPrint)
 		{
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 		}
+	}
+
+	public JsonConverter(Class<T> clazz, ObjectMapper mapper)
+	{
+		super();
+		this.clazz = clazz;
+		this.mapper = mapper;
+		this.mapper.registerModule(new AfterburnerModule());
 	}
 
 	public void toJson(T object, OutputStream out)
