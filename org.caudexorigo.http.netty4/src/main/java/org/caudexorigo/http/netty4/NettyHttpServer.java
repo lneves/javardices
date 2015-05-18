@@ -1,6 +1,7 @@
 package org.caudexorigo.http.netty4;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelOption;
@@ -44,6 +45,8 @@ public class NettyHttpServer
 	private int _maxContentLenght = -1;
 	private boolean _validate_headers;
 
+	private ByteBufAllocator _allocator;
+
 	public NettyHttpServer()
 	{
 		this(DEFAULT_HOST, DEFAULT_PORT);
@@ -59,7 +62,6 @@ public class NettyHttpServer
 		_host = host;
 		_port = port;
 		_validate_headers = false;
-
 		ResourceLeakDetector.setLevel(Level.DISABLED);
 	}
 
@@ -237,23 +239,41 @@ public class NettyHttpServer
 
 	private void setupBootStrap(ServerBootstrap bootstrap)
 	{
-		String os_arch = System.getProperty("os.arch");
-		boolean isARM = StringUtils.contains(os_arch, "arm");
-
-		if (isARM)
-		{
-			bootstrap.childOption(ChannelOption.ALLOCATOR, new UnpooledByteBufAllocator(false));
-		}
-		else
-		{
-			bootstrap.childOption(ChannelOption.ALLOCATOR, new PooledByteBufAllocator(true));
-		}
+		bootstrap.childOption(ChannelOption.ALLOCATOR, getAllocator());
 
 		bootstrap.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 		bootstrap.childOption(ChannelOption.SO_REUSEADDR, true);
 		bootstrap.option(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 		bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 		bootstrap.option(ChannelOption.SO_REUSEADDR, true);
+	}
+
+	public void setAllocator(ByteBufAllocator alloc)
+	{
+		_allocator = alloc;
+	}
+
+	public ByteBufAllocator getAllocator()
+	{
+		if (_allocator == null)
+		{
+			String os_arch = System.getProperty("os.arch");
+
+			boolean isARM = StringUtils.contains(os_arch, "arm");
+
+			if (isARM)
+			{
+				return new UnpooledByteBufAllocator(false);
+			}
+			else
+			{
+				return new PooledByteBufAllocator(true);
+			}
+		}
+		else
+		{
+			return _allocator;
+		}
 	}
 
 	private void stop(EventLoopGroup bossGroup, EventLoopGroup workerGroup)
