@@ -263,11 +263,11 @@ public class NettyHttpServer
 
 			if (isARM)
 			{
-				return new UnpooledByteBufAllocator(false);
+				return UnpooledByteBufAllocator.DEFAULT;
 			}
 			else
 			{
-				return new PooledByteBufAllocator(true);
+				return PooledByteBufAllocator.DEFAULT;
 			}
 		}
 		else
