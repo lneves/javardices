@@ -1,27 +1,18 @@
 package org.caudexorigo.http.netty4;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.PooledByteBufAllocator;
-import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.ServerChannel;
-import io.netty.channel.epoll.Epoll;
-import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.ResourceLeakDetector;
-import io.netty.util.ResourceLeakDetector.Level;
 
 import java.net.InetSocketAddress;
 
 import javax.net.ssl.SSLContext;
 
-import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
+import org.caudexorigo.netty.DefaultNettyContext;
+import org.caudexorigo.netty.NettyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,8 +35,7 @@ public class NettyHttpServer
 	private int _port;
 	private int _maxContentLenght = -1;
 	private boolean _validate_headers;
-
-	private ByteBufAllocator _allocator;
+	private NettyContext _nettyCtx;
 
 	public NettyHttpServer()
 	{
@@ -62,7 +52,6 @@ public class NettyHttpServer
 		_host = host;
 		_port = port;
 		_validate_headers = false;
-		ResourceLeakDetector.setLevel(Level.DISABLED);
 	}
 
 	public String getHost()
@@ -147,26 +136,15 @@ public class NettyHttpServer
 	public synchronized void start()
 	{
 		log.info("Starting Httpd");
-		String os_arch = System.getProperty("os.arch");
 
-		if (Epoll.isAvailable())
-		{
-			log.info("netty-transport: linux-epoll");
-			log.info("os-arch: {}", os_arch);
-			doStart(new EpollEventLoopGroup(), new EpollEventLoopGroup(), EpollServerSocketChannel.class);
-		}
-		else
-		{
-			log.info("netty-transport: nio");
-			log.info("os-arch: {}", os_arch);
-			doStart(new NioEventLoopGroup(), new NioEventLoopGroup(), NioServerSocketChannel.class);
-		}
-	}
+		NettyContext nctx = getNettyContext();
+		EventLoopGroup bossGroup = nctx.getBossEventLoopGroup();
+		EventLoopGroup workerGroup = nctx.getWorkerEventLoopGroup();
 
-	private void doStart(EventLoopGroup bossGroup, EventLoopGroup workerGroup, Class<? extends ServerChannel> serverChannelClass)
-	{
 		try
 		{
+			Class<? extends ServerChannel> serverChannelClass = nctx.getServerChannelClass();
+
 			NettyHttpServerInitializer server_init = new NettyHttpServerInitializer(_mapper, getRequestObserver(), getResponseFormtter(), getMaxContentLength(), getValidateHeaders());
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
@@ -203,8 +181,9 @@ public class NettyHttpServer
 	{
 		log.info("Starting Httpd - SSL");
 
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
-		EventLoopGroup workerGroup = new NioEventLoopGroup();
+		NettyContext nctx = getNettyContext();
+		EventLoopGroup bossGroup = nctx.getBossEventLoopGroup();
+		EventLoopGroup workerGroup = nctx.getWorkerEventLoopGroup();
 
 		final SSLContext sslContext;
 		try
@@ -222,7 +201,10 @@ public class NettyHttpServer
 			NettySslHttpServerInitializer server_init = new NettySslHttpServerInitializer(sslContext, http_handler);
 			ServerBootstrap b = new ServerBootstrap();
 			setupBootStrap(b);
-			b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(server_init);
+
+			Class<? extends ServerChannel> serverChannelClass = nctx.getServerChannelClass();
+
+			b.group(bossGroup, workerGroup).channel(serverChannelClass).childHandler(server_init);
 
 			b.bind(http_ssl_ctx.getSslPort()).sync().channel().closeFuture().sync();
 			log.info("Httpd SSL started. Listening on port: {}", http_ssl_ctx.getSslPort());
@@ -239,7 +221,7 @@ public class NettyHttpServer
 
 	private void setupBootStrap(ServerBootstrap bootstrap)
 	{
-		bootstrap.childOption(ChannelOption.ALLOCATOR, getAllocator());
+		bootstrap.childOption(ChannelOption.ALLOCATOR, getNettyContext().getAllocator());
 
 		bootstrap.childOption(ChannelOption.MAX_MESSAGES_PER_READ, Integer.MAX_VALUE);
 		bootstrap.childOption(ChannelOption.SO_REUSEADDR, true);
@@ -248,32 +230,18 @@ public class NettyHttpServer
 		bootstrap.option(ChannelOption.SO_REUSEADDR, true);
 	}
 
-	public void setAllocator(ByteBufAllocator alloc)
+	private NettyContext getNettyContext()
 	{
-		_allocator = alloc;
+		if (_nettyCtx == null)
+		{
+			_nettyCtx = DefaultNettyContext.get();
+		}
+		return _nettyCtx;
 	}
 
-	public ByteBufAllocator getAllocator()
+	public void setNettyContext(NettyContext nettyCtx)
 	{
-		if (_allocator == null)
-		{
-			String os_arch = System.getProperty("os.arch");
-
-			boolean isARM = StringUtils.contains(os_arch, "arm");
-
-			if (isARM)
-			{
-				return UnpooledByteBufAllocator.DEFAULT;
-			}
-			else
-			{
-				return PooledByteBufAllocator.DEFAULT;
-			}
-		}
-		else
-		{
-			return _allocator;
-		}
+		_nettyCtx = nettyCtx;
 	}
 
 	private void stop(EventLoopGroup bossGroup, EventLoopGroup workerGroup)
