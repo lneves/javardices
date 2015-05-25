@@ -3,7 +3,7 @@
 	<groupId>org.caudexorigo</groupId>
 	<artifactId>org-caudexorigo-json</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>org-caudexorigo.json</name>
+	<name>org-caudexorigo-json</name>
 	<description>utilities library</description>
 
 	<properties>
