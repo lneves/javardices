@@ -11,9 +11,6 @@ import java.util.Map;
 
 import org.caudexorigo.http.netty4.HttpAction;
 import org.caudexorigo.http.netty4.reporting.MessageBody;
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
-import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
-import org.caudexorigo.jpt.JptConfiguration;
 import org.caudexorigo.jpt.JptInstance;
 import org.caudexorigo.jpt.JptInstanceBuilder;
 import org.caudexorigo.jpt.web.HttpJptContext;
@@ -24,25 +21,12 @@ public class NettyWebJptAction extends HttpAction
 	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
 	private final URI _templateURI;
-	private final ResponseFormatter _rspFormatter;
 
 	public NettyWebJptAction(URI templateURI)
 	{
-		this(templateURI, JptConfiguration.fullErrors());
-	}
 
-	public NettyWebJptAction(URI templateURI, boolean showFullErrorInfo)
-	{
 		super();
 		_templateURI = templateURI;
-		_rspFormatter = new StandardResponseFormatter(showFullErrorInfo);
-	}
-
-	public NettyWebJptAction(URI templateURI, ResponseFormatter rspFmt)
-	{
-		super();
-		_templateURI = templateURI;
-		_rspFormatter = rspFmt;
 	}
 
 	@Override
@@ -89,9 +73,9 @@ public class NettyWebJptAction extends HttpAction
 		return _templateURI;
 	}
 
-	@Override
-	protected ResponseFormatter getResponseFormatter()
-	{
-		return _rspFormatter;
-	}
+//	@Override
+//	protected ResponseFormatter getResponseFormatter()
+//	{
+//		return _rspFormatter;
+//	}
 }

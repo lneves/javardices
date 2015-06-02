@@ -120,15 +120,19 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			ByteBuf ebuf = ctx.alloc().buffer();
 			FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, ebuf);
 
+			Throwable w = findWebException(t);
+
 			HttpAction errorAction;
-			if (t instanceof WebException)
+			if (w instanceof WebException)
 			{
-				WebException we = (WebException) t;
+				System.out.println("HttpProtocolHandler.handleRead(t instanceof WebException)");
+				WebException we = (WebException) w;
 				errorAction = new ErrorAction(we, _rspFmt);
 				eresponse.setStatus(HttpResponseStatus.valueOf(we.getHttpStatusCode()));
 			}
 			else
 			{
+				System.out.println("HttpProtocolHandler.handleRead(t not instanceof WebException)");
 				Throwable r = ErrorAnalyser.findRootCause(t);
 				errorAction = new ErrorAction(new WebException(r, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
 			}
@@ -136,5 +140,27 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			errorAction.doProcess(ctx, request, eresponse);
 			errorAction.observeEnd(ctx, request, eresponse, _requestObserver);
 		}
+	}
+
+	private Throwable findWebException(Throwable ex)
+	{
+		if (ex instanceof WebException)
+		{
+			return ex;
+		}
+		else
+		{
+			Throwable inner_ex = ex.getCause();
+			while (inner_ex != null)
+			{
+				if (inner_ex instanceof WebException)
+				{
+					return inner_ex;
+				}
+				inner_ex = inner_ex.getCause();
+			}
+		}
+
+		return ex;
 	}
 }

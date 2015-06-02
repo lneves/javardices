@@ -17,8 +17,6 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.ReferenceCountUtil;
 
 import org.caudexorigo.ErrorAnalyser;
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
-import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +26,6 @@ public abstract class HttpAction
 	private static final CharSequence DATE_ENTITY = HttpHeaders.newEntity(Names.DATE);
 
 	private static Logger log = LoggerFactory.getLogger(HttpAction.class);
-
-	private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
 
 	public HttpAction()
 	{
@@ -46,24 +42,41 @@ public abstract class HttpAction
 		{
 			ByteBuf buf = new EmptyByteBuf(ctx.alloc());
 			FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, buf);
-			service(ctx, request, response);
+
+			try
+			{
+				service(ctx, request, response);
+			}
+			catch (Throwable t)
+			{
+				if (response != null)
+				{
+					ReferenceCountUtil.release(response);
+				}
+				throw new RuntimeException(t);
+			}
+
 			observeEnd(ctx, request, response, requestObserver);
 			ReferenceCountUtil.release(response);
 		}
 		else
 		{
-
 			FullHttpResponse response = buildResponse(ctx);
 
 			try
 			{
 				doProcess(ctx, request, response);
-				observeEnd(ctx, request, response, requestObserver);
 			}
-			catch (Throwable ex)
+			catch (Throwable t)
 			{
-				handleError(ctx, request, ex, requestObserver);
+				if (response != null)
+				{
+					ReferenceCountUtil.release(response);
+				}
+				throw new RuntimeException(t);
 			}
+
+			observeEnd(ctx, request, response, requestObserver);
 		}
 	}
 
@@ -86,28 +99,6 @@ public abstract class HttpAction
 		return false;
 	}
 
-	void handleError(ChannelHandlerContext ctx, FullHttpRequest request, Throwable ex, RequestObserver requestObserver)
-	{
-		ByteBuf ebuf = ctx.alloc().buffer();
-		FullHttpResponse eresponse = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.INTERNAL_SERVER_ERROR, ebuf);
-
-		Throwable error_ex = new Exception(ex);
-		while (error_ex.getCause() != null)
-		{
-			error_ex = error_ex.getCause();
-			if (error_ex instanceof WebException)
-			{
-				WebException w_ex = (WebException) error_ex;
-				eresponse.setStatus(HttpResponseStatus.valueOf(w_ex.getHttpStatusCode()));
-				break;
-			}
-		}
-
-		writeStandardResponse(request, eresponse, error_ex);
-		commitResponse(ctx, eresponse, false);
-		observeEnd(ctx, request, eresponse, requestObserver);
-	}
-
 	void commitResponse(ChannelHandlerContext ctx, FullHttpResponse response, boolean is_keep_alive)
 	{
 
@@ -122,33 +113,6 @@ public abstract class HttpAction
 			// Close the connection when the whole content is written out.
 			future.addListener(ChannelFutureListener.CLOSE);
 		}
-	}
-
-	protected void writeStandardResponse(FullHttpRequest request, FullHttpResponse response, Throwable rootCause)
-	{
-		ResponseFormatter rspFrm = getResponseFormatter();
-
-		if (rootCause != null)
-		{
-			try
-			{
-				if (response.getStatus().code() < 400)
-				{
-					response.setStatus(HttpResponseStatus.INTERNAL_SERVER_ERROR);
-				}
-
-				rspFrm.formatResponse(request, response, rootCause);
-			}
-			catch (Throwable e)
-			{
-				log.error(e.getMessage(), e);
-			}
-		}
-	}
-
-	protected ResponseFormatter getResponseFormatter()
-	{
-		return defaultRspFmt;
 	}
 
 	protected void observeBegin(ChannelHandlerContext ctx, HttpRequest request, RequestObserver requestObserver)

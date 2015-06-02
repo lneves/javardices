@@ -7,14 +7,11 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.util.ReferenceCountUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.caudexorigo.concurrent.CustomExecutors;
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +31,6 @@ public class CacheAdapter extends HttpAction
 
 	public CacheAdapter(HttpAction wrapped, CacheKeyBuilder cacheKeyBuilder)
 	{
-		List<String> headers = new ArrayList<String>();
-
-		headers.add("Set-Cookie");
-
 		this.wrapped = wrapped;
 		this.cacheKeyBuilder = cacheKeyBuilder;
 	}
@@ -50,20 +43,21 @@ public class CacheAdapter extends HttpAction
 	@Override
 	protected void process(ChannelHandlerContext ctx, FullHttpRequest request, RequestObserver requestObserver)
 	{
-		observeBegin(ctx, request, requestObserver);
-		FullHttpResponse response;
-
 		if (request.getMethod().equals(HttpMethod.GET))
 		{
-			response = cachedProcess(ctx, request, requestObserver);
+			observeBegin(ctx, request, requestObserver);
+
+			FullHttpResponse response = cachedProcess(ctx, request, requestObserver);
+
+			boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
+			commitResponse(ctx, response, is_keep_alive);
+
+			observeEnd(ctx, request, response, requestObserver);
 		}
 		else
 		{
-			response = buildResponse(ctx);
-			wrappedProcess(ctx, request, response, requestObserver);
+			this.wrapped.process(ctx, request, requestObserver);
 		}
-
-		observeEnd(ctx, request, response, requestObserver);
 	}
 
 	private FullHttpResponse cachedProcess(ChannelHandlerContext ctx, FullHttpRequest request, RequestObserver requestObserver)
@@ -80,7 +74,19 @@ public class CacheAdapter extends HttpAction
 			log.debug("Cache miss for: {}", ck);
 
 			ReferenceCountUtil.retain(response);
-			wrappedProcess(ctx, request, response, requestObserver);
+
+			try
+			{
+				wrapped.service(ctx, request, response);
+			}
+			catch (Throwable t)
+			{
+				if (response != null)
+				{
+					ReferenceCountUtil.release(response);
+				}
+				throw new RuntimeException(t);
+			}
 
 			prepareResponse(request, response);
 
@@ -117,7 +123,6 @@ public class CacheAdapter extends HttpAction
 			response.headers().set(ncache, hit);
 
 			ReferenceCountUtil.retain(response);
-			doProcess(ctx, request, response);
 		}
 
 		return response;
@@ -130,7 +135,6 @@ public class CacheAdapter extends HttpAction
 			log.warn("netty bug 'response.content().readableBytes() == 0', pass-through");
 			return false;
 		}
-		
 
 		if (response.headers().contains(HttpHeaders.Names.SET_COOKIE))
 		{
@@ -165,29 +169,6 @@ public class CacheAdapter extends HttpAction
 	public FullHttpResponse removeCachedEntry(CacheKey ck)
 	{
 		return cachedContent.remove(ck);
-	}
-
-	private void wrappedProcess(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, RequestObserver requestObserver)
-	{
-		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
-		try
-		{
-			wrapped.service(ctx, request, response);
-		}
-		catch (Throwable ex)
-		{
-			handleError(ctx, request, ex, requestObserver);
-		}
-		finally
-		{
-			commitResponse(ctx, response, is_keep_alive);
-		}
-	}
-	
-	@Override
-	protected ResponseFormatter getResponseFormatter()
-	{
-		return this.wrapped.getResponseFormatter();
 	}
 
 	public void clear()

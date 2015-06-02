@@ -20,14 +20,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
-import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 import org.caudexorigo.text.UrlCodec;
 
 public class StaticFileAction extends HttpAction
@@ -36,22 +33,15 @@ public class StaticFileAction extends HttpAction
 	private final String rootDirectoryPath;
 
 	private final long cacheAge;
-	private ResponseFormatter rspFmt;
 
 	public StaticFileAction(URI rootPath)
 	{
-		this(rootPath, new StandardResponseFormatter(false));
+		this(rootPath, 0);
 	}
 
-	public StaticFileAction(URI rootPath, ResponseFormatter rspFmt)
-	{
-		this(rootPath, rspFmt, 0);
-	}
-
-	public StaticFileAction(URI rootPath, ResponseFormatter rspFmt, long cacheAge)
+	public StaticFileAction(URI rootPath, long cacheAge)
 	{
 		super();
-		this.rspFmt = rspFmt;
 		this.rootDirectory = new File(rootPath);
 		this.rootDirectoryPath = rootDirectory.getAbsolutePath();
 
@@ -275,11 +265,5 @@ public class StaticFileAction extends HttpAction
 	protected boolean isZeroCopy()
 	{
 		return true;
-	}
-
-	@Override
-	protected ResponseFormatter getResponseFormatter()
-	{
-		return rspFmt;
 	}
 }

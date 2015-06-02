@@ -24,12 +24,6 @@ public class ErrorAction extends HttpAction
 		_rspFmt.formatResponse(request, response, _ex);
 	}
 
-	@Override
-	protected ResponseFormatter getResponseFormatter()
-	{
-		return _rspFmt;
-	}
-
 	public WebException getError()
 	{
 		return _ex;

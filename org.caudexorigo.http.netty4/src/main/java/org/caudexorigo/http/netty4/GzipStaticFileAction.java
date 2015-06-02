@@ -8,8 +8,6 @@ import java.io.File;
 import java.net.URI;
 
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
-import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
 
 public class GzipStaticFileAction extends StaticFileAction
 {
@@ -22,17 +20,7 @@ public class GzipStaticFileAction extends StaticFileAction
 
 	public GzipStaticFileAction(URI rootPath, long cacheAge)
 	{
-		super(rootPath, new StandardResponseFormatter(false), cacheAge);
-	}
-
-	public GzipStaticFileAction(URI rootPath, ResponseFormatter rspFmt, long cacheAge)
-	{
-		super(rootPath, rspFmt, cacheAge);
-	}
-
-	public GzipStaticFileAction(URI rootPath, ResponseFormatter rspFmt)
-	{
-		super(rootPath, rspFmt);
+		super(rootPath, cacheAge);
 	}
 
 	@Override
