@@ -72,10 +72,4 @@ public class NettyWebJptAction extends HttpAction
 	{
 		return _templateURI;
 	}
-
-//	@Override
-//	protected ResponseFormatter getResponseFormatter()
-//	{
-//		return _rspFormatter;
-//	}
 }
