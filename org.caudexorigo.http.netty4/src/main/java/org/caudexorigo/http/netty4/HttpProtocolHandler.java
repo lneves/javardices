@@ -125,14 +125,12 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			HttpAction errorAction;
 			if (w instanceof WebException)
 			{
-				System.out.println("HttpProtocolHandler.handleRead(t instanceof WebException)");
 				WebException we = (WebException) w;
 				errorAction = new ErrorAction(we, _rspFmt);
 				eresponse.setStatus(HttpResponseStatus.valueOf(we.getHttpStatusCode()));
 			}
 			else
 			{
-				System.out.println("HttpProtocolHandler.handleRead(t not instanceof WebException)");
 				Throwable r = ErrorAnalyser.findRootCause(t);
 				errorAction = new ErrorAction(new WebException(r, HttpResponseStatus.INTERNAL_SERVER_ERROR.code()), _rspFmt);
 			}
