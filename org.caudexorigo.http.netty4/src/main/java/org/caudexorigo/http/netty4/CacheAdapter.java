@@ -7,6 +7,8 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.util.ReferenceCountUtil;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledExecutorService;
@@ -156,7 +158,7 @@ public class CacheAdapter extends HttpAction
 		// extension point
 	}
 
-	private void evict(final CacheKey ck)
+	private FullHttpResponse evict(final CacheKey ck)
 	{
 		log.debug("Evict entry '{}'", ck);
 		FullHttpResponse rsp = cachedContent.remove(ck);
@@ -164,15 +166,25 @@ public class CacheAdapter extends HttpAction
 		{
 			ReferenceCountUtil.release(rsp);
 		}
+		return rsp;
 	}
 
 	public FullHttpResponse removeCachedEntry(CacheKey ck)
 	{
-		return cachedContent.remove(ck);
+		return evict(ck);
 	}
 
 	public void clear()
 	{
+		Set<CacheKey> keys = new HashSet<CacheKey>();
+		keys.addAll(cachedContent.keySet());
+
+		for (CacheKey ck : keys)
+		{
+			evict(ck);
+		}
+
 		cachedContent.clear();
+		keys.clear();
 	}
 }
