@@ -49,7 +49,7 @@ public class Shutdown
 	public static void exitIfOOM(Throwable t)
 	{
 		Throwable r = ErrorAnalyser.findRootCause(t);
-		if (t instanceof OutOfMemoryError)
+		if (r instanceof OutOfMemoryError)
 		{
 			Shutdown.now(r);
 		}
