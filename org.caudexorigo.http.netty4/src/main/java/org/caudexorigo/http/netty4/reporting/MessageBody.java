@@ -20,6 +20,7 @@ public class MessageBody
 		status.put(206, true);
 		status.put(300, true);
 		status.put(301, true);
+		status.put(302, true);
 		status.put(303, true);
 		status.put(304, false);
 		status.put(305, true);
