@@ -181,7 +181,14 @@ public class CacheAdapter extends HttpAction
 
 		for (CacheKey ck : keys)
 		{
-			evict(ck);
+			try
+			{
+				evict(ck);
+			}
+			catch (Throwable t)
+			{
+				log.warn("Error on eviction: {}", t.getMessage());
+			}
 		}
 
 		cachedContent.clear();
