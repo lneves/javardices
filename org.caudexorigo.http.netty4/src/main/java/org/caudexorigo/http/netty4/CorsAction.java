@@ -6,8 +6,6 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
-import org.caudexorigo.http.netty4.HttpAction;
-
 public class CorsAction extends HttpAction
 {
 	@Override
@@ -15,6 +13,8 @@ public class CorsAction extends HttpAction
 	{
 		response.headers().add(HttpHeaders.Names.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 		response.headers().add(HttpHeaders.Names.ALLOW, "GET,HEAD,POST,OPTIONS");
+		response.headers().add(HttpHeaders.Names.ACCESS_CONTROL_ALLOW_HEADERS, "x-request-with, x-requested-with, content-type");
 		response.setStatus(HttpResponseStatus.OK);
+
 	}
 }
