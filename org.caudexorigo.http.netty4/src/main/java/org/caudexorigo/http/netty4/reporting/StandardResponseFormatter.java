@@ -1,5 +1,6 @@
 package org.caudexorigo.http.netty4.reporting;
 
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -26,13 +27,13 @@ public class StandardResponseFormatter implements ResponseFormatter
 	}
 
 	@Override
-	public void formatResponse(FullHttpRequest request, FullHttpResponse response)
+	public void formatResponse(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
-		formatResponse(request, response, null);
+		formatResponse(ctx, request, response, null);
 	}
 
 	@Override
-	public void formatResponse(FullHttpRequest request, FullHttpResponse response, Throwable error)
+	public void formatResponse(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, Throwable error)
 	{
 		if (MessageBody.allow(response.getStatus().code()))
 		{
