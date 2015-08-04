@@ -28,8 +28,7 @@ public class DefaultNettyContext implements NettyContext
 	private final Class<? extends DatagramChannel> _datagramChannelClass;
 
 	private final EventLoopGroup _bossEventLoopGroup;
-	private EventLoopGroup _workerEventLoopGroup;
-	private final Object mutex = new Object();
+	private final EventLoopGroup _workerEventLoopGroup;
 
 	private DefaultNettyContext()
 	{
@@ -93,22 +92,7 @@ public class DefaultNettyContext implements NettyContext
 	@Override
 	public EventLoopGroup getWorkerEventLoopGroup()
 	{
-		synchronized (mutex)
-		{
-			if (_workerEventLoopGroup == null)
-			{
-				if (Epoll.isAvailable())
-				{
-					_workerEventLoopGroup = new EpollEventLoopGroup();
-				}
-				else
-				{
-					_workerEventLoopGroup = new NioEventLoopGroup();
-				}
-			}
-
-			return _workerEventLoopGroup;
-		}
+		return _workerEventLoopGroup;
 	}
 
 	@Override
