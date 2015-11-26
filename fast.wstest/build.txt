@@ -1,0 +1,4 @@
+
+Maven command to build:
+
+mvn clean package assembly:single

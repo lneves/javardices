@@ -9,5 +9,4 @@ java \
 -Djava.net.preferIPv4Stack=true \
 -Djava.net.preferIPv6Addresses=false \
 -Dfile.encoding=UTF-8 \
--classpath "./target/lib/*" \
-wstest.srv.netty.NettyWSTestSrv
+-jar "./target/fast-wstest-1.0-SNAPSHOT-jar-with-dependencies.jar"
