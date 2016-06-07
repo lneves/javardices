@@ -9,9 +9,9 @@ import org.caudexorigo.http.netty4.NettyHttpServerCliArgs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NettyWSTestSrv
+public class Main
 {
-	private static Logger log = LoggerFactory.getLogger(NettyWSTestSrv.class);
+	private static Logger log = LoggerFactory.getLogger(Main.class);
 
 	public static void main(String[] args) throws Exception
 	{

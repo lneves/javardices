@@ -24,7 +24,6 @@ public class NettyWebJptAction extends HttpAction
 
 	public NettyWebJptAction(URI templateURI)
 	{
-
 		super();
 		_templateURI = templateURI;
 	}

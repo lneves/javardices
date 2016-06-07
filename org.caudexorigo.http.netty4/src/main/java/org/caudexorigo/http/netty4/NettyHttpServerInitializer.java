@@ -1,13 +1,13 @@
 package org.caudexorigo.http.netty4;
 
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
+
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
-
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
 
 public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel>
 {
@@ -42,15 +42,14 @@ public class NettyHttpServerInitializer extends ChannelInitializer<SocketChannel
 		int maxHeaderSize = 8192;
 		int maxChunkSize = 8192;
 
+		pipeline.addLast("http-encoder", new HttpResponseEncoder());
 		pipeline.addLast("http-decoder", new HttpRequestDecoder(maxInitialLineLength, maxHeaderSize, maxChunkSize, validate_headers));
 		pipeline.addLast("http-aggregator", new HttpObjectAggregator(maxContentLength));
-		pipeline.addLast("http-encoder", new HttpResponseEncoder());
 
 		// pipeline.addLast(new HttpServerCodec());
 		// pipeline.addLast(new HttpObjectAggregator(65536));
 		// pipeline.addLast(new ChunkedWriteHandler());
 
 		pipeline.addLast("http-protocol-handler", new HttpProtocolHandler(mapper, requestObserver, responseFormatter));
-
 	}
 }

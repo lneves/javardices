@@ -7,7 +7,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -99,7 +98,7 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 	{
 		if (is100ContinueExpected(request))
 		{
-			ctx.write(new DefaultHttpResponse(HTTP_1_1, CONTINUE));
+			ctx.writeAndFlush(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
 		}
 
 		try

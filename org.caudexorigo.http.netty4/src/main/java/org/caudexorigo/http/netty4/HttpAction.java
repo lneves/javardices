@@ -101,7 +101,6 @@ public abstract class HttpAction
 
 	void commitResponse(ChannelHandlerContext ctx, FullHttpResponse response, boolean is_keep_alive)
 	{
-
 		response.headers().set(CONTENT_LENGTH_ENTITY, String.valueOf(response.content().readableBytes()));
 		response.headers().set(DATE_ENTITY, HttpDateFormat.getCurrentHttpDate());
 

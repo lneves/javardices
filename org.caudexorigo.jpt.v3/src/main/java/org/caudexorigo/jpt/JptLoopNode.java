@@ -95,7 +95,7 @@ public class JptLoopNode extends JptParentNode
 	{
 		checkAllowed(context, loopVar);
 		for (int n = 0; n < items.length; n = n + increment)
-		{			
+		{
 			context.put(loopVar, items[n]);
 			context.put("$index", n + 1);
 			context.put("$length", items.length);
@@ -112,8 +112,6 @@ public class JptLoopNode extends JptParentNode
 		context.remove("$index");
 		context.remove("$length");
 	}
-
-
 
 	private void iteratorLoop(Map<String, Object> context, Writer out, Iterator items, int child_count, int increment, String loopVar, String pad) throws IOException
 	{
@@ -151,7 +149,6 @@ public class JptLoopNode extends JptParentNode
 		context.remove(loopVar);
 		context.remove("$index");
 		context.remove("$length");
-
 	}
 
 	private void iterableLoop(Map<String, Object> context, Writer out, Iterable items, int child_count, int increment, String loopVar, String pad) throws IOException

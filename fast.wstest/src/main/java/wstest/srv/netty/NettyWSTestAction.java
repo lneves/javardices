@@ -1,5 +1,18 @@
 package wstest.srv.netty;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import org.apache.commons.lang3.StringUtils;
+import org.caudexorigo.ErrorAnalyser;
+import org.caudexorigo.http.netty4.HttpAction;
+import org.caudexorigo.io.UnsynchronizedStringWriter;
+import org.jibx.runtime.JiBXException;
+import org.jibx.runtime.JiBXParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,20 +23,6 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-
-import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.ErrorAnalyser;
-import org.caudexorigo.http.netty4.HttpAction;
-import org.caudexorigo.io.StringBuilderWriter;
-import org.jibx.runtime.JiBXException;
-import org.jibx.runtime.JiBXParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import wstest.srv.IWSTest;
 import wstest.srv.WSTestImpl;
 import wstest.srv.actors.COfTestStruct;
@@ -159,7 +158,7 @@ public class NettyWSTestAction extends HttpAction
 
 	private static String buildStackTrace(Throwable ex)
 	{
-		StringBuilderWriter sw = new StringBuilderWriter();
+		UnsynchronizedStringWriter sw = new UnsynchronizedStringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		ex.printStackTrace(pw);
 		return sw.toString();

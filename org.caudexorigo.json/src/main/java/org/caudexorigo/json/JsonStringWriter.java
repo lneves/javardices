@@ -186,7 +186,7 @@ class JsonStringWriter extends Writer
 	/**
 	 * Return the string buffer itself.
 	 * 
-	 * @return StringBuffer holding the current buffer value.
+	 * @return StringBuilder holding the current buffer value.
 	 */
 	public StringBuilder getBuffer()
 	{

@@ -5,7 +5,6 @@ import java.io.Writer;
 
 public class UnsynchronizedStringWriter extends Writer
 {
-
 	private StringBuilder buf;
 
 	/**

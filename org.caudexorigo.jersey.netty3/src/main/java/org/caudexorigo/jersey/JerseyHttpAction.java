@@ -11,9 +11,7 @@ import org.glassfish.jersey.internal.PropertiesDelegate;
 import org.glassfish.jersey.server.ApplicationHandler;
 import org.glassfish.jersey.server.ContainerRequest;
 import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.server.internal.ConfigHelper;
 import org.glassfish.jersey.server.spi.Container;
-import org.glassfish.jersey.server.spi.ContainerLifecycleListener;
 import org.jboss.netty.buffer.ChannelBufferInputStream;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.http.HttpRequest;
@@ -26,7 +24,6 @@ public class JerseyHttpAction extends HttpAction implements Container
 	private static Logger log = LoggerFactory.getLogger(JerseyHttpAction.class);
 
 	public ApplicationHandler webappHandler;
-	private final ContainerLifecycleListener containerListener;
 	private final ResourceConfig resConf;
 
 	private final SecurityContext securityCtx;
@@ -37,7 +34,6 @@ public class JerseyHttpAction extends HttpAction implements Container
 		this.resConf = resConf;
 		this.securityCtx = securityCtx;
 
-		containerListener = ConfigHelper.getContainerLifecycleListener(webappHandler);
 		log.debug(String.format("new (%s, %s)", webappHandler.toString(), resConf.toString()));
 	}
 
@@ -82,8 +78,11 @@ public class JerseyHttpAction extends HttpAction implements Container
 	public void reload(ResourceConfig resConf)
 	{
 		log.debug("reload(JerseyHttpAction, ResourceConfig)");
-		webappHandler = new ApplicationHandler(resConf);
-		containerListener.onReload(this);
+
+		// webappHandler.onShutdown(this);
+		// webappHandler = new ApplicationHandler(resConf);
+		// webappHandler.onReload(this);
+		// webappHandler.onStartup(this);
 	}
 
 	@Override
@@ -91,4 +90,5 @@ public class JerseyHttpAction extends HttpAction implements Container
 	{
 		return webappHandler;
 	}
+
 }

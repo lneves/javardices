@@ -237,8 +237,9 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 	{
 
 		String macroName = macroParams.get("macro");
-		// System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
-		// System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
+//		System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
+//		System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
+//		System.out.println("JptNodeBuilder.prepareMacro.isInSlot: " + _isInSlot);
 
 		Document macro_doc = macroDocument.getDocument();
 		findSlotActorsInDocument(macroDocument);

@@ -23,6 +23,7 @@ import java.io.RandomAccessFile;
 import java.net.URI;
 import java.nio.file.Files;
 import java.util.Date;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.text.UrlCodec;
@@ -63,6 +64,13 @@ public class StaticFileAction extends HttpAction
 		long clen = file.length();
 
 		HttpResponse response = new DefaultHttpResponse(rsp.getProtocolVersion(), rsp.getStatus(), false);
+
+		Set<String> previousHeaders = rsp.headers().names();
+
+		for (String hname : previousHeaders)
+		{
+			response.headers().add(hname, rsp.headers().get(hname));
+		}
 
 		CharSequence ctype = getMimeType(request, file);
 
@@ -148,7 +156,8 @@ public class StaticFileAction extends HttpAction
 	{
 		try
 		{
-			// String req_path = StringUtils.substringBefore(request.getUri(), "?");
+			// String req_path = StringUtils.substringBefore(request.getUri(),
+			// "?");
 			// String abs_path = getFileAbsolutePath(file);
 			String ctype = Files.probeContentType(file.toPath());
 			if (StringUtils.isNotBlank(ctype))
