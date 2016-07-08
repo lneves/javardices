@@ -41,7 +41,7 @@ public class Main
 
 			log.info(String.format("Server Init: %nRoot Directory: %s%nHost: %s%nPort: %s%n", root_uri.toASCIIString(), host, port));
 
-			InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
+			InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.getDefaultFactory());
 			NettyHttpServer server = new NettyHttpServer();
 			server.setValidateHeaders(false);
 			server.setHost(host);
