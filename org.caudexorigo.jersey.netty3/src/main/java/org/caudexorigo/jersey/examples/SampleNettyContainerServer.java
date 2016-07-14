@@ -1,10 +1,12 @@
 package org.caudexorigo.jersey.examples;
 
-import org.caudexorigo.cli.CliFactory;
-import org.caudexorigo.http.netty.NettyHttpServerCliArgs;
+
 import org.caudexorigo.http.netty.NettyHttpServer;
+import org.caudexorigo.http.netty.NettyHttpServerCliArgs;
 import org.jboss.netty.logging.InternalLoggerFactory;
 import org.jboss.netty.logging.Slf4JLoggerFactory;
+
+import com.lexicalscope.jewel.cli.CliFactory;
 
 public class SampleNettyContainerServer
 {

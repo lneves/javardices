@@ -1,6 +1,6 @@
 package org.caudexorigo.http.netty;
 
-import org.caudexorigo.cli.Option;
+import com.lexicalscope.jewel.cli.Option;
 
 /**
  * Auxiliary interface that maps command line arguments.

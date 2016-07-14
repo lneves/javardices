@@ -70,6 +70,12 @@
 			<artifactId>netty</artifactId>
 			<version>3.9.9.Final</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.lexicalscope.jewelcli</groupId>
+			<artifactId>jewelcli</artifactId>
+			<version>RELEASE</version>
+		</dependency>
 
 	</dependencies>
 </project>
