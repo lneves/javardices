@@ -63,6 +63,12 @@
 			<artifactId>javassist</artifactId>
 			<version>RELEASE</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.lexicalscope.jewelcli</groupId>
+			<artifactId>jewelcli</artifactId>
+			<version>RELEASE</version>
+		</dependency>
 
 	</dependencies>
 </project>

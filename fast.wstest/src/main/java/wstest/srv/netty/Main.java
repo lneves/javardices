@@ -1,13 +1,14 @@
 package wstest.srv.netty;
 
-import io.netty.util.internal.logging.InternalLoggerFactory;
-import io.netty.util.internal.logging.Slf4JLoggerFactory;
-
-import org.caudexorigo.cli.CliFactory;
 import org.caudexorigo.http.netty4.NettyHttpServer;
 import org.caudexorigo.http.netty4.NettyHttpServerCliArgs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.lexicalscope.jewel.cli.CliFactory;
+
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Slf4JLoggerFactory;
 
 public class Main
 {
@@ -36,7 +37,7 @@ public class Main
 
 		final NettyHttpServerCliArgs cargs = CliFactory.parseArguments(NettyHttpServerCliArgs.class, args);
 
-		InternalLoggerFactory.setDefaultFactory(new Slf4JLoggerFactory());
+		InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.getDefaultFactory());
 		NettyHttpServer server = new NettyHttpServer();
 		server.setPort(cargs.getPort());
 		server.setHost(cargs.getHost());

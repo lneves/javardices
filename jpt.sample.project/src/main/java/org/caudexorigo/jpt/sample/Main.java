@@ -1,19 +1,20 @@
 package org.caudexorigo.jpt.sample;
 
-import io.netty.util.ResourceLeakDetector;
-import io.netty.util.ResourceLeakDetector.Level;
-import io.netty.util.internal.logging.InternalLoggerFactory;
-import io.netty.util.internal.logging.Slf4JLoggerFactory;
-
 import java.io.File;
 import java.net.URI;
 
 import org.caudexorigo.Shutdown;
-import org.caudexorigo.cli.CliFactory;
 import org.caudexorigo.http.netty4.NettyHttpServer;
 import org.caudexorigo.http.netty4.NettyHttpServerCliArgs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.lexicalscope.jewel.cli.CliFactory;
+
+import io.netty.util.ResourceLeakDetector;
+import io.netty.util.ResourceLeakDetector.Level;
+import io.netty.util.internal.logging.InternalLoggerFactory;
+import io.netty.util.internal.logging.Slf4JLoggerFactory;
 
 public class Main
 {
