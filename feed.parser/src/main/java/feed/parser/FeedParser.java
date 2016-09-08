@@ -13,13 +13,11 @@ import org.caudexorigo.text.DetectEncoding;
 public class FeedParser
 {
 	private final StaxParser staxParser;
-	private final DetectEncoding encDetector;
 
 	public FeedParser()
 	{
 		super();
 		staxParser = new StaxParser();
-		encDetector = new DetectEncoding("UTF-8");
 	}
 
 	public FeedChannel parse(Reader reader)
@@ -64,9 +62,12 @@ public class FeedParser
 	{
 		if (stream.markSupported())
 		{
-			stream.mark(500);
+			DetectEncoding encDetector = new DetectEncoding("UTF-8");
+			stream.mark(512);
 			String encoding = encDetector.detect(stream);
 			stream.reset();
+			encDetector.stripBOM(stream);
+
 			Reader reader = new InputStreamReader(stream, encoding);
 			return reader;
 		}

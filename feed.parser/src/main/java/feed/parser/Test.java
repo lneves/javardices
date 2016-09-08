@@ -16,12 +16,12 @@ public class Test
 		{
 			// String rss = IOUtils.toString(new FileInputStream("./tests/maissemanario.xml"), Charset.forName("UTF-8"));
 
-			URL oracle = new URL("http://globoesporte.globo.com/servico/semantica/editorias/plantao/feed.rss");
+			URL oracle = new URL("http://www.sport.fr/RSS/sport.xml");
 
 			FeedParser parser = new FeedParser();
 			FeedChannel feed = parser.parse(oracle.openStream(), true, true);
-			feed.addCategory("foo");
-			feed.addCategory("bar");
+			// feed.addCategory("foo");
+			// feed.addCategory("bar");
 
 			// System.out.println(feed);
 

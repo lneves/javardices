@@ -99,6 +99,8 @@ public class StaxParser
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/feedburner:origlink", new SimpleFeedEntryProcessor("origlink"));
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:category", new CategoryProcessor());
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:tag", new CategoryProcessor());
+		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:subject", new CategoryProcessor());
+		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:subtitle", new CategoryProcessor());
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/dc:subject", new CategoryProcessor());
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/dc:date", new SimpleFeedEntryProcessor("pubdate"));
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/dc:creator", new SimpleFeedEntryProcessor("author"));
