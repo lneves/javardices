@@ -18,9 +18,9 @@ public class GzipStaticFileAction extends StaticFileAction
 		super(rootPath);
 	}
 
-	public GzipStaticFileAction(URI rootPath, long cacheAge)
+	public GzipStaticFileAction(URI rootPath, long cacheDuration)
 	{
-		super(rootPath, cacheAge);
+		super(rootPath, cacheDuration);
 	}
 
 	@Override

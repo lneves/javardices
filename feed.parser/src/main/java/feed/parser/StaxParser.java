@@ -191,7 +191,7 @@ public class StaxParser
 			{
 				Throwable r = ErrorAnalyser.findRootCause(t);
 				log.error(r.getMessage(), r);
-				return new FeedChannel();
+				return new FeedChannel(stripHtml);
 			}
 		}
 	}

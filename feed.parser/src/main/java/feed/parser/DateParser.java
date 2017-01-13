@@ -67,7 +67,7 @@ public class DateParser
 
 			for (int i = 0; i < date_formaters.length; i++)
 			{
-				SimpleDateFormat sdf = new SimpleDateFormat(date_formats[i]);
+				SimpleDateFormat sdf = new SimpleDateFormat(date_formats[i], Locale.US);
 				sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 				date_formaters[i] = sdf;
 			}
@@ -140,7 +140,7 @@ public class DateParser
 
 	public static void main(String[] args)
 	{
-		Date d = parse("Thu, 01 Jan 2004 19:48:21 GMT");
+		Date d = parse("Thu, 01 Dez 2016 11:58:12 GMT");
 
 		if (d != null)
 		{

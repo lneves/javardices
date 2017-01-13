@@ -33,20 +33,20 @@ public class StaticFileAction extends HttpAction
 	private final File rootDirectory;
 	private final String rootDirectoryPath;
 
-	private final long cacheAge;
+	private final long cacheDuration;
 
 	public StaticFileAction(URI rootPath)
 	{
 		this(rootPath, 0);
 	}
 
-	public StaticFileAction(URI rootPath, long cacheAge)
+	public StaticFileAction(URI rootPath, long cacheDuration)
 	{
 		super();
 		this.rootDirectory = new File(rootPath);
 		this.rootDirectoryPath = rootDirectory.getAbsolutePath();
 
-		this.cacheAge = cacheAge;
+		this.cacheDuration = cacheDuration;
 
 		if (!rootDirectory.isDirectory() || !rootDirectory.canRead() || rootDirectory.isHidden())
 		{
@@ -92,10 +92,11 @@ public class StaticFileAction extends HttpAction
 		response.setStatus(HttpResponseStatus.OK);
 		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
 
-		if (cacheAge > 0)
+		if (cacheDuration > 0)
 		{
-			response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheAge));
+			response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheDuration));
 			response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
+			response.headers().set(HttpHeaders.Names.VARY, "Accept-Encoding");
 		}
 		String contentEncoding = getContentEncoding(request, file);
 

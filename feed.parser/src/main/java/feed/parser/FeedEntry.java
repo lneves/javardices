@@ -180,7 +180,9 @@ public class FeedEntry
 		return null;
 	}
 
-	private String getRawBody()
+	@JsonIgnore
+	@XmlTransient
+	public String getRawBody()
 	{
 		if (StringUtils.isNotBlank(attr.get("content:encoded")))
 		{

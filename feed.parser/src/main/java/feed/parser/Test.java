@@ -16,7 +16,7 @@ public class Test
 		{
 			// String rss = IOUtils.toString(new FileInputStream("./tests/maissemanario.xml"), Charset.forName("UTF-8"));
 
-			URL oracle = new URL("http://www.sport.fr/RSS/sport.xml");
+			URL oracle = new URL("http://sol.sapo.pt/feedsapo.xml");
 
 			FeedParser parser = new FeedParser();
 			FeedChannel feed = parser.parse(oracle.openStream(), true, true);
