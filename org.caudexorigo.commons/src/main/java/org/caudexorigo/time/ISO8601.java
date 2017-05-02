@@ -64,6 +64,7 @@ public class ISO8601
 		StringTokenizer st = new StringTokenizer(isodate, "-T:.+Z", true);
 
 		Calendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+		calendar.setLenient(false);
 		calendar.clear();
 		try
 		{
