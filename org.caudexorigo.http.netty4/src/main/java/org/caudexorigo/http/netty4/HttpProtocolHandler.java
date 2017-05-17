@@ -165,6 +165,6 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			}
 		}
 
-		return ex;
+		return ErrorAnalyser.findRootCause(ex);
 	}
 }
