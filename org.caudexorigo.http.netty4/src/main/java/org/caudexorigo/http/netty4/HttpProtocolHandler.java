@@ -3,6 +3,15 @@ package org.caudexorigo.http.netty4;
 import static io.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
 import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+
+import java.io.FileNotFoundException;
+
+import org.caudexorigo.ErrorAnalyser;
+import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
+import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -12,14 +21,6 @@ import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.ReferenceCountUtil;
-
-import java.io.FileNotFoundException;
-
-import org.caudexorigo.ErrorAnalyser;
-import org.caudexorigo.http.netty4.reporting.ResponseFormatter;
-import org.caudexorigo.http.netty4.reporting.StandardResponseFormatter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 {
@@ -125,6 +126,12 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 			if (w instanceof WebException)
 			{
 				WebException we = (WebException) w;
+				errorAction = new ErrorAction(we, _rspFmt);
+				eresponse.setStatus(HttpResponseStatus.valueOf(we.getHttpStatusCode()));
+			}
+			else if (w instanceof IllegalArgumentException)
+			{
+				WebException we = new WebException(w, HttpResponseStatus.BAD_REQUEST.code());
 				errorAction = new ErrorAction(we, _rspFmt);
 				eresponse.setStatus(HttpResponseStatus.valueOf(we.getHttpStatusCode()));
 			}
