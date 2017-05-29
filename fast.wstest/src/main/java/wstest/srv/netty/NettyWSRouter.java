@@ -1,10 +1,10 @@
 package wstest.srv.netty;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.FullHttpRequest;
-
 import org.caudexorigo.http.netty4.HttpAction;
 import org.caudexorigo.http.netty4.RequestRouter;
+
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.FullHttpRequest;
 
 public class NettyWSRouter implements RequestRouter
 {

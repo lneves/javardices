@@ -1,8 +1,9 @@
 
 package wstest.srv.actors;
 
-/** 
+/**
  * Schema fragment(s) for this class:
+ * 
  * <pre>
  * &lt;xs:element xmlns:ns="uri:WSTestWeb-TestService" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="EchoList">
  *   &lt;xs:complexType>
@@ -15,23 +16,25 @@ package wstest.srv.actors;
  */
 public class EchoList
 {
-    private TestNode list;
+	private TestNode list;
 
-    /** 
-     * Get the 'list' element value.
-     * 
-     * @return value
-     */
-    public TestNode getList() {
-        return list;
-    }
+	/**
+	 * Get the 'list' element value.
+	 * 
+	 * @return value
+	 */
+	public TestNode getList()
+	{
+		return list;
+	}
 
-    /** 
-     * Set the 'list' element value.
-     * 
-     * @param list
-     */
-    public void setList(TestNode list) {
-        this.list = list;
-    }
+	/**
+	 * Set the 'list' element value.
+	 * 
+	 * @param list
+	 */
+	public void setList(TestNode list)
+	{
+		this.list = list;
+	}
 }

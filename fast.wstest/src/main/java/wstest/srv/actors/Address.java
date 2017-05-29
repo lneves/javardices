@@ -1,8 +1,9 @@
 
 package wstest.srv.actors;
 
-/** 
+/**
  * Schema fragment(s) for this class:
+ * 
  * <pre>
  * &lt;xs:complexType xmlns:ns="uri:WSTestWeb-TestService" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="Address">
  *   &lt;xs:sequence>
@@ -19,137 +20,151 @@ package wstest.srv.actors;
  */
 public class Address
 {
-    private String firstName;
-    private String lastName;
-    private String address1;
-    private String address2;
-    private String city;
-    private String state;
-    private String zip;
+	private String firstName;
+	private String lastName;
+	private String address1;
+	private String address2;
+	private String city;
+	private String state;
+	private String zip;
 
-    /** 
-     * Get the 'FirstName' element value.
-     * 
-     * @return value
-     */
-    public String getFirstName() {
-        return firstName;
-    }
+	/**
+	 * Get the 'FirstName' element value.
+	 * 
+	 * @return value
+	 */
+	public String getFirstName()
+	{
+		return firstName;
+	}
 
-    /** 
-     * Set the 'FirstName' element value.
-     * 
-     * @param firstName
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	/**
+	 * Set the 'FirstName' element value.
+	 * 
+	 * @param firstName
+	 */
+	public void setFirstName(String firstName)
+	{
+		this.firstName = firstName;
+	}
 
-    /** 
-     * Get the 'LastName' element value.
-     * 
-     * @return value
-     */
-    public String getLastName() {
-        return lastName;
-    }
+	/**
+	 * Get the 'LastName' element value.
+	 * 
+	 * @return value
+	 */
+	public String getLastName()
+	{
+		return lastName;
+	}
 
-    /** 
-     * Set the 'LastName' element value.
-     * 
-     * @param lastName
-     */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	/**
+	 * Set the 'LastName' element value.
+	 * 
+	 * @param lastName
+	 */
+	public void setLastName(String lastName)
+	{
+		this.lastName = lastName;
+	}
 
-    /** 
-     * Get the 'Address1' element value.
-     * 
-     * @return value
-     */
-    public String getAddress1() {
-        return address1;
-    }
+	/**
+	 * Get the 'Address1' element value.
+	 * 
+	 * @return value
+	 */
+	public String getAddress1()
+	{
+		return address1;
+	}
 
-    /** 
-     * Set the 'Address1' element value.
-     * 
-     * @param address1
-     */
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
+	/**
+	 * Set the 'Address1' element value.
+	 * 
+	 * @param address1
+	 */
+	public void setAddress1(String address1)
+	{
+		this.address1 = address1;
+	}
 
-    /** 
-     * Get the 'Address2' element value.
-     * 
-     * @return value
-     */
-    public String getAddress2() {
-        return address2;
-    }
+	/**
+	 * Get the 'Address2' element value.
+	 * 
+	 * @return value
+	 */
+	public String getAddress2()
+	{
+		return address2;
+	}
 
-    /** 
-     * Set the 'Address2' element value.
-     * 
-     * @param address2
-     */
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
+	/**
+	 * Set the 'Address2' element value.
+	 * 
+	 * @param address2
+	 */
+	public void setAddress2(String address2)
+	{
+		this.address2 = address2;
+	}
 
-    /** 
-     * Get the 'City' element value.
-     * 
-     * @return value
-     */
-    public String getCity() {
-        return city;
-    }
+	/**
+	 * Get the 'City' element value.
+	 * 
+	 * @return value
+	 */
+	public String getCity()
+	{
+		return city;
+	}
 
-    /** 
-     * Set the 'City' element value.
-     * 
-     * @param city
-     */
-    public void setCity(String city) {
-        this.city = city;
-    }
+	/**
+	 * Set the 'City' element value.
+	 * 
+	 * @param city
+	 */
+	public void setCity(String city)
+	{
+		this.city = city;
+	}
 
-    /** 
-     * Get the 'State' element value.
-     * 
-     * @return value
-     */
-    public String getState() {
-        return state;
-    }
+	/**
+	 * Get the 'State' element value.
+	 * 
+	 * @return value
+	 */
+	public String getState()
+	{
+		return state;
+	}
 
-    /** 
-     * Set the 'State' element value.
-     * 
-     * @param state
-     */
-    public void setState(String state) {
-        this.state = state;
-    }
+	/**
+	 * Set the 'State' element value.
+	 * 
+	 * @param state
+	 */
+	public void setState(String state)
+	{
+		this.state = state;
+	}
 
-    /** 
-     * Get the 'Zip' element value.
-     * 
-     * @return value
-     */
-    public String getZip() {
-        return zip;
-    }
+	/**
+	 * Get the 'Zip' element value.
+	 * 
+	 * @return value
+	 */
+	public String getZip()
+	{
+		return zip;
+	}
 
-    /** 
-     * Set the 'Zip' element value.
-     * 
-     * @param zip
-     */
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
+	/**
+	 * Set the 'Zip' element value.
+	 * 
+	 * @param zip
+	 */
+	public void setZip(String zip)
+	{
+		this.zip = zip;
+	}
 }

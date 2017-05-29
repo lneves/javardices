@@ -1,8 +1,9 @@
 
 package wstest.srv.actors;
 
-/** 
+/**
  * Schema fragment(s) for this class:
+ * 
  * <pre>
  * &lt;xs:element xmlns:ns="uri:WSTestWeb-TestService" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="EchoSyntheticResponse">
  *   &lt;xs:complexType>
@@ -15,23 +16,25 @@ package wstest.srv.actors;
  */
 public class EchoSyntheticResponse
 {
-    private Synthetic echoSyntheticResult;
+	private Synthetic echoSyntheticResult;
 
-    /** 
-     * Get the 'EchoSyntheticResult' element value.
-     * 
-     * @return value
-     */
-    public Synthetic getEchoSyntheticResult() {
-        return echoSyntheticResult;
-    }
+	/**
+	 * Get the 'EchoSyntheticResult' element value.
+	 * 
+	 * @return value
+	 */
+	public Synthetic getEchoSyntheticResult()
+	{
+		return echoSyntheticResult;
+	}
 
-    /** 
-     * Set the 'EchoSyntheticResult' element value.
-     * 
-     * @param echoSyntheticResult
-     */
-    public void setEchoSyntheticResult(Synthetic echoSyntheticResult) {
-        this.echoSyntheticResult = echoSyntheticResult;
-    }
+	/**
+	 * Set the 'EchoSyntheticResult' element value.
+	 * 
+	 * @param echoSyntheticResult
+	 */
+	public void setEchoSyntheticResult(Synthetic echoSyntheticResult)
+	{
+		this.echoSyntheticResult = echoSyntheticResult;
+	}
 }

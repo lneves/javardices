@@ -18,6 +18,6 @@ public class SoapFault
 	@Override
 	public String toString()
 	{
-		return "SoapFault [faultCode=" + faultCode + ", faultString=" + faultString + "]";
+		return String.format("SoapFault [faultCode=%s, faultString=%s]", faultCode, faultString);
 	}
 }

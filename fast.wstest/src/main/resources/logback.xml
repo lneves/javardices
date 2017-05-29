@@ -10,7 +10,7 @@
 	<logger level="error" additivity="false" name="org.apache">
 		<appender-ref ref="ConsoleAppender" />
 	</logger>
-	
+
 
 	<root level="info">
 		<appender-ref ref="ConsoleAppender" />
