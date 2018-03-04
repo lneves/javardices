@@ -98,6 +98,8 @@ public class JptLoopNode extends JptParentNode
 		{
 			context.put(loopVar, items[n]);
 			context.put("$index", n + 1);
+			context.put("$index$even", ((n + 1) % 2 == 0));
+			context.put("$index$odd", ((n + 1) % 2 != 0));
 			context.put("$length", items.length);
 			for (int i = 0; i < child_count; i++)
 			{
@@ -110,6 +112,8 @@ public class JptLoopNode extends JptParentNode
 
 		context.remove(loopVar);
 		context.remove("$index");
+		context.remove("$index$even");
+		context.remove("$index$odd");
 		context.remove("$length");
 	}
 
@@ -133,6 +137,8 @@ public class JptLoopNode extends JptParentNode
 			{
 				context.put(loopVar, item);
 				context.put("$index", index);
+				context.put("$index$even", (index % 2 == 0));
+				context.put("$index$odd", (index % 2 != 0));
 				context.put("$length", len);
 
 				for (int i = 0; i < child_count; i++)
@@ -148,6 +154,8 @@ public class JptLoopNode extends JptParentNode
 
 		context.remove(loopVar);
 		context.remove("$index");
+		context.remove("$index$even");
+		context.remove("$index$odd");
 		context.remove("$length");
 	}
 
