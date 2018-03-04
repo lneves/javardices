@@ -6,12 +6,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.ParserContext;
 import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateCompiler;
 import org.mvel2.templates.TemplateRuntime;
+import org.unbescape.xml.XmlEscape;
 
 public class JptTemplateNode extends JptNode
 {
@@ -23,7 +23,7 @@ public class JptTemplateNode extends JptNode
 
 	JptTemplateNode(String template, boolean isInSlot)
 	{
-		_template = StringEscapeUtils.unescapeXml(template);
+		_template = XmlEscape.unescapeXml(template);
 
 		_isInSlot = isInSlot;
 	}

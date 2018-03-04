@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import nu.xom.Attribute;
-
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
+import org.unbescape.xml.XmlEscape;
+
+import nu.xom.Attribute;
 
 public class JptAttributeNode extends JptNode
 {
@@ -73,7 +73,7 @@ public class JptAttributeNode extends JptNode
 
 			if (StringUtils.isNotBlank(v))
 			{
-				String sout = StringEscapeUtils.escapeXml(v);
+				String sout = XmlEscape.escapeXml11(v);
 				out.write(SPACE, 0, 1);
 				out.write(_attribute_name, 0, _attribute_name.length);
 				out.write(EQUAL_SIGN, 0, 1);

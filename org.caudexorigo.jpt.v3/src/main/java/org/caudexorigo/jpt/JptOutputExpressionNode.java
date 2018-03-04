@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
+import org.unbescape.xml.XmlEscape;
 
 public class JptOutputExpressionNode extends JptNode
 {
@@ -91,7 +91,7 @@ public class JptOutputExpressionNode extends JptNode
 
 			result = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
 
-			String sout = escape ? StringEscapeUtils.escapeXml(result) : result;
+			String sout = escape ? XmlEscape.escapeXml11(result) : result;
 			out.write(sout);
 		}
 		catch (Throwable t)

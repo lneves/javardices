@@ -12,6 +12,7 @@ import nu.xom.Attribute;
 import org.apache.commons.lang3.StringUtils;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
+import org.unbescape.xml.XmlEscape;
 
 public class JptConditionalAttributeNode extends JptNode
 {
@@ -81,13 +82,13 @@ public class JptConditionalAttributeNode extends JptNode
 		boolean condition = (Boolean) MVEL.executeExpression(_condition_compiled_exp, context);
 
 		if (condition)
-		{
+		{ 
 			String sout = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
 			out.write(SPACE, 0, 1);
 			out.write(_attribute_name, 0, _attribute_name.length);
 			out.write(EQUAL_SIGN, 0, 1);
 			out.write(QUOTE, 0, 1);
-			out.write(sout);
+			out.write(XmlEscape.escapeXml11(sout));
 			out.write(QUOTE, 0, 1);
 		}
 	}
