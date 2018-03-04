@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.caudexorigo</groupId>
-	<artifactId>org-caudexorigo-json</artifactId>
+	<artifactId>libsvm</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>org-caudexorigo-json</name>
-	<description>utilities library</description>
+	<name>libsvm</name>
+	<description>libsvm: maven ready</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -25,21 +25,18 @@
 		</plugins>
 	</build>
 
-	<dependencies>
+	<repositories>
+		<repository>
+			<id>personal-cloudpt</id>
+			<name>Personal Repo</name>
+			<url>https://cld.pt/dl/download/9e76a086-067a-4adc-900f-5f7fdc756136/m2repo/</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>[2.8.6,2.8.99]</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.module</groupId>
-			<artifactId>jackson-module-afterburner</artifactId>
-			<version>[2.8.6,2.8.99]</version>
-		</dependency>
-
-	</dependencies>
 
 
 </project>

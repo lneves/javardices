@@ -1,15 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.caudexorigo</groupId>
-	<artifactId>feed-parser</artifactId>
+	<artifactId>org-caudexorigo-http-netty41</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>feed-parser</name>
-	<description>feed parser library</description>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	<name>org-caudexorigo-http-netty41</name>
+	<description>netty4.1 based http server</description>
 
 	<build>
 		<plugins>
@@ -48,15 +43,32 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.7.25</version>
+			<version>[1.7.25,1.7.99]</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-codec-http</artifactId>
+			<version>4.1.20.Final</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.caudexorigo</groupId>
+			<artifactId>org-caudexorigo-netty41</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>RELEASE</version>
 		</dependency>
 		
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
+			<groupId>com.lexicalscope.jewelcli</groupId>
+			<artifactId>jewelcli</artifactId>
 			<version>RELEASE</version>
 		</dependency>
-
+		
 	</dependencies>
-
 </project>
