@@ -9,7 +9,7 @@
 
 
 <table border="1" cellspacing="0" cellpadding="5" width="450">
-	<tr tal:repeat="var=person;source=$this.persons" bgcolor="#EEEBCC">
+	<tr tal:repeat="var=person;source=$this.persons" bgcolor="#EEEBCC" tal:conditional-attributes="class ($index%2==0) 'even'; class ($index%2!=0) 'odd'">
 		<td align="left" nowrap="nowrap" tal:content="person.age">age</td>
 		<td align="left" nowrap="nowrap" tal:content="person.name">name</td>
 		<td align="left" nowrap="nowrap" tal:content="$this.value">value</td>

@@ -10,7 +10,7 @@ import org.caudexorigo.jpt.JptInstanceBuilder;
 
 public class CustomerListRenderer
 {
-	
+
 	public static void main(String[] args)
 	{
 		try

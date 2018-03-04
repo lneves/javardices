@@ -3,4 +3,3 @@ package feed.parser;
 
 import javax.xml.bind.annotation.XmlNs;
 import javax.xml.bind.annotation.XmlSchema;
-

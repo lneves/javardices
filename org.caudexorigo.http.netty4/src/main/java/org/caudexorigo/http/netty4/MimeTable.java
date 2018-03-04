@@ -188,6 +188,8 @@ public class MimeTable
 		TABLE.put("eot", HttpHeaders.newEntity("application/vnd.ms-fontobject"));
 		TABLE.put("ttf", HttpHeaders.newEntity("application/x-font-ttf"));
 		TABLE.put("woff", HttpHeaders.newEntity("application/octet-stream"));
+		TABLE.put("woff2", HttpHeaders.newEntity("application/font-woff2"));
+
 		TABLE.put("json", HttpHeaders.newEntity("application/json"));
 	}
 

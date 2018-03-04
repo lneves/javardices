@@ -66,8 +66,8 @@ public class JptAttributeNode extends JptNode
 				// Compile the expression.
 				_compiled_exp = MVEL.compileExpression(_attr_exp, parser_context);
 			}
-			
-			//System.err.println(String.format("attribute expression: '%s';%n\tcontext: %s", _attr_exp, context));
+
+			// System.err.println(String.format("attribute expression: '%s';%n\tcontext: %s", _attr_exp, context));
 
 			String v = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
 

@@ -33,7 +33,7 @@ public class SimpleContext2
 
 		return p;
 	}
-	
+
 	public String getSalut()
 	{
 		return "Hello <strong>World</strong>!";

@@ -14,9 +14,8 @@ public class FieldTest
 		{
 			BeanInfo info = Introspector.getBeanInfo(SimpleContext.class);
 			PropertyDescriptor[] pds = info.getPropertyDescriptors();
-			
-			
-			for (PropertyDescriptor	 x : pds)
+
+			for (PropertyDescriptor x : pds)
 			{
 				System.out.println(x.getName());
 			}

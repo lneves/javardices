@@ -28,6 +28,7 @@ public class JptFunctions
 		StringBuilder sb = new StringBuilder();
 		Formatter formmater = new Formatter(sb);
 		formmater.format("%tFT%<tT%<tz", System.currentTimeMillis());
+		formmater.close();
 		return sb.toString();
 	}
 
@@ -47,6 +48,7 @@ public class JptFunctions
 		StringBuilder sb = new StringBuilder();
 		Formatter formmater = new Formatter(sb);
 		formmater.format(pattern, value);
+		formmater.close();
 		return sb.toString();
 	}
 
@@ -55,6 +57,7 @@ public class JptFunctions
 		StringBuilder sb = new StringBuilder();
 		Formatter formmater = new Formatter(sb, locale);
 		formmater.format(pattern, value);
+		formmater.close();
 		return sb.toString();
 	}
 

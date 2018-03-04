@@ -12,19 +12,19 @@ public class AtomLink
 		this.href = href;
 	}
 
-	@XmlAttribute(name="href")
+	@XmlAttribute(name = "href")
 	public String getHref()
 	{
 		return href;
 	}
 
-	@XmlAttribute(name="type")
+	@XmlAttribute(name = "type")
 	public String getType()
 	{
 		return "application/rss+xml";
 	}
-	
-	@XmlAttribute(name="rel")
+
+	@XmlAttribute(name = "rel")
 	public String getRel()
 	{
 		return "self";

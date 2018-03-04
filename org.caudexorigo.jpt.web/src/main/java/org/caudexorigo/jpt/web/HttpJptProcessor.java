@@ -21,7 +21,7 @@ public interface HttpJptProcessor
 	public OutputStream getOutputStream() throws IOException;
 
 	public String getParameter(String p_name);
-	
+
 	public List<String> getParameters(String name);
 
 	public Map<String, List<String>> getParameters();
@@ -39,10 +39,10 @@ public interface HttpJptProcessor
 	public void setSessionValue(String attr_name, Object value);
 
 	public void setStatus(int statusCode);
-	
+
 	public int getStatus();
-	
+
 	public InetSocketAddress getClientLocalAddress();
-	
+
 	public InetSocketAddress getClientRemoteAddress();
 }

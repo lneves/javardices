@@ -119,11 +119,7 @@ public class UrlCodec
 	/**
 	 * Translates a string into <code>application/x-www-form-urlencoded</code> format using a specific encoding scheme. This method uses the supplied encoding scheme to obtain the bytes for unsafe characters.
 	 * <p>
-	 * <em><strong>Note:</strong> The <a href=
-	 * "http://www.w3.org/TR/html40/appendix/notes.html#non-ascii-chars">
-	 * World Wide Web Consortium Recommendation</a> states that
-	 * UTF-8 should be used. Not doing so may introduce
-	 * incompatibilites.</em>
+	 * <em><strong>Note:</strong> The <a href= "http://www.w3.org/TR/html40/appendix/notes.html#non-ascii-chars"> World Wide Web Consortium Recommendation</a> states that UTF-8 should be used. Not doing so may introduce incompatibilites.</em>
 	 * 
 	 * @param s
 	 *            <code>String</code> to be translated.

@@ -48,5 +48,5 @@ public class Person
 	public String toString()
 	{
 		return String.format("Person [age=%s, name=%s, getSubItems()=%s]", age, name, getSubItems());
-	}	
+	}
 }

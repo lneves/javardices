@@ -103,7 +103,7 @@ public abstract class JptParentNode extends JptNode
 	{
 		return true;
 	}
-	
+
 	protected void checkAllowed(Map<String, Object> context, String variable)
 	{
 		if (context.get(variable) != null)

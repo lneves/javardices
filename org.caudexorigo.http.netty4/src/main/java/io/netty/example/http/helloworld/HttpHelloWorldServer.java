@@ -65,7 +65,7 @@ public class HttpHelloWorldServer
 			boolean isARM = StringUtils.contains(os_arch, "arm");
 
 			ServerBootstrap b = new ServerBootstrap();
-			
+
 			if (isARM)
 			{
 				b.childOption(ChannelOption.ALLOCATOR, new UnpooledByteBufAllocator(false));

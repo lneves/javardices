@@ -82,7 +82,7 @@ public class HttpDateFormat
 			currentHTTPDate = HttpHeaders.newEntity(dateFormat.format(new Date(currentTime)));
 		}
 		return currentHTTPDate;
-	} 
+	}
 
 	private String getDate(Date d)
 	{

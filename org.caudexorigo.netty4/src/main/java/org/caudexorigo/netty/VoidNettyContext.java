@@ -21,7 +21,7 @@ public class VoidNettyContext implements NettyContext
 	private final Class<? extends ServerChannel> _serverChannelClass;
 	private final Class<? extends Channel> _channelClass;
 	private final Class<? extends DatagramChannel> _datagramChannelClass;
-	
+
 	public VoidNettyContext()
 	{
 		super();

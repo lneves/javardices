@@ -23,25 +23,25 @@ public class ErrorTemplates
 		{
 			log.error("Failed to load error template", e);
 			DEFAULT_TEMPLATE = "";
-		};
+		}
+		;
 	}
-	
-	private static Map<Integer, String> templates = new HashMap<Integer, String>(); 
-	
+
+	private static Map<Integer, String> templates = new HashMap<Integer, String>();
+
 	private static String DEFAULT_TEMPLATE;
 
-	
 	public static String getTemplate(int code)
 	{
 		String template = templates.get(code);
 		return (template != null) ? template : DEFAULT_TEMPLATE;
 	}
-	
+
 	public static void setTemplate(int code, String template)
 	{
 		templates.put(code, template);
 	}
-	
+
 	public static void setTemplateFromFile(int code, String fileLocation)
 	{
 		try
@@ -51,7 +51,7 @@ public class ErrorTemplates
 		}
 		catch (Exception e)
 		{
-			log.error(String.format("Error trying to read file '%s' for code %s.", fileLocation, code) );
+			log.error(String.format("Error trying to read file '%s' for code %s.", fileLocation, code));
 		}
 	}
 }

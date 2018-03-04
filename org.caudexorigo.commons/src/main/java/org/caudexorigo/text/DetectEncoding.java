@@ -118,10 +118,10 @@ public class DetectEncoding
 			// must be read to tell which code page is in use)
 			new Magic("EBCDIC", false, (byte) 0x4C, (byte) 0x6F, (byte) 0xA7, (byte) 0x94),
 
-	// Other UTF-8 without an encoding declaration, or else the
-	// data stream is mislabeled (lacking a required encoding
-	// declaration), corrupt, fragmentary, or enclosed in a
-	// wrapper of some kind
+			// Other UTF-8 without an encoding declaration, or else the
+			// data stream is mislabeled (lacking a required encoding
+			// declaration), corrupt, fragmentary, or enclosed in a
+			// wrapper of some kind
 	};
 
 	static Map<String, String> encoding_map = getEncodingMap();

@@ -237,9 +237,9 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 	{
 
 		String macroName = macroParams.get("macro");
-//		System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
-//		System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
-//		System.out.println("JptNodeBuilder.prepareMacro.isInSlot: " + _isInSlot);
+		// System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
+		// System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
+		// System.out.println("JptNodeBuilder.prepareMacro.isInSlot: " + _isInSlot);
 
 		Document macro_doc = macroDocument.getDocument();
 		findSlotActorsInDocument(macroDocument);
@@ -329,7 +329,9 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 	private void processTalConditionalAttributes(Element el)
 	{
-		Attribute attribute = XomUtils.getAttribute(el, "tal:conditionalAttributes");
+		Attribute attribute0 = XomUtils.getAttribute(el, "tal:conditional-attributes");
+		Attribute attribute1 = XomUtils.getAttribute(el, "tal:conditionalAttributes");
+		Attribute attribute = coalesce(attribute0, attribute1);
 		if (attribute != null)
 		{
 			el.removeAttribute(attribute);

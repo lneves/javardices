@@ -19,6 +19,7 @@
 	<option tal:conditionalAttributes="selected false 'selected'" value="4">Selected value</option>
 	<!-- Supports multiple conditional attributes. If no condition is present (b case) then the attribute is rendered -->
 	<option tal:conditionalAttributes="a true 'a'; b 'b'; c false 'c'" value="4">Selected value</option>
+	<option tal:conditional-attributes="a true 'a'; b 'b'; c false 'c'" value="4">Selected value</option>
 </select>
 
 </body>

@@ -55,7 +55,7 @@ public class HttpSslContext
 
 		kmf.init(keyStore, KEYPW);
 
-		//javax.net.ssl.SSLContext sslContext = javax.net.ssl.SSLContext.getInstance("SSLv3");
+		// javax.net.ssl.SSLContext sslContext = javax.net.ssl.SSLContext.getInstance("SSLv3");
 		javax.net.ssl.SSLContext sslContext = javax.net.ssl.SSLContext.getInstance("TLS");
 
 		sslContext.init(kmf.getKeyManagers(), null, null);

@@ -13,7 +13,7 @@ public class JptConstants
 	public static final String TAL_NS_URI = "http://xml.zope.org/namespaces/tal";
 
 	public static final XPathContext XPATH_CTX;
-	
+
 	static
 	{
 		XPATH_CTX = new XPathContext();

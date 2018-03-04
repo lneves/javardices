@@ -47,5 +47,4 @@ public class SimpleContext
 		return String.format("SimpleContext [calue()=%s, link()=%s, cssLink()=%s, boolt()=%s, persons()=%s, title()=%s]", getValue(), getLink(), getCssLink(), isBoolt(), Arrays.toString(getPersons()), getTitle());
 	}
 
-
 }

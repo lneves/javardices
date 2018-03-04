@@ -77,4 +77,9 @@ public class JptInstance
 	{
 		return _dependecies;
 	}
+
+	public JptDocument getJptDocument()
+	{
+		return _jptDocument;
+	}
 }

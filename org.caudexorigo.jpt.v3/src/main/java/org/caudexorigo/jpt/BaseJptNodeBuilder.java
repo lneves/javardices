@@ -1,5 +1,7 @@
 package org.caudexorigo.jpt;
 
+import java.util.Objects;
+
 import nu.xom.Attribute;
 import nu.xom.Comment;
 import nu.xom.DocType;
@@ -141,6 +143,18 @@ public class BaseJptNodeBuilder
 	private boolean isJptNs(String uri)
 	{
 		return (uri.equals("http://xml.zope.org/namespaces/tal") || uri.equals("http://xml.zope.org/namespaces/metal") || uri.equals("http://xml.zope.org/namespaces/metal/append-to-slot"));
+	}
+
+	protected static <T> T coalesce(T... values)
+	{
+		for (T v : values)
+		{
+			if (Objects.nonNull(v))
+			{
+				return v;
+			}
+		}
+		return null;
 	}
 
 	protected void process(Attribute attribute)
