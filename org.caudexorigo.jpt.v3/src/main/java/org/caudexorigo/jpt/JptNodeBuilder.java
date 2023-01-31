@@ -1,6 +1,7 @@
 package org.caudexorigo.jpt;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayDeque;
@@ -9,16 +10,13 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Node;
-import nu.xom.ParsingException;
-import nu.xom.ValidityException;
-
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.xom.XomDocumentBuilder;
-import org.caudexorigo.xom.XomUtils;
+import org.caudexorigo.nu.xom.Attribute;
+import org.caudexorigo.nu.xom.Document;
+import org.caudexorigo.nu.xom.Element;
+import org.caudexorigo.nu.xom.Node;
+import org.caudexorigo.nu.xom.ParsingException;
+import org.caudexorigo.nu.xom.ValidityException;
 
 public class JptNodeBuilder extends BaseJptNodeBuilder
 {
@@ -46,17 +44,20 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 	private Map<String, Element> slotAppenders = new HashMap<String, Element>();
 
-	private boolean _isInSlot = false;;
+	private boolean _isInSlot = false;
 
-	public JptNodeBuilder()
+	private final JptConfiguration _jptConf;;
+
+	public JptNodeBuilder(JptConfiguration jptConf)
 	{
-		this(new StringBuilder());
+		this(jptConf, new StringBuilder());
 	}
 
-	private JptNodeBuilder(StringBuilder sb)
+	private JptNodeBuilder(JptConfiguration jptConf, StringBuilder sb)
 	{
 		super(sb);
 		_sb = sb;
+		_jptConf = jptConf;
 	}
 
 	public JptDocument getJptDocument()
@@ -235,12 +236,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 
 	private void prepareMacro(URI muri, Document macroDocument, Node useMacroNode, String macroPath, Map<String, String> macroParams) throws ValidityException, ParsingException, IOException
 	{
-
 		String macroName = macroParams.get("macro");
-		// System.out.println("JptNodeBuilder.prepareMacro.macroName: " + macroName);
-		// System.out.println("JptNodeBuilder.prepareMacro.macroPath: " + macroPath);
-		// System.out.println("JptNodeBuilder.prepareMacro.isInSlot: " + _isInSlot);
-
 		Document macro_doc = macroDocument.getDocument();
 		findSlotActorsInDocument(macroDocument);
 		prepareSlotsActorsInDocument();
@@ -321,7 +317,7 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			{
 				Attribute tal_attribute = aattribute1[k];
 
-				JptAttributeNode jattr = new JptAttributeNode(tal_attribute, _isInSlot);
+				JptAttributeNode jattr = new JptAttributeNode(tal_attribute, _isInSlot, _jptConf.escapeOutput());
 				((JptParentNode) pnodes.peek()).appendChild(jattr);
 			}
 		}
@@ -500,11 +496,11 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			JptOutputExpressionNode jout;
 			if (el.getBaseURI().equals(APPEND_SLOT_NS))
 			{
-				jout = new JptOutputExpressionNode(attribute.getValue(), true);
+				jout = new JptOutputExpressionNode(attribute.getValue(), true, _jptConf.escapeOutput());
 			}
 			else
 			{
-				jout = new JptOutputExpressionNode(attribute.getValue(), _isInSlot);
+				jout = new JptOutputExpressionNode(attribute.getValue(), _isInSlot, _jptConf.escapeOutput());
 			}
 
 			((JptParentNode) pnodes.peek()).appendChild(jout);
@@ -537,17 +533,29 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 		if (attribute != null)
 		{
 			el.removeAttribute(attribute);
-			String use_macro_value = attribute.getValue();
-			URI macroURI = _templateUri.resolve(use_macro_value);
-			// String macroName = extractMacroName(macroURI.getQuery());
-			String macroPath = macroURI.getPath();
+			String macroPath = attribute.getValue();
 			URI macroUri = _templateUri.resolve(macroPath);
-			Dependency d = new Dependency(macroUri);
-			_dependecies.add(d);
 
-			Map<String, String> macroParams = extractMacroParams(macroURI.getRawQuery());
-			Document document_macro = XomDocumentBuilder.getDocument(macroUri);
-			prepareMacro(macroURI, document_macro, el, macroPath, macroParams);
+			InputStream in;
+			if ("jar".equals(_templateUri.getScheme()))
+			{
+				String surrogatePath = StringUtils.substringAfterLast(_templateUri.toString(), "!");
+				URI surrogateTemplateUri = URI.create("file://".concat(surrogatePath));
+				URI surrogateMacroUri = surrogateTemplateUri.resolve(macroPath);
+				String classLoaderPath = surrogateMacroUri.getPath();
+				in = getClass().getResourceAsStream(classLoaderPath);
+			}
+			else
+			{
+				URI noQueryUri = URI.create(StringUtils.substringBeforeLast(macroUri.toString(), "?"));
+				Dependency d = new Dependency(noQueryUri);
+				_dependecies.add(d);
+				in = macroUri.toURL().openStream();
+			}
+
+			Map<String, String> macroParams = extractMacroParams(macroUri.getRawQuery());
+			Document document_macro = XomDocumentBuilder.getDocument(in);
+			prepareMacro(macroUri, document_macro, el, macroPath, macroParams);
 		}
 	}
 
@@ -579,7 +587,6 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 				}
 			}
 		}
-
 	}
 
 	private void processMetalDefineSlot(Element el) throws ValidityException, ParsingException, IOException
@@ -660,11 +667,11 @@ public class JptNodeBuilder extends BaseJptNodeBuilder
 			JptOutputExpressionNode jout;
 			if (el.getBaseURI().equals(APPEND_SLOT_NS))
 			{
-				jout = new JptOutputExpressionNode(attribute.getValue(), true);
+				jout = new JptOutputExpressionNode(attribute.getValue(), true, _jptConf.escapeOutput());
 			}
 			else
 			{
-				jout = new JptOutputExpressionNode(attribute.getValue(), _isInSlot);
+				jout = new JptOutputExpressionNode(attribute.getValue(), _isInSlot, _jptConf.escapeOutput());
 			}
 
 			// JptOutputExpressionNode jout = new

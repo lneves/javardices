@@ -1,16 +1,10 @@
 package org.caudexorigo.jpt;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.Writer;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.ErrorAnalyser;
-import org.mvel2.MVEL;
-import org.mvel2.ParserContext;
 import org.unbescape.xml.XmlEscape;
 
 public class JptOutputExpressionNode extends JptNode
@@ -20,37 +14,41 @@ public class JptOutputExpressionNode extends JptNode
 
 	private boolean _isInSlot;
 
-	private Serializable _compiled_exp;
-
 	private final boolean escape;
+	private final JptExpression jptExpression;
 
-	private String _evaluation_exp;
+//	JptOutputExpressionNode(String jptExp, boolean isInSlot)
+//	{
+//		this(jptExp, isInSlot, true);
+//	}
 
-	JptOutputExpressionNode(String jpt_exp, boolean isInSlot)
+	JptOutputExpressionNode(String jptExp, boolean isInSlot, boolean escapeContent)
 	{
-		_isInSlot = isInSlot;
-
-		if (StringUtils.isBlank(jpt_exp))
+		if (StringUtils.isBlank(jptExp))
 		{
 			throw new IllegalArgumentException("tal expression can not be blank");
 		}
 
-		_evaluation_exp = jpt_exp;
+		_isInSlot = isInSlot;
 
-		if (jpt_exp.startsWith(TEXT))
+		String _evaluation_exp = jptExp;
+
+		if (jptExp.startsWith(TEXT))
 		{
 			escape = true;
-			_evaluation_exp = jpt_exp.substring(TEXT.length());
+			_evaluation_exp = jptExp.substring(TEXT.length());
 		}
-		else if (jpt_exp.startsWith(STRUCTURE))
+		else if (jptExp.startsWith(STRUCTURE))
 		{
 			escape = false;
-			_evaluation_exp = jpt_exp.substring(STRUCTURE.length());
+			_evaluation_exp = jptExp.substring(STRUCTURE.length());
 		}
 		else
 		{
-			escape = true;
+			escape = escapeContent;
 		}
+
+		jptExpression = new JptExpression(_evaluation_exp);
 	}
 
 	public int getChildCount()
@@ -70,34 +68,18 @@ public class JptOutputExpressionNode extends JptNode
 			throw new IllegalArgumentException("render context can not be null");
 		}
 
-		String result = null;
-
 		try
 		{
-			if (_compiled_exp == null)
-			{
-				ParserContext parser_context = ParserContext.create();
+			String result = jptExpression.evalAsString(context);
 
-				Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-				for (Entry<String, Object> entry : ctx_entries)
-				{
-					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-				}
-				// Compile the expression.
-				_compiled_exp = MVEL.compileExpression(_evaluation_exp, parser_context);
-
-			}
-
-			result = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
-
-			String sout = escape ? XmlEscape.escapeXml11(result) : result;
+			String sout = escape ? XmlEscape.escapeXml10(result) : result;
 			out.write(sout);
 		}
 		catch (Throwable t)
 		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			throw new RuntimeException(String.format("Error processing JptOutputExpressionNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", _evaluation_exp, context, r.getMessage()));
+			Throwable r = findRootCause(t);
+			String emsg = String.format("Error processing JptOutputExpressionNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", jptExpression.getExpression(), context, r.getMessage());
+			throw new RuntimeException(emsg);
 		}
 	}
 

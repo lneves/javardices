@@ -3,7 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
 <head>
 <title>Test for "tal:content"</title>
+<style type="text/css">
+	/*<![CDATA[*/
+xpto {
+	color: #333333;
+	line-height: 150%;
+}
+	/*]]>*/
+</style>
 </head>
+<script></script>
+<script tal:content="''"></script>
+<hr />
 <body>
 <h2>Test for "tal:content"</h2>
 <div>

@@ -104,6 +104,18 @@ public class HttpProtocolHandler extends ChannelInboundHandlerAdapter
 
 		try
 		{
+			if (request.getDecoderResult().isFailure())
+			{
+				if (request.getDecoderResult().cause() != null)
+				{
+					throw new WebException(request.getDecoderResult().cause(), HttpResponseStatus.BAD_REQUEST.code());
+				}
+				else
+				{
+					throw new WebException(new IllegalArgumentException(), HttpResponseStatus.BAD_REQUEST.code());
+				}
+			}
+			
 			HttpAction action = _requestMapper.map(ctx, request);
 
 			if (action != null)

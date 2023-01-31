@@ -1,42 +1,44 @@
 package org.caudexorigo.jpt;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.ErrorAnalyser;
-import org.mvel2.MVEL;
-import org.mvel2.ParserContext;
+import org.caudexorigo.nu.xom.Attribute;
 import org.unbescape.xml.XmlEscape;
-
-import nu.xom.Attribute;
 
 public class JptAttributeNode extends JptNode
 {
-	private String _attr_exp;
+	private static final char QUOTE = '"';
 
-	private char[] _attribute_name;
-
-	private static final char[] EQUAL_SIGN = "=".toCharArray();
-
-	private static final char[] QUOTE = "\"".toCharArray();
-
-	private static final char[] SPACE = " ".toCharArray();
+	private final char[] attributePrefix;
 
 	private boolean _isInSlot;
 
-	private Serializable _compiled_exp;
+	private final JptExpression jptExpression;
 
-	JptAttributeNode(Attribute attribute, boolean isInSlot)
+	private final boolean _escapeContent;
+
+	JptAttributeNode(Attribute attribute, boolean isInSlot, boolean escapeContent)
 	{
 		_isInSlot = isInSlot;
+		_escapeContent = escapeContent;
 
-		_attribute_name = attribute.getQualifiedName().toCharArray();
-		_attr_exp = attribute.getValue().replace("\'", "\"").trim();
+		String attributeName = attribute.getQualifiedName();
+		String attrExp = attribute.getValue().replace("\'", "\"").trim();
+
+		attributePrefix = (new StringBuilder())
+				.append(" ")
+				.append(attributeName)
+				.append("=")
+				.append(QUOTE).toString().toCharArray();
+
+		jptExpression = new JptExpression(attrExp);
+
 	}
 
 	public int getChildCount()
@@ -53,39 +55,22 @@ public class JptAttributeNode extends JptNode
 	{
 		try
 		{
-			if (_compiled_exp == null)
+			String result = jptExpression.evalAsString(context);
+
+			if (StringUtils.isNotBlank(result))
 			{
-				ParserContext parser_context = ParserContext.create();
+				String sout = _escapeContent ? XmlEscape.escapeXml10Attribute(result) : result;
 
-				Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-				for (Entry<String, Object> entry : ctx_entries)
-				{
-					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-				}
-				// Compile the expression.
-				_compiled_exp = MVEL.compileExpression(_attr_exp, parser_context);
-			}
-
-			// System.err.println(String.format("attribute expression: '%s';%n\tcontext: %s", _attr_exp, context));
-
-			String v = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
-
-			if (StringUtils.isNotBlank(v))
-			{
-				String sout = XmlEscape.escapeXml11(v);
-				out.write(SPACE, 0, 1);
-				out.write(_attribute_name, 0, _attribute_name.length);
-				out.write(EQUAL_SIGN, 0, 1);
-				out.write(QUOTE, 0, 1);
+				out.write(attributePrefix, 0, attributePrefix.length);
 				out.write(sout);
-				out.write(QUOTE, 0, 1);
+				out.write(QUOTE);
 			}
 		}
 		catch (Throwable t)
 		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			throw new RuntimeException(String.format("Error processing JptAttributeNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", _attr_exp, context, r.getMessage()));
+			Throwable r = findRootCause(t);
+			String emsg = String.format("Error processing JptAttributeNode:%nexpression: '%s';%ncontext: %s;%nmessage: '%s'", jptExpression.getExpression(), context, r.getMessage());
+			throw new RuntimeException(emsg);
 		}
 	}
 

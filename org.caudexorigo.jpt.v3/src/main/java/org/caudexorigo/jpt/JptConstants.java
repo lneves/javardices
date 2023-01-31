@@ -1,6 +1,6 @@
 package org.caudexorigo.jpt;
 
-import nu.xom.XPathContext;
+import org.caudexorigo.nu.xom.XPathContext;
 
 public class JptConstants
 {
@@ -12,12 +12,13 @@ public class JptConstants
 
 	public static final String TAL_NS_URI = "http://xml.zope.org/namespaces/tal";
 
-	public static final XPathContext XPATH_CTX;
+	public static final XPathContext XPATH_CTX = buildXapthCtx();
 
-	static
+	private static XPathContext buildXapthCtx()
 	{
-		XPATH_CTX = new XPathContext();
-		XPATH_CTX.addNamespace("tal", "http://xml.zope.org/namespaces/tal");
-		XPATH_CTX.addNamespace("metal", "http://xml.zope.org/namespaces/metal");
+		XPathContext xctx = new XPathContext();
+		xctx.addNamespace("tal", "http://xml.zope.org/namespaces/tal");
+		xctx.addNamespace("metal", "http://xml.zope.org/namespaces/metal");
+		return xctx;
 	}
 }

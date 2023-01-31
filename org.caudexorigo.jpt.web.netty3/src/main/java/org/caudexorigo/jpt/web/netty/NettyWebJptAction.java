@@ -21,6 +21,7 @@ public class NettyWebJptAction extends HttpAction
 {
 	private static final int[] NO_CONTENT_STATUS_CODES = new int[] { 204, 205, 301, 302, 303, 304, 305, 307 }; // code values must be ordered
 	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+	private static final JptConfiguration jptConf = JptConfiguration.fromFile("/jpt.config");
 
 	private final URI _templateURI;
 	private final StandardResponseFormatter _rspFormatter;
@@ -28,7 +29,7 @@ public class NettyWebJptAction extends HttpAction
 
 	public NettyWebJptAction(URI templateURI)
 	{
-		this(templateURI, JptConfiguration.fullErrors());
+		this(templateURI, jptConf.fullErrors());
 	}
 
 	public NettyWebJptAction(URI templateURI, boolean showFullErrorInfo)

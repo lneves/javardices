@@ -37,7 +37,8 @@ public class XorShift extends Random
 	}
 
 	/**
-	 * Sets the seed for this pseudo random number generator. As described above, two instances of the same random class, starting with the same seed, produce the same results, if the same methods are called.
+	 * Sets the seed for this pseudo random number generator. As described above, two instances of the same random class, starting with the same seed,
+	 *  produce the same results, if the same methods are called.
 	 * 
 	 * @param s
 	 *            the new seed
@@ -57,7 +58,8 @@ public class XorShift extends Random
 	}
 
 	/**
-	 * Implementation of George Marsaglia's elegant Xorshift random generator 30% faster and better quality than the built-in java.util.random see also see http://www.javamex.com/tutorials/random_numbers/xorshift.shtml
+	 * Implementation of George Marsaglia's elegant Xorshift random generator 30% faster and better quality than the built-in java.util.random,
+	 *  see also see http://www.javamex.com/tutorials/random_numbers/xorshift.shtml
 	 */
 	protected int next(int nbits)
 	{

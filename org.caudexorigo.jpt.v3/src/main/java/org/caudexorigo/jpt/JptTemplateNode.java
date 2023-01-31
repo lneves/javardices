@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.caudexorigo.ErrorAnalyser;
 import org.mvel2.ParserContext;
 import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateCompiler;
@@ -57,8 +56,9 @@ public class JptTemplateNode extends JptNode
 		}
 		catch (Throwable t)
 		{
-			Throwable r = ErrorAnalyser.findRootCause(t);
-			throw new RuntimeException(String.format("Error processing template:%ncontext: %s;%nmessage: '%s'", context, r.getMessage()));
+			Throwable r = findRootCause(t);
+			String emsg = String.format("Error processing template:%ncontext: %s;%nmessage: '%s'", context, r.getMessage());
+			throw new RuntimeException(emsg);
 		}
 
 		String sout = String.valueOf(TemplateRuntime.execute(_compiled_template, context));

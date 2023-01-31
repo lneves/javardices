@@ -34,7 +34,7 @@ public class RandomUtils
 	/**
 	 * An instance of {@link JVMRandom}.
 	 */
-	public static final Random JVM_RANDOM = new JVMRandom();
+	public static final Random JVM_RANDOM = new Random();
 
 	// should be possible for JVM_RANDOM?
 	// public static void nextBytes(byte[]) {

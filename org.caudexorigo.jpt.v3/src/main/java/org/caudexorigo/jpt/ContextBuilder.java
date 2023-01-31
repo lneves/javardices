@@ -2,10 +2,9 @@ package org.caudexorigo.jpt;
 
 import java.util.HashMap;
 
-import nu.xom.Document;
-import nu.xom.ProcessingInstruction;
-
 import org.apache.commons.lang3.StringUtils;
+import org.caudexorigo.nu.xom.Document;
+import org.caudexorigo.nu.xom.ProcessingInstruction;
 
 public class ContextBuilder
 {
@@ -24,7 +23,7 @@ public class ContextBuilder
 		HashMap<String, String> _processingInstructions = new HashMap<String, String>();
 		for (int i = 0; i < doc.getChildCount(); i++)
 		{
-			nu.xom.Node child = doc.getChild(i);
+			org.caudexorigo.nu.xom.Node child = doc.getChild(i);
 			if (!(child instanceof ProcessingInstruction))
 				continue;
 			ProcessingInstruction pi = (ProcessingInstruction) child;

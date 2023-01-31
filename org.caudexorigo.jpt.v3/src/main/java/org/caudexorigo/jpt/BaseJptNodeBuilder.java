@@ -1,23 +1,41 @@
 package org.caudexorigo.jpt;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-import nu.xom.Attribute;
-import nu.xom.Comment;
-import nu.xom.DocType;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Node;
-import nu.xom.ParentNode;
-import nu.xom.ProcessingInstruction;
-import nu.xom.Text;
-import nu.xom.XMLException;
+import org.caudexorigo.nu.xom.Attribute;
+import org.caudexorigo.nu.xom.Comment;
+import org.caudexorigo.nu.xom.DocType;
+import org.caudexorigo.nu.xom.Document;
+import org.caudexorigo.nu.xom.Element;
+import org.caudexorigo.nu.xom.Node;
+import org.caudexorigo.nu.xom.ParentNode;
+import org.caudexorigo.nu.xom.ProcessingInstruction;
+import org.caudexorigo.nu.xom.Text;
+import org.caudexorigo.nu.xom.XMLException;
 
 public class BaseJptNodeBuilder
 {
+	private final Set<String> allowSelfClosing = new HashSet<>();
+
 	public BaseJptNodeBuilder(StringBuilder sb)
 	{
 		_buffer = sb;
+
+		allowSelfClosing.add("area");
+		allowSelfClosing.add("base");
+		allowSelfClosing.add("basefont");
+		allowSelfClosing.add("br");
+		allowSelfClosing.add("col");
+		allowSelfClosing.add("frame");
+		allowSelfClosing.add("hr");
+		allowSelfClosing.add("img");
+		allowSelfClosing.add("input");
+		allowSelfClosing.add("isindex");
+		allowSelfClosing.add("link");
+		allowSelfClosing.add("meta");
+		allowSelfClosing.add("param");
 	}
 
 	public void process(Document doc)
@@ -43,6 +61,7 @@ public class BaseJptNodeBuilder
 			hasRealChildren = true;
 			break;
 		}
+
 		if (hasRealChildren)
 		{
 			processStartTag(element);
@@ -55,7 +74,15 @@ public class BaseJptNodeBuilder
 		}
 		else
 		{
-			processEmptyElementTag(element);
+			if (allowSelfClosing.contains(element.getLocalName()))
+			{
+				processEmptyElementTag(element);
+			}
+			else
+			{
+				processStartTag(element);
+				processEndTag(element);
+			}
 		}
 	}
 

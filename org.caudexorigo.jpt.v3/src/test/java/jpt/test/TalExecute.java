@@ -5,7 +5,6 @@ import java.io.Writer;
 import java.net.URI;
 
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.Shutdown;
 import org.caudexorigo.jpt.JptInstance;
 import org.caudexorigo.jpt.JptInstanceBuilder;
 
@@ -30,7 +29,17 @@ public class TalExecute
 		}
 		catch (Throwable t)
 		{
-			Shutdown.now(t);
+			findRootCause(t).printStackTrace();
 		}
+	}
+
+	private static Throwable findRootCause(Throwable ex)
+	{
+		Throwable error_ex = new Exception(ex);
+		while (error_ex.getCause() != null)
+		{
+			error_ex = error_ex.getCause();
+		}
+		return error_ex;
 	}
 }

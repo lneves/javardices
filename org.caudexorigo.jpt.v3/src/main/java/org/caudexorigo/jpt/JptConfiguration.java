@@ -1,109 +1,140 @@
 package org.caudexorigo.jpt;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathFactory;
+
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 public class JptConfiguration
 {
-
-	private static final Logger log = LoggerFactory.getLogger(JptConfiguration.class);
-
-	private static final String CONFIG_FILE = "/jpt.config";
-
 	private static final boolean DEFAULT_CHECK_MODIFIED = true;
 
 	private static final String DEFAULT_ENCODING = "UTF-8";
 
 	private static final boolean DEFAULT_FULL_ERRORS = false;
 
-	private String _active_enviroment;
+	private static final boolean DEFAULT_ESCAPE_OUTPUT = true;
 
-	private boolean _check_modified;
+	public static final JptConfiguration DEFAULT_CONFIG = new JptConfiguration(DEFAULT_CHECK_MODIFIED, DEFAULT_FULL_ERRORS, DEFAULT_ESCAPE_OUTPUT, DEFAULT_ENCODING);
 
-	private boolean _full_errors;
+	public static final JptConfiguration DISABLE_OUTPUT_ESCAPING = new JptConfiguration(DEFAULT_CHECK_MODIFIED, DEFAULT_FULL_ERRORS, false, DEFAULT_ENCODING);
 
-	private String _encoding;
-
-	private String _xml_reader_class;
-
-	private static JptConfiguration instance = new JptConfiguration();
-
-	private JptConfiguration()
+	public static JptConfiguration fromFile(final String configPath)
 	{
 		try
 		{
-			_active_enviroment = textValueFromPath("/config/active-enviroment/text()");
-			_check_modified = Boolean.parseBoolean(textValueFromPath("/config/enviroment/" + _active_enviroment + "/check-modified/text()"));
-			_full_errors = Boolean.parseBoolean(textValueFromPath("/config/enviroment/" + _active_enviroment + "/full-errors/text()"));
-			_encoding = textValueFromPath("/config/enviroment/" + _active_enviroment + "/encoding/text()");
-			_encoding = StringUtils.isBlank(_encoding) ? DEFAULT_ENCODING : _encoding.trim();
-			_xml_reader_class = textValueFromPath("/config/enviroment/" + _active_enviroment + "/parser/text()");
+			InputSource sourceFile = new org.xml.sax.InputSource(JptConfiguration.class.getResourceAsStream(configPath));
+			DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = builderFactory.newDocumentBuilder();
+			Document xmlDocument = builder.parse(sourceFile);
+			XPath xPath = XPathFactory.newInstance().newXPath();
+
+			String activeEnviroment = textValueFromPath(xmlDocument, xPath, "/config/active-enviroment/text()");
+			boolean checkModified = tryParse(xmlDocument, xPath, "/config/enviroment/" + activeEnviroment + "/check-modified/text()", true);
+			boolean fullErrors = tryParse(xmlDocument, xPath, "/config/enviroment/" + activeEnviroment + "/full-errors/text()", true);
+			boolean escapeOutput = tryParse(xmlDocument, xPath, "/config/enviroment/" + activeEnviroment + "/escape-output/text()", true);
+			String encoding = textValueFromPath(xmlDocument, xPath, "/config/enviroment/" + activeEnviroment + "/encoding/text()");
+			encoding = StringUtils.isBlank(encoding) ? DEFAULT_ENCODING : encoding.trim();
+
+			JptConfiguration conf = new JptConfiguration(checkModified, fullErrors, escapeOutput, encoding);
+			conf.activeEnviroment = activeEnviroment;
+			return conf;
 		}
 		catch (Throwable t)
 		{
-			log.warn("Error reading configuration check your \"{}\" file. Detail: {}", CONFIG_FILE, t.getMessage());
-			_active_enviroment = "";
-			_check_modified = DEFAULT_CHECK_MODIFIED;
-			_encoding = DEFAULT_ENCODING;
-			_full_errors = DEFAULT_FULL_ERRORS;
-			_xml_reader_class = "";
+			String emsg = String.format("Error reading configuration from \"%s\". Detail: %s", configPath, ExceptionUtils.getRootCauseMessage(t));
+			throw new IllegalArgumentException(emsg);
 		}
 	}
 
-	private static String textValueFromPath(String pathExpression)
+	private static boolean tryParse(Document xmlDocument, XPath xPath, String expression, boolean defaultValue)
 	{
 		try
 		{
-			Object pad = new Object();
-			InputSource configFile = new org.xml.sax.InputSource(pad.getClass().getResourceAsStream(CONFIG_FILE));
-			// InputStream is = new FileInputStream(CONFIG_FILE);
-			// InputSource configFile = new org.xml.sax.InputSource(is);
-			if (configFile.getByteStream() == null)
+			String svalue = textValueFromPath(xmlDocument, xPath, expression);
+
+			if (StringUtils.isBlank(svalue))
 			{
-				throw new RuntimeException("file \"" + CONFIG_FILE + "\" not found in path.");
+				return defaultValue;
+			}
+			else
+			{
+				return Boolean.parseBoolean(svalue);
 			}
 
-			// 1. Instantiate an XPathFactory.
-			javax.xml.xpath.XPathFactory factory = javax.xml.xpath.XPathFactory.newInstance();
-			// 2. Use the XPathFactory to create a new XPath object
-			javax.xml.xpath.XPath xpath = factory.newXPath();
-			// 3. Compile an XPath string into an XPathExpression
-			javax.xml.xpath.XPathExpression expression = xpath.compile(pathExpression);
+		}
+		catch (Throwable t)
+		{
+			return defaultValue;
+		}
+	}
 
-			// 4. Evaluate the XPath expression on an input document
-			String result = expression.evaluate(configFile);
+	private static String textValueFromPath(Document xmlDocument, XPath xPath, String pathExpression)
+	{
+		try
+		{
+			String result = xPath.compile(pathExpression).evaluate(xmlDocument);
 			return result == null ? "" : result;
 		}
 		catch (Exception e)
 		{
-			throw new RuntimeException(String.format("Xpath:\"%s\" not found in document!", pathExpression), e);
+			throw new RuntimeException(e);
 		}
 	}
 
-	public static String active_enviroment()
+	public JptConfiguration(boolean checkModified, boolean fullErrors, boolean escapeOutput, String encoding)
 	{
-		return instance._active_enviroment;
+		super();
+		_checkModified = checkModified;
+		_fullErrors = fullErrors;
+		_escapeOutput = escapeOutput;
+		_encoding = encoding;
 	}
 
-	public static boolean checkModified()
+	private final boolean _checkModified;
+
+	private final boolean _fullErrors;
+
+	private final boolean _escapeOutput;
+
+	private final String _encoding;
+
+	private String activeEnviroment;
+
+	public boolean checkModified()
 	{
-		return instance._check_modified;
+		return _checkModified;
 	}
 
-	public static boolean fullErrors()
+	public boolean fullErrors()
 	{
-		return instance._full_errors;
+		return _fullErrors;
 	}
 
-	public static String encoding()
+	public boolean escapeOutput()
 	{
-		return instance._encoding;
+		return _escapeOutput;
 	}
 
-	public static String xmlReaderClass()
+	public String encoding()
 	{
-		return instance._xml_reader_class;
+		return _encoding;
 	}
+
+	public String getActiveEnviroment()
+	{
+		return StringUtils.defaultIfBlank(activeEnviroment, "");
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("JptConfiguration [activeEnviroment=%s, checkModified=%s, fullErrors=%s, escapeOutput=%s, encoding=%s]", activeEnviroment, _checkModified, _fullErrors, _escapeOutput, _encoding);
+	}
+
 }

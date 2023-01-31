@@ -15,8 +15,6 @@
 
 
 
-
-
 <nav tal:condition="context.persons != null" role="navigation" id="menu">
 	<a class="toggle l-hide s-show" href="/" data-target="#menu ul" data-kpi="menu,0,0">Servi&ccedil;os</a>
 	<ul class="center s-hide" data-kpi="menu,1,0">

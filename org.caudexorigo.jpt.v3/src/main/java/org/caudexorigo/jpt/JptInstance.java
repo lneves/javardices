@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.xom.XomDocumentBuilder;
 
 public class JptInstance
 {
@@ -16,9 +15,9 @@ public class JptInstance
 
 	private ArrayList<Dependency> _dependecies;
 
-	public JptInstance(URI templateUri)
+	public JptInstance(final JptConfiguration jptConf, URI templateUri)
 	{
-		nu.xom.Document doc;
+		org.caudexorigo.nu.xom.Document doc;
 		try
 		{
 			doc = XomDocumentBuilder.getDocument(templateUri);
@@ -27,7 +26,7 @@ public class JptInstance
 		{
 			throw new JptException(t);
 		}
-		JptNodeBuilder nbuilder = new JptNodeBuilder();
+		JptNodeBuilder nbuilder = new JptNodeBuilder(jptConf);
 		nbuilder.process(doc, templateUri);
 		_dependecies = nbuilder.getDependecies();
 
@@ -36,19 +35,19 @@ public class JptInstance
 		_jptDocument = nbuilder.getJptDocument();
 	}
 
-	public JptInstance(InputStream in_io, String resourcePath)
+	public JptInstance(final JptConfiguration jptConf, InputStream instream, String resourcePath)
 	{
-		nu.xom.Document doc;
+		org.caudexorigo.nu.xom.Document doc;
 		try
 		{
-			doc = XomDocumentBuilder.getDocument(in_io);
+			doc = XomDocumentBuilder.getDocument(instream);
 		}
 		catch (Exception e)
 		{
 			throw new JptException(e);
 		}
 		URI resourceUri = URI.create(resourcePath);
-		JptNodeBuilder nbuilder = new JptNodeBuilder();
+		JptNodeBuilder nbuilder = new JptNodeBuilder(jptConf);
 		nbuilder.process(doc, resourceUri);
 		_jptDocument = nbuilder.getJptDocument();
 	}

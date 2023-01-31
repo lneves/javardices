@@ -1,47 +1,52 @@
 package org.caudexorigo.jpt;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.Writer;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import nu.xom.Attribute;
 
 import org.apache.commons.lang3.StringUtils;
-import org.mvel2.MVEL;
-import org.mvel2.ParserContext;
+import org.caudexorigo.nu.xom.Attribute;
 import org.unbescape.xml.XmlEscape;
 
 public class JptConditionalAttributeNode extends JptNode
 {
-	private String _attr_exp;
-
-	private char[] _attribute_name;
-
-	private static final char[] EQUAL_SIGN = "=".toCharArray();
-
-	private static final char[] QUOTE = "\"".toCharArray();
-
-	private static final char[] SPACE = " ".toCharArray();
+	private static final char QUOTE = '"';
 
 	private boolean _isInSlot;
 
-	private Serializable _compiled_exp;
-
-	private Serializable _condition_compiled_exp;
-
 	private String[] new_attr_exps;
+
+	private final char[] attributePrefix;
+
+	private final JptExpression jptConditionExpression;
+
+	private final JptExpression jptExpression;
 
 	JptConditionalAttributeNode(Attribute attribute, boolean isInSlot)
 	{
 		_isInSlot = isInSlot;
 
-		_attribute_name = attribute.getQualifiedName().toCharArray();
-		_attr_exp = attribute.getValue().replace("\'", "\"").trim();
+		String attributeName = attribute.getQualifiedName();
+		String attrExp = attribute.getValue().replace("\'", "\"").trim();
 
-		new_attr_exps = StringUtils.split(_attr_exp, " ", 2);
+		new_attr_exps = StringUtils.split(attrExp, " ", 2);
+
+		attributePrefix = (new StringBuilder())
+				.append(' ')
+				.append(attributeName)
+				.append('=')
+				.append(QUOTE).toString().toCharArray();
+
+		if (new_attr_exps.length == 1)
+		{
+			jptConditionExpression = new JptExpression("true");
+			jptExpression = new JptExpression(attrExp);
+		}
+		else
+		{
+			jptConditionExpression = new JptExpression(new_attr_exps[0]);
+			jptExpression = new JptExpression(new_attr_exps[1]);
+		}
 	}
 
 	public int getChildCount()
@@ -56,40 +61,18 @@ public class JptConditionalAttributeNode extends JptNode
 
 	public void render(Map<String, Object> context, Writer out) throws IOException
 	{
-		if (_compiled_exp == null)
-		{
-			ParserContext parser_context = ParserContext.create();
-
-			Set<Entry<String, Object>> ctx_entries = context.entrySet();
-
-			for (Entry<String, Object> entry : ctx_entries)
-			{
-				parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-			}
-
-			if (new_attr_exps.length == 1)
-			{
-				_condition_compiled_exp = MVEL.compileExpression("true");
-				_compiled_exp = MVEL.compileExpression(_attr_exp, parser_context);
-			}
-			else
-			{
-				_condition_compiled_exp = MVEL.compileExpression(new_attr_exps[0]);
-				_compiled_exp = MVEL.compileExpression(new_attr_exps[1], parser_context);
-			}
-		}
-
-		boolean condition = (Boolean) MVEL.executeExpression(_condition_compiled_exp, context);
+		boolean condition = jptConditionExpression.evalAsBoolean(context);
 
 		if (condition)
-		{ 
-			String sout = String.valueOf(MVEL.executeExpression(_compiled_exp, context));
-			out.write(SPACE, 0, 1);
-			out.write(_attribute_name, 0, _attribute_name.length);
-			out.write(EQUAL_SIGN, 0, 1);
-			out.write(QUOTE, 0, 1);
-			out.write(XmlEscape.escapeXml11(sout));
-			out.write(QUOTE, 0, 1);
+		{
+			String sout = jptExpression.evalAsString(context);
+
+			if (StringUtils.isNotBlank(sout))
+			{
+				out.write(attributePrefix, 0, attributePrefix.length);
+				out.write(XmlEscape.escapeXml10Attribute(sout));
+				out.write(QUOTE);
+			}
 		}
 	}
 

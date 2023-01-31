@@ -3,8 +3,6 @@ package org.caudexorigo.jpt.web;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import org.caudexorigo.ErrorAnalyser;
-
 public class ErrorHandler
 {
 	private final Throwable _th;
@@ -13,7 +11,7 @@ public class ErrorHandler
 
 	public ErrorHandler(Throwable ex, String pagePath)
 	{
-		_th = ErrorAnalyser.findRootCause(ex);
+		_th = findRootCause(ex);
 		_pagePath = pagePath;
 	}
 
@@ -34,5 +32,15 @@ public class ErrorHandler
 		_th.printStackTrace(pw);
 		pw.flush();
 		return sw.toString();
+	}
+
+	private final Throwable findRootCause(Throwable ex)
+	{
+		Throwable error_ex = new Exception(ex);
+		while (error_ex.getCause() != null)
+		{
+			error_ex = error_ex.getCause();
+		}
+		return error_ex;
 	}
 }

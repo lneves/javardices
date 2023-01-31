@@ -21,7 +21,6 @@ public class JptDocument extends JptParentNode
 			JptNode jpt_node = getChild(i);
 
 			jpt_node.render(context, out);
-
 		}
 	}
 

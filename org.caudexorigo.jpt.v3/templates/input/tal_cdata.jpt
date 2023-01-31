@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<style type="text/css">
+	/*<![CDATA[Y*/
+xpto {
+	color: #333333;
+	line-height: 150%;
+}
+	/*W]]>*/
+</style>
+
+</html>

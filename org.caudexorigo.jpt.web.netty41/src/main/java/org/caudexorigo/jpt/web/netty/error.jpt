@@ -1,0 +1,73 @@
+<?jpt template-class="org.caudexorigo.jpt.web.ErrorHandler"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+	<head>
+		<title>JPT processing error</title>
+		<style>
+			body {font-family:sans-serif;font-weight:normal;font-size: .9em;color:black;background-color:#FFFFCC}
+			p {font-family:sans-serif;font-weight:normal;color:black;margin-top: -5px}
+			b {font-family:sans-serif;font-weight:bold;color:black;margin-top: -5px}
+			h1 { font-family:sans-serif;font-weight:normal;font-size:16pt;color:red }
+			h2 { font-family:sans-serif;font-weight:normal;font-size:14pt;color:maroon }
+			h3 { font-family:sans-serif;font-weight:normal;font-size:12pt;color:maroon }
+			pre {font-size: .9em}
+        </style>
+	</head>
+	<body>
+		<h1>
+			JPT processing error in
+			<span tal:content="$this.getPagePath()">getPagePath()</span>
+		</h1>
+		<h2 tal:content="$this.getExMessage()">getExMessage()</h2>
+		<pre tal:content="$this.getStackTrace()">stackTrace</pre>
+	</body>
+</html>
+
+<?jpt template-class="org.caudexorigo.jpt.web.ErrorHandler"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+	<head>
+		<title>Error Information</title>
+		<style>
+			<!--
+				h1 {color:white;background-color:#3300cc;font-size:22px;}
+				h2 {color:white;background-color:#3300cc;font-size:16px;}
+				h3 {color:white;background-color:#3300cc;font-size:14px;}
+				body {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;}
+				b {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#3300cc;}
+				p {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}
+				a {color : black;}
+				a.name {color : black;}
+				table {cellpadding:20;border-color:black;border-width:1px;border-style:solid;border-collapse:collapse}
+				td {border-width:1px;border-color:black;border-style:solid;color:black;font-size:12px;}
+				th {border-width:1px;border-color:black;border-style:solid;background-color:FF99FF;color:black;font-size:12px;}
+				hr {color : #3300cc;}
+
+			-->
+		</style>
+	</head>
+</body>
+	<h1>Failure Report</h1>
+	<h1>Response Status 404</h1>
+	<hr size="1" noshade="noshade" />
+	<p>
+		<table cellpadding="5">
+			<tr>
+				<th>Status Code</th>
+				<td>404</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>The requested resource (Not Found) could not be found.</td>
+			</tr>
+
+			<tr>
+				<th>Request Method</th>
+				<td>GET</td>
+			</tr>
+		</table>
+
+	</p>
+	<hr size="1" noshade="noshade" />

@@ -78,6 +78,7 @@ public class StaxParser
 		ns_aliases.put("http://www.w3.org/2000/01/rdf-schema#", "rdfs");
 		ns_aliases.put("http://www.w3.org/2003/01/geo/wgs84_pos#", "wgs84");
 		ns_aliases.put("http://www.w3.org/2005/atom", "atom");
+		ns_aliases.put("http://www.w3.org/2005/Atom", "Atom");
 		ns_aliases.put("http://www.w3.org/XML/1998/namespace", "xml");
 		ns_aliases.put("http://xmlns.com/foaf/0.1/", "foaf");
 		ns_aliases.put("http://search.yahoo.com/mrss/", "media");
@@ -96,6 +97,8 @@ public class StaxParser
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:description", new SimpleFeedEntryProcessor("body"));
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/atom:summary", new SimpleFeedEntryProcessor("body"));
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:link", new SimpleFeedEntryProcessor("link"));
+		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/atom:link", new AtomFeedChannelLinkProcessor("service.feed", "application/x.atom+xml"));
+		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/Atom:link", new RssFeedAtomLinkProcessor());
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/feedburner:origlink", new SimpleFeedEntryProcessor("origlink"));
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:category", new CategoryProcessor());
 		feed_entry_processors.put("/rss:rss/rss:channel/rss:item/rss:tag", new CategoryProcessor());
@@ -209,7 +212,7 @@ public class StaxParser
 			{
 				if (eventType == XMLStreamConstants.START_ELEMENT)
 				{
-					String ns = StringUtils.isBlank(staxXmlReader.getNamespaceURI()) ? "" : staxXmlReader.getNamespaceURI().toLowerCase();
+					String ns = StringUtils.isBlank(staxXmlReader.getNamespaceURI()) ? "" : staxXmlReader.getNamespaceURI();
 					String lname = staxXmlReader.getLocalName().toLowerCase();
 					String alias_prefix = ns_aliases.get(ns);
 

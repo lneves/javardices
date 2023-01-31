@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for "tal:content"</title>
+<style type="text/css">
+	/*@CDATA-BEGIN@*/
+xpto {
+	color: #333333;
+	line-height: 150%;
+}
+	/*@CDATA-END@*/
+</style>
+</head>
+<body>
+<h2>Test for "tal:content"</h2>
+<div>
+<p>String before</p>
+<p tal:content="$this.value">foo bar baz</p>
+<p>String after</p>
+</div>
+
+</body>
+</html>

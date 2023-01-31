@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
 
-import org.caudexorigo.ds.Cache;
-import org.caudexorigo.ds.CacheFiller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,20 +21,25 @@ public final class JptInstanceBuilder
 	{
 	}
 
-	private static final CacheFiller<URI, JptInstance> template_cache_listeners_cf = new CacheFiller<URI, JptInstance>()
-	{
-		public JptInstance populate(URI templateUri)
-		{
-			return new JptInstance(templateUri);
-		}
-	};
-
 	public static JptInstance getJptInstance(final URI templateUri)
+	{
+		return getJptInstance(JptConfiguration.DEFAULT_CONFIG, templateUri);
+	}
+
+	public static JptInstance getJptInstance(final JptConfiguration jptConf, final URI templateUri)
 	{
 		try
 		{
+			final CacheFiller<URI, JptInstance> template_cache_listeners_cf = new CacheFiller<URI, JptInstance>()
+			{
+				public JptInstance populate(URI templateUri)
+				{
+					return new JptInstance(jptConf, templateUri);
+				}
+			};
+
 			JptInstance t = instance.template_cache.get(templateUri, template_cache_listeners_cf);
-			boolean isStale = isStale(t);
+			boolean isStale = isStale(jptConf.checkModified(), t);
 			if (isStale)
 			{
 				// TODO: check the effect of multiple threads hitting this
@@ -60,14 +63,14 @@ public final class JptInstanceBuilder
 		}
 	}
 
-	public static JptInstance getJptInstance(final InputStream in_io, final String resourcePath)
+	public static JptInstance getJptInstance(JptConfiguration jptConf, final InputStream instream, final String resourcePath)
 	{
-		return new JptInstance(in_io, resourcePath);
+		return new JptInstance(jptConf, instream, resourcePath);
 	}
 
-	private static boolean isStale(JptInstance jpt)
+	private static boolean isStale(boolean checkModified, JptInstance jpt)
 	{
-		if (JptConfiguration.checkModified())
+		if (checkModified)
 		{
 			try
 			{

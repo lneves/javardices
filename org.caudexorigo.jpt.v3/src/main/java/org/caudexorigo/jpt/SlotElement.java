@@ -1,6 +1,6 @@
 package org.caudexorigo.jpt;
 
-import nu.xom.Element;
+import org.caudexorigo.nu.xom.Element;
 
 public class SlotElement
 {

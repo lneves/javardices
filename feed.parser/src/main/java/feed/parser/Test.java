@@ -16,7 +16,7 @@ public class Test
 		{
 			// String rss = IOUtils.toString(new FileInputStream("./tests/maissemanario.xml"), Charset.forName("UTF-8"));
 
-			URL oracle = new URL("http://sol.sapo.pt/feedsapo.xml");
+			URL oracle = new URL("https://www.sabado.pt/rss");
 
 			FeedParser parser = new FeedParser();
 			FeedChannel feed = parser.parse(oracle.openStream(), true, true);
@@ -29,13 +29,13 @@ public class Test
 			mapper.setSerializationInclusion(Include.NON_NULL);
 			mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-			String json_feed = mapper.writeValueAsString(feed);
+			//String json_feed = mapper.writeValueAsString(feed);
 
-			System.out.println(json_feed);
+			//System.out.println(json_feed);
 
-			FeedChannel feed_from_json = mapper.readValue(json_feed, FeedChannel.class);
+			//FeedChannel feed_from_json = mapper.readValue(json_feed, FeedChannel.class);
 
-			System.out.println(feed_from_json.toString());
+			feed.getEntries().forEach(e -> System.out.println(e.getLink()));
 
 			// JAXBContext jaxbContext = JAXBContext.newInstance(Rss.class);
 			// Marshaller jaxbMarshaller = jaxbContext.createMarshaller();

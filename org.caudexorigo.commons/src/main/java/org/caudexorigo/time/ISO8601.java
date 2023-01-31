@@ -256,7 +256,7 @@ public class ISO8601
 		return sdf_local.get().format(date);
 	}
 
-	public static void test(String isodate)
+	private static void test(String isodate)
 	{
 		System.out.println("----------------------------------");
 		try
@@ -274,7 +274,7 @@ public class ISO8601
 		System.out.println("----------------------------------");
 	}
 
-	public static void test(Date date)
+	private static void test(Date date)
 	{
 		String isodate = null;
 		System.out.println("----------------------------------");
@@ -305,6 +305,7 @@ public class ISO8601
 		test("1997-07-16T19:20:30.45-02:00");
 		test("1997-07-16T19:20:30+01:00");
 		test("1997-07-16T19:20:30+01:00");
+		test("1997-07-16T19:20:30");
 		test("1997-07-16T19:20");
 		test("1997-07-16");
 		test("1997-07");

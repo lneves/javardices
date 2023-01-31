@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<messages>
+
+
+    <message id="/index.jpt">
+        <locale language="en">
+            <entry key="fish">Fish</entry>
+            <entry key="dogs">Dogs</entry>
+            <entry key="reptiles">Reptiles</entry>
+            <entry key="cats">Cats</entry>
+			<entry key="birds">Birds</entry>
+            <entry key="fishBlurb">Saltwater, Freshwater</entry>
+            <entry key="dogsBlurb">Various Breeds</entry>
+            <entry key="reptilesBlurb">Lizards, Turtles, Snakes</entry>
+            <entry key="catsBlurb">Various Breeds, Exotic Varieties</entry>
+            <entry key="birdsBlurb">Exotic Varieties</entry>
+        </locale>
+       <locale language="pt">
+            <entry key="fish">Peixes</entry>
+            <entry key="dogs">Cães</entry>
+            <entry key="reptiles">Répteis</entry>
+            <entry key="cats">Gatos</entry>
+			<entry key="birds">Pássaros</entry>
+            <entry key="fishBlurb">Água Salgada, Água Doce</entry>
+            <entry key="dogsBlurb">Várias Raças</entry>
+            <entry key="reptilesBlurb">Lagartos, Tartarugas, Cobras</entry>
+            <entry key="catsBlurb">Várias Raças, Variedades Exóticas</entry>
+            <entry key="birdsBlurb">Variedades Exóticas</entry>
+        </locale>
+    </message>
+
+    <message id="/category.jpt">
+        <locale language="en">
+            <entry key="productId">Product Id</entry>
+            <entry key="name">Product Name</entry>
+        </locale>
+       <locale language="pt">
+            <entry key="productId">Producto Id</entry>
+            <entry key="name">Nome do Producto</entry>
+        </locale>
+    </message>
+
+    <message id="/product.jpt">
+        <locale language="en">
+            <entry key="itemId">Item Id</entry>
+            <entry key="name">Name</entry>
+            <entry key="unitCost">UnitCost</entry>
+            <entry key="addToCart">Add to cart</entry>
+        </locale>
+       <locale language="pt">
+            <entry key="itemId">Item Id</entry>
+            <entry key="name">Nome</entry>
+            <entry key="unitCost">Preço</entry>
+            <entry key="addToCart">Adicionar ao carrinho</entry>
+        </locale>
+    </message>
+
+    <message id="/macros/shell.jpt">
+        <locale language="en">
+			<entry key="searchQuestion">What are you looking for?</entry>
+			<entry key="buttonSearch">Search</entry>
+			<entry key="cartLink">Cart</entry>
+			<entry key="signinLink">SignIn</entry>
+			<entry key="signoutLink">SignOut</entry>
+			<entry key="myaccountLink">My Account</entry>
+			<entry key="helpLink">Help</entry>
+			<entry key="fishLink">Fish</entry>
+			<entry key="dogsLink">Dogs</entry>
+			<entry key="reptilesLink">Reptiles</entry>
+			<entry key="catsLink">Cats</entry>
+			<entry key="birdsLink">Birds</entry>
+        </locale>
+       <locale language="pt">
+			<entry key="searchQuestion">O que procura?</entry>
+			<entry key="buttonSearch">Pesquisa</entry>
+			<entry key="cartLink">Carrinho</entry>
+			<entry key="signinLink">Login</entry>
+			<entry key="signoutLink">Logout</entry>
+			<entry key="myaccountLink">A minha Conta</entry>
+			<entry key="helpLink">Ajuda</entry>
+			<entry key="fishLink">Peixe</entry>
+			<entry key="dogsLink">Cães</entry>
+			<entry key="reptilesLink">Répteis</entry>
+			<entry key="catsLink">Gatos</entry>
+			<entry key="birdsLink">Pássaros</entry>
+        </locale>
+    </message>
+
+</messages>

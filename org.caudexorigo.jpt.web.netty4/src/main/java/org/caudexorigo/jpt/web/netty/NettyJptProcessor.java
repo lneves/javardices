@@ -39,20 +39,25 @@ public class NettyJptProcessor implements HttpJptProcessor
 	private final ChannelHandlerContext ctx;
 
 	private final ParameterDecoder parameterDecoder;
-
+	
 	public NettyJptProcessor(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
 	{
-		this(ctx, request, response, false);
+		this(JptConfiguration.DEFAULT_CONFIG, ctx, request, response, false);
 	}
 
-	public NettyJptProcessor(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, boolean use_compression)
+	public NettyJptProcessor(JptConfiguration jptConf, ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
+	{
+		this(jptConf, ctx, request, response, false);
+	}
+
+	public NettyJptProcessor(JptConfiguration jptConf, ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response, boolean use_compression)
 	{
 		this.ctx = ctx;
 		try
 		{
 			_req = request;
 			_res = response;
-			String charsetName = JptConfiguration.encoding();
+			String charsetName = jptConf.encoding();
 			parameterDecoder = new ParameterDecoder(_req, Charset.forName(charsetName));
 
 			if (request.getMethod().equals(HttpMethod.HEAD))

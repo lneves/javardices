@@ -14,7 +14,19 @@ public class Dependency
 		else
 		{
 			_uri = templateUri;
-			_lastModified = (new File(_uri)).lastModified();
+
+			long mtime = 0L;
+
+			try
+			{
+				mtime = (new File(_uri)).lastModified();
+			}
+			catch (Throwable t)
+			{
+				// could not create a file from the specified URI
+			}
+
+			_lastModified = mtime;
 		}
 	}
 

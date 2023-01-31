@@ -4,7 +4,6 @@ import java.util.Map;
 
 public abstract class JptParentNode extends JptNode
 {
-
 	JptNode children[];
 	int childCount;
 	String actualBaseURI;
@@ -106,7 +105,7 @@ public abstract class JptParentNode extends JptNode
 
 	protected void checkAllowed(Map<String, Object> context, String variable)
 	{
-		if (context.get(variable) != null)
+		if (context.containsKey(variable))
 		{
 			throw new IllegalStateException(String.format("Variable '%s' is already in context", variable));
 		}

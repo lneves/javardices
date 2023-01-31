@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?jpt template-class="jpt.test.SimpleContext"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal">
+<head>
+<title>Test for "tal:repeat"</title>
+</head>
+<body>
+<h2>Test for "tal:repeat"</h2>
+
+
+<table border="1" cellspacing="0" cellpadding="5" width="450">
+	<tr tal:repeat="var=person;source=$this.persons" bgcolor="#EEEBCC" tal:conditional-attributes="class $index$even 'even'; class $index$odd 'odd'">
+		<td align="left" nowrap="nowrap" tal:content="structure person.age">age</td>
+		<td align="left" nowrap="nowrap" tal:content="structure person.name">name</td>
+		<td align="left" nowrap="nowrap" tal:content="structure $this.value">value</td>
+	</tr>
+</table>
+
+</body>
+</html>

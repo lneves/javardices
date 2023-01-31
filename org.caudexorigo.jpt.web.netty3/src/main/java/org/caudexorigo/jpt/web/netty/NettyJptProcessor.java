@@ -45,6 +45,8 @@ public class NettyJptProcessor implements HttpJptProcessor
 
 	private final ChannelHandlerContext _ctx;
 	private boolean _use_compression;
+	
+	private static final JptConfiguration jptConf = JptConfiguration.fromFile("/jpt.config");
 
 	public NettyJptProcessor(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
 	{
@@ -62,7 +64,7 @@ public class NettyJptProcessor implements HttpJptProcessor
 			ChannelBuffer buf = ChannelBuffers.dynamicBuffer();
 
 			response.setContent(buf);
-			_encoding = JptConfiguration.encoding();
+			_encoding = jptConf.encoding();
 
 			if (use_compression)
 			{
