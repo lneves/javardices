@@ -3,11 +3,10 @@ package org.caudexorigo.cli;
 import java.util.List;
 import java.util.Map;
 
-interface ArgumentCollection extends Iterable<Map.Entry<String, List<String>>>
-{
-	List<String> getUnparsed();
+interface ArgumentCollection extends Iterable<Map.Entry<String, List<String>>> {
+  List<String> getUnparsed();
 
-	boolean contains(String... options);
+  boolean contains(String... options);
 
-	boolean containsAny(final List<String> options);
+  boolean containsAny(final List<String> options);
 }

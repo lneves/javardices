@@ -14,27 +14,24 @@ package wstest.srv.actors;
  * &lt;/xs:element>
  * </pre>
  */
-public class EchoListResponse
-{
-	private TestNode echoListResult;
+public class EchoListResponse {
+  private TestNode echoListResult;
 
-	/**
-	 * Get the 'EchoListResult' element value.
-	 * 
-	 * @return value
-	 */
-	public TestNode getEchoListResult()
-	{
-		return echoListResult;
-	}
+  /**
+   * Get the 'EchoListResult' element value.
+   * 
+   * @return value
+   */
+  public TestNode getEchoListResult() {
+    return echoListResult;
+  }
 
-	/**
-	 * Set the 'EchoListResult' element value.
-	 * 
-	 * @param echoListResult
-	 */
-	public void setEchoListResult(TestNode echoListResult)
-	{
-		this.echoListResult = echoListResult;
-	}
+  /**
+   * Set the 'EchoListResult' element value.
+   * 
+   * @param echoListResult
+   */
+  public void setEchoListResult(TestNode echoListResult) {
+    this.echoListResult = echoListResult;
+  }
 }

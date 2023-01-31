@@ -1,83 +1,72 @@
 package org.caudexorigo.jpt;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.caudexorigo.nu.xom.Attribute;
 import org.unbescape.xml.XmlEscape;
 
-public class JptConditionalAttributeNode extends JptNode
-{
-	private static final char QUOTE = '"';
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
 
-	private boolean _isInSlot;
+public class JptConditionalAttributeNode extends JptNode {
+  private static final char QUOTE = '"';
 
-	private String[] new_attr_exps;
+  private boolean _isInSlot;
 
-	private final char[] attributePrefix;
+  private String[] new_attr_exps;
 
-	private final JptExpression jptConditionExpression;
+  private final char[] attributePrefix;
 
-	private final JptExpression jptExpression;
+  private final JptExpression jptConditionExpression;
 
-	JptConditionalAttributeNode(Attribute attribute, boolean isInSlot)
-	{
-		_isInSlot = isInSlot;
+  private final JptExpression jptExpression;
 
-		String attributeName = attribute.getQualifiedName();
-		String attrExp = attribute.getValue().replace("\'", "\"").trim();
+  JptConditionalAttributeNode(Attribute attribute, boolean isInSlot) {
+    _isInSlot = isInSlot;
 
-		new_attr_exps = StringUtils.split(attrExp, " ", 2);
+    String attributeName = attribute.getQualifiedName();
+    String attrExp = attribute.getValue().replace("\'", "\"").trim();
 
-		attributePrefix = (new StringBuilder())
-				.append(' ')
-				.append(attributeName)
-				.append('=')
-				.append(QUOTE).toString().toCharArray();
+    new_attr_exps = StringUtils.split(attrExp, " ", 2);
 
-		if (new_attr_exps.length == 1)
-		{
-			jptConditionExpression = new JptExpression("true");
-			jptExpression = new JptExpression(attrExp);
-		}
-		else
-		{
-			jptConditionExpression = new JptExpression(new_attr_exps[0]);
-			jptExpression = new JptExpression(new_attr_exps[1]);
-		}
-	}
+    attributePrefix = (new StringBuilder())
+        .append(' ')
+        .append(attributeName)
+        .append('=')
+        .append(QUOTE).toString().toCharArray();
 
-	public int getChildCount()
-	{
-		return 0;
-	}
+    if (new_attr_exps.length == 1) {
+      jptConditionExpression = new JptExpression("true");
+      jptExpression = new JptExpression(attrExp);
+    } else {
+      jptConditionExpression = new JptExpression(new_attr_exps[0]);
+      jptExpression = new JptExpression(new_attr_exps[1]);
+    }
+  }
 
-	public JptNode getChild(int i)
-	{
-		throw new IndexOutOfBoundsException("Attributes do not have children");
-	}
+  public int getChildCount() {
+    return 0;
+  }
 
-	public void render(Map<String, Object> context, Writer out) throws IOException
-	{
-		boolean condition = jptConditionExpression.evalAsBoolean(context);
+  public JptNode getChild(int i) {
+    throw new IndexOutOfBoundsException("Attributes do not have children");
+  }
 
-		if (condition)
-		{
-			String sout = jptExpression.evalAsString(context);
+  public void render(Map<String, Object> context, Writer out) throws IOException {
+    boolean condition = jptConditionExpression.evalAsBoolean(context);
 
-			if (StringUtils.isNotBlank(sout))
-			{
-				out.write(attributePrefix, 0, attributePrefix.length);
-				out.write(XmlEscape.escapeXml10Attribute(sout));
-				out.write(QUOTE);
-			}
-		}
-	}
+    if (condition) {
+      String sout = jptExpression.evalAsString(context);
 
-	public boolean isInSlot()
-	{
-		return _isInSlot;
-	}
+      if (StringUtils.isNotBlank(sout)) {
+        out.write(attributePrefix, 0, attributePrefix.length);
+        out.write(XmlEscape.escapeXml10Attribute(sout));
+        out.write(QUOTE);
+      }
+    }
+  }
+
+  public boolean isInSlot() {
+    return _isInSlot;
+  }
 }

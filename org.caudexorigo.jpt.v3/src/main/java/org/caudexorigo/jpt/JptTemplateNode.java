@@ -1,73 +1,63 @@
 package org.caudexorigo.jpt;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import org.mvel2.ParserContext;
 import org.mvel2.templates.CompiledTemplate;
 import org.mvel2.templates.TemplateCompiler;
 import org.mvel2.templates.TemplateRuntime;
 import org.unbescape.xml.XmlEscape;
 
-public class JptTemplateNode extends JptNode
-{
-	private boolean _isInSlot;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
-	private CompiledTemplate _compiled_template;
+public class JptTemplateNode extends JptNode {
+  private boolean _isInSlot;
 
-	private String _template;
+  private CompiledTemplate _compiled_template;
 
-	JptTemplateNode(String template, boolean isInSlot)
-	{
-		_template = XmlEscape.unescapeXml(template);
+  private String _template;
 
-		_isInSlot = isInSlot;
-	}
+  JptTemplateNode(String template, boolean isInSlot) {
+    _template = XmlEscape.unescapeXml(template);
 
-	public int getChildCount()
-	{
-		return 0;
-	}
+    _isInSlot = isInSlot;
+  }
 
-	public JptNode getChild(int i)
-	{
-		throw new IndexOutOfBoundsException("Output Expressions do not have children");
-	}
+  public int getChildCount() {
+    return 0;
+  }
 
-	public void render(Map<String, Object> context, Writer out) throws IOException
-	{
-		try
-		{
-			if (_compiled_template == null)
-			{
-				ParserContext parser_context = ParserContext.create();
+  public JptNode getChild(int i) {
+    throw new IndexOutOfBoundsException("Output Expressions do not have children");
+  }
 
-				Set<Entry<String, Object>> ctx_entries = context.entrySet();
+  public void render(Map<String, Object> context, Writer out) throws IOException {
+    try {
+      if (_compiled_template == null) {
+        ParserContext parser_context = ParserContext.create();
 
-				for (Entry<String, Object> entry : ctx_entries)
-				{
-					parser_context.addInput(entry.getKey(), entry.getValue().getClass());
-				}
-				_compiled_template = TemplateCompiler.compileTemplate(_template, parser_context);
-			}
-		}
-		catch (Throwable t)
-		{
-			Throwable r = findRootCause(t);
-			String emsg = String.format("Error processing template:%ncontext: %s;%nmessage: '%s'", context, r.getMessage());
-			throw new RuntimeException(emsg);
-		}
+        Set<Entry<String, Object>> ctx_entries = context.entrySet();
 
-		String sout = String.valueOf(TemplateRuntime.execute(_compiled_template, context));
+        for (Entry<String, Object> entry : ctx_entries) {
+          parser_context.addInput(entry.getKey(), entry.getValue().getClass());
+        }
+        _compiled_template = TemplateCompiler.compileTemplate(_template, parser_context);
+      }
+    } catch (Throwable t) {
+      Throwable r = findRootCause(t);
+      String emsg = String.format("Error processing template:%ncontext: %s;%nmessage: '%s'",
+          context, r.getMessage());
+      throw new RuntimeException(emsg);
+    }
 
-		out.write(sout);
-	}
+    String sout = String.valueOf(TemplateRuntime.execute(_compiled_template, context));
 
-	public boolean isInSlot()
-	{
-		return _isInSlot;
-	}
+    out.write(sout);
+  }
+
+  public boolean isInSlot() {
+    return _isInSlot;
+  }
 }

@@ -1,14 +1,5 @@
 package org.caudexorigo.jpt.web.netty;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
-
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.caudexorigo.http.netty4.HttpAction;
 import org.caudexorigo.http.netty4.reporting.MessageBody;
 import org.caudexorigo.jpt.JptInstance;
@@ -16,59 +7,61 @@ import org.caudexorigo.jpt.JptInstanceBuilder;
 import org.caudexorigo.jpt.web.HttpJptContext;
 import org.caudexorigo.jpt.web.HttpJptController;
 
-public class NettyWebJptAction extends HttpAction
-{
-	private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
+import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
-	private final URI _templateURI;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.HttpHeaders;
 
-	public NettyWebJptAction(URI templateURI)
-	{
-		super();
-		_templateURI = templateURI;
-	}
+public class NettyWebJptAction extends HttpAction {
+  private static final String CONTENT_TYPE = "text/html; charset=UTF-8";
 
-	@Override
-	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse response)
-	{
-		try
-		{
-			NettyJptProcessor aweb_jpt_processor = new NettyJptProcessor(ctx, request, response);
-			JptInstance jpt = JptInstanceBuilder.getJptInstance(_templateURI);
+  private final URI _templateURI;
 
-			HttpJptContext jpt_ctx = new HttpJptContext(aweb_jpt_processor, getTemplateURI());
-			HttpJptController page_controller = (HttpJptController) Class.forName(jpt.getCtxObjectType()).newInstance();
+  public NettyWebJptAction(URI templateURI) {
+    super();
+    _templateURI = templateURI;
+  }
 
-			page_controller.setHttpContext(jpt_ctx);
-			page_controller.init();
+  @Override
+  public void service(ChannelHandlerContext ctx, FullHttpRequest request,
+      FullHttpResponse response) {
+    try {
+      NettyJptProcessor aweb_jpt_processor = new NettyJptProcessor(ctx, request, response);
+      JptInstance jpt = JptInstanceBuilder.getJptInstance(_templateURI);
 
-			int http_status = jpt_ctx.getStatus();
+      HttpJptContext jpt_ctx = new HttpJptContext(aweb_jpt_processor, getTemplateURI());
+      HttpJptController page_controller = (HttpJptController) Class.forName(jpt.getCtxObjectType())
+          .newInstance();
 
-			boolean allowsContent = MessageBody.allow(http_status);
+      page_controller.setHttpContext(jpt_ctx);
+      page_controller.init();
 
-			if (allowsContent)
-			{
-				Map<String, Object> renderContext = new HashMap<String, Object>();
-				renderContext.put("$this", page_controller);
-				renderContext.put("$jpt", jpt_ctx);
+      int http_status = jpt_ctx.getStatus();
 
-				jpt.render(renderContext, aweb_jpt_processor.getWriter());
-				aweb_jpt_processor.flush();
+      boolean allowsContent = MessageBody.allow(http_status);
 
-				if (!response.headers().contains(HttpHeaders.Names.CONTENT_TYPE))
-				{
-					response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
-				}
-			}
-		}
-		catch (Throwable t)
-		{
-			throw new RuntimeException(t);
-		}
-	}
+      if (allowsContent) {
+        Map<String, Object> renderContext = new HashMap<String, Object>();
+        renderContext.put("$this", page_controller);
+        renderContext.put("$jpt", jpt_ctx);
 
-	public URI getTemplateURI()
-	{
-		return _templateURI;
-	}
+        jpt.render(renderContext, aweb_jpt_processor.getWriter());
+        aweb_jpt_processor.flush();
+
+        if (!response.headers().contains(HttpHeaders.Names.CONTENT_TYPE)) {
+          response.headers().set(HttpHeaders.Names.CONTENT_TYPE, CONTENT_TYPE);
+        }
+      }
+    } catch (Throwable t) {
+      throw new RuntimeException(t);
+    }
+  }
+
+  public URI getTemplateURI() {
+    return _templateURI;
+  }
 }

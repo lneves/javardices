@@ -1,10 +1,9 @@
 package org.caudexorigo.cli;
 
-interface TypedArguments
-{
-	Object getValue(ArgumentSpecification specification);
+interface TypedArguments {
+  Object getValue(ArgumentSpecification specification);
 
-	boolean contains(ArgumentSpecification specification);
+  boolean contains(ArgumentSpecification specification);
 
-	Object getUnparsedValue();
+  Object getUnparsedValue();
 }

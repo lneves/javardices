@@ -1,91 +1,84 @@
 package org.caudexorigo.http.netty4;
 
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.util.concurrent.FastThreadLocal;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class HttpDateFormat
-{
-	/**
-	 * By default, we update the format if it is more than a second old
-	 */
-	private static final int DEFAULT_GRANULARITY = 1000;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.util.concurrent.FastThreadLocal;
 
-	private static int granularity = DEFAULT_GRANULARITY;
+public class HttpDateFormat {
+  /**
+   * By default, we update the format if it is more than a second old
+   */
+  private static final int DEFAULT_GRANULARITY = 1000;
 
-	private static final String DEFAULT_TIME_ZONE_NAME = "GMT";
+  private static int granularity = DEFAULT_GRANULARITY;
 
-	/**
-	 * Thread local <code>HttpDateFormat</code>
-	 */
-	private static final FastThreadLocal<HttpDateFormat> FORMAT_LOCAL = new FastThreadLocal<HttpDateFormat>()
-	{
-		@Override
-		protected HttpDateFormat initialValue()
-		{
-			return new HttpDateFormat();
-		}
-	};
+  private static final String DEFAULT_TIME_ZONE_NAME = "GMT";
 
-	/**
-	 * Format for HTTP dates
-	 */
-	private final SimpleDateFormat dateFormat;
+  /**
+   * Thread local <code>HttpDateFormat</code>
+   */
+  private static final FastThreadLocal<HttpDateFormat> FORMAT_LOCAL =
+      new FastThreadLocal<HttpDateFormat>() {
+        @Override
+        protected HttpDateFormat initialValue() {
+          return new HttpDateFormat();
+        }
+      };
 
-	/**
-	 * The time of the last format operation (0 if none have yet taken place)
-	 */
-	private long timeLastGenerated;
+  /**
+   * Format for HTTP dates
+   */
+  private final SimpleDateFormat dateFormat;
 
-	/**
-	 * The current formatted HTTP date
-	 */
-	private CharSequence currentHTTPDate;
+  /**
+   * The time of the last format operation (0 if none have yet taken place)
+   */
+  private long timeLastGenerated;
 
-	private HttpDateFormat()
-	{
-		// HTTP date format specifies GMT
-		dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
-		dateFormat.setTimeZone(TimeZone.getTimeZone(DEFAULT_TIME_ZONE_NAME));
-	}
+  /**
+   * The current formatted HTTP date
+   */
+  private CharSequence currentHTTPDate;
 
-	/**
-	 * Returns the current time formatted as specified in the HTTP 1.1 specification.
-	 * 
-	 * @return The formatted date
-	 */
-	public static CharSequence getCurrentHttpDate()
-	{
-		return FORMAT_LOCAL.get().getCurrentDate();
-	}
+  private HttpDateFormat() {
+    // HTTP date format specifies GMT
+    dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US);
+    dateFormat.setTimeZone(TimeZone.getTimeZone(DEFAULT_TIME_ZONE_NAME));
+  }
 
-	public static String getHttpDate(Date d)
-	{
-		return FORMAT_LOCAL.get().getDate(d);
-	}
+  /**
+   * Returns the current time formatted as specified in the HTTP 1.1 specification.
+   * 
+   * @return The formatted date
+   */
+  public static CharSequence getCurrentHttpDate() {
+    return FORMAT_LOCAL.get().getCurrentDate();
+  }
 
-	/**
-	 * Provides the current formatted date to be employed. If we haven't updated our view of the time in the last 'granularity' ms, we format a fresh value.
-	 * 
-	 * @return The current http date
-	 */
-	private CharSequence getCurrentDate()
-	{
-		long currentTime = System.currentTimeMillis();
-		if (currentTime - timeLastGenerated > granularity)
-		{
-			timeLastGenerated = currentTime;
-			currentHTTPDate = HttpHeaders.newEntity(dateFormat.format(new Date(currentTime)));
-		}
-		return currentHTTPDate;
-	}
+  public static String getHttpDate(Date d) {
+    return FORMAT_LOCAL.get().getDate(d);
+  }
 
-	private String getDate(Date d)
-	{
-		return dateFormat.format(d);
-	}
+  /**
+   * Provides the current formatted date to be employed. If we haven't updated our view of
+   * the time in the last 'granularity' ms, we format a fresh value.
+   * 
+   * @return The current http date
+   */
+  private CharSequence getCurrentDate() {
+    long currentTime = System.currentTimeMillis();
+    if (currentTime - timeLastGenerated > granularity) {
+      timeLastGenerated = currentTime;
+      currentHTTPDate = HttpHeaders.newEntity(dateFormat.format(new Date(currentTime)));
+    }
+    return currentHTTPDate;
+  }
+
+  private String getDate(Date d) {
+    return dateFormat.format(d);
+  }
 }

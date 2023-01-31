@@ -14,69 +14,62 @@ package wstest.srv.actors;
  * &lt;/xs:complexType>
  * </pre>
  */
-public class Synthetic
-{
-	private String strng;
-	private TestStruct strct;
-	private byte[] barray;
+public class Synthetic {
+  private String strng;
+  private TestStruct strct;
+  private byte[] barray;
 
-	/**
-	 * Get the 'Strng' element value.
-	 * 
-	 * @return value
-	 */
-	public String getStrng()
-	{
-		return strng;
-	}
+  /**
+   * Get the 'Strng' element value.
+   * 
+   * @return value
+   */
+  public String getStrng() {
+    return strng;
+  }
 
-	/**
-	 * Set the 'Strng' element value.
-	 * 
-	 * @param strng
-	 */
-	public void setStrng(String strng)
-	{
-		this.strng = strng;
-	}
+  /**
+   * Set the 'Strng' element value.
+   * 
+   * @param strng
+   */
+  public void setStrng(String strng) {
+    this.strng = strng;
+  }
 
-	/**
-	 * Get the 'Strct' element value.
-	 * 
-	 * @return value
-	 */
-	public TestStruct getStrct()
-	{
-		return strct;
-	}
+  /**
+   * Get the 'Strct' element value.
+   * 
+   * @return value
+   */
+  public TestStruct getStrct() {
+    return strct;
+  }
 
-	/**
-	 * Set the 'Strct' element value.
-	 * 
-	 * @param strct
-	 */
-	public void setStrct(TestStruct strct)
-	{
-		this.strct = strct;
-	}
+  /**
+   * Set the 'Strct' element value.
+   * 
+   * @param strct
+   */
+  public void setStrct(TestStruct strct) {
+    this.strct = strct;
+  }
 
-	/**
-	 * Get the 'Barray' element value.
-	 * 
-	 * @return value
-	 */
-	public byte[] getBarray()
-	{
-		return barray;
-	}
+  /**
+   * Get the 'Barray' element value.
+   * 
+   * @return value
+   */
+  public byte[] getBarray() {
+    return barray;
+  }
 
-	/**
-	 * Set the 'Barray' element value.
-	 * 
-	 * @param barray
-	 */
-	public void setBarray(byte[] barray)
-	{
-		this.barray = barray;
-	}
+  /**
+   * Set the 'Barray' element value.
+   * 
+   * @param barray
+   */
+  public void setBarray(byte[] barray) {
+    this.barray = barray;
+  }
 }

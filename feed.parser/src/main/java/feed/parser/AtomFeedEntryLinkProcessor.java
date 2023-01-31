@@ -1,33 +1,30 @@
 package feed.parser;
 
-import javax.xml.stream.XMLStreamReader;
-
 import org.apache.commons.lang3.StringUtils;
 
-public class AtomFeedEntryLinkProcessor implements FeedEntryProcessor
-{
-	private final String relValue;
-	private final String typeValue;
+import javax.xml.stream.XMLStreamReader;
 
-	public AtomFeedEntryLinkProcessor(String rel, String type)
-	{
-		super();
-		this.relValue = rel;
-		this.typeValue = type;
-	}
+public class AtomFeedEntryLinkProcessor implements FeedEntryProcessor {
+  private final String relValue;
+  private final String typeValue;
 
-	@Override
-	public void process(FeedChannel feed_channel, XMLStreamReader stax_xml_reader)
-	{
+  public AtomFeedEntryLinkProcessor(String rel, String type) {
+    super();
+    this.relValue = rel;
+    this.typeValue = type;
+  }
 
-		FeedEntry feed_entry = feed_channel.getLastFeedEntry();
-		String rel = stax_xml_reader.getAttributeValue("", "rel");
-		String type = stax_xml_reader.getAttributeValue("", "type");
-		String href = stax_xml_reader.getAttributeValue("", "href");
+  @Override
+  public void process(FeedChannel feed_channel, XMLStreamReader stax_xml_reader) {
 
-		if (StringUtils.isNotBlank(rel) && StringUtils.isNotBlank(type) && StringUtils.isNotBlank(href) && rel.equals(relValue) && type.equals(typeValue))
-		{
-			feed_entry.setAttribute("link", href);
-		}
-	}
+    FeedEntry feed_entry = feed_channel.getLastFeedEntry();
+    String rel = stax_xml_reader.getAttributeValue("", "rel");
+    String type = stax_xml_reader.getAttributeValue("", "type");
+    String href = stax_xml_reader.getAttributeValue("", "href");
+
+    if (StringUtils.isNotBlank(rel) && StringUtils.isNotBlank(type) && StringUtils.isNotBlank(href)
+        && rel.equals(relValue) && type.equals(typeValue)) {
+      feed_entry.setAttribute("link", href);
+    }
+  }
 }

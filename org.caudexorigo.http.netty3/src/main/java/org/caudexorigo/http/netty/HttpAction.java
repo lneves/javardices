@@ -1,7 +1,5 @@
 package org.caudexorigo.http.netty;
 
-import java.nio.charset.Charset;
-
 import org.caudexorigo.ErrorAnalyser;
 import org.caudexorigo.http.netty.reporting.ResponseFormatter;
 import org.caudexorigo.http.netty.reporting.StandardResponseFormatter;
@@ -16,143 +14,117 @@ import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class HttpAction
-{
-	private static Logger log = LoggerFactory.getLogger(HttpAction.class);
+import java.nio.charset.Charset;
 
-	public abstract void service(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response);
+public abstract class HttpAction {
+  private static Logger log = LoggerFactory.getLogger(HttpAction.class);
 
-	private HttpRequest request = null;
-	private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
+  public abstract void service(ChannelHandlerContext ctx, HttpRequest request,
+      HttpResponse response);
 
-	public HttpAction()
-	{
-		super();
-	}
+  private HttpRequest request = null;
+  private ResponseFormatter defaultRspFmt = new StandardResponseFormatter(false);
 
-	protected final void process(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
-	{
-		request = (this.request != null) ? this.request : request;
+  public HttpAction() {
+    super();
+  }
 
-		if (this instanceof StaticFileAction)
-		{
-			try
-			{
-				service(ctx, request, response);
-			}
-			catch (Throwable ex)
-			{
-				handleError(ctx, request, response, ex);
-				commitResponse(ctx, response, false);
-			}
-		}
-		else
-		{
-			boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
-			if (!is_keep_alive)
-			{
-				response.headers().set(HttpHeaders.Names.CONNECTION, "Close");
-			}
+  protected final void process(ChannelHandlerContext ctx, HttpRequest request,
+      HttpResponse response) {
+    request = (this.request != null) ? this.request : request;
 
-			try
-			{
-				HttpRequestWrapper hrw = null;
-				if (request instanceof HttpRequestWrapper)
-				{
-					hrw = (HttpRequestWrapper) request;
-				}
-				else
-				{
-					hrw = new HttpRequestWrapper(request, getCharset());
-				}
+    if (this instanceof StaticFileAction) {
+      try {
+        service(ctx, request, response);
+      } catch (Throwable ex) {
+        handleError(ctx, request, response, ex);
+        commitResponse(ctx, response, false);
+      }
+    } else {
+      boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
+      if (!is_keep_alive) {
+        response.headers().set(HttpHeaders.Names.CONNECTION, "Close");
+      }
 
-				service(ctx, hrw, response);
-			}
-			catch (Throwable ex)
-			{
-				handleError(ctx ,request, response, ex);
-			}
-			finally
-			{
-				commitResponse(ctx, response, is_keep_alive);
-			}
-		}
-	}
+      try {
+        HttpRequestWrapper hrw = null;
+        if (request instanceof HttpRequestWrapper) {
+          hrw = (HttpRequestWrapper) request;
+        } else {
+          hrw = new HttpRequestWrapper(request, getCharset());
+        }
 
-	private void handleError(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, Throwable ex)
-	{
-		request = (this.request != null) ? this.request : request;
+        service(ctx, hrw, response);
+      } catch (Throwable ex) {
+        handleError(ctx, request, response, ex);
+      } finally {
+        commitResponse(ctx, response, is_keep_alive);
+      }
+    }
+  }
 
-		response.headers().clear();
-		Throwable rootCause = ErrorAnalyser.findRootCause(ex);
+  private void handleError(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response,
+      Throwable ex) {
+    request = (this.request != null) ? this.request : request;
 
-		if (ex instanceof WebException)
-		{
-			WebException w_ex = (WebException) ex;
-			response.setStatus(HttpResponseStatus.valueOf(w_ex.getHttpStatusCode()));
-		}
+    response.headers().clear();
+    Throwable rootCause = ErrorAnalyser.findRootCause(ex);
 
-		if (log.isDebugEnabled())
-		{
-			log.error(rootCause.getMessage(), rootCause);
-		}
-		else
-		{
-			log.error("http.netty.error: {}; path: {}", rootCause.getMessage(), request.getUri());
-		}
+    if (ex instanceof WebException) {
+      WebException w_ex = (WebException) ex;
+      response.setStatus(HttpResponseStatus.valueOf(w_ex.getHttpStatusCode()));
+    }
 
-		writeStandardResponse(ctx, request, response, rootCause);
-	}
+    if (log.isDebugEnabled()) {
+      log.error(rootCause.getMessage(), rootCause);
+    } else {
+      log.error("http.netty.error: {}; path: {}", rootCause.getMessage(), request.getUri());
+    }
 
-	private void commitResponse(ChannelHandlerContext ctx, HttpResponse response, boolean is_keep_alive)
-	{
-		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
-		response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(response.getContent().writerIndex()));
-		Channel channel = ctx.getChannel();
-		ChannelFuture future = channel.write(response);
+    writeStandardResponse(ctx, request, response, rootCause);
+  }
 
-		if (!is_keep_alive)
-		{
-			future.addListener(ChannelFutureListener.CLOSE);
-		}
-	}
+  private void commitResponse(ChannelHandlerContext ctx, HttpResponse response,
+      boolean is_keep_alive) {
+    response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
+    response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, String.valueOf(response.getContent()
+        .writerIndex()));
+    Channel channel = ctx.getChannel();
+    ChannelFuture future = channel.write(response);
 
-	private void writeStandardResponse(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response, Throwable rootCause)
-	{
-		request = (this.request != null) ? this.request : request;
+    if (!is_keep_alive) {
+      future.addListener(ChannelFutureListener.CLOSE);
+    }
+  }
 
-		ResponseFormatter rspFrm = getResponseFormatter();
+  private void writeStandardResponse(ChannelHandlerContext ctx, HttpRequest request,
+      HttpResponse response, Throwable rootCause) {
+    request = (this.request != null) ? this.request : request;
 
-		if (rootCause != null)
-		{
-			try
-			{
-				if (response.getStatus().getCode() < 400)
-				{
-					response.setStatus(HttpResponseStatus.INTERNAL_SERVER_ERROR);
-				}
+    ResponseFormatter rspFrm = getResponseFormatter();
 
-				rspFrm.formatResponse(ctx, request, response, rootCause);
-			}
-			catch (Throwable e)
-			{
-				log.error(e.getMessage(), e);
-			}
-		}
-	}
+    if (rootCause != null) {
+      try {
+        if (response.getStatus().getCode() < 400) {
+          response.setStatus(HttpResponseStatus.INTERNAL_SERVER_ERROR);
+        }
 
-	public void setRequest(HttpRequest request)
-	{
-		this.request = request;
-	}
+        rspFrm.formatResponse(ctx, request, response, rootCause);
+      } catch (Throwable e) {
+        log.error(e.getMessage(), e);
+      }
+    }
+  }
 
-	public Charset getCharset()
-	{
-		return null;
-	}
+  public void setRequest(HttpRequest request) {
+    this.request = request;
+  }
 
-	protected ResponseFormatter getResponseFormatter()
-	{
-		return defaultRspFmt;
-	}
+  public Charset getCharset() {
+    return null;
+  }
+
+  protected ResponseFormatter getResponseFormatter() {
+    return defaultRspFmt;
+  }
 }

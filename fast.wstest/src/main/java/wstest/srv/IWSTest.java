@@ -5,15 +5,14 @@ import wstest.srv.actors.Order;
 import wstest.srv.actors.Synthetic;
 import wstest.srv.actors.TestNode;
 
-public interface IWSTest
-{
-	void echoVoid();
+public interface IWSTest {
+  void echoVoid();
 
-	COfTestStruct echoStruct(COfTestStruct array);
+  COfTestStruct echoStruct(COfTestStruct array);
 
-	TestNode echoList(TestNode list);
+  TestNode echoList(TestNode list);
 
-	Synthetic echoSynthetic(Synthetic synth);
+  Synthetic echoSynthetic(Synthetic synth);
 
-	Order getOrder(int orderId, int customerId, int messageSize);
+  Order getOrder(int orderId, int customerId, int messageSize);
 }

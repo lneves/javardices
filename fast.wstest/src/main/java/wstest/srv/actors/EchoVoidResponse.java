@@ -10,6 +10,5 @@ package wstest.srv.actors;
  * &lt;/xs:element>
  * </pre>
  */
-public class EchoVoidResponse
-{
+public class EchoVoidResponse {
 }

@@ -14,27 +14,24 @@ package wstest.srv.actors;
  * &lt;/xs:element>
  * </pre>
  */
-public class GetOrderResponse
-{
-	private Order getOrderResult;
+public class GetOrderResponse {
+  private Order getOrderResult;
 
-	/**
-	 * Get the 'GetOrderResult' element value.
-	 * 
-	 * @return value
-	 */
-	public Order getGetOrderResult()
-	{
-		return getOrderResult;
-	}
+  /**
+   * Get the 'GetOrderResult' element value.
+   * 
+   * @return value
+   */
+  public Order getGetOrderResult() {
+    return getOrderResult;
+  }
 
-	/**
-	 * Set the 'GetOrderResult' element value.
-	 * 
-	 * @param getOrderResult
-	 */
-	public void setGetOrderResult(Order getOrderResult)
-	{
-		this.getOrderResult = getOrderResult;
-	}
+  /**
+   * Set the 'GetOrderResult' element value.
+   * 
+   * @param getOrderResult
+   */
+  public void setGetOrderResult(Order getOrderResult) {
+    this.getOrderResult = getOrderResult;
+  }
 }

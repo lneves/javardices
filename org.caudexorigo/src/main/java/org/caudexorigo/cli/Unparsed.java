@@ -12,12 +12,12 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Unparsed
-{
-	/**
-	 * The name to use when describe the unparsed arguments in help text and error messages
-	 * 
-	 * @return The name to use when describe the unparsed arguments in help text and error messages
-	 */
-	String name() default "";
+public @interface Unparsed {
+  /**
+   * The name to use when describe the unparsed arguments in help text and error messages
+   * 
+   * @return The name to use when describe the unparsed arguments in help text and error
+   *         messages
+   */
+  String name() default "";
 }

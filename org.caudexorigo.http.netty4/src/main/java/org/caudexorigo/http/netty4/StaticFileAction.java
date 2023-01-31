@@ -1,5 +1,17 @@
 package org.caudexorigo.http.netty4;
 
+import org.apache.commons.lang3.StringUtils;
+import org.caudexorigo.text.UrlCodec;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.net.URI;
+import java.nio.file.Files;
+import java.util.Date;
+import java.util.Set;
+
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,264 +28,213 @@ import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedFile;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.net.URI;
-import java.nio.file.Files;
-import java.util.Date;
-import java.util.Set;
+public class StaticFileAction extends HttpAction {
+  private final File rootDirectory;
+  private final String rootDirectoryPath;
 
-import org.apache.commons.lang3.StringUtils;
-import org.caudexorigo.text.UrlCodec;
+  private final long cacheDuration;
 
-public class StaticFileAction extends HttpAction
-{
-	private final File rootDirectory;
-	private final String rootDirectoryPath;
+  public StaticFileAction(URI rootPath) {
+    this(rootPath, 0);
+  }
 
-	private final long cacheDuration;
+  public StaticFileAction(URI rootPath, long cacheDuration) {
+    super();
+    this.rootDirectory = new File(rootPath);
+    this.rootDirectoryPath = rootDirectory.getAbsolutePath();
 
-	public StaticFileAction(URI rootPath)
-	{
-		this(rootPath, 0);
-	}
+    this.cacheDuration = cacheDuration;
 
-	public StaticFileAction(URI rootPath, long cacheDuration)
-	{
-		super();
-		this.rootDirectory = new File(rootPath);
-		this.rootDirectoryPath = rootDirectory.getAbsolutePath();
+    if (!rootDirectory.isDirectory() || !rootDirectory.canRead() || rootDirectory.isHidden()) {
+      throw new IllegalArgumentException("Not a valid root directory");
+    }
+  }
 
-		this.cacheDuration = cacheDuration;
+  @Override
+  public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse rsp) {
+    validateRequest(request);
 
-		if (!rootDirectory.isDirectory() || !rootDirectory.canRead() || rootDirectory.isHidden())
-		{
-			throw new IllegalArgumentException("Not a valid root directory");
-		}
-	}
+    File file = getFile(request);
 
-	@Override
-	public void service(ChannelHandlerContext ctx, FullHttpRequest request, FullHttpResponse rsp)
-	{
-		validateRequest(request);
+    long clen = file.length();
 
-		File file = getFile(request);
+    HttpResponse response = new DefaultHttpResponse(rsp.getProtocolVersion(), rsp.getStatus(),
+        false);
 
-		long clen = file.length();
+    Set<String> previousHeaders = rsp.headers().names();
 
-		HttpResponse response = new DefaultHttpResponse(rsp.getProtocolVersion(), rsp.getStatus(), false);
+    for (String hname : previousHeaders) {
+      response.headers().add(hname, rsp.headers().get(hname));
+    }
 
-		Set<String> previousHeaders = rsp.headers().names();
+    CharSequence ctype = getMimeType(request, file);
 
-		for (String hname : previousHeaders)
-		{
-			response.headers().add(hname, rsp.headers().get(hname));
-		}
+    if (StringUtils.isNotBlank(ctype)) {
+      response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);
+    }
 
-		CharSequence ctype = getMimeType(request, file);
+    RandomAccessFile raf = null;
+    try {
+      raf = new RandomAccessFile(file, "r");
+    } catch (FileNotFoundException e1) {
+      // this exception can be ignored because we already tested for it
+    }
 
-		if (StringUtils.isNotBlank(ctype))
-		{
-			response.headers().set(HttpHeaders.Names.CONTENT_TYPE, ctype);
-		}
+    response.setStatus(HttpResponseStatus.OK);
+    response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
 
-		RandomAccessFile raf = null;
-		try
-		{
-			raf = new RandomAccessFile(file, "r");
-		}
-		catch (FileNotFoundException e1)
-		{
-			// this exception can be ignored because we already tested for it
-		}
+    if (cacheDuration > 0) {
+      response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s",
+          cacheDuration));
+      response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(
+          file.lastModified())));
+      response.headers().set(HttpHeaders.Names.VARY, "Accept-Encoding");
+    }
+    String contentEncoding = getContentEncoding(request, file);
 
-		response.setStatus(HttpResponseStatus.OK);
-		response.headers().set(HttpHeaders.Names.DATE, HttpDateFormat.getCurrentHttpDate());
+    if (StringUtils.isNotBlank(contentEncoding)) {
+      response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, contentEncoding);
+    }
 
-		if (cacheDuration > 0)
-		{
-			response.headers().set(HttpHeaders.Names.CACHE_CONTROL, String.format("max-age=%s", cacheDuration));
-			response.headers().set(HttpHeaders.Names.LAST_MODIFIED, HttpDateFormat.getHttpDate(new Date(file.lastModified())));
-			response.headers().set(HttpHeaders.Names.VARY, "Accept-Encoding");
-		}
-		String contentEncoding = getContentEncoding(request, file);
+    boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
 
-		if (StringUtils.isNotBlank(contentEncoding))
-		{
-			response.headers().set(HttpHeaders.Names.CONTENT_ENCODING, contentEncoding);
-		}
+    try {
+      if (request.getMethod() == HttpMethod.GET) {
+        response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
 
-		boolean is_keep_alive = HttpHeaders.isKeepAlive(request);
+        rsp.headers().set(response.headers());
+        rsp.setStatus(rsp.getStatus());
+        ctx.write(response);
 
-		try
-		{
-			if (request.getMethod() == HttpMethod.GET)
-			{
-				response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, Long.toString(clen));
+        boolean useSsl = (ctx.pipeline().get(SslHandler.class) != null);
 
-				rsp.headers().set(response.headers());
-				rsp.setStatus(rsp.getStatus());
-				ctx.write(response);
+        if (useSsl) {
+          is_keep_alive = false;
+          ctx.write(new ChunkedFile(raf, 0, clen, 8192 * 2), ctx.voidPromise());
+        } else {
+          ctx.write(new DefaultFileRegion(raf.getChannel(), 0, clen), ctx.voidPromise());
+        }
+      } else if (request.getMethod() == HttpMethod.HEAD) {
+        response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, "0");
+        rsp.headers().set(response.headers());
+        rsp.setStatus(rsp.getStatus());
+        ctx.write(response);
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
-				boolean useSsl = (ctx.pipeline().get(SslHandler.class) != null);
+    // Write the end marker
+    ChannelFuture lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
 
-				if (useSsl)
-				{
-					is_keep_alive = false;
-					ctx.write(new ChunkedFile(raf, 0, clen, 8192 * 2), ctx.voidPromise());
-				}
-				else
-				{
-					ctx.write(new DefaultFileRegion(raf.getChannel(), 0, clen), ctx.voidPromise());
-				}
-			}
-			else if (request.getMethod() == HttpMethod.HEAD)
-			{
-				response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, "0");
-				rsp.headers().set(response.headers());
-				rsp.setStatus(rsp.getStatus());
-				ctx.write(response);
-			}
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException(e);
-		}
+    // Decide whether to close the connection or not.
+    if (!is_keep_alive) {
+      // Close the connection when the whole content is written out.
+      lastContentFuture.addListener(ChannelFutureListener.CLOSE);
+    }
+  }
 
-		// Write the end marker
-		ChannelFuture lastContentFuture = ctx.writeAndFlush(LastHttpContent.EMPTY_LAST_CONTENT);
+  protected CharSequence getMimeType(HttpRequest request, File file) {
+    try {
+      // String req_path = StringUtils.substringBefore(request.getUri(),
+      // "?");
+      // String abs_path = getFileAbsolutePath(file);
+      String ctype = Files.probeContentType(file.toPath());
+      if (StringUtils.isNotBlank(ctype)) {
+        return ctype;
+      } else {
+        return MimeTable.getContentType(file.getPath());
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-		// Decide whether to close the connection or not.
-		if (!is_keep_alive)
-		{
-			// Close the connection when the whole content is written out.
-			lastContentFuture.addListener(ChannelFutureListener.CLOSE);
-		}
-	}
+  // this method serves as optional overload hook
+  public String getContentEncoding(HttpRequest req, File file) {
+    return null;
+  }
 
-	protected CharSequence getMimeType(HttpRequest request, File file)
-	{
-		try
-		{
-			// String req_path = StringUtils.substringBefore(request.getUri(),
-			// "?");
-			// String abs_path = getFileAbsolutePath(file);
-			String ctype = Files.probeContentType(file.toPath());
-			if (StringUtils.isNotBlank(ctype))
-			{
-				return ctype;
-			}
-			else
-			{
-				return MimeTable.getContentType(file.getPath());
-			}
-		}
-		catch (IOException e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
+  protected String getFileAbsolutePath(File file) {
+    String abs_path = file.getAbsolutePath();
 
-	// this method serves as optional overload hook
-	public String getContentEncoding(HttpRequest req, File file)
-	{
-		return null;
-	}
+    if (!file.getAbsolutePath().startsWith(rootDirectoryPath)) {
+      throw new WebException(new IllegalArgumentException("Forbidden"), HttpResponseStatus.FORBIDDEN
+          .code());
+    }
 
-	protected String getFileAbsolutePath(File file)
-	{
-		String abs_path = file.getAbsolutePath();
+    return abs_path;
+  }
 
-		if (!file.getAbsolutePath().startsWith(rootDirectoryPath))
-		{
-			throw new WebException(new IllegalArgumentException("Forbidden"), HttpResponseStatus.FORBIDDEN.code());
-		}
+  protected File getFile(FullHttpRequest request) {
+    String req_path = StringUtils.substringBefore(request.getUri(), "?");
+    return getFile(req_path);
+  }
 
-		return abs_path;
-	}
+  protected File getFile(String req_path) {
+    String fs_path = sanitizePath(req_path);
 
-	protected File getFile(FullHttpRequest request)
-	{
-		String req_path = StringUtils.substringBefore(request.getUri(), "?");
-		return getFile(req_path);
-	}
+    if (fs_path == null) {
+      throw new WebException(new IllegalArgumentException("Forbidden"), HttpResponseStatus.FORBIDDEN
+          .code());
+    }
 
-	protected File getFile(String req_path)
-	{
-		String fs_path = sanitizePath(req_path);
+    File file = new File(fs_path);
+    validateFile(file, req_path);
+    return file;
+  }
 
-		if (fs_path == null)
-		{
-			throw new WebException(new IllegalArgumentException("Forbidden"), HttpResponseStatus.FORBIDDEN.code());
-		}
+  protected void validateFile(File file, String path) {
+    if (file.isHidden() || !file.exists()) {
+      throw new WebException(new FileNotFoundException(String.format("File not found: '%s'", path)),
+          HttpResponseStatus.NOT_FOUND.code());
+    }
 
-		File file = new File(fs_path);
-		validateFile(file, req_path);
-		return file;
-	}
+    if (!file.isFile()) {
+      throw new WebException(new IllegalArgumentException(), HttpResponseStatus.FORBIDDEN.code());
+    }
+  }
 
-	protected void validateFile(File file, String path)
-	{
-		if (file.isHidden() || !file.exists())
-		{
-			throw new WebException(new FileNotFoundException(String.format("File not found: '%s'", path)), HttpResponseStatus.NOT_FOUND.code());
-		}
+  protected void validateRequest(FullHttpRequest request) {
+    if (!((request.getMethod() == HttpMethod.GET) || (request.getMethod() == HttpMethod.HEAD))) {
+      throw new WebException(new IllegalArgumentException("Method not allowed"),
+          HttpResponseStatus.METHOD_NOT_ALLOWED.code());
+    }
 
-		if (!file.isFile())
-		{
-			throw new WebException(new IllegalArgumentException(), HttpResponseStatus.FORBIDDEN.code());
-		}
-	}
+    if (HttpHeaders.isTransferEncodingChunked(request)) {
+      throw new WebException(new IllegalArgumentException("Bad request"),
+          HttpResponseStatus.BAD_REQUEST.code());
+    }
+  }
 
-	protected void validateRequest(FullHttpRequest request)
-	{
-		if (!((request.getMethod() == HttpMethod.GET) || (request.getMethod() == HttpMethod.HEAD)))
-		{
-			throw new WebException(new IllegalArgumentException("Method not allowed"), HttpResponseStatus.METHOD_NOT_ALLOWED.code());
-		}
+  private String sanitizePath(String req_path) {
+    if (StringUtils.isBlank(req_path)) {
+      return null;
+    }
 
-		if (HttpHeaders.isTransferEncodingChunked(request))
-		{
-			throw new WebException(new IllegalArgumentException("Bad request"), HttpResponseStatus.BAD_REQUEST.code());
-		}
-	}
+    // Decode the path.
+    try {
+      req_path = UrlCodec.decode(req_path, "ISO-8859-1");
+    } catch (Throwable e) {
+      req_path = UrlCodec.decode(req_path, "UTF-8");
+    }
 
-	private String sanitizePath(String req_path)
-	{
-		if (StringUtils.isBlank(req_path))
-		{
-			return null;
-		}
+    // Convert file separators.
+    req_path = req_path.replace('/', File.separatorChar);
 
-		// Decode the path.
-		try
-		{
-			req_path = UrlCodec.decode(req_path, "ISO-8859-1");
-		}
-		catch (Throwable e)
-		{
-			req_path = UrlCodec.decode(req_path, "UTF-8");
-		}
+    // Simplistic dumb security check.
+    // You will have to do something serious in the production environment.
+    if (req_path.contains(File.separator + ".") || req_path.contains("." + File.separator)
+        || req_path.startsWith(".") || req_path.endsWith(".")) {
+      return null;
+    }
+    // Convert to absolute path.
 
-		// Convert file separators.
-		req_path = req_path.replace('/', File.separatorChar);
+    return rootDirectoryPath + File.separator + req_path;
+  }
 
-		// Simplistic dumb security check.
-		// You will have to do something serious in the production environment.
-		if (req_path.contains(File.separator + ".") || req_path.contains("." + File.separator) || req_path.startsWith(".") || req_path.endsWith("."))
-		{
-			return null;
-		}
-		// Convert to absolute path.
-
-		return rootDirectoryPath + File.separator + req_path;
-	}
-
-	@Override
-	protected boolean isZeroCopy()
-	{
-		return true;
-	}
+  @Override
+  protected boolean isZeroCopy() {
+    return true;
+  }
 }

@@ -14,27 +14,24 @@ package wstest.srv.actors;
  * &lt;/xs:element>
  * </pre>
  */
-public class EchoStruct
-{
-	private COfTestStruct array;
+public class EchoStruct {
+  private COfTestStruct array;
 
-	/**
-	 * Get the 'array' element value.
-	 * 
-	 * @return value
-	 */
-	public COfTestStruct getArray()
-	{
-		return array;
-	}
+  /**
+   * Get the 'array' element value.
+   * 
+   * @return value
+   */
+  public COfTestStruct getArray() {
+    return array;
+  }
 
-	/**
-	 * Set the 'array' element value.
-	 * 
-	 * @param array
-	 */
-	public void setArray(COfTestStruct array)
-	{
-		this.array = array;
-	}
+  /**
+   * Set the 'array' element value.
+   * 
+   * @param array
+   */
+  public void setArray(COfTestStruct array) {
+    this.array = array;
+  }
 }

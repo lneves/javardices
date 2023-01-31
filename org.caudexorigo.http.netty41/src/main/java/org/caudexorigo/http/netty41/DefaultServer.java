@@ -10,54 +10,46 @@ import io.netty.handler.codec.http.HttpResponse;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import io.netty.util.internal.logging.Slf4JLoggerFactory;
 
-public class DefaultServer
-{
-	public static void main(String[] args)
-	{
-		try
-		{
-			String host = "0.0.0.0";
-			int port = 8000;
+public class DefaultServer {
+  public static void main(String[] args) {
+    try {
+      String host = "0.0.0.0";
+      int port = 8000;
 
-			InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.getDefaultFactory());
-			NettyHttpServer server = new NettyHttpServer(host, port);
+      InternalLoggerFactory.setDefaultFactory(Slf4JLoggerFactory.getDefaultFactory());
+      NettyHttpServer server = new NettyHttpServer(host, port);
 
-			server.setRequestObserver(new RequestObserver()
-			{
-				@Override
-				public void begin(ChannelHandlerContext ctx, HttpRequest request)
-				{
-					request.headers().add("X-BEGIN", System.nanoTime());
-				}
+      server.setRequestObserver(new RequestObserver() {
+        @Override
+        public void begin(ChannelHandlerContext ctx, HttpRequest request) {
+          request.headers().add("X-BEGIN", System.nanoTime());
+        }
 
-				@Override
-				public void end(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response)
-				{
-					long elapsed = 0l;
-					if (request.headers().get("X-BEGIN") != null)
-					{
-						long begin = Long.parseLong(request.headers().get("X-BEGIN"));
-						elapsed = (System.nanoTime() - begin) / 1000000;
-					}
+        @Override
+        public void end(ChannelHandlerContext ctx, HttpRequest request, HttpResponse response) {
+          long elapsed = 0l;
+          if (request.headers().get("X-BEGIN") != null) {
+            long begin = Long.parseLong(request.headers().get("X-BEGIN"));
+            elapsed = (System.nanoTime() - begin) / 1000000;
+          }
 
-					String path = request.uri();
+          String path = request.uri();
 
-					String verb = request.method().name();
-					int status = response.status().code();
-					String remoteIp = StringUtils.substringBetween(ctx.channel().remoteAddress().toString(), "/", ":");
+          String verb = request.method().name();
+          int status = response.status().code();
+          String remoteIp = StringUtils.substringBetween(ctx.channel().remoteAddress().toString(),
+              "/", ":");
 
-					System.out.printf("%s => %s \"%s %s\" - %s%n", elapsed, remoteIp, verb, path, status);
-				}
-			});
+          System.out.printf("%s => %s \"%s %s\" - %s%n", elapsed, remoteIp, verb, path, status);
+        }
+      });
 
-			server.setRouter(new DefaultRouter());
-			server.setResponseFormatter(new StandardResponseFormatter(true));
-			System.out.printf("listening on: %s%n", port);
-			server.start();
-		}
-		catch (Throwable t)
-		{
-			Shutdown.now(t);
-		}
-	}
+      server.setRouter(new DefaultRouter());
+      server.setResponseFormatter(new StandardResponseFormatter(true));
+      System.out.printf("listening on: %s%n", port);
+      server.start();
+    } catch (Throwable t) {
+      Shutdown.now(t);
+    }
+  }
 }

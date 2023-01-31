@@ -10,27 +10,24 @@ package wstest.srv.actors;
  * &lt;/xs:complexType>
  * </pre>
  */
-public class TestNode extends TestStruct
-{
-	private TestNode next;
+public class TestNode extends TestStruct {
+  private TestNode next;
 
-	/**
-	 * Get the 'Next' element value.
-	 * 
-	 * @return value
-	 */
-	public TestNode getNext()
-	{
-		return next;
-	}
+  /**
+   * Get the 'Next' element value.
+   * 
+   * @return value
+   */
+  public TestNode getNext() {
+    return next;
+  }
 
-	/**
-	 * Set the 'Next' element value.
-	 * 
-	 * @param next
-	 */
-	public void setNext(TestNode next)
-	{
-		this.next = next;
-	}
+  /**
+   * Set the 'Next' element value.
+   * 
+   * @param next
+   */
+  public void setNext(TestNode next) {
+    this.next = next;
+  }
 }

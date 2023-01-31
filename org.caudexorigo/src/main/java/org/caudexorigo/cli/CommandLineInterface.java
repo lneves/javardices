@@ -12,12 +12,11 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface CommandLineInterface
-{
-	/**
-	 * The name of the application that this is the interface for
-	 * 
-	 * @return The name of the application that this is the interface for
-	 */
-	String application() default "";
+public @interface CommandLineInterface {
+  /**
+   * The name of the application that this is the interface for
+   * 
+   * @return The name of the application that this is the interface for
+   */
+  String application() default "";
 }

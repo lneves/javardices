@@ -11,27 +11,26 @@ import wstest.srv.actors.EchoVoidResponse;
 import wstest.srv.actors.GetOrder;
 import wstest.srv.actors.GetOrderResponse;
 
-public class SoapBody
-{
-	public SoapFault fault;
+public class SoapBody {
+  public SoapFault fault;
 
-	public EchoList echoList;
+  public EchoList echoList;
 
-	public EchoListResponse echoListResponse;
+  public EchoListResponse echoListResponse;
 
-	public EchoStruct echoStruct;
+  public EchoStruct echoStruct;
 
-	public EchoStructResponse echoStructResponse;
+  public EchoStructResponse echoStructResponse;
 
-	public EchoSynthetic echoSynthetic;
+  public EchoSynthetic echoSynthetic;
 
-	public EchoSyntheticResponse echoSyntheticResponse;
+  public EchoSyntheticResponse echoSyntheticResponse;
 
-	public EchoVoid echoVoid;
+  public EchoVoid echoVoid;
 
-	public EchoVoidResponse echoVoidResponse;
+  public EchoVoidResponse echoVoidResponse;
 
-	public GetOrder getOrder;
+  public GetOrder getOrder;
 
-	public GetOrderResponse getOrderResponse;
+  public GetOrderResponse getOrderResponse;
 }

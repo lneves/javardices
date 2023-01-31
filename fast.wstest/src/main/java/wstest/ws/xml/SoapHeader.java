@@ -1,6 +1,5 @@
 package wstest.ws.xml;
 
-public class SoapHeader
-{
+public class SoapHeader {
 
 }

@@ -5,18 +5,15 @@ package org.caudexorigo.cli;
  * 
  * @author Tim Wood
  */
-class ValueFormatException extends CliException
-{
-	private static final long serialVersionUID = -5278572593150819070L;
+class ValueFormatException extends CliException {
+  private static final long serialVersionUID = -5278572593150819070L;
 
-	/**
-	 * A value had an invalid format
-	 * 
-	 * @param message
-	 *            A message describing the problem
-	 */
-	public ValueFormatException(final String message)
-	{
-		super(message);
-	}
+  /**
+   * A value had an invalid format
+   * 
+   * @param message A message describing the problem
+   */
+  public ValueFormatException(final String message) {
+    super(message);
+  }
 }

@@ -1,27 +1,23 @@
 package feed.parser;
 
-import javax.xml.stream.XMLStreamReader;
-
 import org.apache.commons.lang3.StringUtils;
 
-public class RssFeedAtomLinkProcessor implements FeedEntryProcessor
-{
-	public RssFeedAtomLinkProcessor()
-	{
-		super();
-	}
+import javax.xml.stream.XMLStreamReader;
 
-	@Override
-	public void process(FeedChannel feed_channel, XMLStreamReader stax_xml_reader)
-	{
+public class RssFeedAtomLinkProcessor implements FeedEntryProcessor {
+  public RssFeedAtomLinkProcessor() {
+    super();
+  }
 
-		String href = stax_xml_reader.getAttributeValue(null, "href");
+  @Override
+  public void process(FeedChannel feed_channel, XMLStreamReader stax_xml_reader) {
 
-		if (StringUtils.isNotBlank(href))
-		{
-			FeedEntry feed_entry = feed_channel.getLastFeedEntry();
+    String href = stax_xml_reader.getAttributeValue(null, "href");
 
-			feed_entry.setAttribute("link", href);
-		}
-	}
+    if (StringUtils.isNotBlank(href)) {
+      FeedEntry feed_entry = feed_channel.getLastFeedEntry();
+
+      feed_entry.setAttribute("link", href);
+    }
+  }
 }

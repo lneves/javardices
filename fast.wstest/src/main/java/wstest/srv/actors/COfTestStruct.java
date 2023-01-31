@@ -15,27 +15,24 @@ import java.util.List;
  * &lt;/xs:complexType>
  * </pre>
  */
-public class COfTestStruct
-{
-	private List<TestStruct> lList = new ArrayList<TestStruct>();
+public class COfTestStruct {
+  private List<TestStruct> lList = new ArrayList<TestStruct>();
 
-	/**
-	 * Get the list of 'l' element items.
-	 * 
-	 * @return list
-	 */
-	public List<TestStruct> getLs()
-	{
-		return lList;
-	}
+  /**
+   * Get the list of 'l' element items.
+   * 
+   * @return list
+   */
+  public List<TestStruct> getLs() {
+    return lList;
+  }
 
-	/**
-	 * Set the list of 'l' element items.
-	 * 
-	 * @param list
-	 */
-	public void setLs(List<TestStruct> list)
-	{
-		lList = list;
-	}
+  /**
+   * Set the list of 'l' element items.
+   * 
+   * @param list
+   */
+  public void setLs(List<TestStruct> list) {
+    lList = list;
+  }
 }

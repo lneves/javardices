@@ -2,12 +2,6 @@ package org.caudexorigo.http.netty;
 
 import static org.jboss.netty.channel.Channels.pipeline;
 
-import java.net.InetSocketAddress;
-import java.util.concurrent.Executor;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLEngine;
-
 import org.caudexorigo.Shutdown;
 import org.caudexorigo.concurrent.CustomExecutors;
 import org.caudexorigo.http.netty.reporting.ResponseFormatter;
@@ -24,299 +18,263 @@ import org.jboss.netty.handler.ssl.SslHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NettyHttpServer
-{
-	private static final String DEFAULT_HOST = "0.0.0.0";
+import java.net.InetSocketAddress;
+import java.util.concurrent.Executor;
 
-	private static final int DEFAULT_PORT = 8080;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
 
-	private static Logger log = LoggerFactory.getLogger(NettyHttpServer.class);
+public class NettyHttpServer {
+  private static final String DEFAULT_HOST = "0.0.0.0";
 
-	private Executor _bossExecutor;
+  private static final int DEFAULT_PORT = 8080;
 
-	private String _host;
+  private static Logger log = LoggerFactory.getLogger(NettyHttpServer.class);
 
-	private RequestRouter _mapper;
-	private RequestObserver _requestObserver;
-	private ResponseFormatter _rspFmt;
+  private Executor _bossExecutor;
 
-	private int _port;
+  private String _host;
 
-	private Executor _workerExecutor;
+  private RequestRouter _mapper;
+  private RequestObserver _requestObserver;
+  private ResponseFormatter _rspFmt;
 
-	private final boolean _is_compression_enabled;
+  private int _port;
 
-	// private Map<String, WebSocketHandler> _webSocketHandlers = new HashMap<String, WebSocketHandler>();
-	// private boolean _hasWebSocketSupport;
+  private Executor _workerExecutor;
 
-	public NettyHttpServer()
-	{
-		this(DEFAULT_HOST, DEFAULT_PORT, false);
-	}
+  private final boolean _is_compression_enabled;
 
-	public NettyHttpServer(String host, int port)
-	{
+  // private Map<String, WebSocketHandler> _webSocketHandlers = new HashMap<String,
+  // WebSocketHandler>();
+  // private boolean _hasWebSocketSupport;
 
-		this(host, port, false);
-	}
+  public NettyHttpServer() {
+    this(DEFAULT_HOST, DEFAULT_PORT, false);
+  }
 
-	public NettyHttpServer(String host, int port, boolean is_compression_enabled)
-	{
-		_host = host;
-		_port = port;
-		_is_compression_enabled = is_compression_enabled;
+  public NettyHttpServer(String host, int port) {
 
-	}
+    this(host, port, false);
+  }
 
-	public NettyHttpServer(String host, int port, boolean is_compression_enabled, Executor boss_executor, Executor worker_executor)
-	{
-		this(host, port, is_compression_enabled);
-		_bossExecutor = boss_executor;
-		_workerExecutor = worker_executor;
-	}
+  public NettyHttpServer(String host, int port, boolean is_compression_enabled) {
+    _host = host;
+    _port = port;
+    _is_compression_enabled = is_compression_enabled;
 
-	private synchronized Executor getBossThreadPool()
-	{
-		if (_bossExecutor == null)
-		{
-			_bossExecutor = CustomExecutors.newCachedThreadPool("http-boss");
-		}
-		return _bossExecutor;
-	}
+  }
 
-	public String getHost()
-	{
-		return _host;
-	}
+  public NettyHttpServer(String host, int port, boolean is_compression_enabled,
+      Executor boss_executor, Executor worker_executor) {
+    this(host, port, is_compression_enabled);
+    _bossExecutor = boss_executor;
+    _workerExecutor = worker_executor;
+  }
 
-	public int getPort()
-	{
-		return _port;
-	}
+  private synchronized Executor getBossThreadPool() {
+    if (_bossExecutor == null) {
+      _bossExecutor = CustomExecutors.newCachedThreadPool("http-boss");
+    }
+    return _bossExecutor;
+  }
 
-	public RequestRouter getRouter()
-	{
-		return _mapper;
-	}
+  public String getHost() {
+    return _host;
+  }
 
-	private Executor getWorkerThreadPool()
-	{
-		if (_workerExecutor == null)
-		{
-			_workerExecutor = CustomExecutors.newCachedThreadPool("http-worker");
-		}
-		return _workerExecutor;
-	}
+  public int getPort() {
+    return _port;
+  }
 
-	public void setHost(String host)
-	{
-		_host = host;
-	}
+  public RequestRouter getRouter() {
+    return _mapper;
+  }
 
-	public void setPort(int port)
-	{
-		_port = port;
-	}
+  private Executor getWorkerThreadPool() {
+    if (_workerExecutor == null) {
+      _workerExecutor = CustomExecutors.newCachedThreadPool("http-worker");
+    }
+    return _workerExecutor;
+  }
 
-	public void setRouter(RequestRouter mapper)
-	{
-		_mapper = mapper;
-	}
+  public void setHost(String host) {
+    _host = host;
+  }
 
-	private ResponseFormatter getResponseFormtter()
-	{
-		if (_rspFmt != null)
-		{
-			return _rspFmt;
-		}
-		else
-		{
-			return new StandardResponseFormatter(false);
-		}
-	}
+  public void setPort(int port) {
+    _port = port;
+  }
 
-	protected RequestObserver getRequestObserver()
-	{
-		if (_requestObserver != null)
-		{
-			return _requestObserver;
-		}
-		else
-		{
-			return new DefaultObserver();
-		}
-	}
+  public void setRouter(RequestRouter mapper) {
+    _mapper = mapper;
+  }
 
-	public void setRequestObserver(RequestObserver requestObserver)
-	{
-		_requestObserver = requestObserver;
-	}
+  private ResponseFormatter getResponseFormtter() {
+    if (_rspFmt != null) {
+      return _rspFmt;
+    } else {
+      return new StandardResponseFormatter(false);
+    }
+  }
 
-	public void setResponseFormtter(ResponseFormatter rspFmt)
-	{
-		_rspFmt = rspFmt;
-	}
+  protected RequestObserver getRequestObserver() {
+    if (_requestObserver != null) {
+      return _requestObserver;
+    } else {
+      return new DefaultObserver();
+    }
+  }
 
-	// public void addWebSocketHandler(String path, WebSocketHandler webSocketHandler)
-	// {
-	// if (webSocketHandler == null)
-	// {
-	// throw new IllegalArgumentException("WebSocketHandler can not be null");
-	// }
-	// if (StringUtils.isBlank(path))
-	// {
-	// throw new IllegalArgumentException("WebSocketHandler Path can not be blank");
-	// }
-	//
-	// _webSocketHandlers.put(path, webSocketHandler);
-	// _hasWebSocketSupport = true;
-	// }
+  public void setRequestObserver(RequestObserver requestObserver) {
+    _requestObserver = requestObserver;
+  }
 
-	public synchronized void start()
-	{
-		log.info("Starting Httpd");
+  public void setResponseFormtter(ResponseFormatter rspFmt) {
+    _rspFmt = rspFmt;
+  }
 
-		ChannelFactory factory = new NioServerSocketChannelFactory(getBossThreadPool(), getWorkerThreadPool());
-		ServerBootstrap bootstrap = new ServerBootstrap(factory);
+  // public void addWebSocketHandler(String path, WebSocketHandler webSocketHandler)
+  // {
+  // if (webSocketHandler == null)
+  // {
+  // throw new IllegalArgumentException("WebSocketHandler can not be null");
+  // }
+  // if (StringUtils.isBlank(path))
+  // {
+  // throw new IllegalArgumentException("WebSocketHandler Path can not be blank");
+  // }
+  //
+  // _webSocketHandlers.put(path, webSocketHandler);
+  // _hasWebSocketSupport = true;
+  // }
 
-		ChannelPipelineFactory pf = new ChannelPipelineFactory()
-		{
-			@Override
-			public ChannelPipeline getPipeline() throws Exception
-			{
-				try
-				{
-					// Create a default pipeline implementation.
-					ChannelPipeline pipeline = pipeline();
+  public synchronized void start() {
+    log.info("Starting Httpd");
 
-					// if (_hasWebSocketSupport)
-					// {
-					// pipeline.addLast("policy-file", new PolicyFileRequestDecoder(getPort()));
-					// }
+    ChannelFactory factory = new NioServerSocketChannelFactory(getBossThreadPool(),
+        getWorkerThreadPool());
+    ServerBootstrap bootstrap = new ServerBootstrap(factory);
 
-					pipeline.addLast("http-decoder", new HttpRequestDecoder(4096, 8192, 256 * 1024));
-					pipeline.addLast("http-encoder", new HttpResponseEncoder());
+    ChannelPipelineFactory pf = new ChannelPipelineFactory() {
+      @Override
+      public ChannelPipeline getPipeline() throws Exception {
+        try {
+          // Create a default pipeline implementation.
+          ChannelPipeline pipeline = pipeline();
 
-					if (_is_compression_enabled)
-					{
-						pipeline.addLast("http-compression", new HttpContentCompressor());
-					}
+          // if (_hasWebSocketSupport)
+          // {
+          // pipeline.addLast("policy-file", new PolicyFileRequestDecoder(getPort()));
+          // }
 
-					// if (_hasWebSocketSupport)
-					// {
-					// Set<String> ws_paths = _webSocketHandlers.keySet();
-					//
-					// for (String wspath : ws_paths)
-					// {
-					// http_handler.addWebSocketHandler(wspath, _webSocketHandlers.get(wspath));
-					// }
-					// }
+          pipeline.addLast("http-decoder", new HttpRequestDecoder(4096, 8192, 256 * 1024));
+          pipeline.addLast("http-encoder", new HttpResponseEncoder());
 
-					pipeline.addLast("http-handler", new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter()));
-					return pipeline;
-				}
-				catch (Throwable t)
-				{
-					Shutdown.now(t);
-					return null;
-				}
-			}
+          if (_is_compression_enabled) {
+            pipeline.addLast("http-compression", new HttpContentCompressor());
+          }
 
-		};
+          // if (_hasWebSocketSupport)
+          // {
+          // Set<String> ws_paths = _webSocketHandlers.keySet();
+          //
+          // for (String wspath : ws_paths)
+          // {
+          // http_handler.addWebSocketHandler(wspath, _webSocketHandlers.get(wspath));
+          // }
+          // }
 
-		setupBootStrap(bootstrap, pf);
+          pipeline.addLast("http-handler", new HttpProtocolHandler(_mapper, getRequestObserver(),
+              getResponseFormtter()));
+          return pipeline;
+        } catch (Throwable t) {
+          Shutdown.now(t);
+          return null;
+        }
+      }
 
-		try
-		{
-			// Bind and start to accept incoming connections.
-			InetSocketAddress inet = new InetSocketAddress(getHost(), getPort());
-			bootstrap.bind(inet);
-			log.info("Httpd started. Listening on port: {}", inet.toString());
-		}
-		catch (Throwable t)
-		{
-			throw new RuntimeException(t);
-		}
-	}
+    };
 
-	public synchronized void startSsl(final HttpSslContext http_ssl_ctx)
-	{
-		log.info("Starting Httpd - SSL");
+    setupBootStrap(bootstrap, pf);
 
-		ChannelFactory factory = new NioServerSocketChannelFactory(getBossThreadPool(), getWorkerThreadPool());
+    try {
+      // Bind and start to accept incoming connections.
+      InetSocketAddress inet = new InetSocketAddress(getHost(), getPort());
+      bootstrap.bind(inet);
+      log.info("Httpd started. Listening on port: {}", inet.toString());
+    } catch (Throwable t) {
+      throw new RuntimeException(t);
+    }
+  }
 
-		ServerBootstrap bootstrap = new ServerBootstrap(factory);
+  public synchronized void startSsl(final HttpSslContext http_ssl_ctx) {
+    log.info("Starting Httpd - SSL");
 
-		final SSLContext sslContext;
-		try
-		{
-			sslContext = http_ssl_ctx.getSSLContext();
-		}
-		catch (Exception e)
-		{
-			throw new RuntimeException(e);
-		}
+    ChannelFactory factory = new NioServerSocketChannelFactory(getBossThreadPool(),
+        getWorkerThreadPool());
 
-		ChannelPipelineFactory pf = new ChannelPipelineFactory()
-		{
-			@Override
-			public ChannelPipeline getPipeline() throws Exception
-			{
-				try
-				{
-					ChannelPipeline pipeline = pipeline();
+    ServerBootstrap bootstrap = new ServerBootstrap(factory);
 
-					final SSLEngine sslEngine = sslContext.createSSLEngine();
-					sslEngine.setUseClientMode(false);
-					final SslHandler sslHandler = new SslHandler(sslEngine);
+    final SSLContext sslContext;
+    try {
+      sslContext = http_ssl_ctx.getSSLContext();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
 
-					final HttpRequestDecoder httpRequestDecoder = new HttpRequestDecoder(4096, 8192, 256 * 1024);
-					final HttpResponseEncoder httpResponseEncoder = new HttpResponseEncoder();
-					final HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper, getRequestObserver(), getResponseFormtter());
+    ChannelPipelineFactory pf = new ChannelPipelineFactory() {
+      @Override
+      public ChannelPipeline getPipeline() throws Exception {
+        try {
+          ChannelPipeline pipeline = pipeline();
 
-					pipeline.addLast("ssl", sslHandler);
-					pipeline.addLast("http-decoder", httpRequestDecoder);
-					pipeline.addLast("http-encoder", httpResponseEncoder);
-					pipeline.addLast("http-handler", http_handler);
-					return pipeline;
-				}
-				catch (Throwable t)
-				{
-					Shutdown.now(t);
-					return null;
-				}
-			}
-		};
+          final SSLEngine sslEngine = sslContext.createSSLEngine();
+          sslEngine.setUseClientMode(false);
+          final SslHandler sslHandler = new SslHandler(sslEngine);
 
-		setupBootStrap(bootstrap, pf);
+          final HttpRequestDecoder httpRequestDecoder = new HttpRequestDecoder(4096, 8192, 256
+              * 1024);
+          final HttpResponseEncoder httpResponseEncoder = new HttpResponseEncoder();
+          final HttpProtocolHandler http_handler = new HttpProtocolHandler(_mapper,
+              getRequestObserver(), getResponseFormtter());
 
-		try
-		{
-			// Bind and start to accept incoming connections.
-			InetSocketAddress inet = new InetSocketAddress(getHost(), http_ssl_ctx.getSslPort());
-			bootstrap.bind(inet);
-			log.info("Httpd SSL started. Listening on port: {}", inet.toString());
-		}
-		catch (Throwable t)
-		{
-			throw new RuntimeException(t);
-		}
-	}
+          pipeline.addLast("ssl", sslHandler);
+          pipeline.addLast("http-decoder", httpRequestDecoder);
+          pipeline.addLast("http-encoder", httpResponseEncoder);
+          pipeline.addLast("http-handler", http_handler);
+          return pipeline;
+        } catch (Throwable t) {
+          Shutdown.now(t);
+          return null;
+        }
+      }
+    };
 
-	private void setupBootStrap(ServerBootstrap bootstrap, ChannelPipelineFactory pf)
-	{
-		bootstrap.setPipelineFactory(pf);
+    setupBootStrap(bootstrap, pf);
 
-		bootstrap.setOption("child.tcpNoDelay", true);
-		bootstrap.setOption("child.keepAlive", true);
-		bootstrap.setOption("child.receiveBufferSize", 128 * 1024);
-		bootstrap.setOption("child.sendBufferSize", 128 * 1024);
-		bootstrap.setOption("reuseAddress", true);
-		bootstrap.setOption("backlog", 1024);
-	}
+    try {
+      // Bind and start to accept incoming connections.
+      InetSocketAddress inet = new InetSocketAddress(getHost(), http_ssl_ctx.getSslPort());
+      bootstrap.bind(inet);
+      log.info("Httpd SSL started. Listening on port: {}", inet.toString());
+    } catch (Throwable t) {
+      throw new RuntimeException(t);
+    }
+  }
 
-	public void stop()
-	{
-		log.warn("pt.com.http.NettyHttpServer.stop() is not implemented");
-	}
+  private void setupBootStrap(ServerBootstrap bootstrap, ChannelPipelineFactory pf) {
+    bootstrap.setPipelineFactory(pf);
+
+    bootstrap.setOption("child.tcpNoDelay", true);
+    bootstrap.setOption("child.keepAlive", true);
+    bootstrap.setOption("child.receiveBufferSize", 128 * 1024);
+    bootstrap.setOption("child.sendBufferSize", 128 * 1024);
+    bootstrap.setOption("reuseAddress", true);
+    bootstrap.setOption("backlog", 1024);
+  }
+
+  public void stop() {
+    log.warn("pt.com.http.NettyHttpServer.stop() is not implemented");
+  }
 }

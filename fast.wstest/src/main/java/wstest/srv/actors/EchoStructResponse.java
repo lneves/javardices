@@ -14,27 +14,24 @@ package wstest.srv.actors;
  * &lt;/xs:element>
  * </pre>
  */
-public class EchoStructResponse
-{
-	private COfTestStruct echoStructResult;
+public class EchoStructResponse {
+  private COfTestStruct echoStructResult;
 
-	/**
-	 * Get the 'EchoStructResult' element value.
-	 * 
-	 * @return value
-	 */
-	public COfTestStruct getEchoStructResult()
-	{
-		return echoStructResult;
-	}
+  /**
+   * Get the 'EchoStructResult' element value.
+   * 
+   * @return value
+   */
+  public COfTestStruct getEchoStructResult() {
+    return echoStructResult;
+  }
 
-	/**
-	 * Set the 'EchoStructResult' element value.
-	 * 
-	 * @param echoStructResult
-	 */
-	public void setEchoStructResult(COfTestStruct echoStructResult)
-	{
-		this.echoStructResult = echoStructResult;
-	}
+  /**
+   * Set the 'EchoStructResult' element value.
+   * 
+   * @param echoStructResult
+   */
+  public void setEchoStructResult(COfTestStruct echoStructResult) {
+    this.echoStructResult = echoStructResult;
+  }
 }

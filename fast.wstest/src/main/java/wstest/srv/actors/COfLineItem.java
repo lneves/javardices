@@ -15,27 +15,24 @@ import java.util.List;
  * &lt;/xs:complexType>
  * </pre>
  */
-public class COfLineItem
-{
-	private List<LineItem> lineItemList = new ArrayList<LineItem>();
+public class COfLineItem {
+  private List<LineItem> lineItemList = new ArrayList<LineItem>();
 
-	/**
-	 * Get the list of 'LineItem' element items.
-	 * 
-	 * @return list
-	 */
-	public List<LineItem> getLineItems()
-	{
-		return lineItemList;
-	}
+  /**
+   * Get the list of 'LineItem' element items.
+   * 
+   * @return list
+   */
+  public List<LineItem> getLineItems() {
+    return lineItemList;
+  }
 
-	/**
-	 * Set the list of 'LineItem' element items.
-	 * 
-	 * @param list
-	 */
-	public void setLineItems(List<LineItem> list)
-	{
-		lineItemList = list;
-	}
+  /**
+   * Set the list of 'LineItem' element items.
+   * 
+   * @param list
+   */
+  public void setLineItems(List<LineItem> list) {
+    lineItemList = list;
+  }
 }

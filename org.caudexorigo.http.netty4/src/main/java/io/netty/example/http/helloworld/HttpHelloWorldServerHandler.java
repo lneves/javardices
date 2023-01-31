@@ -1,25 +1,25 @@
 /*
  * Copyright 2013 The Netty Project
  *
- * The Netty Project licenses this file to you under the Apache License,
- * version 2.0 (the "License"); you may not use this file except in compliance
- * with the License. You may obtain a copy of the License at:
+ * The Netty Project licenses this file to you under the Apache License, version 2.0 (the
+ * "License"); you may not use this file except in compliance with the License. You may
+ * obtain a copy of the License at:
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations
- * under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the specific language governing
+ * permissions and limitations under the License.
  */
 package io.netty.example.http.helloworld;
 
-import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpHeaders.is100ContinueExpected;
+import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpResponseStatus.CONTINUE;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
@@ -34,60 +34,55 @@ import io.netty.handler.codec.http.HttpHeaders.Values;
 import io.netty.handler.codec.http.HttpRequest;
 
 @Sharable
-public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter
-{
-	private static final CharSequence CONTENT_LENGTH_ENTITY = HttpHeaders.newEntity(Names.CONTENT_LENGTH);
-	private static final CharSequence CONNECTION_ENTITY = HttpHeaders.newEntity(Names.CONNECTION);
-	private static final CharSequence CONTENT_TYPE_ENTITY = HttpHeaders.newEntity(Names.CONTENT_TYPE);
+public class HttpHelloWorldServerHandler extends ChannelInboundHandlerAdapter {
+  private static final CharSequence CONTENT_LENGTH_ENTITY = HttpHeaders.newEntity(
+      Names.CONTENT_LENGTH);
+  private static final CharSequence CONNECTION_ENTITY = HttpHeaders.newEntity(Names.CONNECTION);
+  private static final CharSequence CONTENT_TYPE_ENTITY = HttpHeaders.newEntity(Names.CONTENT_TYPE);
 
-	private static final CharSequence KEEP_ALIVE = HttpHeaders.newEntity(Values.KEEP_ALIVE);
-	private static final CharSequence TEXT_PLAIN = HttpHeaders.newEntity("text/plain");
+  private static final CharSequence KEEP_ALIVE = HttpHeaders.newEntity(Values.KEEP_ALIVE);
+  private static final CharSequence TEXT_PLAIN = HttpHeaders.newEntity("text/plain");
 
-	private static final byte[] CONTENT = "Hello World".getBytes();
+  private static final byte[] CONTENT = "Hello World".getBytes();
 
-	private static final ByteBuf CONTENT_BUFFER = Unpooled.unreleasableBuffer(Unpooled.directBuffer().writeBytes(CONTENT));
-	private static final CharSequence contentLength = HttpHeaders.newEntity(String.valueOf(CONTENT_BUFFER.readableBytes()));
+  private static final ByteBuf CONTENT_BUFFER = Unpooled.unreleasableBuffer(Unpooled.directBuffer()
+      .writeBytes(CONTENT));
+  private static final CharSequence contentLength = HttpHeaders.newEntity(String.valueOf(
+      CONTENT_BUFFER.readableBytes()));
 
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx)
-	{
-		ctx.flush();
-	}
+  @Override
+  public void channelReadComplete(ChannelHandlerContext ctx) {
+    ctx.flush();
+  }
 
-	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception
-	{
-		if (msg instanceof HttpRequest)
-		{
-			HttpRequest req = (HttpRequest) msg;
+  @Override
+  public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+    if (msg instanceof HttpRequest) {
+      HttpRequest req = (HttpRequest) msg;
 
-			if (is100ContinueExpected(req))
-			{
-				ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
-			}
+      if (is100ContinueExpected(req)) {
+        ctx.write(new DefaultFullHttpResponse(HTTP_1_1, CONTINUE));
+      }
 
-			boolean keepAlive = isKeepAlive(req);
-			FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, CONTENT_BUFFER.duplicate(), false);
-			HttpHeaders hh = response.headers();
-			hh.set(CONTENT_TYPE_ENTITY, TEXT_PLAIN);
-			hh.set(CONTENT_LENGTH_ENTITY, contentLength);
+      boolean keepAlive = isKeepAlive(req);
+      FullHttpResponse response = new DefaultFullHttpResponse(HTTP_1_1, OK, CONTENT_BUFFER
+          .duplicate(), false);
+      HttpHeaders hh = response.headers();
+      hh.set(CONTENT_TYPE_ENTITY, TEXT_PLAIN);
+      hh.set(CONTENT_LENGTH_ENTITY, contentLength);
 
-			if (!keepAlive)
-			{
-				ctx.write(response).addListener(ChannelFutureListener.CLOSE);
-			}
-			else
-			{
-				hh.set(CONNECTION_ENTITY, KEEP_ALIVE);
-				ctx.write(response);
-			}
-		}
-	}
+      if (!keepAlive) {
+        ctx.write(response).addListener(ChannelFutureListener.CLOSE);
+      } else {
+        hh.set(CONNECTION_ENTITY, KEEP_ALIVE);
+        ctx.write(response);
+      }
+    }
+  }
 
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception
-	{
-		// cause.printStackTrace();
-		ctx.close();
-	}
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+    // cause.printStackTrace();
+    ctx.close();
+  }
 }

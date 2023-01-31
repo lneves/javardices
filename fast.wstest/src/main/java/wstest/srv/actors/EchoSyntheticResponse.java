@@ -14,27 +14,24 @@ package wstest.srv.actors;
  * &lt;/xs:element>
  * </pre>
  */
-public class EchoSyntheticResponse
-{
-	private Synthetic echoSyntheticResult;
+public class EchoSyntheticResponse {
+  private Synthetic echoSyntheticResult;
 
-	/**
-	 * Get the 'EchoSyntheticResult' element value.
-	 * 
-	 * @return value
-	 */
-	public Synthetic getEchoSyntheticResult()
-	{
-		return echoSyntheticResult;
-	}
+  /**
+   * Get the 'EchoSyntheticResult' element value.
+   * 
+   * @return value
+   */
+  public Synthetic getEchoSyntheticResult() {
+    return echoSyntheticResult;
+  }
 
-	/**
-	 * Set the 'EchoSyntheticResult' element value.
-	 * 
-	 * @param echoSyntheticResult
-	 */
-	public void setEchoSyntheticResult(Synthetic echoSyntheticResult)
-	{
-		this.echoSyntheticResult = echoSyntheticResult;
-	}
+  /**
+   * Set the 'EchoSyntheticResult' element value.
+   * 
+   * @param echoSyntheticResult
+   */
+  public void setEchoSyntheticResult(Synthetic echoSyntheticResult) {
+    this.echoSyntheticResult = echoSyntheticResult;
+  }
 }

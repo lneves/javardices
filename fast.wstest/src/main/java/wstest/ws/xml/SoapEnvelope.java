@@ -1,13 +1,11 @@
 package wstest.ws.xml;
 
-public class SoapEnvelope
-{
-	public SoapBody body;
+public class SoapEnvelope {
+  public SoapBody body;
 
-	public SoapHeader header;
+  public SoapHeader header;
 
-	public SoapEnvelope()
-	{
-		body = new SoapBody();
-	}
+  public SoapEnvelope() {
+    body = new SoapBody();
+  }
 }
