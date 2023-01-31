@@ -2,7 +2,7 @@ package feed.parser;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
 
 public class Enclosure {
   private int length;

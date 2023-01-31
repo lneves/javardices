@@ -1,6 +1,6 @@
 package feed.parser;
 
-import javax.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlAttribute;
 
 public class AtomLink {
   private final String href;
